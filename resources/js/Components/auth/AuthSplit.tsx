@@ -9,7 +9,7 @@ export const BLS_FEATURES: { icon: LucideIcon; title: string; desc: string }[] =
     { icon: Receipt, title: "e-Faktur & e-Bupot", desc: "Buat faktur dan bukti potong" },
     { icon: FileSpreadsheet, title: "SPT Masa & Tahunan", desc: "Isi, hitung, dan lapor SPT" },
     { icon: Wallet, title: "Billing & pembayaran", desc: "Kode billing dan buku besar" },
-    { icon: BookOpenCheck, title: "Kelas & ujian brevet", desc: "Materi, latihan, dan nilai" },
+    { icon: BookOpenCheck, title: "Kelas & ujian", desc: "Materi, latihan, dan nilai" },
 ];
 
 export const COPYRIGHT = `© ${new Date().getFullYear()} Brevet Learning System. Seluruh hak cipta dilindungi.`;
