@@ -130,7 +130,7 @@ useImperativeHandle(ref, () => ({
                 <div className="bg-muted p-4 w-full rounded-t-xl">
                     <p className="font-semibold text-sm">HEADER</p>
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl">
+                <div className="p-4 bg-card w-full rounded-b-xl">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <Label className="col-span-2">Nama PKP</Label>

@@ -61,7 +61,7 @@ function getCourseTestStatusDisplay(serverStatus: string) {
         case 'remedial_upcoming':
             return {
                 label: "Belum Mulai",
-                color: "text-slate-700 bg-slate-100 border border-slate-200",
+                color: "text-foreground bg-muted border border-border",
             };
         case 'finished':
         case 'remedial_finished':
@@ -215,7 +215,7 @@ export default function CourseTestDetail({
                             <h1 className="text-2xl font-bold text-primary">
                                 Ujian Kelas: {courseTest?.title}
                             </h1>
-                            <p className="text-sm text-gray-500 mt-1">
+                            <p className="text-sm text-muted-foreground mt-1">
                                 Detail ini termasuk dalam kelas{" "}
                                 <span className="font-semibold text-primary">
                                     {course?.name || "-"}
@@ -231,7 +231,7 @@ export default function CourseTestDetail({
                         </Button>
                     </div>
 
-                    <div className="rounded-xl border bg-white p-6 shadow space-y-4">
+                    <div className="rounded-xl border bg-card p-6 shadow space-y-4">
                         <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
                             <div className="flex flex-wrap items-center gap-2.5">
                                 <span
@@ -243,9 +243,9 @@ export default function CourseTestDetail({
                                     <GraduationCap className="mr-1 h-3.5 w-3.5" />
                                     Bagian dari kelas {course?.name || "-"}
                                 </span>
-                                <span className="text-sm text-gray-500">
+                                <span className="text-sm text-muted-foreground">
                                     Pengajar:{" "}
-                                    <span className="font-medium text-gray-700">
+                                    <span className="font-medium text-foreground">
                                         {teacher?.name ?? "-"}
                                     </span>
                                 </span>
@@ -271,7 +271,7 @@ export default function CourseTestDetail({
                                         )}
                                     </span>
                                 ) : (
-                                    <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                                    <span className="inline-flex items-center rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
                                         {showScore
                                             ? "Nilai Terbaik: -"
                                             : "Status: -"}
@@ -280,42 +280,42 @@ export default function CourseTestDetail({
                             </div>
                         </div>
 
-                        <p className="text-gray-700 text-sm md:text-base">
+                        <p className="text-foreground text-sm md:text-base">
                             {courseTest?.description ||
                                 "Tidak ada deskripsi ujian."}
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                            <div className="rounded-lg border p-3 bg-slate-50/70">
-                                <div className="text-gray-500">Kelas</div>
-                                <div className="font-semibold text-gray-800">
+                            <div className="rounded-lg border p-3 bg-muted/35">
+                                <div className="text-muted-foreground">Kelas</div>
+                                <div className="font-semibold text-foreground">
                                     {course?.name || "-"}
                                 </div>
                             </div>
                             <div className="rounded-lg border p-3">
-                                <div className="text-gray-500">
+                                <div className="text-muted-foreground">
                                     Kesempatan Mengerjakan
                                 </div>
-                                <div className="font-semibold text-gray-800">
+                                <div className="font-semibold text-foreground">
                                     {attemptsText}
                                 </div>
-                                <div className="text-xs text-gray-500 mt-1">
+                                <div className="text-xs text-muted-foreground mt-1">
                                     Sudah digunakan: {attemptsUsed}
                                 </div>
                             </div>
                             <div className="rounded-lg border p-3">
-                                <div className="text-gray-500">Durasi</div>
-                                <div className="font-semibold text-gray-800">
+                                <div className="text-muted-foreground">Durasi</div>
+                                <div className="font-semibold text-foreground">
                                     {courseTest?.duration
                                         ? `${courseTest.duration} menit`
                                         : "-"}
                                 </div>
                             </div>
                             <div className="rounded-lg border p-3">
-                                <div className="text-gray-500">
+                                <div className="text-muted-foreground">
                                     {showScore ? "Nilai Terbaik" : "Status"}
                                 </div>
-                                <div className="font-semibold text-gray-800">
+                                <div className="font-semibold text-foreground">
                                     {bestAttempt
                                         ? showScore
                                             ? `${bestAttempt.score} (${bestAttemptLabel})`
@@ -325,7 +325,7 @@ export default function CourseTestDetail({
                             </div>
                         </div>
 
-                        <div className="rounded-lg border border-dashed bg-slate-50/70 p-3 text-sm text-gray-700">
+                        <div className="rounded-lg border border-dashed bg-muted/35 p-3 text-sm text-foreground">
                             <div className="flex flex-wrap items-center gap-1.5">
                                 <CalendarClock size={14} />
                                 <span className="font-medium">
@@ -348,13 +348,13 @@ export default function CourseTestDetail({
                                     <div className="flex items-center gap-2">
                                         <FileCheck className="h-5 w-5 text-indigo-600" />
                                         <div>
-                                            <h3 className="font-semibold text-gray-900 text-sm md:text-base">
+                                            <h3 className="font-semibold text-foreground text-sm md:text-base">
                                                 Persyaratan Akses Ujian: Pengiriman Tugas (Submission)
                                             </h3>
-                                            <p className="text-xs text-gray-500">
+                                            <p className="text-xs text-muted-foreground">
                                                 Tugas yang diwajibkan: <strong className="text-primary">{requiredTaskTitle}</strong>
                                                 {isAllSubmissionsRequired && (
-                                                    <span className="ml-1 text-slate-500 font-normal">
+                                                    <span className="ml-1 text-muted-foreground font-normal">
                                                         (Wajib ACC seluruhnya)
                                                     </span>
                                                 )}
@@ -377,8 +377,8 @@ export default function CourseTestDetail({
                                         ) : (
                                             <>
                                                 {!submission && (
-                                                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 border border-slate-200">
-                                                        <AlertCircle className="h-3.5 w-3.5 text-slate-500" />
+                                                    <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground border border-border">
+                                                        <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" />
                                                         Belum Mengumpulkan
                                                     </span>
                                                 )}
@@ -406,8 +406,8 @@ export default function CourseTestDetail({
                                 </div>
 
                                 {isAllSubmissionsRequired && courseSubmissions.length > 0 && (
-                                    <div className="rounded-lg border bg-slate-50/60 p-3.5 space-y-2">
-                                        <div className="flex items-center justify-between text-xs text-gray-700 font-semibold border-b pb-2">
+                                    <div className="rounded-lg border bg-muted/30 p-3.5 space-y-2">
+                                        <div className="flex items-center justify-between text-xs text-foreground font-semibold border-b pb-2">
                                             <span>Daftar Tugas yang Wajib Di-ACC ({courseSubmissions.length} Tugas)</span>
                                             <span className={isSubmissionApproved ? "text-emerald-700 font-medium" : "text-amber-700 font-medium"}>
                                                 {approvedSubmissionsCount} dari {courseSubmissions.length} Tugas Telah Di-ACC
@@ -430,15 +430,15 @@ export default function CourseTestDetail({
                                                                 ? "bg-amber-50/40 border-amber-200"
                                                                 : isRejected
                                                                 ? "bg-rose-50/40 border-rose-200"
-                                                                : "bg-white border-slate-200"
+                                                                : "bg-card border-border"
                                                         }`}
                                                     >
                                                         <div className="flex items-start gap-2">
-                                                            <span className="font-semibold text-gray-500">{idx + 1}.</span>
+                                                            <span className="font-semibold text-muted-foreground">{idx + 1}.</span>
                                                             <div>
-                                                                <p className="font-semibold text-gray-900">{cs.title}</p>
+                                                                <p className="font-semibold text-foreground">{cs.title}</p>
                                                                 {cs.deadline && (
-                                                                    <p className="text-[11px] text-gray-500">
+                                                                    <p className="text-[11px] text-muted-foreground">
                                                                         Batas Waktu: {formatLocalDateTime(cs.deadline)}
                                                                     </p>
                                                                 )}
@@ -461,15 +461,15 @@ export default function CourseTestDetail({
                                                                     Ditolak (Perlu Perbaikan)
                                                                 </span>
                                                             ) : (
-                                                                <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700 border border-slate-300">
-                                                                    <AlertCircle className="h-3 w-3 text-slate-500" />
+                                                                <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-foreground border border-input">
+                                                                    <AlertCircle className="h-3 w-3 text-muted-foreground" />
                                                                     Belum Mengumpulkan
                                                                 </span>
                                                             )}
                                                             {/* {userSub?.id && (
                                                                 <a
                                                                     href={route("submissions.download", userSub.id)}
-                                                                    className="inline-flex items-center gap-1 rounded border bg-white px-2 py-0.5 text-[11px] font-medium text-gray-700 hover:bg-gray-50"
+                                                                    className="inline-flex items-center gap-1 rounded border bg-card px-2 py-0.5 text-[11px] font-medium text-foreground hover:bg-muted/50"
                                                                 >
                                                                     <Download className="h-3 w-3" />
                                                                     Berkas
@@ -513,7 +513,7 @@ export default function CourseTestDetail({
                                             {!isAllSubmissionsRequired && submission?.id && (
                                                 <a
                                                     href={route("submissions.download", submission.id)}
-                                                    className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-white px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-50 shadow-xs transition"
+                                                    className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-card px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-50 shadow-xs transition"
                                                 >
                                                     <Download className="h-3.5 w-3.5" />
                                                     Berkas Saya ({submission.original_filename})
@@ -543,7 +543,7 @@ export default function CourseTestDetail({
                                             </p>
                                         </div>
                                         <div className="flex flex-wrap items-center gap-2">
-                                            <Button size="sm" variant="outline" asChild className="text-xs text-amber-800 border-amber-300 bg-white hover:bg-amber-50">
+                                            <Button size="sm" variant="outline" asChild className="text-xs text-amber-800 border-amber-300 bg-card hover:bg-amber-50">
                                                 <Link href={route("courses.detail", course.id)}>
                                                     Lihat & Kerjakan Tugas di Halaman Kelas
                                                 </Link>
@@ -592,19 +592,19 @@ export default function CourseTestDetail({
                                 </p>
                             )}
                             {hasOtherActive && (
-                                <p className="mt-2 text-xs text-red-600">
+                                <p className="mt-2 text-xs text-destructive">
                                     Anda memiliki ujian kelas aktif lain.
                                     Selesaikan terlebih dahulu sebelum memulai
                                     ujian ini.
                                 </p>
                             )}
                             {!hasOtherActive && notStarted && (
-                                <p className="mt-2 text-xs text-red-600">
+                                <p className="mt-2 text-xs text-destructive">
                                     {isRemedialMode ? "Remedial belum dimulai." : "Ujian kelas belum mulai."}
                                 </p>
                             )}
                             {!hasOtherActive && isClosed && (
-                                <p className="mt-2 text-xs text-red-600">
+                                <p className="mt-2 text-xs text-destructive">
                                     {isRemedialMode ? "Remedial telah ditutup." : "Ujian kelas sudah ditutup."}
                                 </p>
                             )}
@@ -614,13 +614,13 @@ export default function CourseTestDetail({
                                 </p>
                             )}
                             {isAttemptLimitReached && !isNotEligible && (
-                                <p className="mt-2 text-xs text-red-600">
+                                <p className="mt-2 text-xs text-destructive">
                                     {isRemedialMode
                                         ? `Anda sudah lulus ujian remedial ini (nilai >= ${passingScore}).`
                                         : "Batas kesempatan ujian sudah habis."}
                                 </p>
                             )}
-                            <p className="mt-2 text-xs text-gray-500">
+                            <p className="mt-2 text-xs text-muted-foreground">
                                 {isRemedialMode
                                     ? `Anda dapat mengerjakan remedial berulang kali selama masa remedial berlangsung dan Anda belum mencapai nilai kelulusan (>= ${passingScore}).`
                                     : "Anda dapat mengerjakan ulang selama ujian masih berlangsung dan kuota pengerjaan masih tersedia."}
@@ -628,8 +628,8 @@ export default function CourseTestDetail({
                         </div>
 
                         {attemptHistory.length > 0 && (
-                            <div className="rounded-lg border bg-white p-3">
-                                <p className="text-sm font-semibold text-slate-800 mb-2">
+                            <div className="rounded-lg border bg-card p-3">
+                                <p className="text-sm font-semibold text-foreground mb-2">
                                     Riwayat Sesi Ujian
                                 </p>
                                 <div className="space-y-2">
@@ -639,7 +639,7 @@ export default function CourseTestDetail({
                                                 key={attempt.id}
                                                 className="flex flex-col gap-2 rounded-md border p-2.5 md:flex-row md:items-center md:justify-between"
                                             >
-                                                <div className="text-sm text-slate-700">
+                                                <div className="text-sm text-foreground">
                                                     <span className="font-medium">
                                                         Sesi{" "}
                                                         {attemptHistory.length -

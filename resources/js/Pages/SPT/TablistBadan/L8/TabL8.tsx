@@ -223,7 +223,7 @@ export default function TabL8({
                 disabled={disabled}
                 className={cn(
                     "rounded-l-none text-right",
-                    disabled && "bg-gray-100",
+                    disabled && "bg-muted",
                 )}
                 placeholder="0"
             />
@@ -231,7 +231,7 @@ export default function TabL8({
     );
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
             {/* HEADER */}
             <div>
                 <h2 className="text-xl font-semibold mb-6">
@@ -239,10 +239,10 @@ export default function TabL8({
                     BADAN DALAM NEGERI BERDASARKAN PASAL 31E AYAT (1)
                     UNDANG-UNDANG PPh
                 </h2>
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
                             <Label className="text-sm">Tahun Pajak</Label>
@@ -250,7 +250,7 @@ export default function TabL8({
                                 type="text"
                                 value={String(spt.year)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
@@ -259,7 +259,7 @@ export default function TabL8({
                                 type="text"
                                 value={sptBadan.npwp ?? "-"}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </div>
@@ -268,21 +268,21 @@ export default function TabL8({
 
             <Accordion type="multiple" defaultValue={["l8"]}>
                 <AccordionItem value="l8">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         PERHITUNGAN FASILITAS PENGURANGAN TARIF PPh BAGI WAJIB
                         PAJAK BADAN DALAM NEGERI BERDASARKAN PASAL 31E AYAT (1)
                         UNDANG-UNDANG PPh
                     </AccordionTrigger>
-                    <AccordionContent className="p-6 bg-white w-full border border-t-0 rounded-b-xl">
+                    <AccordionContent className="p-6 bg-card w-full border border-t-0 rounded-b-xl">
                         <div className="overflow-x-auto border">
                             <div className="grid min-w-[900px] grid-cols-[70px_minmax(0,1fr)_380px] text-sm">
-                                <div className="border-b bg-amber-400 px-3 py-2 text-center font-semibold">
+                                <div className="border-b bg-highlight px-3 py-2 text-center font-semibold text-highlight-foreground">
                                     NO.
                                 </div>
-                                <div className="border-b border-l bg-amber-400 px-3 py-2 text-center font-semibold">
+                                <div className="border-b border-l bg-highlight px-3 py-2 text-center font-semibold text-highlight-foreground">
                                     DESKRIPSI
                                 </div>
-                                <div className="border-b border-l bg-amber-400 px-3 py-2 text-center font-semibold">
+                                <div className="border-b border-l bg-highlight px-3 py-2 text-center font-semibold text-highlight-foreground">
                                     AMOUNT (Rupiah)
                                 </div>
 

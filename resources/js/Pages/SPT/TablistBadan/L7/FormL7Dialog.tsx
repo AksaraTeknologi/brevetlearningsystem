@@ -194,7 +194,7 @@ export function FormL7Dialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>Kompensasi Kerugian</DialogTitle>
                 </DialogHeader>
 
@@ -203,7 +203,7 @@ export function FormL7Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[200px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Tahun Bagian Pajak{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -216,11 +216,11 @@ export function FormL7Dialog({
                                 }
                                 placeholder="Contoh: 2020"
                                 className={cn(
-                                    errors.tax_year_part && "border-red-500",
+                                    errors.tax_year_part && "border-destructive",
                                 )}
                             />
                             {errors.tax_year_part && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_year_part}
                                 </p>
                             )}
@@ -248,7 +248,6 @@ export function FormL7Dialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

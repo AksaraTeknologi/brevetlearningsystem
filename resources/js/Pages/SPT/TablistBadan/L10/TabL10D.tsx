@@ -226,8 +226,8 @@ export function TabL10D({ sptBadanId, l10d }: TabL10DProps) {
     }, [boolState, iiiA, iiiB, sptBadanId]);
 
     const sectionHeaderClass =
-        "px-4 py-2 text-black text-sm font-bold bg-zinc-300";
-    const subheaderClass = "px-4 py-2 text-sm text-gray-700 bg-zinc-100";
+        "px-4 py-2 text-foreground text-sm font-bold bg-zinc-300";
+    const subheaderClass = "px-4 py-2 text-sm text-foreground bg-muted";
 
     return (
         <div className="rounded-lg overflow-hidden border">
@@ -242,7 +242,7 @@ export function TabL10D({ sptBadanId, l10d }: TabL10DProps) {
                 <div
                     key={row.field}
                     className={`flex items-start gap-3 px-4 py-3 border-t ${
-                        idx % 2 === 0 ? "bg-white" : "bg-gray-50"
+                        idx % 2 === 0 ? "bg-card" : "bg-muted/50"
                     }`}
                 >
                     <Checkbox
@@ -269,7 +269,7 @@ export function TabL10D({ sptBadanId, l10d }: TabL10DProps) {
                 <div
                     key={row.field}
                     className={`flex items-start gap-3 px-4 py-3 border-t ${
-                        idx % 2 === 0 ? "bg-white" : "bg-gray-50"
+                        idx % 2 === 0 ? "bg-card" : "bg-muted/50"
                     }`}
                 >
                     <Checkbox
@@ -295,7 +295,7 @@ export function TabL10D({ sptBadanId, l10d }: TabL10DProps) {
             </div>
 
             {/* III Row 1 — iii_a */}
-            <div className="flex items-center gap-3 px-4 py-3 border-t bg-white flex-wrap">
+            <div className="flex items-center gap-3 px-4 py-3 border-t bg-card flex-wrap">
                 <span className="inline-flex items-center justify-center w-6 h-6 rounded text-xs font-bold shrink-0">
                     1.
                 </span>
@@ -339,7 +339,7 @@ export function TabL10D({ sptBadanId, l10d }: TabL10DProps) {
             </div>
 
             {/* III Row 2 — iii_b */}
-            <div className="flex items-center gap-3 px-4 py-3 border-t bg-gray-50 flex-wrap">
+            <div className="flex items-center gap-3 px-4 py-3 border-t bg-muted/50 flex-wrap">
                 <span className="inline-flex items-center justify-center w-6 h-6 rounded text-xs font-bold shrink-0">
                     2.
                 </span>

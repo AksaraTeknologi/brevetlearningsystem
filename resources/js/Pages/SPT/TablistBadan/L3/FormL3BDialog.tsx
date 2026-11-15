@@ -195,7 +195,7 @@ export function FormL3BDialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-3xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         PPH YANG DIPOTONG/DIPUNGUT OLEH PIHAK LAIN
                     </DialogTitle>
@@ -206,7 +206,7 @@ export function FormL3BDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama Pemotong/Pemungut Pajak{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -215,10 +215,10 @@ export function FormL3BDialog({
                                     handleChange("name", e.target.value)
                                 }
                                 placeholder="Masukkan nama"
-                                className={cn(errors.name && "border-red-500")}
+                                className={cn(errors.name && "border-destructive")}
                             />
                             {errors.name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.name}
                                 </p>
                             )}
@@ -228,7 +228,7 @@ export function FormL3BDialog({
                     {/* NPWP */}
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            NPWP<span className="text-red-500">*</span>
+                            NPWP<span className="text-destructive">*</span>
                         </Label>
                         <Input
                             inputMode="numeric"
@@ -242,7 +242,7 @@ export function FormL3BDialog({
                     {/* Jenis Pajak */}
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Jenis Pajak <span className="text-red-500">*</span>
+                            Jenis Pajak <span className="text-destructive">*</span>
                         </Label>
                         <Select
                             value={formData.tax_type ?? ""}
@@ -302,7 +302,7 @@ export function FormL3BDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nomor Bukti Pemotongan/SSP/SSPCP{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             value={formData.number_of_provement ?? ""}
@@ -319,7 +319,7 @@ export function FormL3BDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Tanggal Bukti Pemotongan/SSP/SSPCP{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={isCalendarOpen}
@@ -394,7 +394,6 @@ export function FormL3BDialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

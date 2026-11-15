@@ -146,7 +146,7 @@ const TabL1 = forwardRef(
         );
 
         return (
-            <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+            <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
                 <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                     <li>A. HARTA PADA AKHIR TAHUN PAJAK</li>
                     <li>B. UTANG PADA AKHIR TAHUN PAJAK</li>
@@ -157,10 +157,10 @@ const TabL1 = forwardRef(
 
                 {/* HEADER (bukan accordion) */}
                 <div>
-                    <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                         HEADER
                     </div>
-                    <div className="p-4 bg-white w-full rounded-b-xl">
+                    <div className="p-4 bg-card w-full rounded-b-xl">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <Label className="col-span-2">
@@ -191,16 +191,16 @@ const TabL1 = forwardRef(
                     defaultValue={["a", "b", "c", "d", "e"]}
                 >
                     <AccordionItem value="a">
-                        <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                        <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                             A. HARTA PADA AKHIR TAHUN PAJAK
                         </AccordionTrigger>
-                        <AccordionContent className="p-4 bg-white w-full">
+                        <AccordionContent className="p-4 bg-card w-full">
                             <div className="p-4 space-y-6">
                                 <div>
-                                    <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                    <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                         1. KAS DAN SETARA KAS
                                     </div>
-                                    <div className="p-4 bg-white w-full rounded-b-xl">
+                                    <div className="p-4 bg-card w-full rounded-b-xl">
                                         <SectionL1A1
                                             data={normalizedLampiran.l1a1}
                                             sptOpId={sptOp?.id ?? ""}
@@ -208,10 +208,10 @@ const TabL1 = forwardRef(
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded mt-4">
+                                    <div className="bg-brand text-white font-semibold p-4 w-full rounded mt-4">
                                         2. PIUTANG
                                     </div>
-                                    <div className="p-4 bg-white w-full rounded-b-xl">
+                                    <div className="p-4 bg-card w-full rounded-b-xl">
                                         <SectionL1A2
                                             data={normalizedLampiran.l1a2}
                                             sptOpId={sptOp?.id ?? ""}
@@ -219,10 +219,10 @@ const TabL1 = forwardRef(
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded mt-4">
+                                    <div className="bg-brand text-white font-semibold p-4 w-full rounded mt-4">
                                         3. INVESTASI/SEKURITAS
                                     </div>
-                                    <div className="p-4 bg-white w-full rounded-b-xl">
+                                    <div className="p-4 bg-card w-full rounded-b-xl">
                                         <SectionL1A3
                                             data={normalizedLampiran.l1a3}
                                             sptOpId={sptOp?.id ?? ""}
@@ -230,10 +230,10 @@ const TabL1 = forwardRef(
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded mt-4">
+                                    <div className="bg-brand text-white font-semibold p-4 w-full rounded mt-4">
                                         4. HARTA BERGERAK
                                     </div>
-                                    <div className="p-4 bg-white w-full rounded-b-xl">
+                                    <div className="p-4 bg-card w-full rounded-b-xl">
                                         <SectionL1A4
                                             data={normalizedLampiran.l1a4}
                                             sptOpId={sptOp?.id ?? ""}
@@ -241,11 +241,11 @@ const TabL1 = forwardRef(
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded mt-4">
+                                    <div className="bg-brand text-white font-semibold p-4 w-full rounded mt-4">
                                         5. HARTA TIDAK BERGERAK (TERMASUK TANAH
                                         BANGUNAN)
                                     </div>
-                                    <div className="p-4 bg-white w-full rounded-b-xl">
+                                    <div className="p-4 bg-card w-full rounded-b-xl">
                                         <SectionL1A5
                                             data={normalizedLampiran.l1a5}
                                             sptOpId={sptOp?.id ?? ""}
@@ -253,10 +253,10 @@ const TabL1 = forwardRef(
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded mt-4">
+                                    <div className="bg-brand text-white font-semibold p-4 w-full rounded mt-4">
                                         6. HARTA LAINNYA
                                     </div>
-                                    <div className="p-4 bg-white w-full rounded-b-xl">
+                                    <div className="p-4 bg-card w-full rounded-b-xl">
                                         <SectionL1A6
                                             data={normalizedLampiran.l1a6}
                                             sptOpId={sptOp?.id ?? ""}
@@ -264,10 +264,10 @@ const TabL1 = forwardRef(
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded mt-4">
+                                    <div className="bg-brand text-white font-semibold p-4 w-full rounded mt-4">
                                         7. REKAPITULASI HARTA (OTOMATIS)
                                     </div>
-                                    <div className="p-4 bg-white w-full rounded-b-xl">
+                                    <div className="p-4 bg-card w-full rounded-b-xl">
                                         <SectionL1A7
                                             totalAcquisitionCost={
                                                 totalA7AcquisitionCost
@@ -281,10 +281,10 @@ const TabL1 = forwardRef(
                     </AccordionItem>
 
                     <AccordionItem value="b">
-                        <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                        <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                             B. UTANG PADA AKHIR TAHUN PAJAK
                         </AccordionTrigger>
-                        <AccordionContent className="p-4 bg-white w-full">
+                        <AccordionContent className="p-4 bg-card w-full">
                             <SectionL1B
                                 data={normalizedLampiran.l1b}
                                 sptOpId={sptOp?.id ?? ""}
@@ -293,10 +293,10 @@ const TabL1 = forwardRef(
                     </AccordionItem>
 
                     <AccordionItem value="c">
-                        <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                        <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                             C. DAFTAR ANGGOTA KELUARGA YANG MENJADI TANGGUNGAN
                         </AccordionTrigger>
-                        <AccordionContent className="p-4 bg-white w-full">
+                        <AccordionContent className="p-4 bg-card w-full">
                             <SectionL1C
                                 data={normalizedLampiran.l1c}
                                 sptOpId={sptOp?.id ?? ""}
@@ -305,10 +305,10 @@ const TabL1 = forwardRef(
                     </AccordionItem>
 
                     <AccordionItem value="d">
-                        <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                        <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                             D. PENGHASILAN NETO DALAM NEGERI DARI PEKERJAAN
                         </AccordionTrigger>
-                        <AccordionContent className="p-4 bg-white w-full">
+                        <AccordionContent className="p-4 bg-card w-full">
                             <SectionL1D
                                 data={normalizedLampiran.l1d}
                                 sptOpId={sptOp?.id ?? ""}
@@ -317,10 +317,10 @@ const TabL1 = forwardRef(
                     </AccordionItem>
 
                     <AccordionItem value="e">
-                        <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                        <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                             E. DAFTAR BUKTI PEMOTONGAN/PEMUNGUTAN PPh
                         </AccordionTrigger>
-                        <AccordionContent className="p-4 bg-white w-full">
+                        <AccordionContent className="p-4 bg-card w-full">
                             <SectionL1E
                                 data={normalizedLampiran.l1e}
                                 sptOpId={sptOp?.id ?? ""}

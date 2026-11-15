@@ -29,7 +29,7 @@ interface TabL11BProps {
 
 function SectionHeader({ title }: { title: string }) {
     return (
-        <div className="bg-blue-950 text-white px-4 py-4 font-semibold text-sm rounded">
+        <div className="bg-brand text-white px-4 py-4 font-semibold text-sm rounded">
             {title}
         </div>
     );
@@ -37,7 +37,7 @@ function SectionHeader({ title }: { title: string }) {
 
 function SubSectionHeader({ title }: { title: string }) {
     return (
-        <div className="bg-blue-850 text-black px-4 py-4 font-medium text-sm rounded ">
+        <div className="bg-blue-850 text-foreground px-4 py-4 font-medium text-sm rounded ">
             {title}
         </div>
     );
@@ -68,7 +68,7 @@ export function TabL11B({
     return (
         <div className="space-y-6">
             {/* Section I - EBITDA */}
-            <div className="border border-gray-300 rounded overflow-hidden">
+            <div className="border border-input rounded overflow-hidden">
                 <SectionHeader title="I. PENGHITUNGAN EBITDA" />
                 <div className="p-4">
                     <FormL11B1 sptBadanId={sptBadanId} l11b1={l11b1} />
@@ -76,11 +76,11 @@ export function TabL11B({
             </div>
 
             {/* Section II - Debt to Equity Ratio */}
-            <div className="border border-gray-300 rounded overflow-hidden">
+            <div className="border border-input rounded overflow-hidden">
                 <SectionHeader title="II. PERBANDINGAN ANTARA UTANG DAN MODAL (DEBT TO EQUITY RATIO)" />
 
                 <div className="p-4 space-y-4">
-                    <div className="border border-gray-200 rounded overflow-hidden">
+                    <div className="border border-border rounded overflow-hidden">
                         <SubSectionHeader title="A. PENGHITUNGAN SALDO RATA-RATA UTANG" />
                         <div className="p-4">
                             <SectionL11B2A
@@ -90,7 +90,7 @@ export function TabL11B({
                         </div>
                     </div>
 
-                    <div className="border border-gray-200 rounded overflow-hidden">
+                    <div className="border border-border rounded overflow-hidden">
                         <SubSectionHeader title="B. PENGHITUNGAN SALDO RATA-RATA MODAL" />
                         <div className="p-4">
                             <SectionL11B2B
@@ -100,7 +100,7 @@ export function TabL11B({
                         </div>
                     </div>
 
-                    <div className="border border-gray-200 rounded overflow-hidden">
+                    <div className="border border-border rounded overflow-hidden">
                         <SubSectionHeader title="C. PENGHITUNGAN BESARNYA PERBANDINGAN ANTARA UTANG DAN MODAL (DEBT TO EQUITY RATIO)" />
                         <div className="p-4">
                             <DerFormulaDisplay
@@ -113,7 +113,7 @@ export function TabL11B({
             </div>
 
             {/* Section III - Biaya Pinjaman */}
-            <div className="border border-gray-300 rounded overflow-hidden">
+            <div className="border border-input rounded overflow-hidden">
                 <SectionHeader title="III. PENGHITUNGAN BIAYA PINJAMAN" />
                 <div className="p-4">
                     <SectionL11B3
@@ -156,36 +156,36 @@ function DerFormulaDisplay({
         }).format(val);
 
     return (
-        <div className="overflow-x-auto rounded border border-gray-200">
+        <div className="overflow-x-auto rounded border border-border">
             <table className="min-w-[600px] w-full text-sm border-collapse">
                 <thead>
-                    <tr className="bg-blue-950 text-white">
-                        <th className="border border-gray-300 px-3 py-2 text-left">
+                    <tr className="bg-brand text-white">
+                        <th className="border border-input px-3 py-2 text-left">
                             Keterangan
                         </th>
-                        <th className="border border-gray-300 px-3 py-2 text-center">
+                        <th className="border border-input px-3 py-2 text-center">
                             (1)
                         </th>
-                        <th className="border border-gray-300 px-3 py-2 text-center">
+                        <th className="border border-input px-3 py-2 text-center">
                             (2)
                         </th>
-                        <th className="border border-gray-300 px-3 py-2 text-center">
+                        <th className="border border-input px-3 py-2 text-center">
                             DER (1)/(2)
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="bg-white">
-                        <td className="border border-gray-300 px-3 py-2">
+                    <tr className="bg-card">
+                        <td className="border border-input px-3 py-2">
                             Perbandingan Utang dan Modal
                         </td>
-                        <td className="border border-gray-300 px-3 py-2 text-right">
+                        <td className="border border-input px-3 py-2 text-right">
                             {formatRupiah(totalUtang)}
                         </td>
-                        <td className="border border-gray-300 px-3 py-2 text-right">
+                        <td className="border border-input px-3 py-2 text-right">
                             {formatRupiah(totalModal)}
                         </td>
-                        <td className="border border-gray-300 px-3 py-2 text-center font-semibold">
+                        <td className="border border-input px-3 py-2 text-center font-semibold">
                             {totalModal > 0 ? der.toFixed(2) : "-"} : 1
                         </td>
                     </tr>

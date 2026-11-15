@@ -66,9 +66,9 @@ export default function EconomySearchDialog({
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
 
-                    <div className="bg-white rounded-lg border overflow-hidden">
+                    <div className="bg-card rounded-lg border overflow-hidden">
                         <div className="bg-yellow-100 border-b">
-                            <div className="grid grid-cols-4 gap-4 p-4 text-sm font-medium text-gray-700">
+                            <div className="grid grid-cols-4 gap-4 p-4 text-sm font-medium text-foreground">
                                 <div>Kode</div>
                                 <div>Nama Kode</div>
                                 <div>Deskripsi Kode</div>
@@ -80,7 +80,7 @@ export default function EconomySearchDialog({
                                 filteredEconomies.map((economy) => (
                                     <div
                                         key={economy.id}
-                                        className="grid grid-cols-4 gap-4 p-4 text-sm hover:bg-gray-50 cursor-pointer"
+                                        className="grid grid-cols-4 gap-4 p-4 text-sm hover:bg-muted/50 cursor-pointer"
                                         onClick={() =>
                                             handleSelectEconomy(economy)
                                         }
@@ -112,7 +112,7 @@ export default function EconomySearchDialog({
                                     </div>
                                 ))
                             ) : (
-                                <div className="p-4 text-center text-gray-500">
+                                <div className="p-4 text-center text-muted-foreground">
                                     {availableEconomies.length === 0
                                         ? "Data ekonomi tidak tersedia"
                                         : "Tidak ada data yang sesuai dengan pencarian"}

@@ -40,6 +40,14 @@ import {
     AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
 
+const getInitials = (name: string) =>
+    name
+        ?.split(" ")
+        .map((n) => n[0])
+        .join("")
+        .substring(0, 2)
+        .toUpperCase() || "??";
+
 export default function ParticipantDetail({
     test,
     participant,
@@ -55,16 +63,6 @@ export default function ParticipantDetail({
     attempts = [],
 }: any) {
     const { flash }: any = usePage().props;
-
-    const getInitials = (name: string) => {
-        return name
-            ?.split(" ")
-            .map((n) => n[0])
-            .join("")
-            .substring(0, 2)
-            .toUpperCase() || "??";
-    };
-
     const [feedbackData, setFeedbackData] = useState(
         participant.feedback || ""
     );
@@ -112,8 +110,8 @@ export default function ParticipantDetail({
         <TeacherLayout>
             <Head title={`Detail Peserta - ${participant.user?.name}`} />
 
-            <div className="teacher-page-shell">
-                <div className="teacher-page-stack">
+            <div className="py-8 mx-auto lg:px-4">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -141,22 +139,22 @@ export default function ParticipantDetail({
 
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="teacher-page-title">
+                            <h1 className="text-2xl font-semibold text-primary">
                                 Detail Peserta - {participant.user?.name}
                             </h1>
-                            <p className="text-gray-600">
+                            <p className="text-muted-foreground">
                                 Test: {test.name}
                             </p>
                         </div>
                     </div>
 
-                    <div className="rounded-xl bg-white border shadow p-6">
+                    <div className="rounded-xl bg-card border shadow p-6">
                         <h2 className="text-lg font-bold mb-4 text-primary">
                             Informasi Peserta
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <div className="text-sm text-gray-500 mb-1">
+                                <div className="mb-1 text-sm text-muted-foreground">
                                     Nama
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -164,18 +162,20 @@ export default function ParticipantDetail({
                                         <img
                                             src={participant.user.profile_url}
                                             alt={`Foto profil ${participant.user.name}`}
-                                            className="h-10 w-10 rounded-xl object-cover shadow-sm ring-1 ring-teal-100"
+                                            className="h-10 w-10 rounded-xl object-cover shadow-sm ring-1 ring-border shrink-0"
                                         />
                                     ) : (
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-teal-600 to-cyan-700 text-sm font-bold text-white shadow-sm shrink-0">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-700 to-brand-900 text-sm font-bold text-white shadow-sm shrink-0">
                                             {getInitials(participant.user?.name || "??")}
                                         </div>
                                     )}
-                                    <span className="font-medium text-lg text-slate-700">{participant.user?.name || "-"}</span>
+                                    <span className="text-lg font-medium text-foreground">
+                                        {participant.user?.name || "-"}
+                                    </span>
                                 </div>
                             </div>
                             <div>
-                                <div className="text-sm text-gray-500">
+                                <div className="text-sm text-muted-foreground">
                                     Email
                                 </div>
                                 <div className="font-medium">
@@ -183,7 +183,7 @@ export default function ParticipantDetail({
                                 </div>
                             </div>
                             <div>
-                                <div className="text-sm text-gray-500">
+                                <div className="text-sm text-muted-foreground">
                                     Nilai Terbaik
                                 </div>
                                 <div className="font-mono text-lg font-bold text-primary">
@@ -197,7 +197,7 @@ export default function ParticipantDetail({
                                 </div>
                             </div>
                             <div>
-                                <div className="text-sm text-gray-500">
+                                <div className="text-sm text-muted-foreground">
                                     Feedback
                                 </div>
                                 <div className="font-medium mb-2">
@@ -244,7 +244,7 @@ export default function ParticipantDetail({
                                                         id="feedback"
                                                         rows={5}
                                                         placeholder="Tulis feedback untuk peserta..."
-                                                        className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                                                        className="w-full mt-1 px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                                                         value={feedbackData}
                                                         onChange={(e) =>
                                                             setFeedbackData(
@@ -282,7 +282,7 @@ export default function ParticipantDetail({
                                             <AlertDialogTrigger asChild>
                                                 <Button
                                                     variant="outline"
-                                                    className="text-red-700 bg-red-50 border-red-200 hover:bg-red-100"
+                                                    className="text-destructive bg-red-50 border-red-200 hover:bg-red-100"
                                                 >
                                                     <Trash2 size={16} />
                                                     Hapus Feedback
@@ -311,7 +311,7 @@ export default function ParticipantDetail({
                                                         Batal
                                                     </AlertDialogCancel>
                                                     <AlertDialogAction
-                                                        className="bg-red-600 hover:bg-red-700"
+                                                        className="bg-destructive hover:bg-red-700 text-destructive-foreground"
                                                         onClick={
                                                             handleDeleteFeedback
                                                         }
@@ -332,11 +332,11 @@ export default function ParticipantDetail({
                             Hasil yang Sudah Dikerjakan
                         </h2>
                         {attempts.length === 0 ? (
-                            <div className="text-sm italic text-gray-500">Belum ada riwayat pengerjaan.</div>
+                            <div className="text-sm italic text-muted-foreground">Belum ada riwayat pengerjaan.</div>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm border">
-                                    <thead className="bg-gray-50">
+                                    <thead className="bg-muted/50">
                                         <tr>
                                             <th className="px-3 py-2 border">#</th>
                                             <th className="px-3 py-2 border text-left">Mulai</th>

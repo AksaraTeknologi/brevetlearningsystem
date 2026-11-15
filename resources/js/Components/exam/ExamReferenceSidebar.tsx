@@ -90,10 +90,10 @@ export default function ExamReferenceSidebar({
                     size="sm"
                     onClick={onToggleOpen}
                     title="Buka Panel Referensi"
-                    className="w-full lg:w-11 lg:h-auto lg:py-3 flex lg:flex-col items-center gap-2 bg-white border rounded-xl shadow-sm hover:bg-slate-50"
+                    className="w-full lg:w-11 lg:h-auto lg:py-3 flex lg:flex-col items-center gap-2 tls-card hover:bg-muted/50"
                 >
                     <PanelLeftOpen className="h-4 w-4 text-blue-600 shrink-0" />
-                    <span className="text-xs font-medium text-slate-700 lg:[writing-mode:vertical-rl] lg:rotate-180">
+                    <span className="text-xs font-medium text-foreground lg:[writing-mode:vertical-rl] lg:rotate-180">
                         Referensi ({references.length})
                     </span>
                 </Button>
@@ -103,11 +103,11 @@ export default function ExamReferenceSidebar({
 
     return (
         <>
-            <aside className="bg-white border rounded-xl p-4 shadow-sm h-max flex flex-col gap-3">
+            <aside className="tls-card p-4 h-max flex flex-col gap-3">
                 <div className="flex items-center justify-between gap-2 pb-2 border-b">
                     <div className="flex items-center gap-2 min-w-0">
                         <BookOpen className="h-4 w-4 text-blue-600 shrink-0" />
-                        <h3 className="font-semibold text-sm text-gray-800 truncate">
+                        <h3 className="font-semibold text-sm text-foreground truncate">
                             Referensi
                         </h3>
                     </div>
@@ -117,7 +117,7 @@ export default function ExamReferenceSidebar({
                         size="icon"
                         onClick={onToggleOpen}
                         title="Tutup Panel Referensi"
-                        className="h-7 w-7 text-gray-500 hover:text-gray-800 shrink-0"
+                        className="h-7 w-7 text-muted-foreground hover:text-foreground shrink-0"
                     >
                         <PanelLeftClose className="h-4 w-4" />
                     </Button>
@@ -130,14 +130,14 @@ export default function ExamReferenceSidebar({
                                 key={item.id ?? `${item.url}-${idx}`}
                                 type="button"
                                 onClick={() => setActiveRef(item)}
-                                className="w-full text-left flex items-start gap-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-blue-50 hover:border-blue-300 transition-colors group"
+                                className="w-full text-left flex items-start gap-2.5 p-2.5 rounded-lg border border-border bg-muted/35 hover:bg-blue-50 hover:border-blue-300 transition-colors group"
                             >
                                 <FileText className="h-4 w-4 text-blue-600 mt-0.5 shrink-0" />
                                 <div className="min-w-0 flex-1">
-                                    <p className="text-xs font-medium text-slate-800 group-hover:text-blue-700 break-words leading-snug">
+                                    <p className="text-xs font-medium text-foreground group-hover:text-blue-700 break-words leading-snug">
                                         {item.title || `Referensi ${idx + 1}`}
                                     </p>
-                                    <p className="text-[11px] text-slate-500 mt-0.5">
+                                    <p className="text-[11px] text-muted-foreground mt-0.5">
                                         Klik untuk pratinjau file
                                     </p>
                                 </div>
@@ -145,8 +145,8 @@ export default function ExamReferenceSidebar({
                         ))}
                     </div>
                 ) : (
-                    <div className="rounded-lg border border-dashed border-slate-200 bg-slate-50/60 p-3 text-center">
-                        <p className="text-xs text-slate-500 leading-relaxed">
+                    <div className="rounded-lg border border-dashed border-border bg-muted/30 p-3 text-center">
+                        <p className="text-xs text-muted-foreground leading-relaxed">
                             Belum ada link referensi Google Drive untuk ujian ini.
                         </p>
                     </div>
@@ -173,7 +173,7 @@ export default function ExamReferenceSidebar({
                         )}
                     </DialogHeader>
 
-                    <div className="flex-1 min-h-0 bg-slate-100 relative">
+                    <div className="flex-1 min-h-0 bg-muted relative">
                         {previewMeta?.embedUrl ? (
                             <iframe
                                 src={previewMeta.embedUrl}
@@ -182,13 +182,13 @@ export default function ExamReferenceSidebar({
                                 allow="autoplay"
                             />
                         ) : (
-                            <div className="h-full flex flex-col items-center justify-center p-6 text-center text-sm text-slate-500">
+                            <div className="h-full flex flex-col items-center justify-center p-6 text-center text-sm text-muted-foreground">
                                 URL referensi tidak valid.
                             </div>
                         )}
                     </div>
 
-                    <div className="px-4 py-2 bg-slate-50 border-t text-[11px] text-slate-500 flex items-center justify-between gap-2">
+                    <div className="px-4 py-2 bg-muted/50 border-t text-[11px] text-muted-foreground flex items-center justify-between gap-2">
                         <span>
                             {previewMeta?.isFolder
                                 ? "Jika isi folder tidak tampil, pastikan izin Drive disetel ke 'Siapa saja yang memiliki link' atau buka di tab baru."

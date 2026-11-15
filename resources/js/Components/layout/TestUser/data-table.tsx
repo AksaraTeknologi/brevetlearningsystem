@@ -26,6 +26,12 @@ import React from "react";
 import { Input } from "@/Components/ui/input";
 import { DataTablePagination } from "../DataTablePagination";
 import { DataTableViewOptions } from "../DataTableViewOption";
+import {
+    countTextFilters,
+    DataTableExport,
+    DataTableFilterRow,
+    DataTableFilterToggle,
+} from "../DataTableTools";
 import { X, Search } from "lucide-react";
 
 interface DataTableParticipantProps<TData, TValue> {
@@ -61,6 +67,7 @@ export function DataTableParticipant<TData extends { id: string }, TValue>({
             columnVisibility,
         },
     });
+    const [showColumnFilters, setShowColumnFilters] = React.useState(false);
 
     const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -75,7 +82,7 @@ export function DataTableParticipant<TData extends { id: string }, TValue>({
 
     return (
         <>
-            <div className="flex items-center justify-between py-4">
+            <div className="tls-table-toolbar flex items-center justify-between py-4">
                 <div className="flex items-center gap-2">
                     <div className="relative">
                         <Search
@@ -110,6 +117,12 @@ export function DataTableParticipant<TData extends { id: string }, TValue>({
                     )}
                 </div>
                 <DataTableViewOptions table={table} />
+                <DataTableFilterToggle
+                    active={showColumnFilters}
+                    onToggle={() => setShowColumnFilters((v) => !v)}
+                    activeCount={countTextFilters(table)}
+                />
+                <DataTableExport table={table} fileName="peserta-ujian" />
             </div>
             <div className="rounded-md border">
                 <Table>
@@ -131,6 +144,7 @@ export function DataTableParticipant<TData extends { id: string }, TValue>({
                                 })}
                             </TableRow>
                         ))}
+                        {showColumnFilters && <DataTableFilterRow table={table} />}
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (

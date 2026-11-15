@@ -246,8 +246,8 @@ export default function FormCreateTest({
         <TeacherLayout>
             <Head title="Tambah Ujian" />
 
-            <div className="teacher-page-shell">
-                <div className="teacher-page-stack">
+            <div className="py-8 mx-auto lg:px-4">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -262,11 +262,11 @@ export default function FormCreateTest({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="teacher-page-title">
+                    <h1 className="text-2xl font-semibold text-primary">
                         Tambah Ujian
                     </h1>
 
-                    <div className="teacher-panel">
+                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
                         {tests.length < user.max_test ? (
                             <Form {...form}>
                                 <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -278,7 +278,7 @@ export default function FormCreateTest({
                                                 <FormItem>
                                                     <FormLabel>
                                                         Judul Ujian
-                                                        <span className="text-red-500">
+                                                        <span className="text-destructive">
                                                             *
                                                         </span>
                                                     </FormLabel>
@@ -325,7 +325,7 @@ export default function FormCreateTest({
                                                 <FormItem>
                                                     <FormLabel className="md:w-1/4">
                                                         Tanggal Mulai
-                                                        <span className="text-red-500">
+                                                        <span className="text-destructive">
                                                             *
                                                         </span>
                                                     </FormLabel>
@@ -419,7 +419,7 @@ export default function FormCreateTest({
                                                 <FormItem>
                                                     <FormLabel className="md:w-1/4">
                                                         Jam Mulai
-                                                        <span className="text-red-500">
+                                                        <span className="text-destructive">
                                                             *
                                                         </span>
                                                     </FormLabel>
@@ -567,7 +567,7 @@ export default function FormCreateTest({
                                                 <FormItem>
                                                     <FormLabel>
                                                         Bank Soal
-                                                        <span className="text-red-500">
+                                                        <span className="text-destructive">
                                                             *
                                                         </span>
                                                     </FormLabel>
@@ -680,7 +680,7 @@ export default function FormCreateTest({
                                                     </p>
                                                     {questionBanks.length ===
                                                         0 && (
-                                                        <p className="text-xs text-red-600">
+                                                        <p className="text-xs text-destructive">
                                                             Belum ada bank soal
                                                             aktif. Buat bank
                                                             soal terlebih
@@ -789,7 +789,7 @@ export default function FormCreateTest({
                                                 <FormItem>
                                                     <FormLabel>
                                                         Durasi Ujian (menit)
-                                                        <span className="text-red-500">
+                                                        <span className="text-destructive">
                                                             *
                                                         </span>
                                                     </FormLabel>
@@ -868,7 +868,7 @@ export default function FormCreateTest({
                                                 <FormItem>
                                                     <FormLabel>
                                                         Kode Ujian
-                                                        <span className="text-red-500">
+                                                        <span className="text-destructive">
                                                             *
                                                         </span>
                                                     </FormLabel>

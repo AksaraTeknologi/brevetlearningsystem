@@ -176,7 +176,7 @@ export function TableL5B({
                                         <Button
                                             size="icon"
                                             variant="ghost"
-                                            className="h-8 w-8 text-red-500 hover:text-red-600"
+                                            className="h-8 w-8 text-destructive hover:text-destructive/80"
                                             onClick={() => onDelete(item.id!)}
                                         >
                                             <Trash2 className="h-4 w-4" />
@@ -199,7 +199,7 @@ export function TableL5B({
                 <TableFooter>
                     {/* Summary accumulation rows */}
                     {SUMMARY_ROWS.map((row) => (
-                        <TableRow key={row.label} className="bg-gray-100 dark:bg-gray-700">
+                        <TableRow key={row.label} className="bg-muted dark:bg-gray-700">
                             <TableCell
                                 colSpan={4}
                                 className="text-xs font-semibold text-center uppercase"

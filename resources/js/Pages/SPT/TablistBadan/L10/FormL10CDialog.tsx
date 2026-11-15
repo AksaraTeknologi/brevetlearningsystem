@@ -59,7 +59,7 @@ const formatRupiahInput = (value: number) => {
 };
 
 const rowClass = "grid grid-cols-[240px_1fr] items-start gap-x-4 py-2";
-const labelClass = "text-sm font-medium text-gray-700 dark:text-gray-300 pt-2";
+const labelClass = "text-sm font-medium text-foreground dark:text-gray-300 pt-2";
 
 export function FormL10CDialog({
     open,
@@ -175,7 +175,7 @@ export function FormL10CDialog({
     return (
         <Dialog open={open} onOpenChange={(v) => !v && handleClose()}>
             <DialogContent className="max-w-2xl p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData ? "Edit" : "Tambah"} Data Transaksi Mitra
                     </DialogTitle>
@@ -185,7 +185,7 @@ export function FormL10CDialog({
                     {/* Nama Mitra */}
                     <div className={rowClass}>
                         <Label className={labelClass}>
-                            Nama Mitra <span className="text-red-500">*</span>
+                            Nama Mitra <span className="text-destructive">*</span>
                         </Label>
                         <div>
                             <Input
@@ -196,7 +196,7 @@ export function FormL10CDialog({
                                 placeholder="Nama mitra transaksi"
                             />
                             {errors.partner_name && (
-                                <p className="text-xs text-red-500 mt-1">
+                                <p className="text-xs text-destructive mt-1">
                                     {errors.partner_name}
                                 </p>
                             )}
@@ -207,7 +207,7 @@ export function FormL10CDialog({
                     <div className={rowClass}>
                         <Label className={labelClass}>
                             Jenis Transaksi{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div>
                             <Input
@@ -221,7 +221,7 @@ export function FormL10CDialog({
                                 placeholder="Jenis transaksi"
                             />
                             {errors.transaction_type && (
-                                <p className="text-xs text-red-500 mt-1">
+                                <p className="text-xs text-destructive mt-1">
                                     {errors.transaction_type}
                                 </p>
                             )}
@@ -293,7 +293,7 @@ export function FormL10CDialog({
                             Nilai Transaksi (Rp)
                         </Label>
                         <div className="flex">
-                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-gray-100 text-sm text-gray-600">
+                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-muted-foreground">
                                 Rp.
                             </span>
                             <Input
@@ -318,7 +318,6 @@ export function FormL10CDialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

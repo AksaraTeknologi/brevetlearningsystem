@@ -26,6 +26,12 @@ import React from "react";
 import { Input } from "@/Components/ui/input";
 import { DataTablePagination } from "../DataTablePagination";
 import { DataTableViewOptions } from "../DataTableViewOption";
+import {
+    countTextFilters,
+    DataTableExport,
+    DataTableFilterRow,
+    DataTableFilterToggle,
+} from "../DataTableTools";
 import { X } from "lucide-react";
 
 interface DataTableTeacherProps<TData, TValue> {
@@ -63,6 +69,7 @@ export function DataTableTeacher<TData extends { id: string }, TValue>({
             columnVisibility,
         },
     });
+    const [showColumnFilters, setShowColumnFilters] = React.useState(false);
 
     const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -75,7 +82,7 @@ export function DataTableTeacher<TData extends { id: string }, TValue>({
 
     return (
         <>
-            <div className="flex items-center py-4 gap-2">
+            <div className="tls-table-toolbar flex items-center py-4 gap-2">
                 <Input
                     placeholder="Cari Nama Pengguna..."
                     value={
@@ -101,6 +108,12 @@ export function DataTableTeacher<TData extends { id: string }, TValue>({
                     )}
                 </div>
                 <DataTableViewOptions table={table} />
+                <DataTableFilterToggle
+                    active={showColumnFilters}
+                    onToggle={() => setShowColumnFilters((v) => !v)}
+                    activeCount={countTextFilters(table)}
+                />
+                <DataTableExport table={table} fileName="pengajar" />
             </div>
             <div className="rounded-md border">
                 <Table>
@@ -122,6 +135,7 @@ export function DataTableTeacher<TData extends { id: string }, TValue>({
                                 })}
                             </TableRow>
                         ))}
+                        {showColumnFilters && <DataTableFilterRow table={table} />}
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (

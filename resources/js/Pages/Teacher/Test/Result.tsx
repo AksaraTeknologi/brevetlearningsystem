@@ -8,11 +8,11 @@ export default function TeacherResult({ test, attempt, review, participant }: an
       <div className="py-6 px-4">
         <div className="flex items-center justify-between max-w-5xl mx-auto mb-4">
           <div>
-            <h1 className="teacher-page-title">
+            <h1 className="text-2xl font-semibold text-primary">
               Hasil Ujian - {test?.title ?? test?.name}
             </h1>
             {participant?.user?.name && (
-              <p className="text-gray-600 text-sm">Peserta: {participant.user.name}</p>
+              <p className="text-muted-foreground text-sm">Peserta: {participant.user.name}</p>
             )}
           </div>
           <Link
@@ -24,20 +24,20 @@ export default function TeacherResult({ test, attempt, review, participant }: an
         </div>
 
         <div className="max-w-5xl mx-auto space-y-6">
-          <div className="bg-white border rounded-xl p-6 shadow-sm flex items-center justify-between">
+          <div className="bg-card border rounded-xl p-6 shadow-sm flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-500">Skor</div>
+              <div className="text-sm text-muted-foreground">Skor</div>
               <div className="text-3xl font-semibold">{attempt?.score ?? 0}</div>
               <div className={`mt-1 inline-flex text-xs px-2 py-0.5 rounded-full ${attempt?.passed ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
                 {attempt?.passed ? 'Lulus' : 'Tidak Lulus'} (KKM {test?.passing_score ?? 0})
               </div>
             </div>
-            <div className="text-right text-sm text-gray-500">
+            <div className="text-right text-sm text-muted-foreground">
               {attempt?.submitted_at && (<div>Diserahkan: {new Date(attempt.submitted_at).toLocaleString()}</div>)}
             </div>
           </div>
 
-          <div className="bg-white border rounded-xl p-6 shadow-sm">
+          <div className="bg-card border rounded-xl p-6 shadow-sm">
             <h2 className="text-lg font-semibold mb-4">Review Jawaban</h2>
             <div className="space-y-4">
               {review?.map((r: any, idx: number) => (
@@ -51,7 +51,7 @@ export default function TeacherResult({ test, attempt, review, participant }: an
                       <span className="text-xs px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">Salah</span>
                     )}
                     {r.is_correct === null && (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">Tidak dinilai</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-foreground">Tidak dinilai</span>
                     )}
                   </div>
                   <div className="mt-2 whitespace-pre-wrap">{r.question_text}</div>
@@ -69,8 +69,8 @@ export default function TeacherResult({ test, attempt, review, participant }: an
                   
                   {r.question_type === 'short_answer' ? (
                     <div className="mt-2">
-                      <div className="text-sm text-gray-500">Jawaban Peserta:</div>
-                      <div className="mt-1 whitespace-pre-wrap bg-gray-50 border rounded p-2">{r.selected || '-'}</div>
+                      <div className="text-sm text-muted-foreground">Jawaban Peserta:</div>
+                      <div className="mt-1 whitespace-pre-wrap bg-muted/50 border rounded p-2">{r.selected || '-'}</div>
                     </div>
                   ) : (
                     <div className="mt-3 space-y-2">
@@ -78,7 +78,7 @@ export default function TeacherResult({ test, attempt, review, participant }: an
                         const isSelected = r.selected === o.id;
                         const isCorrect = o.is_correct;
                         return (
-                          <div key={o.id} className={`p-2 rounded border text-sm ${isCorrect ? 'bg-emerald-50 border-emerald-200' : isSelected ? 'bg-rose-50 border-rose-200' : 'bg-white'}`}>
+                          <div key={o.id} className={`p-2 rounded border text-sm ${isCorrect ? 'bg-emerald-50 border-emerald-200' : isSelected ? 'bg-rose-50 border-rose-200' : 'bg-card'}`}>
                             <div className="flex items-start gap-2">
                               <input type="radio" disabled checked={isSelected} readOnly className="mt-1" />
                               <div className="flex-1">
@@ -103,8 +103,8 @@ export default function TeacherResult({ test, attempt, review, participant }: an
                     </div>
                   )}
                   {r.explanation && (
-                    <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50/70 p-3 text-sm text-blue-950">
-                      <div className="font-semibold text-blue-900 mb-1">Pembahasan</div>
+                    <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50/70 p-3 text-sm text-brand-ink">
+                      <div className="font-semibold text-brand-ink mb-1">Pembahasan</div>
                       <div className="whitespace-pre-wrap leading-relaxed">{r.explanation}</div>
                     </div>
                   )}

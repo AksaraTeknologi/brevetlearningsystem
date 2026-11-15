@@ -47,10 +47,10 @@ export function TabL12B({
             {/* Accordion 1 - Identitas Wajib Pajak Bentuk Usaha Tetap */}
             <Accordion type="single" collapsible defaultValue="acc1">
                 <AccordionItem value="acc1">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         I. IDENTITAS WAJIB PAJAK BENTUK USAHA TETAP
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL12B12
                             data={l12b12}
                             sptBadanId={sptBadanId}
@@ -63,10 +63,10 @@ export function TabL12B({
             {/* Accordion 2 - Identitas Kantor Pusat Bentuk Usaha Tetap */}
             <Accordion type="single" collapsible defaultValue="acc2">
                 <AccordionItem value="acc2">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         II. IDENTITAS KANTOR PUSAT BENTUK USAHA TETAP
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL12B12
                             data={l12b12}
                             sptBadanId={sptBadanId}
@@ -79,10 +79,10 @@ export function TabL12B({
             {/* Accordion 3 - Penghasilan Kena Pajak Sesudah Dikurangi Pajak */}
             <Accordion type="single" collapsible defaultValue="acc3">
                 <AccordionItem value="acc3">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         III. PENGHASILAN KENA PAJAK SESUDAH DIKURANGI PAJAK
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL12B3 data={l12b3} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>
@@ -91,11 +91,11 @@ export function TabL12B({
             {/* Accordion 4 - Penanaman Kembali Penghasilan Kena Pajak Sesudah Dikurangi Pajak */}
             <Accordion type="single" collapsible defaultValue="acc4">
                 <AccordionItem value="acc4">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         IV. PENANAMAN KEMBALI PENGHASILAN KENA PAJAK SESUDAH
                         DIKURANGI PAJAK
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL12B4 data={l12b4} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>
@@ -104,11 +104,11 @@ export function TabL12B({
             {/* Accordion 5 - Penanaman Kembali dalam Bentuk Penyertaan Modal pada Perusahaan yang Baru Didirikan */}
             <Accordion type="single" collapsible defaultValue="acc5">
                 <AccordionItem value="acc5">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         V. PENANAMAN KEMBALI DALAM BENTUK PENYERTAAN MODAL PADA
                         PERUSAHAAN YANG BARU DIDIRIKAN
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL12B5 data={l12b5} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>
@@ -117,11 +117,11 @@ export function TabL12B({
             {/* Accordion 6 - Penanaman Kembali dalam Bentuk Penyertaan Modal pada Perusahaan yang Sudah Berdiri */}
             <Accordion type="single" collapsible defaultValue="acc6">
                 <AccordionItem value="acc6">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         VI. PENANAMAN KEMBALI DALAM BENTUK PENYERTAAN MODAL PADA
                         PERUSAHAAN YANG SUDAH BERDIRI
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL12B6 data={l12b6} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>
@@ -130,10 +130,10 @@ export function TabL12B({
             {/* Accordion 7 - Penanaman Kembali dalam Bentuk Aktiva Tetap */}
             <Accordion type="single" collapsible defaultValue="acc7">
                 <AccordionItem value="acc7">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         VII. PENANAMAN KEMBALI DALAM BENTUK AKTIVA TETAP
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL12B7 data={l12b7} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>
@@ -142,11 +142,11 @@ export function TabL12B({
             {/* Accordion 8 - Penanaman Kembali dalam Bentuk Aktiva Tidak Berwujud */}
             <Accordion type="single" collapsible defaultValue="acc8">
                 <AccordionItem value="acc8">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         VIII. PENANAMAN KEMBALI DALAM BENTUK AKTIVA TIDAK
                         BERWUJUD
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL12B8 data={l12b8} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>

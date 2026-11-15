@@ -2,6 +2,7 @@
 
 import { Button } from "@/Components/ui/button";
 import toast from "react-hot-toast";
+import { FormPageHeader } from "@/Components/app-shell/FormPage";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, router, usePage } from "@inertiajs/react";
 import {
@@ -71,22 +72,22 @@ export default function BukuBesar({ ledgers }: any) {
             <Head title="Buku Besar" />
 
             <div className="py-8 mx-auto max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
-                <div className="flex flex-1 flex-col gap-4 px-4 pt-0">
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-2xl font-semibold text-primary">
-                            Buku Besar Saya
-                        </h1>
-                        <Button
-                            onClick={() =>
-                                window.open(route("ledger.pdf"), "_blank")
-                            }
-                        >
-                            <Printer /> Cetak Laporan Bulanan
-                        </Button>
-                    </div>
+                <div className="flex flex-1 flex-col gap-4">
+                    <FormPageHeader
+                        title="Buku Besar Saya"
+                        actions={
+                            <Button
+                                onClick={() =>
+                                    window.open(route("ledger.pdf"), "_blank")
+                                }
+                            >
+                                <Printer /> Cetak Laporan Bulanan
+                            </Button>
+                        }
+                    />
 
                     <div className="grid sm:grid-cols-2 gap-4 lg:grid-cols-5">
-                        <div className="p-5 md:space-y-1 rounded-xl bg-sidebar border">
+                        <div className="tls-card space-y-1 p-4 md:p-5">
                             <div className="flex items-center gap-2">
                                 <HandCoins size={18} />
                                 <h2 className="text-sm font-medium">Debit</h2>
@@ -94,16 +95,16 @@ export default function BukuBesar({ ledgers }: any) {
                             <p
                                 className={`md:text-lg font-bold ${
                                     totalDebit < 0
-                                        ? "text-red-500"
+                                        ? "text-destructive"
                                         : totalDebit > 0
                                         ? "text-green-500"
-                                        : "text-black"
+                                        : "text-foreground"
                                 }`}
                             >
                                 {formatCurrency(totalDebit)}
                             </p>
                         </div>
-                        <div className="p-5 md:space-y-1 rounded-xl bg-sidebar border">
+                        <div className="tls-card space-y-1 p-4 md:p-5">
                             <div className="flex items-center gap-2">
                                 <CircleDollarSign size={18} />
                                 <h2 className="text-sm font-medium">Kredit</h2>
@@ -111,16 +112,16 @@ export default function BukuBesar({ ledgers }: any) {
                             <p
                                 className={`md:text-lg font-bold ${
                                     totalCredit < 0
-                                        ? "text-red-500"
+                                        ? "text-destructive"
                                         : totalCredit > 0
                                         ? "text-green-500"
-                                        : "text-black"
+                                        : "text-foreground"
                                 }`}
                             >
                                 {formatCurrency(totalCredit)}
                             </p>
                         </div>
-                        <div className="p-5 md:space-y-1 rounded-xl bg-sidebar border">
+                        <div className="tls-card space-y-1 p-4 md:p-5">
                             <div className="flex items-center gap-2">
                                 <Banknote size={18} />
                                 <h2 className="text-sm font-medium">
@@ -130,16 +131,16 @@ export default function BukuBesar({ ledgers }: any) {
                             <p
                                 className={`md:text-lg font-bold ${
                                     totalDebitUnpaid < 0
-                                        ? "text-red-500"
+                                        ? "text-destructive"
                                         : totalDebitUnpaid > 0
                                         ? "text-green-500"
-                                        : "text-black"
+                                        : "text-foreground"
                                 }`}
                             >
                                 {formatCurrency(totalDebitUnpaid)}
                             </p>
                         </div>
-                        <div className="p-5 md:space-y-1 rounded-xl bg-sidebar border">
+                        <div className="tls-card space-y-1 p-4 md:p-5">
                             <div className="flex items-center gap-2">
                                 <Coins size={18} />
                                 <h2 className="text-sm font-medium">
@@ -149,16 +150,16 @@ export default function BukuBesar({ ledgers }: any) {
                             <p
                                 className={`md:text-lg font-bold ${
                                     totalCreditLeft < 0
-                                        ? "text-red-500"
+                                        ? "text-destructive"
                                         : totalCreditLeft > 0
                                         ? "text-green-500"
-                                        : "text-black"
+                                        : "text-foreground"
                                 }`}
                             >
                                 {formatCurrency(totalCreditLeft)}
                             </p>
                         </div>
-                        <div className="p-5 md:space-y-1 rounded-xl bg-sidebar border">
+                        <div className="tls-card space-y-1 p-4 md:p-5">
                             <div className="flex items-center gap-2">
                                 <Wallet size={18} />
                                 <h2 className="text-sm font-medium">Saldo</h2>
@@ -166,32 +167,33 @@ export default function BukuBesar({ ledgers }: any) {
                             <p
                                 className={`md:text-lg font-bold ${
                                     saldo < 0
-                                        ? "text-red-500"
+                                        ? "text-destructive"
                                         : saldo > 0
                                         ? "text-green-500"
-                                        : "text-black"
+                                        : "text-foreground"
                                 }`}
                             >
                                 {formatCurrency(saldo)}
                             </p>
                         </div>
                     </div>
-                    <div className="p-5 md:p-8 rounded-xl bg-sidebar border">
+                    <div className="tls-card p-4 md:p-5">
                         <div className="flex gap-2">
                             <Button
-                                className="bg-yellow-400 text-primary hover:bg-yellow-400/90 hover:text-primary"
+                                variant="highlight"
+                                aria-label="Muat ulang"
                                 onClick={handleRefresh}
                             >
                                 <RefreshCcw />
                             </Button>
                             <Button
-                                className="bg-zinc-400 hover:bg-zinc-400/90"
+                                className="bg-steel text-steel-foreground hover:bg-steel/90"
                                 disabled
                             >
                                 <File />
                             </Button>
                             <Button
-                                className="bg-green-600 hover:bg-green-600/90"
+                                className="bg-success hover:bg-success/90 text-success-foreground"
                                 disabled
                             >
                                 <FileX />

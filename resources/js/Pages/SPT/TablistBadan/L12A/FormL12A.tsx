@@ -115,7 +115,7 @@ export function FormL12A({ sptBadanId, data }: FormL12AProps) {
             {/* Header column */}
             <div className="grid grid-cols-[1fr_240px]">
                 <div />
-                <div className="bg-blue-950 text-white text-center text-xs font-semibold py-2 px-3 rounded-t">
+                <div className="bg-brand text-white text-center text-xs font-semibold py-2 px-3 rounded-t">
                     NILAI (Rupiah)
                 </div>
             </div>
@@ -161,7 +161,7 @@ export function FormL12A({ sptBadanId, data }: FormL12AProps) {
                     <Input
                         value={formatRupiahInput(dpp)}
                         disabled
-                        className="text-right bg-gray-100"
+                        className="text-right bg-muted"
                     />
                 }
             />
@@ -350,7 +350,7 @@ export function FormL12A({ sptBadanId, data }: FormL12AProps) {
                     type="button"
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="bg-blue-950 hover:bg-blue-900 gap-2"
+                    className="gap-2"
                 >
                     <Save className="w-4 h-4" />
                     {isSaving ? "Menyimpan..." : "Simpan Konsep"}
@@ -380,12 +380,12 @@ function Row({
     input: React.ReactNode;
 }) {
     return (
-        <div className="grid grid-cols-[1fr_240px] border-b border-gray-200 bg-gray-50">
+        <div className="grid grid-cols-[1fr_240px] border-b border-border bg-muted/50">
             <div className="flex items-center gap-3 px-4 py-3">
                 <span className="text-sm font-bold">{number}</span>
                 <span className="text-sm font-medium">{label}</span>
             </div>
-            <div className="px-3 py-2 border-l border-gray-200">{input}</div>
+            <div className="px-3 py-2 border-l border-border">{input}</div>
         </div>
     );
 }
@@ -403,12 +403,12 @@ function SubRow({
 }) {
     const paddingLeft = indent * 28;
     return (
-        <div className="grid grid-cols-[1fr_240px] border-b border-gray-200 bg-white">
+        <div className="grid grid-cols-[1fr_240px] border-b border-border bg-card">
             <div className="flex items-start gap-3 px-4 py-3" style={{ paddingLeft: `${paddingLeft}px` }}>
                 {badge}
                 <div className="flex-1">{content}</div>
             </div>
-            <div className="px-3 py-2 border-l border-gray-200">{input}</div>
+            <div className="px-3 py-2 border-l border-border">{input}</div>
         </div>
     );
 }

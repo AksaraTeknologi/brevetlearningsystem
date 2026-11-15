@@ -64,7 +64,7 @@ const formatRupiahInput = (value: number) => {
 };
 
 const rowClass = "grid grid-cols-[240px_1fr] items-start gap-x-4 py-2";
-const labelClass = "text-sm font-medium text-gray-700 dark:text-gray-300 pt-2";
+const labelClass = "text-sm font-medium text-foreground dark:text-gray-300 pt-2";
 
 export function FormL10ADialog({
     open,
@@ -182,7 +182,7 @@ export function FormL10ADialog({
     return (
         <Dialog open={open} onOpenChange={(v) => !v && handleClose()}>
             <DialogContent className="max-w-3xl p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData ? "Edit" : "Tambah"} Data Transaksi Hubungan
                         Istimewa
@@ -193,7 +193,7 @@ export function FormL10ADialog({
                     {/* Nama */}
                     <div className={rowClass}>
                         <Label className={labelClass}>
-                            Nama <span className="text-red-500">*</span>
+                            Nama <span className="text-destructive">*</span>
                         </Label>
                         <div>
                             <Input
@@ -204,7 +204,7 @@ export function FormL10ADialog({
                                 placeholder="Nama pihak yang memiliki hubungan istimewa"
                             />
                             {errors.name && (
-                                <p className="text-xs text-red-500 mt-1">
+                                <p className="text-xs text-destructive mt-1">
                                     {errors.name}
                                 </p>
                             )}
@@ -214,7 +214,7 @@ export function FormL10ADialog({
                     {/* NPWP */}
                     <div className={rowClass}>
                         <Label className={labelClass}>
-                            NPWP <span className="text-red-500">*</span>
+                            NPWP <span className="text-destructive">*</span>
                         </Label>
                         <div>
                             <Input
@@ -225,7 +225,7 @@ export function FormL10ADialog({
                                 placeholder="NPWP"
                             />
                             {errors.npwp && (
-                                <p className="text-xs text-red-500 mt-1">
+                                <p className="text-xs text-destructive mt-1">
                                     {errors.npwp}
                                 </p>
                             )}
@@ -342,7 +342,7 @@ export function FormL10ADialog({
                             Nilai Transaksi (Rp)
                         </Label>
                         <div className="flex">
-                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-gray-100 text-sm text-gray-600">
+                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-muted-foreground">
                                 Rp.
                             </span>
                             <Input
@@ -401,7 +401,6 @@ export function FormL10ADialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

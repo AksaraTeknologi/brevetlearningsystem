@@ -1,3 +1,4 @@
+import { FormPageHeader } from "@/Components/app-shell/FormPage";
 import { usePage, router, Link } from "@inertiajs/react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
@@ -1796,7 +1797,7 @@ const DetailSPT = ({
         <Authenticated>
             <Head title="Detail SPT" />
             <div className="py-8 mx-auto max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
-                <div className="flex flex-1 flex-col gap-4 px-4 pt-0">
+                <div className="tls-spt flex flex-1 flex-col gap-4">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -1811,10 +1812,11 @@ const DetailSPT = ({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Detail SPT
-                    </h1>
-                    <div className="flex flex-col gap-4 bg-sidebar border rounded-xl p-5 md:p-8">
+                    <FormPageHeader
+                        title="Detail SPT Masa PPN"
+                        backHref={route("spt.konsep")}
+                    />
+                    <div className="flex flex-col gap-4">
                         <Tabs defaultValue="Main Form" className="w-full">
                             <TabsList className="flex justify-start gap-2">
                                 <TabsTrigger value="Main Form">
@@ -1850,7 +1852,7 @@ const DetailSPT = ({
                                                 <AccordionTrigger className="bg-muted p-4 w-full rounded">
                                                     HEADER
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div className="grid grid-cols-2 gap-4">
                                                             <FormField
@@ -2045,11 +2047,11 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-1">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     I. PENYERAHAN BARANG DAN
                                                     JASA
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -3298,11 +3300,11 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-2">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     II. PEROLEHAN BARANG DAN
                                                     JASA
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -4185,11 +4187,11 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-3">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     III. PERHITUNGAN PPN KURANG
                                                     BAYAR/LEBIH BAYAR
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -4527,11 +4529,11 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-4">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     IV. PPN TERUTANG ATAS
                                                     KEGIATAN MEMBANGUN SENDIRI
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -4642,12 +4644,12 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-5">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     V. PEMBAYARAN KEMBALI PAJAK
                                                     MASUKAN YANG TIDAK DAPAT
                                                     DIKREDITKAN
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -4729,11 +4731,11 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-6">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     VI. PAJAK PENJUALAN ATAS
                                                     BARANG MEWAH
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -4993,11 +4995,11 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-7">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     VII. PEMUNGUTAN PPN ATAU PPN
                                                     DAN PPnBM OLEH PEMUNGUT PPN
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -5340,12 +5342,12 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-8">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     VIII. PEMUNGGUTAN PPN ATAU
                                                     PPN DAN PPnBM OLEH PIHAK
                                                     LAIN
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -5713,10 +5715,10 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-9">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     IX. KELENGKAPAN SPT
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
@@ -5835,7 +5837,7 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-penyerahan">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     PERNYATAAN
                                                 </AccordionTrigger>
                                                 <AccordionContent className="p-4 w-full">
@@ -5983,7 +5985,7 @@ const DetailSPT = ({
                                                                 )}
                                                             />
                                                         </div>
-                                                        <div className="flex justify-end mt-4">
+                                                        <div className="mt-4 flex justify-end border-t border-border pt-4">
                                                             <Button 
                                                                 type="submit"
                                                                 disabled={!pernyataanSetuju}

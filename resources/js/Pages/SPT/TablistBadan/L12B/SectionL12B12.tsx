@@ -74,7 +74,7 @@ export function SectionL12B12({ data, sptBadanId, type }: SectionL12B12Props) {
         <div className="space-y-2">
             {rows.map((row) => (
                 <div key={row.badge} className="grid grid-cols-[28px_200px_16px_1fr] items-center gap-2">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded  font-bold text-gray-900">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded  font-bold text-foreground">
                         {row.badge}
                     </span>
                     <Label className=" font-semibold tracking-wide uppercase">{row.label}</Label>
@@ -92,7 +92,6 @@ export function SectionL12B12({ data, sptBadanId, type }: SectionL12B12Props) {
                     type="button"
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="bg-blue-950 hover:bg-blue-900"
                     size="sm"
                 >
                     <Save className="w-4 h-4 mr-2" />

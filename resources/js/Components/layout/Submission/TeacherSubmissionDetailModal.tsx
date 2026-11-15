@@ -232,11 +232,11 @@ export default function TeacherSubmissionDetailModal({
                     <DialogHeader className="border-b pb-4 shrink-0">
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                             <div>
-                                <DialogTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                                <DialogTitle className="text-xl font-bold text-foreground flex items-center gap-2">
                                     <FileText className="h-5 w-5 text-primary" />
                                     <span>Detail Submission: {courseSubmission.title}</span>
                                 </DialogTitle>
-                                <DialogDescription className="text-xs text-gray-500 mt-1">
+                                <DialogDescription className="text-xs text-muted-foreground mt-1">
                                     Tinjau berkas yang dikirimkan siswa dan berikan persetujuan (ACC) atau penolakan.
                                 </DialogDescription>
                             </div>
@@ -270,7 +270,7 @@ export default function TeacherSubmissionDetailModal({
                                     className={cn(
                                         "text-xs gap-1.5 shadow-sm transition shrink-0",
                                         notApprovedCount === 0
-                                            ? "bg-slate-100 text-gray-400 border border-slate-200 cursor-not-allowed hover:bg-slate-100"
+                                            ? "bg-muted text-gray-400 border border-border cursor-not-allowed hover:bg-muted"
                                             : "bg-emerald-600 hover:bg-emerald-700 text-white"
                                     )}
                                     title={notApprovedCount === 0 ? "Semua siswa sudah disetujui (ACC)" : "Setujui semua siswa"}
@@ -284,9 +284,9 @@ export default function TeacherSubmissionDetailModal({
                         </div>
 
                         {/* Submission Meta Details */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3 pt-3 border-t text-xs text-gray-600 bg-slate-50/80 p-3 rounded-lg">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3 pt-3 border-t text-xs text-muted-foreground bg-muted/40 p-3 rounded-lg">
                             <div>
-                                <span className="font-medium text-gray-700">Batas Waktu (Deadline): </span>
+                                <span className="font-medium text-foreground">Batas Waktu (Deadline): </span>
                                 {courseSubmission.deadline ? (
                                     <span className="font-semibold text-rose-600">
                                         {format(new Date(courseSubmission.deadline), "d MMMM yyyy, HH:mm", {
@@ -294,20 +294,20 @@ export default function TeacherSubmissionDetailModal({
                                         })}
                                     </span>
                                 ) : (
-                                    <span className="text-gray-500">Tidak ada batas waktu</span>
+                                    <span className="text-muted-foreground">Tidak ada batas waktu</span>
                                 )}
                             </div>
                             <div>
-                                <span className="font-medium text-gray-700">Petunjuk Tugas: </span>
+                                <span className="font-medium text-foreground">Petunjuk Tugas: </span>
                                 <span>{courseSubmission.description || "-"}</span>
                             </div>
                         </div>
 
                         {/* Stats Pills */}
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 mt-3">
-                            <div className="bg-slate-100 rounded-lg p-2 text-center">
-                                <div className="text-[11px] text-gray-500">Total Siswa</div>
-                                <div className="text-base font-bold text-gray-800">{stats.total}</div>
+                            <div className="bg-muted rounded-lg p-2 text-center">
+                                <div className="text-[11px] text-muted-foreground">Total Siswa</div>
+                                <div className="text-base font-bold text-foreground">{stats.total}</div>
                             </div>
                             <div className="bg-blue-50 border border-blue-100 rounded-lg p-2 text-center">
                                 <div className="text-[11px] text-blue-700">Terkumpul</div>
@@ -325,9 +325,9 @@ export default function TeacherSubmissionDetailModal({
                                 <div className="text-[11px] text-rose-700 font-medium">Ditolak</div>
                                 <div className="text-base font-bold text-rose-700">{stats.rejected}</div>
                             </div>
-                            <div className="bg-gray-50 border border-gray-200 rounded-lg p-2 text-center">
-                                <div className="text-[11px] text-gray-600">Belum Kumpul</div>
-                                <div className="text-base font-bold text-gray-600">{stats.unsubmitted}</div>
+                            <div className="bg-muted/50 border border-border rounded-lg p-2 text-center">
+                                <div className="text-[11px] text-muted-foreground">Belum Kumpul</div>
+                                <div className="text-base font-bold text-muted-foreground">{stats.unsubmitted}</div>
                             </div>
                         </div>
 
@@ -337,7 +337,7 @@ export default function TeacherSubmissionDetailModal({
                                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
                                 <Input
                                     placeholder="Cari nama atau email siswa..."
-                                    className="pl-8 text-xs h-9 bg-white"
+                                    className="pl-8 text-xs h-9 bg-card"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
@@ -359,7 +359,7 @@ export default function TeacherSubmissionDetailModal({
                                             "px-2.5 py-1 text-xs rounded-full font-medium whitespace-nowrap transition",
                                             statusFilter === tab.key
                                                 ? "bg-primary text-white shadow-sm"
-                                                : "bg-slate-100 text-gray-600 hover:bg-slate-200"
+                                                : "bg-muted text-muted-foreground hover:bg-slate-200"
                                         )}
                                     >
                                         {tab.label}
@@ -372,13 +372,13 @@ export default function TeacherSubmissionDetailModal({
                     {/* Table Container (Scrollable) */}
                     <div className="flex-1 overflow-y-auto mt-2 -mx-6 px-6">
                         {filteredItems.length === 0 ? (
-                            <div className="text-center py-12 text-gray-500 text-sm">
+                            <div className="text-center py-12 text-muted-foreground text-sm">
                                 Tidak ada siswa yang sesuai dengan filter pencarian.
                             </div>
                         ) : (
-                            <div className="border rounded-lg overflow-hidden bg-white shadow-sm">
+                            <div className="border rounded-lg overflow-hidden bg-card shadow-sm">
                                 <table className="w-full text-left text-xs">
-                                    <thead className="bg-slate-100/80 text-gray-700 font-semibold border-b">
+                                    <thead className="bg-muted/80 text-foreground font-semibold border-b">
                                         <tr>
                                             <th className="py-2.5 px-3 w-10 text-center">No</th>
                                             <th className="py-2.5 px-3">Nama Siswa</th>
@@ -399,19 +399,19 @@ export default function TeacherSubmissionDetailModal({
                                                 <tr
                                                     key={item.user.id || index}
                                                     className={cn(
-                                                        "hover:bg-slate-50/80 transition",
+                                                        "hover:bg-muted/40 transition",
                                                         sub?.status === "pending_review" && "bg-amber-50/30"
                                                     )}
                                                 >
-                                                    <td className="py-2.5 px-3 text-center text-gray-500">
+                                                    <td className="py-2.5 px-3 text-center text-muted-foreground">
                                                         {index + 1}
                                                     </td>
 
                                                     <td className="py-2.5 px-3">
-                                                        <div className="font-semibold text-gray-800">
+                                                        <div className="font-semibold text-foreground">
                                                             {item.user.name || "Nama Siswa"}
                                                         </div>
-                                                        <div className="text-[11px] text-gray-500">
+                                                        <div className="text-[11px] text-muted-foreground">
                                                             {item.user.email}
                                                         </div>
                                                         {item.user.institution && (
@@ -425,7 +425,7 @@ export default function TeacherSubmissionDetailModal({
                                                         {item.status === "unsubmitted" && (
                                                             <Badge
                                                                 variant="outline"
-                                                                className="bg-gray-100 text-gray-600 border-gray-200 text-[10px]"
+                                                                className="bg-muted text-muted-foreground border-border text-[10px]"
                                                             >
                                                                 Belum Mengumpulkan
                                                             </Badge>
@@ -464,7 +464,7 @@ export default function TeacherSubmissionDetailModal({
                                                                     Pratinjau Berkas
                                                                 </Button>
                                                                 <div
-                                                                    className="text-[11px] text-gray-700 font-medium truncate max-w-[150px] cursor-pointer hover:underline"
+                                                                    className="text-[11px] text-foreground font-medium truncate max-w-[150px] cursor-pointer hover:underline"
                                                                     title={sub.original_filename}
                                                                     onClick={() => setPreviewSubmission(sub)}
                                                                 >
@@ -479,7 +479,7 @@ export default function TeacherSubmissionDetailModal({
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3 text-gray-600 whitespace-nowrap">
+                                                    <td className="py-2.5 px-3 text-muted-foreground whitespace-nowrap">
                                                         {sub?.created_at ? (
                                                             <div>
                                                                 <div>
@@ -498,7 +498,7 @@ export default function TeacherSubmissionDetailModal({
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3 text-gray-600 max-w-[160px]">
+                                                    <td className="py-2.5 px-3 text-muted-foreground max-w-[160px]">
                                                         {sub?.student_notes ? (
                                                             <p className="line-clamp-2 text-[11px]" title={sub.student_notes}>
                                                                 {sub.student_notes}
@@ -508,7 +508,7 @@ export default function TeacherSubmissionDetailModal({
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3 text-gray-600 max-w-[160px]">
+                                                    <td className="py-2.5 px-3 text-muted-foreground max-w-[160px]">
                                                         {sub?.admin_notes ? (
                                                             <p className="line-clamp-2 text-[11px] text-rose-600 font-medium" title={sub.admin_notes}>
                                                                 {sub.admin_notes}
@@ -577,7 +577,7 @@ export default function TeacherSubmissionDetailModal({
                     </div>
 
                     <div className="pt-3 border-t mt-3 flex items-center justify-between shrink-0">
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-muted-foreground">
                             Menampilkan {filteredItems.length} dari {tableItems.length} siswa
                         </span>
                         <Button
@@ -606,19 +606,19 @@ export default function TeacherSubmissionDetailModal({
                     </DialogHeader>
 
                     <form onSubmit={handleConfirmReject} className="space-y-4 pt-2">
-                        <div className="bg-slate-50 p-2.5 rounded-lg text-xs space-y-1 border">
+                        <div className="bg-muted/50 p-2.5 rounded-lg text-xs space-y-1 border">
                             <div>
-                                <span className="font-semibold text-gray-700">Siswa: </span>
+                                <span className="font-semibold text-foreground">Siswa: </span>
                                 <span>{targetSubmission?.user?.name} ({targetSubmission?.user?.email})</span>
                             </div>
                             <div>
-                                <span className="font-semibold text-gray-700">Berkas: </span>
+                                <span className="font-semibold text-foreground">Berkas: </span>
                                 <span className="text-primary font-mono">{targetSubmission?.original_filename}</span>
                             </div>
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-xs font-semibold text-gray-700">
+                            <label className="text-xs font-semibold text-foreground">
                                 Catatan / Alasan Penolakan <span className="text-rose-500">*</span>
                             </label>
                             <Textarea
@@ -659,11 +659,11 @@ export default function TeacherSubmissionDetailModal({
                     <DialogHeader className="border-b pb-3 shrink-0">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                             <div>
-                                <DialogTitle className="text-base font-bold text-gray-900 flex items-center gap-2">
+                                <DialogTitle className="text-base font-bold text-foreground flex items-center gap-2">
                                     <Eye className="h-5 w-5 text-indigo-600" />
                                     <span>Pratinjau Berkas: {previewSubmission?.original_filename}</span>
                                 </DialogTitle>
-                                <DialogDescription className="text-xs text-gray-500 mt-0.5">
+                                <DialogDescription className="text-xs text-muted-foreground mt-0.5">
                                     Siswa: <strong>{previewSubmission?.user?.name}</strong> • Versi {previewSubmission?.version} • {formatBytes(previewSubmission?.file_size)}
                                 </DialogDescription>
                             </div>
@@ -684,15 +684,15 @@ export default function TeacherSubmissionDetailModal({
                         </div>
 
                         {previewSubmission?.student_notes && (
-                            <div className="mt-2 text-xs bg-slate-50 p-2.5 rounded-md border text-gray-700">
-                                <span className="font-semibold text-gray-800">Catatan Siswa: </span>
+                            <div className="mt-2 text-xs bg-muted/50 p-2.5 rounded-md border text-foreground">
+                                <span className="font-semibold text-foreground">Catatan Siswa: </span>
                                 {previewSubmission.student_notes}
                             </div>
                         )}
                     </DialogHeader>
 
                     {/* Preview Viewport */}
-                    <div className="flex-1 overflow-auto mt-2 min-h-[350px] max-h-[62vh] rounded-lg border bg-slate-100 flex items-center justify-center p-2">
+                    <div className="flex-1 overflow-auto mt-2 min-h-[350px] max-h-[62vh] rounded-lg border bg-muted flex items-center justify-center p-2">
                         {previewSubmission && (() => {
                             const ext = previewSubmission.original_filename?.split(".").pop()?.toLowerCase() || "";
                             const isPdf = previewSubmission.mime_type === "application/pdf" || ext === "pdf";
@@ -702,7 +702,7 @@ export default function TeacherSubmissionDetailModal({
                                 return (
                                     <iframe
                                         src={route("submissions.preview", previewSubmission.id)}
-                                        className="w-full h-full min-h-[58vh] rounded border-0 bg-white"
+                                        className="w-full h-full min-h-[58vh] rounded border-0 bg-card"
                                         title="Pratinjau PDF"
                                     />
                                 );
@@ -721,13 +721,13 @@ export default function TeacherSubmissionDetailModal({
                             }
 
                             return (
-                                <div className="text-center p-8 space-y-3 max-w-md mx-auto bg-white rounded-xl shadow-xs border">
+                                <div className="text-center p-8 space-y-3 max-w-md mx-auto bg-card rounded-xl shadow-xs border">
                                     <FileText className="mx-auto h-12 w-12 text-indigo-500" />
                                     <div>
-                                        <h4 className="font-semibold text-gray-800 text-sm">
+                                        <h4 className="font-semibold text-foreground text-sm">
                                             {previewSubmission.original_filename}
                                         </h4>
-                                        <p className="text-xs text-gray-500 mt-1">
+                                        <p className="text-xs text-muted-foreground mt-1">
                                             Format file <strong>.{ext.toUpperCase()}</strong> tidak dapat dipratinjau langsung di peramban.
                                         </p>
                                     </div>
@@ -805,28 +805,28 @@ export default function TeacherSubmissionDetailModal({
                             <CheckCheck className="h-5 w-5 text-emerald-600 shrink-0" />
                             <span>ACC Semua Siswa</span>
                         </AlertDialogTitle>
-                        <AlertDialogDescription className="text-xs text-gray-600 space-y-3 pt-2 text-left" asChild>
+                        <AlertDialogDescription className="text-xs text-muted-foreground space-y-3 pt-2 text-left" asChild>
                             <div>
                                 <p>
                                     Apakah Anda yakin ingin menyetujui (ACC) seluruh siswa untuk tugas <strong>{courseSubmission.title}</strong>? Tindakan ini akan membuka akses ujian untuk siswa terkait.
                                 </p>
-                                <div className="bg-slate-50 border rounded-lg p-3 space-y-1.5 text-xs mt-3">
+                                <div className="bg-muted/50 border rounded-lg p-3 space-y-1.5 text-xs mt-3">
                                     <div className="flex justify-between">
-                                        <span className="text-gray-600">Siswa menunggu review:</span>
+                                        <span className="text-muted-foreground">Siswa menunggu review:</span>
                                         <strong className="text-amber-700">{stats.pending} siswa</strong>
                                     </div>
                                     {stats.rejected > 0 && (
                                         <div className="flex justify-between">
-                                            <span className="text-gray-600">Siswa status ditolak:</span>
+                                            <span className="text-muted-foreground">Siswa status ditolak:</span>
                                             <strong className="text-rose-700">{stats.rejected} siswa</strong>
                                         </div>
                                     )}
                                     <div className="flex justify-between">
-                                        <span className="text-gray-600">Siswa belum mengumpulkan:</span>
-                                        <strong className="text-gray-700">{stats.unsubmitted} siswa</strong>
+                                        <span className="text-muted-foreground">Siswa belum mengumpulkan:</span>
+                                        <strong className="text-foreground">{stats.unsubmitted} siswa</strong>
                                     </div>
                                     <div className="border-t pt-1.5 flex justify-between font-semibold">
-                                        <span className="text-gray-800">Total siswa yang akan di-ACC:</span>
+                                        <span className="text-foreground">Total siswa yang akan di-ACC:</span>
                                         <span className="text-emerald-700 font-bold">
                                             {includeUnsubmitted ? notApprovedCount : (stats.pending + stats.rejected)} siswa
                                         </span>
@@ -839,9 +839,9 @@ export default function TeacherSubmissionDetailModal({
                                             type="checkbox"
                                             checked={includeUnsubmitted}
                                             onChange={(e) => setIncludeUnsubmitted(e.target.checked)}
-                                            className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 mt-0.5 cursor-pointer"
+                                            className="h-4 w-4 rounded border-input text-emerald-600 focus:ring-emerald-500 mt-0.5 cursor-pointer"
                                         />
-                                        <span className="text-xs text-gray-700">
+                                        <span className="text-xs text-foreground">
                                             Sertakan juga siswa yang belum mengumpulkan ({stats.unsubmitted} siswa) agar dapat langsung mengikuti ujian.
                                         </span>
                                     </label>

@@ -131,8 +131,8 @@ export default function EditModule({ course, module }: any) {
     return (
         <TeacherLayout>
             <Head title={`Edit Modul - ${module.title}`} />
-            <div className="teacher-page-shell">
-                <div className="teacher-page-stack">
+            <div className="py-8 mx-auto lg:px-4">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -170,12 +170,12 @@ export default function EditModule({ course, module }: any) {
                     </Breadcrumb>
 
                     <div className="flex items-center gap-4">
-                        <h1 className="teacher-page-title">
+                        <h1 className="text-2xl font-semibold text-primary">
                             Edit Modul - {module.title}
                         </h1>
                     </div>
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-white border shadow">
+                    <div className="p-5 lg:p-8 rounded-xl bg-card border shadow">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
                                 <div className="grid grid-cols-1 gap-6">
@@ -253,7 +253,7 @@ export default function EditModule({ course, module }: any) {
                                                             <div className="flex items-center gap-2">
                                                                 <LinkIcon
                                                                     size={16}
-                                                                    className="text-green-600"
+                                                                    className="text-success"
                                                                 />
                                                                 Link/URL
                                                             </div>
@@ -313,7 +313,7 @@ export default function EditModule({ course, module }: any) {
                                                             }
                                                             className="flex-1"
                                                         />
-                                                        <div className="text-xs text-gray-500">
+                                                        <div className="text-xs text-muted-foreground">
                                                             Max: 20MB
                                                         </div>
                                                     </div>
@@ -321,10 +321,10 @@ export default function EditModule({ course, module }: any) {
                                                     {selectedFile && (
                                                         <div className="flex items-center gap-2 p-2 bg-green-50 border border-green-200 rounded">
                                                             <FileText
-                                                                className="text-green-600"
+                                                                className="text-success"
                                                                 size={16}
                                                             />
-                                                            <span className="text-sm text-green-700">
+                                                            <span className="text-sm text-success">
                                                                 File Baru:{" "}
                                                                 {
                                                                     selectedFile.name
@@ -348,14 +348,14 @@ export default function EditModule({ course, module }: any) {
                                                                         null
                                                                     )
                                                                 }
-                                                                className="ml-auto text-red-500 hover:text-red-700"
+                                                                className="ml-auto text-destructive hover:text-destructive/80"
                                                             >
                                                                 Hapus
                                                             </Button>
                                                         </div>
                                                     )}
 
-                                                    <p className="text-xs text-gray-500">
+                                                    <p className="text-xs text-muted-foreground">
                                                         Format yang didukung:
                                                         PDF, DOC, DOCX, PPT,
                                                         PPTX (Maks. 20MB)
@@ -365,7 +365,7 @@ export default function EditModule({ course, module }: any) {
                                                         !selectedFile &&
                                                         module.type !==
                                                             "file" && (
-                                                            <p className="text-xs text-red-500">
+                                                            <p className="text-xs text-destructive">
                                                                 File harus
                                                                 diupload untuk
                                                                 modul jenis file
@@ -393,7 +393,7 @@ export default function EditModule({ course, module }: any) {
                                                                 placeholder="https://example.com/modul"
                                                                 autoComplete="off"
                                                             />
-                                                            <p className="text-xs text-gray-500">
+                                                            <p className="text-xs text-muted-foreground">
                                                                 Masukkan URL
                                                                 lengkap dengan
                                                                 https://

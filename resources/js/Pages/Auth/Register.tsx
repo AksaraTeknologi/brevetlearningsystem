@@ -1,12 +1,64 @@
+import AuthShell from "@/Components/auth/AuthShell";
+import {
+    authIcon,
+    authInput,
+    authLabel,
+    MasukButton,
+    PortalCard,
+} from "@/Components/auth/parts";
 import InputError from "@/Components/layout/InputError";
 import { Button } from "@/Components/ui/button";
-import { Card, CardContent } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import GuestLayout from "@/Layouts/GuestLayout";
+import { cn } from "@/lib/utils";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { Eye, EyeOff, Loader2 } from "lucide-react"; // Tambahkan Loader2
-import { FormEventHandler, useState } from "react";
+import {
+    Eye,
+    EyeOff,
+    IdCard,
+    Loader2,
+    LockKeyhole,
+    Mail,
+    MapPin,
+    Phone,
+    User,
+    type LucideIcon,
+} from "lucide-react";
+import { FormEventHandler, useState, type ReactNode } from "react";
+
+function Field({
+    id,
+    label,
+    icon: Icon,
+    error,
+    hint,
+    className,
+    children,
+}: {
+    id: string;
+    label: string;
+    icon: LucideIcon;
+    error?: string;
+    hint?: ReactNode;
+    className?: string;
+    children: ReactNode;
+}) {
+    return (
+        <div className={cn("space-y-1.5", className)}>
+            <Label htmlFor={id} className={authLabel}>
+                {label}
+            </Label>
+            <div className="relative">
+                <Icon aria-hidden className={authIcon} />
+                {children}
+            </div>
+            {hint && !error && (
+                <p className="text-xs text-muted-foreground dark:text-white/50">{hint}</p>
+            )}
+            <InputError message={error} />
+        </div>
+    );
+}
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,267 +75,247 @@ export default function Register() {
 
     const handleNpwpChange = (value: string) => {
         const numericValue = value.replace(/[^0-9]/g, "");
-        const limitedValue = numericValue.slice(0, 16);
-        setData("npwp", limitedValue);
+        setData("npwp", numericValue.slice(0, 16));
     };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         post(route("register"), {
             onFinish: () => reset("password", "password_confirmation"),
         });
     };
 
+    const inputCls = cn(authInput, "pl-11");
+    const eyeBtn =
+        "absolute inset-y-0 right-1 grid w-10 place-items-center rounded-md text-brand-900/70 hover:text-brand-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 dark:text-white/60 dark:hover:text-white";
+
     return (
-        <GuestLayout>
-            <Head title="Register" />
+        <AuthShell headerVariant="card" headerAction={<MasukButton />} footerAlign="center">
+            <Head title="Buat Akun" />
 
-            <div className="flex flex-col gap-6">
-                <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                        <form onSubmit={submit} className="p-6 md:p-8">
-                            <div className="flex flex-col gap-6">
-                                <div className="flex flex-col items-center mb-2">
-                                    <Link href="/">
-                                        <img
-                                            src="/images/logo.png"
-                                            alt="Brevet Learning System"
-                                            className="w-36"
-                                        />
-                                    </Link>
-                                    <p className="mt-2 text-balance text-muted-foreground text-sm">
-                                        Silahkan lengkapi data diri untuk
-                                        mendaftar akun
-                                    </p>
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="name">Nama</Label>
-                                    <Input
-                                        id="name"
-                                        type="text"
-                                        name="name"
-                                        value={data.name}
-                                        autoComplete="name"
-                                        placeholder="Nama Lengkap"
-                                        onChange={(e) =>
-                                            setData("name", e.target.value)
-                                        }
-                                        autoFocus
-                                        required
-                                        disabled={processing}
-                                    />
-                                    <InputError message={errors.name} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        name="email"
-                                        value={data.email}
-                                        autoComplete="email"
-                                        placeholder="m@example.com"
-                                        onChange={(e) =>
-                                            setData("email", e.target.value)
-                                        }
-                                        required
-                                        disabled={processing}
-                                    />
-                                    <InputError message={errors.email} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="phone_number">
-                                        Nomor Telepon
-                                    </Label>
-                                    <Input
-                                        id="phone_number"
-                                        type="text"
-                                        name="phone_number"
-                                        value={data.phone_number}
-                                        autoComplete="username"
-                                        placeholder="08xxxxxxxxxx"
-                                        onChange={(e) =>
-                                            setData(
-                                                "phone_number",
-                                                e.target.value
-                                            )
-                                        }
-                                        required
-                                        disabled={processing}
-                                    />
-                                    <InputError message={errors.phone_number} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="npwp">
-                                        NPWP/NIK (16 digit angka)
-                                    </Label>
-                                    <Input
-                                        id="npwp"
-                                        type="text"
-                                        name="npwp"
-                                        value={data.npwp}
-                                        placeholder="Contoh: 1234567890000000"
-                                        onChange={(e) =>
-                                            handleNpwpChange(e.target.value)
-                                        }
-                                        maxLength={16}
-                                        pattern="[0-9]{16}"
-                                        autoComplete="off"
-                                        required
-                                        disabled={processing}
-                                    />
-                                    <InputError message={errors.npwp} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="address">Alamat</Label>
-                                    <Input
-                                        id="address"
-                                        type="text"
-                                        name="address"
-                                        value={data.address}
-                                        autoComplete="off"
-                                        placeholder="Jl. Contoh No. 123"
-                                        onChange={(e) =>
-                                            setData("address", e.target.value)
-                                        }
-                                        required
-                                        disabled={processing}
-                                    />
-                                    <InputError message={errors.address} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="password">Password</Label>
-                                    <div className="relative">
-                                        <Input
-                                            id="password"
-                                            type={
-                                                showPassword
-                                                    ? "text"
-                                                    : "password"
-                                            }
-                                            name="password"
-                                            value={data.password}
-                                            autoComplete="new-password"
-                                            onChange={(e) =>
-                                                setData(
-                                                    "password",
-                                                    e.target.value
-                                                )
-                                            }
-                                            required
-                                            disabled={processing}
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                setShowPassword(!showPassword)
-                                            }
-                                            disabled={processing}
-                                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                                        >
-                                            {showPassword ? (
-                                                <Eye size={18} />
-                                            ) : (
-                                                <EyeOff size={18} />
-                                            )}
-                                        </button>
-                                    </div>
-                                    <InputError message={errors.password} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="password_confirmation">
-                                        Konfirmasi Password
-                                    </Label>
-                                    <div className="relative">
-                                        <Input
-                                            id="password_confirmation"
-                                            type={
-                                                showConfirmPassword
-                                                    ? "text"
-                                                    : "password"
-                                            }
-                                            name="password_confirmation"
-                                            value={data.password_confirmation}
-                                            autoComplete="new-password"
-                                            onChange={(e) =>
-                                                setData(
-                                                    "password_confirmation",
-                                                    e.target.value
-                                                )
-                                            }
-                                            required
-                                            disabled={processing}
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                setShowConfirmPassword(
-                                                    !showConfirmPassword
-                                                )
-                                            }
-                                            disabled={processing}
-                                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                                        >
-                                            {showConfirmPassword ? (
-                                                <Eye size={18} />
-                                            ) : (
-                                                <EyeOff size={18} />
-                                            )}
-                                        </button>
-                                    </div>
-                                    <InputError
-                                        message={errors.password_confirmation}
-                                    />
-                                </div>
+            <PortalCard className="mx-auto max-w-4xl">
+                <div className="text-center">
+                    <img
+                        src="/images/logo.png"
+                        alt="Brevet Learning System"
+                        className="mx-auto h-14 w-auto dark:hidden md:h-16"
+                    />
+                    <img
+                        src="/images/logo putih.png"
+                        alt="Brevet Learning System"
+                        className="mx-auto hidden h-14 w-auto dark:block md:h-16"
+                    />
+                    <h1 className="mt-6 text-2xl font-extrabold tracking-tight text-brand-950 dark:text-white md:text-[30px]">
+                        Buat Akun Brevet Learning System
+                    </h1>
+                    <p className="mx-auto mt-2 max-w-xl text-[15px] text-muted-foreground dark:text-white/60">
+                        Silakan lengkapi data diri untuk mendaftar akun.
+                    </p>
+                </div>
 
-                                {/* Tombol Register dengan Spinner */}
-                                <Button
-                                    type="submit"
-                                    className="w-full"
-                                    disabled={processing}
-                                >
-                                    {processing ? (
-                                        <>
-                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                            Mendaftar...
-                                        </>
-                                    ) : (
-                                        "Daftar"
-                                    )}
-                                </Button>
+                <form
+                    onSubmit={submit}
+                    className="mx-auto mt-8 grid max-w-3xl gap-x-6 gap-y-5 md:grid-cols-2"
+                >
+                    <Field id="name" label="Nama Lengkap" icon={User} error={errors.name}>
+                        <Input
+                            id="name"
+                            name="name"
+                            value={data.name}
+                            autoComplete="name"
+                            placeholder="Nama lengkap sesuai identitas"
+                            onChange={(e) => setData("name", e.target.value)}
+                            aria-invalid={!!errors.name}
+                            autoFocus
+                            required
+                            disabled={processing}
+                            className={inputCls}
+                        />
+                    </Field>
 
-                                <div className="text-center text-sm">
-                                    Sudah memiliki akun?{" "}
-                                    <Link
-                                        href={route("login")}
-                                        className={`hover:underline text-blue-800 hover:text-blue-700 ${
-                                            processing
-                                                ? "pointer-events-none opacity-50"
-                                                : ""
-                                        }`}
-                                    >
-                                        Login
-                                    </Link>
-                                </div>
-                            </div>
-                        </form>
-                        {/* <div className="relative hidden bg-muted md:block">
-                            <img
-                                src="/images/brevet.png"
-                                alt="Image"
-                                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                            <div className="absolute inset-0 flex items-end justify-start px-6 py-8">
-                                <h2 className="text-white text-3xl font-bold">
-                                    Tax <br /> Learning <br /> System
-                                </h2>
-                            </div>
-                        </div> */}
-                    </CardContent>
-                </Card>
-            </div>
-        </GuestLayout>
+                    <Field id="email" label="Email" icon={Mail} error={errors.email}>
+                        <Input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={data.email}
+                            autoComplete="email"
+                            placeholder="nama@email.com"
+                            onChange={(e) => setData("email", e.target.value)}
+                            aria-invalid={!!errors.email}
+                            required
+                            disabled={processing}
+                            className={inputCls}
+                        />
+                    </Field>
+
+                    <Field
+                        id="phone_number"
+                        label="Nomor Telepon"
+                        icon={Phone}
+                        error={errors.phone_number}
+                    >
+                        <Input
+                            id="phone_number"
+                            type="tel"
+                            inputMode="tel"
+                            name="phone_number"
+                            value={data.phone_number}
+                            autoComplete="tel"
+                            placeholder="08xxxxxxxxxx"
+                            onChange={(e) => setData("phone_number", e.target.value)}
+                            aria-invalid={!!errors.phone_number}
+                            required
+                            disabled={processing}
+                            className={inputCls}
+                        />
+                    </Field>
+
+                    <Field
+                        id="npwp"
+                        label="NPWP/NIK"
+                        icon={IdCard}
+                        error={errors.npwp}
+                        hint={`16 digit angka · ${data.npwp.length}/16`}
+                    >
+                        <Input
+                            id="npwp"
+                            name="npwp"
+                            inputMode="numeric"
+                            value={data.npwp}
+                            placeholder="Contoh: 1234567890000000"
+                            onChange={(e) => handleNpwpChange(e.target.value)}
+                            maxLength={16}
+                            pattern="[0-9]{16}"
+                            autoComplete="off"
+                            aria-invalid={!!errors.npwp}
+                            required
+                            disabled={processing}
+                            className={cn(inputCls, "font-mono tracking-wide")}
+                        />
+                    </Field>
+
+                    <Field
+                        id="address"
+                        label="Alamat"
+                        icon={MapPin}
+                        error={errors.address}
+                        className="md:col-span-2"
+                    >
+                        <Input
+                            id="address"
+                            name="address"
+                            value={data.address}
+                            autoComplete="street-address"
+                            placeholder="Jl. Contoh No. 123"
+                            onChange={(e) => setData("address", e.target.value)}
+                            aria-invalid={!!errors.address}
+                            required
+                            disabled={processing}
+                            className={inputCls}
+                        />
+                    </Field>
+
+                    <Field
+                        id="password"
+                        label="Kata Sandi"
+                        icon={LockKeyhole}
+                        error={errors.password}
+                    >
+                        <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            value={data.password}
+                            autoComplete="new-password"
+                            placeholder="Buat kata sandi"
+                            onChange={(e) => setData("password", e.target.value)}
+                            aria-invalid={!!errors.password}
+                            required
+                            disabled={processing}
+                            className={cn(inputCls, "pr-12")}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            disabled={processing}
+                            aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+                            className={eyeBtn}
+                        >
+                            {showPassword ? <EyeOff className="size-[18px]" /> : <Eye className="size-[18px]" />}
+                        </button>
+                    </Field>
+
+                    <Field
+                        id="password_confirmation"
+                        label="Konfirmasi Kata Sandi"
+                        icon={LockKeyhole}
+                        error={errors.password_confirmation}
+                    >
+                        <Input
+                            id="password_confirmation"
+                            type={showConfirmPassword ? "text" : "password"}
+                            name="password_confirmation"
+                            value={data.password_confirmation}
+                            autoComplete="new-password"
+                            placeholder="Ulangi kata sandi"
+                            onChange={(e) =>
+                                setData("password_confirmation", e.target.value)
+                            }
+                            aria-invalid={!!errors.password_confirmation}
+                            required
+                            disabled={processing}
+                            className={cn(inputCls, "pr-12")}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            disabled={processing}
+                            aria-label={
+                                showConfirmPassword
+                                    ? "Sembunyikan konfirmasi kata sandi"
+                                    : "Tampilkan konfirmasi kata sandi"
+                            }
+                            className={eyeBtn}
+                        >
+                            {showConfirmPassword ? (
+                                <EyeOff className="size-[18px]" />
+                            ) : (
+                                <Eye className="size-[18px]" />
+                            )}
+                        </button>
+                    </Field>
+
+                    <div className="mt-2 flex flex-col-reverse items-center gap-4 md:col-span-2 md:flex-row md:justify-between">
+                        <p className="text-sm text-muted-foreground dark:text-white/60">
+                            Sudah memiliki akun?{" "}
+                            <Link
+                                href={route("login")}
+                                className={cn(
+                                    "font-bold text-brand-800 underline-offset-4 hover:underline dark:text-highlight",
+                                    processing && "pointer-events-none opacity-50",
+                                )}
+                            >
+                                Masuk
+                            </Link>
+                        </p>
+                        <Button
+                            type="submit"
+                            disabled={processing}
+                            className="h-11 w-full rounded-[10px] px-10 text-base font-bold shadow-[0_10px_24px_-12px_rgba(13,77,64,0.6)] dark:shadow-none md:w-auto"
+                        >
+                            {processing ? (
+                                <>
+                                    <Loader2 className="animate-spin" />
+                                    Mendaftar...
+                                </>
+                            ) : (
+                                "Daftar"
+                            )}
+                        </Button>
+                    </div>
+                </form>
+            </PortalCard>
+        </AuthShell>
     );
 }

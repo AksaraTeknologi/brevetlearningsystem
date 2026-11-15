@@ -8,7 +8,34 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
-import { DoorOpen, FileText } from "lucide-react";
+import {
+    AlignLeft,
+    Award,
+    Building2,
+    CalendarCheck,
+    CalendarClock,
+    CalendarDays,
+    CalendarRange,
+    DoorOpen,
+    FileText,
+    GraduationCap,
+    Info,
+    MessageSquareText,
+    PlayCircle,
+    StopCircle,
+    UserRound,
+} from "lucide-react";
+import {
+    fmtDate,
+    IconTile,
+    InfoGrid,
+    Notice,
+    Section,
+    Timeline,
+    TONE,
+    toneFromStatus,
+} from "@/Components/app-shell/kit";
+import { cn } from "@/lib/utils";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -86,15 +113,15 @@ function getStatus(start: string, end: string) {
     const endDate = parseLocalDate(end) || new Date(0);
 
     if (now < startDate)
-        return { label: "Belum Mulai", color: "text-gray-500 bg-gray-100" };
+        return { label: "Belum Mulai", color: "text-muted-foreground bg-muted" };
     if (now > endDate)
-        return { label: "Selesai", color: "text-red-700 bg-red-100" };
+        return { label: "Selesai", color: "text-destructive bg-red-100" };
     if (now >= startDate && now <= endDate)
         return {
             label: "Sedang Berlangsung",
-            color: "text-green-700 bg-green-100",
+            color: "text-success bg-green-100",
         };
-    return { label: "-", color: "text-gray-400 bg-gray-50" };
+    return { label: "-", color: "text-gray-400 bg-muted/50" };
 }
 
 export default function DetailCourse({
@@ -172,204 +199,147 @@ export default function DetailCourse({
                     </Breadcrumb>
 
                     {course.has_active_remedial && (
-                        <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 text-sm text-rose-800 flex items-start gap-3 shadow-sm mt-2">
-                            <span className="text-xl leading-none">⚠️</span>
-                            <div>
-                                <h4 className="font-semibold text-rose-900 mb-1">Informasi Ujian Remedial</h4>
-                                <p>
-                                    Anda memiliki ujian remedial aktif yang perlu diselesaikan di kelas ini.
-                                    {!isActive ? (
-                                        <> Silakan klik tombol <strong>Mulai Mengerjakan</strong> di bawah untuk membuka akses pengerjaan remedial.</>
-                                    ) : (
-                                        <> Akses kelas aktif. Silakan pilih tab <strong>Ujian Kelas</strong> di bawah untuk mulai mengerjakan ujian remedial.</>
-                                    )}
-                                </p>
-                            </div>
-                        </div>
+                        <Notice tone="warning" title="Informasi Ujian Remedial">
+                            Anda memiliki ujian remedial aktif yang perlu diselesaikan di kelas ini.
+                            {!isActive ? (
+                                <> Silakan klik tombol <strong>Mulai Mengerjakan</strong> di bawah untuk membuka akses pengerjaan remedial.</>
+                            ) : (
+                                <> Akses kelas aktif. Silakan pilih tab <strong>Ujian Kelas</strong> di bawah untuk mulai mengerjakan ujian remedial.</>
+                            )}
+                        </Notice>
                     )}
 
-                    <div className="flex flex-col md:flex-row md:items-center justify-between mt-2 gap-4">
-                        <div>
-                            <h1 className="text-2xl font-bold text-primary mb-1">
-                                Kelas {course.name}
-                            </h1>
-                            <div className="text-sm text-gray-500">
-                                Pengajar :{" "}
-                                <span className="font-semibold text-primary">
-                                    {teacher?.name || "-"}
+                    {/* Hero kelas */}
+                    <section className="relative overflow-hidden rounded-2xl bg-brand p-5 text-brand-foreground shadow-[0_20px_40px_-24px_rgba(13,77,64,0.6)] md:p-6">
+                        <span aria-hidden className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-highlight/15" />
+                        <div className="relative flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                            <div className="flex min-w-0 items-start gap-4">
+                                <span className="hidden size-14 shrink-0 place-items-center rounded-2xl bg-highlight text-highlight-foreground sm:grid">
+                                    <GraduationCap className="size-7" />
                                 </span>
-                            </div>
-                            <div className="text-sm text-gray-500">
-                                Institusi :{" "}
-                                <span className="font-semibold text-primary">
-                                    {teacher?.institution || "-"}
-                                </span>
-                            </div>
-                            <div
-                                className={`mt-2 w-fit px-2 py-1 rounded text-xs font-semibold ${status.color}`}
-                            >
-                                Kelas {status.label}
-                            </div>
-                        </div>
-                        <div className="flex flex-col md:items-end gap-2">
-                            {!isActive ? (
-                                <Button
-                                    onClick={() =>
-                                        router.post(
-                                            route("courses.start", course.id),
-                                        )
-                                    }
-                                    variant="outline"
-                                    className="text-green-700 bg-green-50 border-green-400 hover:bg-green-100 hover:text-green-700"
-                                    disabled={
-                                        (status.label !== "Sedang Berlangsung" && !course.has_active_remedial) ||
-                                        hasOtherActive
-                                    }
-                                >
-                                    Mulai Mengerjakan
-                                </Button>
-                            ) : (
-                                <Button
-                                    variant="outline"
-                                    className="text-orange-700 bg-orange-50 border-orange-200 hover:bg-orange-100 hover:text-orange-700"
-                                    onClick={() =>
-                                        router.post(route("courses.stop"))
-                                    }
-                                >
-                                    Hentikan Pengerjaan
-                                </Button>
-                            )}
-                            {status.label === "Sedang Berlangsung" ? (
-                                hasOtherActive && (
-                                    <div className="text-sm md:text-right text-red-600 mt-1">
-                                        Anda memiliki kelas aktif lain.
-                                        <br />
-                                        Selesaikan kelas tersebut terlebih
-                                        dahulu sebelum mengerjakan kelas ini.
+                                <div className="min-w-0 space-y-1.5">
+                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold">
+                                        <span className={cn("size-1.5 rounded-full", TONE[toneFromStatus(status.label)].dot)} />
+                                        Kelas {status.label}
+                                    </span>
+                                    <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Kelas {course.name}</h1>
+                                    <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-white/80">
+                                        <span className="inline-flex items-center gap-1.5">
+                                            <UserRound className="size-4 text-highlight" />
+                                            Pengajar: <strong className="text-white">{teacher?.name || "-"}</strong>
+                                        </span>
+                                        <span className="inline-flex items-center gap-1.5">
+                                            <Building2 className="size-4 text-highlight" />
+                                            Institusi: <strong className="text-white">{teacher?.institution || "-"}</strong>
+                                        </span>
                                     </div>
-                                )
-                            ) : (
-                                <div className="text-sm md:text-right mt-1">
-                                    {status.label === "Belum Mulai" && (
-                                        <div className="text-red-600">
-                                            Kelas belum mulai.
-                                            <br />
-                                            Tunggu waktu mulai kelas untuk dapat
-                                            mengerjakan.
-                                        </div>
-                                    )}
-                                    {status.label === "Selesai" && (
-                                        course.has_active_remedial ? (
-                                            <div className="bg-rose-50 border border-rose-200 rounded-lg p-2.5 text-xs text-rose-800 text-left md:text-right max-w-sm">
-                                                <p className="font-semibold mb-0.5">⚠️ Perlu Remedial</p>
-                                                <p>
-                                                    Terdapat ujian remedial yang perlu Anda kerjakan pada kelas ini.
-                                                    {course.remedial_deadline && (
-                                                        <> Batas akhir pengumpulan: <br /><span className="font-semibold">{new Date(course.remedial_deadline).toLocaleString("id-ID", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })} WIB</span>.</>
-                                                    )}
-                                                </p>
-                                            </div>
-                                        ) : (
-                                            <div className="text-red-600">
-                                                Kelas sudah selesai.
-                                                <br />
-                                                Anda tidak dapat mengerjakan kelas
-                                                ini lagi.
-                                            </div>
-                                        )
-                                    )}
                                 </div>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="rounded-xl bg-white border shadow p-6 flex flex-col gap-2">
-                        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-2">
-                            <div className="col-span-1 md:col-span-2">
-                                <Button
-                                    variant="outline"
-                                    className="text-blue-700 bg-blue-50 border-blue-200 hover:bg-blue-100"
-                                    asChild
-                                >
-                                    <Link
-                                        href={route(
-                                            "course.showModules",
-                                            course.id,
-                                        )}
-                                    >
+                            </div>
+                            <div className="flex shrink-0 flex-wrap gap-2">
+                                <Button variant="outline" className="border-white/25 bg-white/10 text-white hover:bg-white/20 hover:text-white" asChild>
+                                    <Link href={route("course.showModules", course.id)}>
                                         <FileText size={16} />
-                                        Lihat Modul ({course.modules_count || 0}
-                                        )
+                                        Lihat Modul ({course.modules_count || 0})
                                     </Link>
                                 </Button>
-                            </div>
-
-                            <div className="flex-1">
-                                <div className="text-sm text-gray-500">
-                                    Deskripsi
-                                </div>
-                                <div className="font-medium text-gray-700 mb-2">
-                                    {course.description || "-"}
-                                </div>
-                                <div>
-                                    <div className="text-sm text-gray-500">
-                                        Durasi Pengerjaan
-                                    </div>
-                                    <div className="font-medium text-gray-700">
-                                        {course.start_date
-                                            ? new Date(
-                                                  course.start_date,
-                                              ).toLocaleDateString("id-ID", {
-                                                  day: "numeric",
-                                                  month: "long",
-                                                  year: "numeric",
-                                              })
-                                            : "-"}
-                                        {" - "}
-                                        {course.end_date
-                                            ? new Date(
-                                                  course.end_date,
-                                              ).toLocaleDateString("id-ID", {
-                                                  day: "numeric",
-                                                  month: "long",
-                                                  year: "numeric",
-                                              })
-                                            : "-"}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex-1 flex flex-col gap-2">
-                                <div>
-                                    <span className="text-sm text-gray-500">
-                                        Nilai Anda
-                                    </span>
-                                    <div className="font-mono text-lg font-bold text-primary">
-                                        {averageScore !== null ? (
-                                            averageScore
-                                        ) : (
-                                            <span className="italic text-gray-400">
-                                                Belum dinilai
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                                <div>
-                                    <span className="text-sm text-gray-500">
-                                        Feedback
-                                    </span>
-                                    <div className="text-gray-700">
-                                        {pivot?.feedback ? (
-                                            pivot.feedback
-                                        ) : (
-                                            <span className="italic text-gray-400">
-                                                Belum ada feedback
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
+                                {!isActive ? (
+                                    <Button
+                                        variant="highlight"
+                                        onClick={() => router.post(route("courses.start", course.id))}
+                                        disabled={
+                                            (status.label !== "Sedang Berlangsung" && !course.has_active_remedial) ||
+                                            hasOtherActive
+                                        }
+                                    >
+                                        <PlayCircle />
+                                        Mulai Mengerjakan
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        variant="outline"
+                                        className="border-highlight/50 bg-highlight/10 text-highlight hover:bg-highlight/20 hover:text-highlight"
+                                        onClick={() => router.post(route("courses.stop"))}
+                                    >
+                                        <StopCircle />
+                                        Hentikan Pengerjaan
+                                    </Button>
+                                )}
                             </div>
                         </div>
-                    </div>
+                        <div className="relative mt-5 grid grid-cols-2 gap-2 md:grid-cols-4">
+                            {[
+                                { icon: CalendarDays, label: "Mulai", value: fmtDate(course.start_date) },
+                                { icon: CalendarCheck, label: "Selesai", value: fmtDate(course.end_date) },
+                                {
+                                    icon: Award,
+                                    label: "Nilai Anda",
+                                    value: averageScore !== null && averageScore !== undefined ? averageScore : "Belum dinilai",
+                                },
+                                { icon: FileText, label: "Modul", value: course.modules_count || 0 },
+                            ].map((m) => (
+                                <div key={m.label} className="flex items-center gap-2.5 rounded-xl bg-white/10 px-3 py-2.5">
+                                    <m.icon className="size-4 shrink-0 text-highlight" />
+                                    <div className="min-w-0">
+                                        <p className="truncate text-[11px] font-semibold uppercase tracking-wide text-white/60">{m.label}</p>
+                                        <p className="truncate text-sm font-semibold">{m.value}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="relative mt-4 [&_.bg-muted]:bg-white/15 [&_.text-muted-foreground]:text-white/70 [&_.text-foreground]:text-white">
+                            <Timeline start={course.start_date} end={course.end_date} tone="highlight" startLabel="Progres durasi kelas" />
+                        </div>
+                    </section>
+
+                    {status.label === "Sedang Berlangsung" ? (
+                        hasOtherActive && (
+                            <Notice tone="destructive">
+                                Anda memiliki kelas aktif lain. Selesaikan kelas tersebut terlebih dahulu sebelum mengerjakan kelas ini.
+                            </Notice>
+                        )
+                    ) : status.label === "Belum Mulai" ? (
+                        <Notice tone="info">Kelas belum mulai. Tunggu waktu mulai kelas untuk dapat mengerjakan.</Notice>
+                    ) : status.label === "Selesai" ? (
+                        course.has_active_remedial ? (
+                            <Notice tone="warning" title="Perlu Remedial">
+                                Terdapat ujian remedial yang perlu Anda kerjakan pada kelas ini.
+                                {course.remedial_deadline && (
+                                    <>
+                                        {" "}Batas akhir pengumpulan:{" "}
+                                        <span className="font-semibold">
+                                            {new Date(course.remedial_deadline).toLocaleString("id-ID", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })} WIB
+                                        </span>
+                                        .
+                                    </>
+                                )}
+                            </Notice>
+                        ) : (
+                            <Notice tone="steel">Kelas sudah selesai. Anda tidak dapat mengerjakan kelas ini lagi.</Notice>
+                        )
+                    ) : null}
+
+                    <Section icon={Info} title="Informasi Kelas">
+                        <InfoGrid
+                            items={[
+                                { icon: AlignLeft, label: "Deskripsi", value: course.description || "-", full: true },
+                                {
+                                    icon: CalendarRange,
+                                    label: "Durasi Pengerjaan",
+                                    value: `${fmtDate(course.start_date)} – ${fmtDate(course.end_date)}`,
+                                },
+                                {
+                                    icon: MessageSquareText,
+                                    label: "Feedback",
+                                    value: pivot?.feedback ? (
+                                        pivot.feedback
+                                    ) : (
+                                        <span className="font-medium italic text-muted-foreground">Belum ada feedback</span>
+                                    ),
+                                    full: true,
+                                },
+                            ]}
+                        />
+                    </Section>
 
                     {/* Tugas / Submission Kelas Siswa */}
                     <StudentCourseSubmissionsSection
@@ -377,13 +347,14 @@ export default function DetailCourse({
                         courseSubmissions={courseSubmissions}
                     />
 
-                    <div className="rounded-xl bg-white border shadow p-6 space-y-4">
-                        <h2 className="text-lg font-semibold text-primary">
+                    <div className="tls-card p-5 md:p-6 space-y-4">
+                        <h2 className="flex items-center gap-3 text-base font-bold text-brand-950">
+                            <IconTile icon={CalendarClock} size="sm" />
                             Jadwal Kelas & Ujian Kelas
                         </h2>
 
                         <div>
-                            <h3 className="font-semibold text-gray-800 mb-2">
+                            <h3 className="font-semibold text-foreground mb-2">
                                 Jadwal Kelas ({courseSchedules.length})
                             </h3>
                             {courseSchedules.length > 0 ? (
@@ -391,13 +362,13 @@ export default function DetailCourse({
                                     {courseSchedules.map((schedule: any) => (
                                         <div
                                             key={schedule.id}
-                                            className="rounded-lg border p-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
+                                            className="flex flex-col gap-2 rounded-xl border border-l-4 border-border border-l-info p-3 md:flex-row md:items-center md:justify-between"
                                         >
                                             <div>
-                                                <div className="font-medium text-gray-800">
+                                                <div className="font-medium text-foreground">
                                                     {schedule.title}
                                                 </div>
-                                                <div className="text-sm text-gray-500">
+                                                <div className="text-sm text-muted-foreground">
                                                     {formatLocalDateTime(
                                                         schedule.scheduled_at,
                                                     )}
@@ -413,7 +384,7 @@ export default function DetailCourse({
                                                     Buka Link Meeting
                                                 </a>
                                             ) : (
-                                                <span className="text-sm text-gray-500 italic">
+                                                <span className="text-sm text-muted-foreground italic">
                                                     Link meeting belum tersedia
                                                 </span>
                                             )}
@@ -421,14 +392,14 @@ export default function DetailCourse({
                                     ))}
                                 </div>
                             ) : (
-                                <p className="text-sm text-gray-500 italic">
+                                <p className="text-sm text-muted-foreground italic">
                                     Belum ada jadwal kelas.
                                 </p>
                             )}
                         </div>
 
                         <div>
-                            <h3 className="font-semibold text-gray-800 mb-2">
+                            <h3 className="font-semibold text-foreground mb-2">
                                 Ujian Kelas ({courseTests.length})
                             </h3>
                             {courseTests.length > 0 ? (
@@ -501,11 +472,11 @@ export default function DetailCourse({
                                         return (
                                             <div
                                                 key={courseTest.id}
-                                                className="rounded-xl border bg-slate-50/60 p-4"
+                                                className="tls-stat p-4"
                                             >
                                                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
                                                     <div>
-                                                        <div className="font-semibold text-gray-800 text-base flex flex-wrap items-center gap-2">
+                                                        <div className="font-semibold text-foreground text-base flex flex-wrap items-center gap-2">
                                                             {courseTest.title}
                                                             {isRemedialMode && (
                                                                 <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold text-rose-700 bg-rose-100 border border-rose-200">
@@ -556,23 +527,23 @@ export default function DetailCourse({
                                                 </div>
 
                                                 <div className="mt-3 grid grid-cols-2 md:grid-cols-3 gap-2">
-                                                    <div className="rounded-md border bg-white p-2">
-                                                        <p className="text-[11px] uppercase tracking-wide text-gray-500">
+                                                    <div className="rounded-md border bg-card p-2">
+                                                        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
                                                             Durasi
                                                         </p>
-                                                        <p className="text-sm font-semibold text-gray-800">
+                                                        <p className="text-sm font-semibold text-foreground">
                                                             {courseTest.duration ||
                                                                 0}{" "}
                                                             menit
                                                         </p>
                                                     </div>
-                                                    <div className="rounded-md border bg-white p-2">
-                                                        <p className="text-[11px] uppercase tracking-wide text-gray-500">
+                                                    <div className="rounded-md border bg-card p-2">
+                                                        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
                                                             Kesempatan
                                                             Mengerjakan
                                                         </p>
                                                         <div className="mt-1 flex items-center justify-between gap-2">
-                                                            <p className="text-sm font-semibold text-gray-800">
+                                                            <p className="text-sm font-semibold text-foreground">
                                                                 {isRemedialMode
                                                                      ? (courseTest?.remedial_status === 'passed' ? "Lulus Remedial" : "Tidak terbatas")
                                                                      : (isUnlimited
@@ -597,7 +568,7 @@ export default function DetailCourse({
                                                                         }}
                                                                     />
                                                                 </div>
-                                                                <p className="mt-1 text-[11px] text-gray-500">
+                                                                <p className="mt-1 text-[11px] text-muted-foreground">
                                                                     Dipakai{" "}
                                                                     {
                                                                         usedAttempts
@@ -610,7 +581,7 @@ export default function DetailCourse({
                                                             </>
                                                         )}
                                                         {isUnlimited && (
-                                                            <p className="mt-1 text-[11px] text-gray-500">
+                                                            <p className="mt-1 text-[11px] text-muted-foreground">
                                                                 Dipakai{" "}
                                                                 {usedAttempts}{" "}
                                                                 kali (tanpa
@@ -626,10 +597,10 @@ export default function DetailCourse({
                                                                       .passed
                                                                     ? "border-emerald-200 bg-emerald-50"
                                                                     : "border-rose-200 bg-rose-50"
-                                                                : "bg-white"
+                                                                : "bg-card"
                                                         }`}
                                                     >
-                                                        <p className="text-[11px] uppercase tracking-wide text-gray-500">
+                                                        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
                                                             {showScore
                                                                 ? "Nilai Terbaik"
                                                                 : "Status"}
@@ -642,7 +613,7 @@ export default function DetailCourse({
                                                                           .passed
                                                                         ? "text-emerald-700"
                                                                         : "text-rose-700"
-                                                                    : "text-gray-800"
+                                                                    : "text-foreground"
                                                             }`}
                                                         >
                                                             {courseTest.best_attempt
@@ -672,14 +643,14 @@ export default function DetailCourse({
                                                     </div>
                                                 </div>
 
-                                                <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-600">
-                                                    <div className="rounded-md border border-dashed bg-white p-2">
+                                                <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-muted-foreground">
+                                                    <div className="rounded-md border border-dashed bg-card p-2">
                                                         Jadwal Mulai:{" "}
                                                         {formatLocalDateTime(
                                                             courseTest.start_date,
                                                         )}
                                                     </div>
-                                                    <div className="rounded-md border border-dashed bg-white p-2">
+                                                    <div className="rounded-md border border-dashed bg-card p-2">
                                                         Jadwal Selesai:{" "}
                                                         {formatLocalDateTime(
                                                             courseTest.end_date,
@@ -701,7 +672,7 @@ export default function DetailCourse({
                                     })}
                                 </div>
                             ) : (
-                                <p className="text-sm text-gray-500 italic">
+                                <p className="text-sm text-muted-foreground italic">
                                     Belum ada ujian kelas.
                                 </p>
                             )}
@@ -860,7 +831,7 @@ export default function DetailCourse({
                         <AlertDialogTrigger asChild>
                             <Button
                                 variant="outline"
-                                className="text-red-700 border-red-200 bg-red-50 hover:bg-red-100"
+                                className="text-destructive border-red-200 bg-red-50 hover:bg-red-100"
                             >
                                 <DoorOpen /> Keluar Kelas
                             </Button>
@@ -880,7 +851,7 @@ export default function DetailCourse({
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Batal</AlertDialogCancel>
                                 <AlertDialogAction
-                                    className="bg-red-600 text-white hover:bg-red-700"
+                                    className="bg-destructive text-white hover:bg-red-700"
                                     onClick={() => {
                                         router.delete(
                                             route("courses.leave", course.id),

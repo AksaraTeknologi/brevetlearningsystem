@@ -27,14 +27,14 @@ export default function TabL3D({
     l3dc: L3DCItem[];
 }) {
     return (
-        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
             <h2 className="text-2xl font-semibold">DAFTAR NOMINATIF (L-3D)</h2>
 
             <div>
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
                             <Label className="text-sm">Tahun Pajak</Label>
@@ -42,7 +42,7 @@ export default function TabL3D({
                                 type="text"
                                 value={String(spt.year)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
@@ -51,7 +51,7 @@ export default function TabL3D({
                                 type="text"
                                 value={user.npwp}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </div>
@@ -60,28 +60,28 @@ export default function TabL3D({
 
             <Accordion type="multiple" defaultValue={["a", "b", "c"]}>
                 <AccordionItem value="a">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         A. DAFTAR NOMINATIF BIAYA ENTERTAINMENT
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full space-y-4">
+                    <AccordionContent className="p-4 bg-card w-full space-y-4">
                         <SectionL3DA data={l3da ?? []} sptOpId={sptOpId} />
                     </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="b">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         B. DAFTAR NOMINATIF BIAYA PROMOSI
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full space-y-4">
+                    <AccordionContent className="p-4 bg-card w-full space-y-4">
                         <SectionL3DB data={l3db ?? []} sptOpId={sptOpId} />
                     </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="c">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         C. DAFTAR NOMINATIF PIUTANG TAK TERTAGIH
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full space-y-4">
+                    <AccordionContent className="p-4 bg-card w-full space-y-4">
                         <SectionL3DC data={l3dc ?? []} sptOpId={sptOpId} />
                     </AccordionContent>
                 </AccordionItem>

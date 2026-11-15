@@ -1,3 +1,8 @@
+import {
+    FormPageHeader,
+    FormSection,
+    FormActions,
+} from "@/Components/app-shell/FormPage";
 import { Button } from "@/Components/ui/button";
 import { Form } from "@/Components/ui/form";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
@@ -109,66 +114,59 @@ export default function FormCreateBP21({ user, objects, bupots, ter }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Buat eBupot BP21
-                    </h1>
+                    <FormPageHeader
+                        title="Buat eBupot BP21"
+                        backHref={route("bp21.notIssued")}
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
+                    <div>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <File size={16} />
-                                    <h3 className="font-medium">
-                                        Informasi Umum
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<File />}
+                                    title="Informasi Umum"
+                                >
                                     <FormFieldsGeneralInformation
                                         form={form}
                                         bupots={bupots}
                                         isEditMode={false}
                                     />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Banknote size={16} />
-                                    <h3 className="font-medium">
-                                        Pajak Penghasilan (Rp)
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<Banknote />}
+                                    title="Pajak Penghasilan (Rp)"
+                                >
                                     <FormFieldsIncomeTax
                                         form={form}
                                         ter={ter}
                                         objects={objects}
                                     />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <BookMarked size={16} />
-                                    <h3 className="font-medium">
-                                        Dokumen Referensi
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<BookMarked />}
+                                    title="Dokumen Referensi"
+                                >
                                     <FormFieldsReferenceDocument
                                         form={form}
                                         user={user}
                                     />
-                                </div>
-                                <Button
-                                    type="submit"
-                                    className="mr-2"
-                                    onClick={() => handleSetStatus("created")}
-                                >
-                                    Kirim
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    onClick={() => handleSetStatus("draft")}
-                                >
-                                    Simpan Draf
-                                </Button>
+                                </FormSection>
+                                <FormActions cancelHref={route("bp21.notIssued")}>
+                                    <Button
+                                        type="submit"
+                                        onClick={() => handleSetStatus("created")}
+                                    >
+                                        Kirim
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        onClick={() => handleSetStatus("draft")}
+                                    >
+                                        Simpan Draf
+                                    </Button>
+                                </FormActions>
                             </form>
                         </Form>
                     </div>

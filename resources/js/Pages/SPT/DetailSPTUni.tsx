@@ -1,3 +1,4 @@
+import { FormPageHeader } from "@/Components/app-shell/FormPage";
 import { usePage, router, Link } from "@inertiajs/react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
@@ -1070,7 +1071,7 @@ const DetailSPT = ({
         <Authenticated>
             <Head title="SPT Masa PPH Unifikasi" />
             <div className="py-8 mx-auto max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
-                <div className="flex flex-1 flex-col gap-4 px-4 pt-0">
+                <div className="tls-spt flex flex-1 flex-col gap-4">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -1085,10 +1086,11 @@ const DetailSPT = ({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        SPT Masa PPH Unifikasi
-                    </h1>
-                    <div className="flex flex-col gap-4 bg-sidebar border rounded-xl p-5 md:p-8">
+                    <FormPageHeader
+                        title="SPT Masa PPH Unifikasi"
+                        backHref={route("spt.konsep")}
+                    />
+                    <div className="flex flex-col gap-4">
                         <Tabs defaultValue="Main Form" className="w-full">
                             <TabsList className="flex justify-start gap-2">
                                 <TabsTrigger value="Main Form">
@@ -1121,7 +1123,7 @@ const DetailSPT = ({
                                                 <AccordionTrigger className="bg-muted p-4 w-full rounded">
                                                     A. IDENTITAS PEMOTONG
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <div className="flex flex-col space-y-2">
                                                         <FormField
                                                             name="user.name"
@@ -1235,47 +1237,47 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-1">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     B. PAJAK PENGHASILAN
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <Table>
                                                         <TableHeader>
                                                             <TableRow>
-                                                                <TableHead className="border border-gray-300" rowSpan={2}>
+                                                                <TableHead className="border border-input" rowSpan={2}>
                                                                     No
                                                                 </TableHead>
-                                                                <TableHead className="border border-gray-300 text-center w-[15%]" rowSpan={2}>
+                                                                <TableHead className="border border-input text-center w-[15%]" rowSpan={2}>
                                                                     Detail
                                                                 </TableHead>
-                                                                <TableHead className="border border-gray-300 text-center w-[25%]" colSpan={2}>
+                                                                <TableHead className="border border-input text-center w-[25%]" colSpan={2}>
                                                                     Pajak Penghasilan
                                                                 </TableHead>
-                                                                <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                                <TableHead className="border border-input text-center" rowSpan={2}>
                                                                     PPh Ditanggung Pemerintah
                                                                 </TableHead>
-                                                                <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                                <TableHead className="border border-input text-center" rowSpan={2}>
                                                                     Jumlah PPh Dibayar
                                                                 </TableHead>
-                                                                <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                                <TableHead className="border border-input text-center" rowSpan={2}>
                                                                     jumlah PPh dibayar dari SPT yang dibetulkan
                                                                 </TableHead>
-                                                                <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                                <TableHead className="border border-input text-center" rowSpan={2}>
                                                                     PPh Kurang Bayar/Lebih Bayar Karena Pembetulan
                                                                 </TableHead>
                                                             </TableRow>
                                                             <TableRow>
-                                                                <TableHead className="border border-gray-300 text-center ">
+                                                                <TableHead className="border border-input text-center ">
                                                                     Setor Sendiri
                                                                 </TableHead>
-                                                                <TableHead className="border border-gray-300 text-center ">
+                                                                <TableHead className="border border-input text-center ">
                                                                     Pemotongan
                                                                 </TableHead>
                                                             </TableRow>
                                                         </TableHeader>
                                                         <TableBody>
                                                             <TableRow
-                                                                className="cursor-pointer hover:bg-gray-100"
+                                                                className="cursor-pointer hover:bg-muted"
                                                                 onClick={() => toggleRow("article4")}
                                                             >
                                                                 <TableCell className="pl-4">
@@ -1822,7 +1824,7 @@ const DetailSPT = ({
                                                             )}
 
                                                             <TableRow
-                                                                className="cursor-pointer hover:bg-gray-100"
+                                                                className="cursor-pointer hover:bg-muted"
                                                                 onClick={() => toggleRow("article15")}
                                                             >
                                                                 <TableCell className="pl-4">
@@ -2235,7 +2237,7 @@ const DetailSPT = ({
                                                             )}
 
                                                             <TableRow
-                                                                className="cursor-pointer hover:bg-gray-100"
+                                                                className="cursor-pointer hover:bg-muted"
                                                                 onClick={() => toggleRow("article22")}
                                                             >
                                                                 <TableCell className="pl-4">
@@ -2781,7 +2783,7 @@ const DetailSPT = ({
                                                             )}
 
                                                             <TableRow
-                                                                className="cursor-pointer hover:bg-gray-100"
+                                                                className="cursor-pointer hover:bg-muted"
                                                                 onClick={() => toggleRow("article23")}
                                                             >
                                                                 <TableCell className="pl-4">
@@ -3060,7 +3062,7 @@ const DetailSPT = ({
                                                             )}
 
                                                             <TableRow
-                                                                className="cursor-pointer hover:bg-gray-100"
+                                                                className="cursor-pointer hover:bg-muted"
                                                                 onClick={() => toggleRow("article26")}
                                                             >
                                                                 <TableCell className="pl-4">
@@ -3337,7 +3339,7 @@ const DetailSPT = ({
                                                                     </TableCell>
                                                                 </TableRow>
                                                             )}
-                                                            <TableRow className="bg-slate-100">
+                                                            <TableRow className="bg-muted">
                                                                 <TableCell ></TableCell>
                                                                 <TableCell className="font-medium">
                                                                     TOTAL PAJAK PENDAPATAN
@@ -3481,7 +3483,7 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-penyerahan">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     C. PERNYATAAN DAN TANDA TANGAN
                                                 </AccordionTrigger>
                                                 <AccordionContent className="p-4 w-full">
@@ -3570,7 +3572,7 @@ const DetailSPT = ({
                                                             />
 
                                                         </div>
-                                                        <div className="flex justify-end mt-4">
+                                                        <div className="mt-4 flex justify-end border-t border-border pt-4">
                                                             <Button 
                                                                 type="submit"
                                                                 disabled={!pernyataanSetuju}

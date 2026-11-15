@@ -135,7 +135,7 @@ export default function DetailCourseTest({
                             <h1 className="text-xl sm:text-2xl font-semibold text-primary">
                                 Detail Ujian Kelas: {courseTest?.title}
                             </h1>
-                            <p className="text-sm text-gray-500 mt-1">
+                            <p className="text-sm text-muted-foreground mt-1">
                                 Kelas:{" "}
                                 <span className="font-semibold">
                                     {course?.name || "-"}
@@ -155,13 +155,13 @@ export default function DetailCourseTest({
                         </Button>
                     </div>
 
-                    <div className="rounded-xl border bg-white p-6 shadow space-y-4">
+                    <div className="rounded-xl border bg-card p-6 shadow space-y-4">
                         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                            <div className="rounded-lg border bg-slate-50 p-3">
-                                <p className="text-xs uppercase tracking-wide text-gray-500">
+                            <div className="rounded-lg border bg-muted/50 p-3">
+                                <p className="text-xs uppercase tracking-wide text-muted-foreground">
                                     Jumlah Peserta Kelas
                                 </p>
-                                <p className="text-2xl font-semibold text-gray-800">
+                                <p className="text-2xl font-semibold text-foreground">
                                     {totalParticipants}
                                 </p>
                             </div>
@@ -189,22 +189,22 @@ export default function DetailCourseTest({
 
                         <div className="grid grid-cols-1 gap-2 md:grid-cols-3 col-span-2 text-sm">
                             <div className="rounded-md border p-3">
-                                <p className="text-gray-500">Durasi</p>
-                                <p className="font-semibold text-gray-800">
+                                <p className="text-muted-foreground">Durasi</p>
+                                <p className="font-semibold text-foreground">
                                     {courseTest?.duration || 0} menit
                                 </p>
                             </div>
                             <div className="rounded-md border p-3">
-                                <p className="text-gray-500">Passing Score</p>
-                                <p className="font-semibold text-gray-800">
+                                <p className="text-muted-foreground">Passing Score</p>
+                                <p className="font-semibold text-foreground">
                                     {courseTest?.passing_score || 0}
                                 </p>
                             </div>
                             <div className="rounded-md border p-3">
-                                <p className="text-gray-500">
+                                <p className="text-muted-foreground">
                                     Maksimal Pengerjaan
                                 </p>
-                                <p className="font-semibold text-gray-800">
+                                <p className="font-semibold text-foreground">
                                     {Number(courseTest?.max_attempts ?? 0) <= 0
                                         ? "Tidak terbatas"
                                         : courseTest?.max_attempts}
@@ -213,14 +213,14 @@ export default function DetailCourseTest({
                         </div>
                         <div className="grid grid-cols-1 gap-2 md:grid-cols-2 text-sm">
                             <div className="rounded-md border border-dashed p-3">
-                                <p className="text-gray-500">Mulai Ujian</p>
-                                <p className="font-semibold text-gray-800">
+                                <p className="text-muted-foreground">Mulai Ujian</p>
+                                <p className="font-semibold text-foreground">
                                     {formatLocalDateTime(courseTest?.start_date)}
                                 </p>
                             </div>
                             <div className="rounded-md border border-dashed p-3">
-                                <p className="text-gray-500">Selesai Ujian</p>
-                                <p className="font-semibold text-gray-800">
+                                <p className="text-muted-foreground">Selesai Ujian</p>
+                                <p className="font-semibold text-foreground">
                                     {formatLocalDateTime(courseTest?.end_date)}
                                 </p>
                             </div>
@@ -240,7 +240,7 @@ export default function DetailCourseTest({
                         <ReferenceLinksDisplay links={courseTest?.reference_link} />
                     </div>
 
-                    <div className="rounded-xl border bg-white p-6 shadow">
+                    <div className="rounded-xl border bg-card p-6 shadow">
                         <Tabs defaultValue="participants">
                             <TabsList>
                                 <TabsTrigger value="participants">
@@ -279,7 +279,7 @@ export default function DetailCourseTest({
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-sm">
                                             <thead>
-                                                <tr className="text-left text-gray-500 border-b">
+                                                <tr className="text-left text-muted-foreground border-b">
                                                     <th className="py-2">
                                                         Nama
                                                     </th>
@@ -301,22 +301,16 @@ export default function DetailCourseTest({
                                                             key={participant.id}
                                                             className="border-b last:border-b-0"
                                                         >
-                                                            <td className="py-2 font-medium text-gray-800">
+                                                            <td className="py-2 font-medium text-foreground">
                                                                 <div className="flex items-center gap-3">
-                                                                    {participant
-                                                                        ?.user
-                                                                        ?.profile_url ? (
+                                                                    {participant?.user?.profile_url ? (
                                                                         <img
-                                                                            src={
-                                                                                participant
-                                                                                    .user
-                                                                                    .profile_url
-                                                                            }
+                                                                            src={participant.user.profile_url}
                                                                             alt={`Foto profil ${participant.user.name}`}
-                                                                            className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-teal-100"
+                                                                            className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-border shrink-0"
                                                                         />
                                                                     ) : (
-                                                                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-teal-600 to-cyan-700 text-xs font-bold text-white shadow-sm shrink-0">
+                                                                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-brand-700 to-brand-900 text-xs font-bold text-white shadow-sm shrink-0">
                                                                             {getInitials(
                                                                                 participant
                                                                                     ?.user
@@ -333,13 +327,13 @@ export default function DetailCourseTest({
                                                                     </span>
                                                                 </div>
                                                             </td>
-                                                            <td className="py-2 text-gray-600">
+                                                            <td className="py-2 text-muted-foreground">
                                                                 {participant
                                                                     ?.user
                                                                     ?.email ||
                                                                     "-"}
                                                             </td>
-                                                            <td className="py-2 text-gray-800 font-semibold">
+                                                            <td className="py-2 text-foreground font-semibold">
                                                                 {participant?.best_score ??
                                                                     "-"}
                                                             </td>
@@ -348,7 +342,7 @@ export default function DetailCourseTest({
                                                                     null ||
                                                                 typeof participant?.best_score ===
                                                                     "undefined" ? (
-                                                                    <span className="inline-flex rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">
+                                                                    <span className="inline-flex rounded-full border border-border bg-muted px-2 py-0.5 text-xs font-semibold text-muted-foreground">
                                                                         Belum
                                                                         Mengerjakan
                                                                     </span>
@@ -370,7 +364,7 @@ export default function DetailCourseTest({
                                         </table>
                                     </div>
                                 ) : (
-                                    <p className="text-sm text-gray-500 italic">
+                                    <p className="text-sm text-muted-foreground italic">
                                         Belum ada peserta kelas.
                                     </p>
                                 )}
@@ -381,7 +375,7 @@ export default function DetailCourseTest({
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-sm">
                                             <thead>
-                                                <tr className="text-left text-gray-500 border-b">
+                                                <tr className="text-left text-muted-foreground border-b">
                                                     <th className="py-2">
                                                         Peserta
                                                     </th>
@@ -406,22 +400,16 @@ export default function DetailCourseTest({
                                                             key={attempt.id}
                                                             className="border-b last:border-b-0"
                                                         >
-                                                            <td className="py-2 font-medium text-gray-800">
+                                                            <td className="py-2 font-medium text-foreground">
                                                                 <div className="flex items-center gap-3">
-                                                                    {attempt
-                                                                        ?.user
-                                                                        ?.profile_url ? (
+                                                                    {attempt?.user?.profile_url ? (
                                                                         <img
-                                                                            src={
-                                                                                attempt
-                                                                                    .user
-                                                                                    .profile_url
-                                                                            }
+                                                                            src={attempt.user.profile_url}
                                                                             alt={`Foto profil ${attempt.user.name}`}
-                                                                            className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-teal-100"
+                                                                            className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-border shrink-0"
                                                                         />
                                                                     ) : (
-                                                                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-teal-600 to-cyan-700 text-xs font-bold text-white shadow-sm shrink-0">
+                                                                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-brand-700 to-brand-900 text-xs font-bold text-white shadow-sm shrink-0">
                                                                             {getInitials(
                                                                                 attempt
                                                                                     ?.user
@@ -438,13 +426,13 @@ export default function DetailCourseTest({
                                                                     </span>
                                                                 </div>
                                                             </td>
-                                                            <td className="py-2 text-gray-600">
+                                                            <td className="py-2 text-muted-foreground">
                                                                 {attempt
                                                                     ?.user
                                                                     ?.email ||
                                                                     "-"}
                                                             </td>
-                                                            <td className="py-2 text-gray-800 font-semibold">
+                                                            <td className="py-2 text-foreground font-semibold">
                                                                 {attempt.score ??
                                                                     "-"}
                                                             </td>
@@ -467,7 +455,7 @@ export default function DetailCourseTest({
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className="py-2 text-gray-600">
+                                                            <td className="py-2 text-muted-foreground">
                                                                 {formatLocalDateTime(
                                                                     attempt.submitted_at,
                                                                 )}
@@ -479,7 +467,7 @@ export default function DetailCourseTest({
                                         </table>
                                     </div>
                                 ) : (
-                                    <p className="text-sm text-gray-500 italic">
+                                    <p className="text-sm text-muted-foreground italic">
                                         Belum ada riwayat pengerjaan.
                                     </p>
                                 )}

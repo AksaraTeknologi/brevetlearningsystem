@@ -19,11 +19,23 @@ import { cn } from "@/lib/utils";
 import {
     BookOpen,
     CalendarIcon,
+    CalendarRange,
     ChevronLeft,
     ChevronRight,
     RefreshCcw,
+    School,
     Search,
+    UserRound,
+    Users,
 } from "lucide-react";
+import {
+    Chip,
+    EmptyState,
+    EntityCard,
+    PageHeader,
+    StatusPill,
+    toneFromStatus,
+} from "@/Components/app-shell/kit";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type FilterState = {
@@ -111,7 +123,7 @@ const getCourseStatus = (course: any) => {
     ) {
         return {
             label: "Tanpa Jadwal",
-            className: "bg-gray-100 text-gray-700",
+            className: "bg-muted text-foreground",
         };
     }
 
@@ -227,15 +239,9 @@ export default function DaftarKelas({ courses, teachers, filters = {} }: any) {
 
             <div className="py-8 mx-auto max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
                 <div className="flex flex-1 flex-col gap-4 px-4 pt-0">
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Daftar Kelas
-                    </h1>
-                    <p className="text-sm text-gray-500">
-                        Daftar seluruh kelas yang dibuat pemateri beserta
-                        informasi pemateri dan status jadwal.
-                    </p>
+                    <PageHeader icon={School} title="Daftar Kelas" description="Daftar seluruh kelas yang dibuat pemateri beserta informasi pemateri dan status jadwal." />
 
-                    <div className="p-5 md:p-8 rounded-xl bg-sidebar border">
+                    <div className="tls-card p-4 md:p-5">
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-6">
                             <div className="xl:col-span-2">
                                 <div className="relative">
@@ -313,7 +319,7 @@ export default function DaftarKelas({ courses, teachers, filters = {} }: any) {
 
                             <div className="md:col-span-2 xl:col-span-4 grid grid-cols-1 lg:grid-cols-2 gap-3">
                                 <div className="space-y-2">
-                                    <p className="text-xs text-gray-500 font-medium">
+                                    <p className="text-xs text-muted-foreground font-medium">
                                         Rentang Tanggal Mulai
                                     </p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -410,7 +416,7 @@ export default function DaftarKelas({ courses, teachers, filters = {} }: any) {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <p className="text-xs text-gray-500 font-medium">
+                                    <p className="text-xs text-muted-foreground font-medium">
                                         Rentang Tanggal Selesai
                                     </p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -518,7 +524,7 @@ export default function DaftarKelas({ courses, teachers, filters = {} }: any) {
                                 </Button>
                                 <Button
                                     type="button"
-                                    className="bg-yellow-400 text-primary hover:bg-yellow-400/90 hover:text-primary"
+                                    className="bg-highlight text-highlight-foreground hover:bg-highlight/90"
                                     onClick={() => applyFilters(filterState)}
                                 >
                                     <RefreshCcw className="h-4 w-4" />
@@ -528,14 +534,7 @@ export default function DaftarKelas({ courses, teachers, filters = {} }: any) {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                             {cards.length === 0 && (
-                                <div className="text-gray-400 text-center col-span-3 py-8">
-                                    <img
-                                        src="/images/empty.svg"
-                                        alt="Belum ada kelas yang ditemukan"
-                                        className="mx-auto mb-4 w-48"
-                                    />
-                                    Belum ada kelas yang ditemukan.
-                                </div>
+                                <EmptyState icon={School} title="Belum ada kelas yang ditemukan." className="col-span-full" />
                             )}
 
                             {cards.map((course: any) => {
@@ -545,91 +544,40 @@ export default function DaftarKelas({ courses, teachers, filters = {} }: any) {
                                 );
 
                                 return (
-                                    <div
+                                    <EntityCard
                                         key={course.id}
-                                        className="rounded-xl bg-white border shadow p-5 flex flex-col gap-2 hover:shadow-lg transition"
+                                        tone={toneFromStatus(status.label)}
+                                        icon={School}
+                                        title={course.name}
+                                        subtitle={course.description || "-"}
+                                        badges={<Chip tone="brand" className="font-mono">{course.code}</Chip>}
+                                        actions={
+                                            <Button variant="outline" asChild>
+                                                <Link href={route("admin.showTeacherCourse", { id: course.teacher_id, courseId: course.id })}>
+                                                    <BookOpen className="h-4 w-4" />
+                                                    Lihat Detail
+                                                </Link>
+                                            </Button>
+                                        }
                                     >
-                                        <div className="flex items-center justify-between gap-2">
-                                            <h3 className="text-lg font-bold text-primary line-clamp-2">
-                                                {course.name}
-                                            </h3>
-                                            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded font-mono shrink-0">
-                                                {course.code}
-                                            </span>
+                                        <div className="space-y-2 text-sm">
+                                            <p className="flex items-center gap-2 text-muted-foreground"><UserRound className="size-4" /> <span className="font-semibold text-foreground">{course.user?.name || "-"}</span></p>
+                                            <p className="flex items-center gap-2 text-muted-foreground"><CalendarRange className="size-4" /> {formatDate(course.start_date)} – {formatDate(course.end_date)}</p>
+                                            <p className="flex items-center gap-2 text-muted-foreground"><Users className="size-4" /> {course.participants_count ?? 0} peserta</p>
                                         </div>
-
-                                        <p className="text-gray-600 text-sm line-clamp-2">
-                                            {course.description || "-"}
-                                        </p>
-
-                                        <div className="text-xs text-gray-600">
-                                            <span className="font-medium">
-                                                Pemateri:
-                                            </span>{" "}
-                                            {course.user?.name || "-"}
-                                        </div>
-
-                                        <div className="text-xs text-gray-500">
-                                            <span className="font-medium">
-                                                Jadwal:
-                                            </span>{" "}
-                                            {formatDate(course.start_date)} -{" "}
-                                            {formatDate(course.end_date)}
-                                        </div>
-
-                                        <div className="text-xs text-gray-500">
-                                            <span className="font-medium">
-                                                Peserta:
-                                            </span>{" "}
-                                            {course.participants_count ?? 0}
-                                        </div>
-
-                                        <div className="flex flex-wrap gap-2 mt-1">
-                                            <span
-                                                className={`inline-block px-2 py-1 rounded text-xs font-semibold ${status.className}`}
-                                            >
-                                                {status.label}
-                                            </span>
+                                        <div className="flex flex-wrap gap-1.5">
+                                            <StatusPill tone={toneFromStatus(status.label)}>{status.label}</StatusPill>
                                             {accessRights.length > 0 ? (
                                                 accessRights.map((access) => (
-                                                    <span
-                                                        key={`${course.id}-${access}`}
-                                                        className="inline-block bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-semibold"
-                                                    >
-                                                        {access === "efaktur"
-                                                            ? "e-Faktur"
-                                                            : access ===
-                                                                "ebupot"
-                                                              ? "e-Bupot"
-                                                              : access}
-                                                    </span>
+                                                    <Chip key={`${course.id}-${access}`} tone="highlight">
+                                                        {access === "efaktur" ? "e-Faktur" : access === "ebupot" ? "e-Bupot" : access}
+                                                    </Chip>
                                                 ))
                                             ) : (
-                                                <span className="inline-block bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
-                                                    Tidak ada akses materi
-                                                </span>
+                                                <Chip tone="steel">Tidak ada akses materi</Chip>
                                             )}
                                         </div>
-
-                                        <Button
-                                            variant="outline"
-                                            asChild
-                                            className="mt-2 w-fit text-blue-700 border-blue-200 hover:bg-blue-50"
-                                        >
-                                            <Link
-                                                href={route(
-                                                    "admin.showTeacherCourse",
-                                                    {
-                                                        id: course.teacher_id,
-                                                        courseId: course.id,
-                                                    },
-                                                )}
-                                            >
-                                                <BookOpen className="h-4 w-4" />
-                                                Lihat Detail
-                                            </Link>
-                                        </Button>
-                                    </div>
+                                    </EntityCard>
                                 );
                             })}
                         </div>
@@ -681,10 +629,10 @@ export default function DaftarKelas({ courses, teachers, filters = {} }: any) {
                                                 href={link.url}
                                                 preserveState
                                                 preserveScroll
-                                                className={`inline-flex items-center justify-center min-w-[36px] h-9 px-3 py-1.5 rounded-md border text-sm font-medium transition-colors ${
+                                                 className={`inline-flex items-center justify-center min-w-[36px] h-9 px-3 py-1.5 rounded-md border text-sm font-medium transition-colors ${
                                                     link.active
-                                                        ? "bg-primary text-white border-primary"
-                                                        : "hover:bg-gray-100 text-gray-700 bg-white"
+                                                        ? "bg-primary text-primary-foreground border-primary"
+                                                        : "hover:bg-muted text-foreground bg-card"
                                                 }`}
                                             >
                                                 {content}

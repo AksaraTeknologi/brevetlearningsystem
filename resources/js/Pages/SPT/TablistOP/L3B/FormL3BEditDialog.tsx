@@ -72,7 +72,7 @@ export default function FormL3BEditDialog({
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-2xl max-h-[90vh] p-0 overflow-hidden flex flex-col">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {brutoType === "a"
                             ? "REKAPITULASI PEREDARAN BRUTO TERTENTU"
@@ -84,7 +84,7 @@ export default function FormL3BEditDialog({
 
                 <div className="p-6 space-y-4 flex-1 overflow-y-auto">
                     <div className="border rounded">
-                        <div className="bg-blue-950 text-white px-4 py-2 font-semibold">
+                        <div className="bg-brand text-white px-4 py-2 font-semibold">
                             {currentTkuLabel || ""}
                         </div>
 
@@ -99,7 +99,7 @@ export default function FormL3BEditDialog({
                                             <Input
                                                 value="1"
                                                 disabled
-                                                className="bg-gray-100"
+                                                className="bg-muted"
                                             />
                                         </div>
                                     )}
@@ -170,7 +170,7 @@ export default function FormL3BEditDialog({
                                     JUMLAH
                                 </div>
                                 <Input
-                                    className="h-9 text-right bg-gray-100"
+                                    className="h-9 text-right bg-muted"
                                     value={formatMoney(total)}
                                     disabled
                                 />
@@ -189,7 +189,6 @@ export default function FormL3BEditDialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={onSubmit}
                     >
                         Simpan

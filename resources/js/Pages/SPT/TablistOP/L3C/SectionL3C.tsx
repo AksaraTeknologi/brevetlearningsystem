@@ -96,14 +96,13 @@ export function SectionL3C({
 
     return (
         <div className="space-y-4">
-            <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+            <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                 {sectionTitle}
             </div>
 
             <div className="flex flex-wrap gap-2">
                 <Button
                     type="button"
-                    className="bg-blue-950 hover:bg-blue-900"
                     onClick={handleAdd}
                 >
                     <Plus className="w-4 h-4 mr-2" />
@@ -130,7 +129,7 @@ export function SectionL3C({
                 <Button
                     type="button"
                     variant="outline"
-                    className="border-blue-950 text-blue-950"
+                    className="border-brand text-brand-ink"
                     disabled
                 >
                     <Upload className="w-4 h-4 mr-2" />

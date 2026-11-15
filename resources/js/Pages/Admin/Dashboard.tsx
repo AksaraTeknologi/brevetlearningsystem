@@ -1,7 +1,15 @@
 import { Button } from "@/Components/ui/button";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
-import { MoveRight, Users, BookOpen, UserCheck, Calendar } from "lucide-react";
+import {
+    BookOpen,
+    Calendar,
+    LayoutDashboard,
+    MoveRight,
+    UserCheck,
+    Users,
+} from "lucide-react";
+import { PageHeader, StatTile } from "@/Components/app-shell/kit";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FakturBupotChart } from "./FakturBupotChart";
@@ -28,7 +36,7 @@ const getCourseStatus = (course: any) => {
         Number.isNaN(startDate.getTime()) ||
         Number.isNaN(endDate.getTime())
     ) {
-        return { label: "Tanpa Jadwal", className: "bg-gray-100 text-gray-700" };
+        return { label: "Tanpa Jadwal", className: "bg-muted text-foreground" };
     }
     if (now < startDate) {
         return { label: "Belum Mulai", className: "bg-orange-100 text-orange-700" };
@@ -106,82 +114,33 @@ export default function Dashboard({
 
             <div className="py-8 mx-auto max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
                 <div className="flex flex-1 flex-col gap-6 px-4 pt-0">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b pb-5">
-                        <div>
-                            <h1 className="text-3xl font-bold tracking-tight text-primary">
-                                Admin Dashboard
-                            </h1>
-                            <p className="text-sm text-muted-foreground mt-1">
-                                Selamat datang di panel kontrol utama Brevet Learning System.
-                            </p>
-                        </div>
-                        <Button variant="outline" className="shadow-sm hover:bg-muted" asChild>
-                            <Link href={route("dashboard")}>
-                                Lihat Sebagai Pengguna <MoveRight className="ml-2 h-4 w-4" />
-                            </Link>
-                        </Button>
-                    </div>
+                    <PageHeader
+                        icon={LayoutDashboard}
+                        eyebrow="Panel Admin"
+                        title="Admin Dashboard"
+                        description="Selamat datang di panel kontrol utama Brevet Learning System."
+                        actions={
+                            <Button variant="outline" asChild>
+                                <Link href={route("dashboard")}>
+                                    Lihat Sebagai Pengguna <MoveRight className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                        }
+                    />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="relative overflow-hidden p-6 rounded-2xl bg-card border shadow-sm transition-all duration-300 hover:shadow-md hover:border-blue-500/20 group">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -mr-8 -mt-8 transition-all group-hover:bg-blue-500/10"></div>
-                            <div className="flex items-center justify-between">
-                                <div className="space-y-1">
-                                    <h2 className="text-sm font-medium text-muted-foreground">
-                                        Jumlah Pengguna
-                                    </h2>
-                                    <p className="text-4xl font-extrabold tracking-tight text-foreground">
-                                        {userCount}
-                                    </p>
-                                </div>
-                                <div className="p-3 rounded-xl bg-blue-500/10 text-blue-600 transition-colors group-hover:bg-blue-500/20">
-                                    <Users className="h-6 w-6" />
-                                </div>
-                            </div>
-                        </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <StatTile icon={Users} label="Jumlah Pengguna" value={userCount} tone="info" className="p-5" />
+                        <StatTile icon={BookOpen} label="Jumlah Kelas" value={courseCount} tone="highlight" className="p-5" />
+                        <StatTile icon={UserCheck} label="Login Hari Ini" value={userLoginToday} tone="success" className="p-5" />
 
-                        <div className="relative overflow-hidden p-6 rounded-2xl bg-card border shadow-sm transition-all duration-300 hover:shadow-md hover:border-amber-500/20 group">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl -mr-8 -mt-8 transition-all group-hover:bg-amber-500/10"></div>
-                            <div className="flex items-center justify-between">
-                                <div className="space-y-1">
-                                    <h2 className="text-sm font-medium text-muted-foreground">
-                                        Jumlah Kelas
-                                    </h2>
-                                    <p className="text-4xl font-extrabold tracking-tight text-foreground">
-                                        {courseCount}
-                                    </p>
-                                </div>
-                                <div className="p-3 rounded-xl bg-amber-500/10 text-amber-600 transition-colors group-hover:bg-amber-500/20">
-                                    <BookOpen className="h-6 w-6" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="relative overflow-hidden p-6 rounded-2xl bg-card border shadow-sm transition-all duration-300 hover:shadow-md hover:border-emerald-500/20 group">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl -mr-8 -mt-8 transition-all group-hover:bg-emerald-500/10"></div>
-                            <div className="flex items-center justify-between">
-                                <div className="space-y-1">
-                                    <h2 className="text-sm font-medium text-muted-foreground">
-                                        Login Hari Ini
-                                    </h2>
-                                    <p className="text-4xl font-extrabold tracking-tight text-foreground">
-                                        {userLoginToday}
-                                    </p>
-                                </div>
-                                <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-600 transition-colors group-hover:bg-emerald-500/20">
-                                    <UserCheck className="h-6 w-6" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="relative overflow-hidden p-6 rounded-2xl bg-gradient-to-br from-primary to-indigo-950 text-primary-foreground shadow-md transition-all duration-300 hover:shadow-lg">
+                        <div className="relative overflow-hidden rounded-2xl bg-brand p-5 text-brand-foreground shadow-[0_20px_40px_-24px_rgba(13,77,64,0.6)]">
                             <div className="absolute -right-4 -bottom-4 opacity-10">
                                 <Calendar className="h-28 w-28" />
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center gap-2">
                                     <Calendar className="h-4 w-4 opacity-80" />
-                                    <p className="text-xs font-semibold uppercase tracking-wider text-primary-foreground/80">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-white/75">
                                         {formattedDate}
                                     </p>
                                 </div>
@@ -191,7 +150,7 @@ export default function Dashboard({
                             </div>
                         </div>
 
-                        <div className="col-span-1 md:col-span-2 lg:col-span-4 grid grid-cols-1 lg:grid-cols-4 gap-6 mt-2">
+                        <div className="col-span-1 md:col-span-2 lg:col-span-4 grid grid-cols-1 lg:grid-cols-4 gap-4 mt-1">
                             <div className="lg:col-span-2">
                                 <FakturBupotChart
                                     outputInvoiceCount={outputInvoiceCount}
@@ -246,7 +205,7 @@ export default function Dashboard({
                                                 return (
                                                     <div
                                                         key={course.id}
-                                                        className="rounded-xl bg-white border shadow p-5 flex flex-col gap-2 hover:shadow-lg transition"
+                                                        className="tls-card tls-card-hover flex flex-col gap-2 border-l-4 border-l-highlight p-5"
                                                     >
                                                         <div className="flex items-center justify-between gap-2">
                                                             <h3 className="text-lg font-bold text-primary line-clamp-2">
@@ -257,22 +216,22 @@ export default function Dashboard({
                                                             </span>
                                                         </div>
 
-                                                        <p className="text-gray-600 text-sm line-clamp-2">
+                                                        <p className="text-muted-foreground text-sm line-clamp-2">
                                                             {course.description || "-"}
                                                         </p>
 
-                                                        <div className="text-xs text-gray-600">
+                                                        <div className="text-xs text-muted-foreground">
                                                             <span className="font-medium">Pemateri:</span>{" "}
                                                             {course.user?.name || "-"}
                                                         </div>
 
-                                                        <div className="text-xs text-gray-500">
+                                                        <div className="text-xs text-muted-foreground">
                                                             <span className="font-medium">Jadwal:</span>{" "}
                                                             {formatDate(course.start_date)} -{" "}
                                                             {formatDate(course.end_date)}
                                                         </div>
 
-                                                        <div className="text-xs text-gray-500">
+                                                        <div className="text-xs text-muted-foreground">
                                                             <span className="font-medium">Peserta:</span>{" "}
                                                             {course.participants_count ?? 0}
                                                         </div>
@@ -297,7 +256,7 @@ export default function Dashboard({
                                                                     </span>
                                                                 ))
                                                             ) : (
-                                                                <span className="inline-block bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
+                                                                <span className="inline-block bg-muted text-muted-foreground px-2 py-1 rounded text-xs">
                                                                     Tidak ada akses materi
                                                                 </span>
                                                             )}

@@ -56,7 +56,7 @@ const formatRupiahInput = (v: number) =>
     v ? rupiahFormatter.format(v).replace("Rp", "").trim() : "";
 
 const rowClass = "grid grid-cols-[220px_1fr] items-start gap-x-4 py-2";
-const labelClass = "text-sm font-medium text-gray-700 dark:text-gray-300 pt-2";
+const labelClass = "text-sm font-medium text-foreground dark:text-gray-300 pt-2";
 
 export function FormL11A2Dialog({
     open,
@@ -152,7 +152,7 @@ export function FormL11A2Dialog({
             }}
         >
             <DialogContent className="max-w-2xl p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData ? "Edit" : "Tambah"} Data Biaya Promosi
                     </DialogTitle>
@@ -260,7 +260,7 @@ export function FormL11A2Dialog({
                     <div className={rowClass}>
                         <Label className={labelClass}>
                             Nama Penerima{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div>
                             <Input
@@ -271,7 +271,7 @@ export function FormL11A2Dialog({
                                 placeholder="Nama penerima"
                             />
                             {errors.name && (
-                                <p className="text-xs text-red-500 mt-1">
+                                <p className="text-xs text-destructive mt-1">
                                     {errors.name}
                                 </p>
                             )}
@@ -338,7 +338,6 @@ export function FormL11A2Dialog({
                         type="button"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
-                        className="bg-blue-950 hover:bg-blue-900"
                     >
                         <Save className="w-4 h-4 mr-2" />{" "}
                         {isSubmitting ? "Menyimpan..." : "Simpan"}

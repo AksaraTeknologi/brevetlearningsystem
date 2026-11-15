@@ -109,13 +109,13 @@ export default function StudentCourseSubmissionsSection({
     };
 
     return (
-        <div className="rounded-xl bg-white border shadow p-6 space-y-4">
+        <div className="rounded-xl bg-card border shadow p-6 space-y-4">
             <div>
                 <h2 className="text-lg font-bold text-primary flex items-center gap-2">
                     <FileText className="h-5 w-5" />
                     Tugas & Submission Kelas ({courseSubmissions.length})
                 </h2>
-                <p className="text-xs text-gray-500 mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                     Kumpulkan tugas Anda sesuai instruksi pengajar. Status tugas yang disetujui (ACC) menjadi syarat untuk membuka ujian kelas yang mewajibkannya.
                 </p>
             </div>
@@ -140,16 +140,16 @@ export default function StudentCourseSubmissionsSection({
                                     isApproved && "bg-emerald-50/30 border-emerald-200",
                                     isPending && "bg-amber-50/30 border-amber-200",
                                     isRejected && "bg-rose-50/30 border-rose-200",
-                                    isUnsubmitted && "bg-slate-50/70 border-slate-200"
+                                    isUnsubmitted && "bg-muted/35 border-border"
                                 )}
                             >
                                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
                                     <div className="space-y-1 flex-1">
                                         <div className="flex flex-wrap items-center gap-2">
-                                            <span className="text-xs font-bold text-gray-500 bg-white border rounded px-1.5 py-0.5">
+                                            <span className="text-xs font-bold text-muted-foreground bg-card border rounded px-1.5 py-0.5">
                                                 Tugas #{index + 1}
                                             </span>
-                                            <h3 className="font-semibold text-gray-900 text-base">
+                                            <h3 className="font-semibold text-foreground text-base">
                                                 {task.title}
                                             </h3>
 
@@ -157,7 +157,7 @@ export default function StudentCourseSubmissionsSection({
                                             {isUnsubmitted && (
                                                 <Badge
                                                     variant="outline"
-                                                    className="bg-gray-100 text-gray-600 border-gray-300 text-xs"
+                                                    className="bg-muted text-muted-foreground border-input text-xs"
                                                 >
                                                     Belum Mengumpulkan
                                                 </Badge>
@@ -181,14 +181,14 @@ export default function StudentCourseSubmissionsSection({
                                                 </Badge>
                                             )}
                                             {isDeadlinePassed && (
-                                                <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 text-xs">
+                                                <Badge variant="outline" className="bg-red-50 text-destructive border-red-200 text-xs">
                                                     Tenggat Berakhir
                                                 </Badge>
                                             )}
                                         </div>
 
                                         {task.deadline && (
-                                            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                                                 <Calendar className="h-3.5 w-3.5 text-gray-400" />
                                                 <span>Batas Pengumpulan: </span>
                                                 <span className="font-medium text-rose-600">
@@ -200,8 +200,8 @@ export default function StudentCourseSubmissionsSection({
                                         )}
 
                                         {task.description && (
-                                            <div className="text-xs text-gray-700 bg-white/80 p-2.5 rounded-lg border">
-                                                <span className="font-semibold block mb-0.5 text-gray-800">
+                                            <div className="text-xs text-foreground bg-card/80 p-2.5 rounded-lg border">
+                                                <span className="font-semibold block mb-0.5 text-foreground">
                                                     Petunjuk Tugas:
                                                 </span>
                                                 <p className="whitespace-pre-line">{task.description}</p>
@@ -255,11 +255,11 @@ export default function StudentCourseSubmissionsSection({
 
                                 {/* Existing Submission Info */}
                                 {sub && (
-                                    <div className="rounded-lg border bg-white p-3 space-y-2 text-xs">
+                                    <div className="rounded-lg border bg-card p-3 space-y-2 text-xs">
                                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b pb-2">
                                             <div className="flex items-center gap-2">
-                                                <Paperclip className="h-4 w-4 text-gray-500" />
-                                                <span className="font-semibold text-gray-800">Berkas Terkirim:</span>
+                                                <Paperclip className="h-4 w-4 text-muted-foreground" />
+                                                <span className="font-semibold text-foreground">Berkas Terkirim:</span>
                                                 <span className="font-mono text-primary font-medium truncate max-w-[200px]" title={sub.original_filename}>
                                                     {sub.original_filename}
                                                 </span>
@@ -281,7 +281,7 @@ export default function StudentCourseSubmissionsSection({
                                             </Button>
                                         </div>
 
-                                        <div className="flex flex-wrap items-center justify-between gap-2 text-gray-500 text-[11px]">
+                                        <div className="flex flex-wrap items-center justify-between gap-2 text-muted-foreground text-[11px]">
                                             <span>
                                                 Dikirim:{" "}
                                                 {format(new Date(sub.created_at), "d MMMM yyyy, HH:mm", {
@@ -315,7 +315,7 @@ export default function StudentCourseSubmissionsSection({
 
                                 {/* Notice if deadline passed and not submitted */}
                                 {isDeadlinePassed && isUnsubmitted && (
-                                    <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+                                    <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-destructive">
                                         Batas waktu pengumpulan tugas ini telah berakhir. Anda tidak dapat mengirimkan tugas lagi.
                                     </div>
                                 )}
@@ -336,9 +336,9 @@ export default function StudentCourseSubmissionsSection({
                                         ) : (
                                             <form
                                                 onSubmit={(e) => handleSubmitSubmission(e, task.id)}
-                                                className="space-y-3 bg-white p-3.5 rounded-lg border shadow-xs"
+                                                className="space-y-3 bg-card p-3.5 rounded-lg border shadow-xs"
                                             >
-                                                <div className="font-semibold text-xs text-gray-800 flex items-center gap-1.5">
+                                                <div className="font-semibold text-xs text-foreground flex items-center gap-1.5">
                                                     <Upload className="h-3.5 w-3.5 text-primary" />
                                                     <span>
                                                         {isRejected
@@ -351,7 +351,7 @@ export default function StudentCourseSubmissionsSection({
 
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                     <div className="space-y-1.5">
-                                                        <label className="text-xs font-medium text-gray-700">
+                                                        <label className="text-xs font-medium text-foreground">
                                                             {sub ? "Pilih Berkas Pengganti / Revisi" : "Pilih Berkas Tugas"}{" "}
                                                             <span className="text-rose-500">*</span>
                                                         </label>
@@ -363,7 +363,7 @@ export default function StudentCourseSubmissionsSection({
                                                                     file: e.target.files?.[0] || null,
                                                                 })
                                                             }
-                                                            className="block w-full text-xs text-gray-700 file:mr-2.5 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 border rounded-md p-1 bg-slate-50 cursor-pointer"
+                                                            className="block w-full text-xs text-foreground file:mr-2.5 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 border rounded-md p-1 bg-muted/50 cursor-pointer"
                                                             accept=".pdf,.doc,.docx,.zip,.rar,.png,.jpg,.jpeg,.xlsx,.xls,.csv,.txt"
                                                         />
                                                         <p className="text-[10px] text-gray-400">
@@ -372,7 +372,7 @@ export default function StudentCourseSubmissionsSection({
                                                     </div>
 
                                                     <div className="space-y-1.5">
-                                                        <label className="text-xs font-medium text-gray-700">
+                                                        <label className="text-xs font-medium text-foreground">
                                                             Catatan Tambahan untuk Pengajar (Opsional)
                                                         </label>
                                                         <Textarea
@@ -425,12 +425,12 @@ export default function StudentCourseSubmissionsSection({
                     })}
                 </div>
             ) : (
-                <div className="rounded-xl border border-dashed p-6 text-center bg-slate-50/50">
+                <div className="rounded-xl border border-dashed p-6 text-center bg-muted/25">
                     <FileText className="mx-auto h-8 w-8 text-gray-400" />
-                    <h3 className="mt-2 text-sm font-semibold text-gray-800">
+                    <h3 className="mt-2 text-sm font-semibold text-foreground">
                         Belum Ada Tugas / Submission
                     </h3>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-muted-foreground">
                         Pengajar belum memberikan tugas submission untuk kelas ini.
                     </p>
                 </div>

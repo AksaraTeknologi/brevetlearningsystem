@@ -20,7 +20,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
-import { Progress } from "@/Components/ui/progress";
+import { FormPageHeader } from "@/Components/app-shell/FormPage";
 import toast from "react-hot-toast";
 import {
     Popover,
@@ -28,7 +28,7 @@ import {
     PopoverTrigger,
 } from "@/Components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, ReceiptText } from "lucide-react";
 import {
     Command,
     CommandEmpty,
@@ -205,7 +205,11 @@ export default function LayananMandiriKodeBilling({
         router.post(route("payment.store"), payload);
     }
 
-    const progress = (step / 3) * 100;
+    const steps = [
+        "Verifikasi Identitas",
+        "Periode & Jenis Pajak",
+        "Unduh Kode Billing",
+    ];
 
     const numberToWords = (num: number): string => {
         const units = [
@@ -308,23 +312,75 @@ export default function LayananMandiriKodeBilling({
             <Head title="Layanan Mandiri Kode Billing" />
             <div className="py-8 mx-auto lg:px-4">
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Layanan Mandiri Kode Billing
-                    </h1>
+                    <FormPageHeader
+                        title="Layanan Mandiri Kode Billing"
+                        description="Buat kode billing untuk menyetorkan pajak dalam tiga langkah."
+                        actions={
+                            <Button variant="outline" size="sm" asChild>
+                                <Link href={route("payment.billing")}>
+                                    <ReceiptText />
+                                    Daftar Kode Billing
+                                </Link>
+                            </Button>
+                        }
+                    />
 
-                    <Progress value={progress} className="mb-4" />
+                    <ol className="tls-card grid grid-cols-3 gap-2 p-3 md:p-4">
+                        {steps.map((label, i) => {
+                            const n = i + 1;
+                            const done = step > n;
+                            const active = step === n;
+                            return (
+                                <li
+                                    key={label}
+                                    className="flex min-w-0 flex-col items-center gap-1.5 text-center sm:flex-row sm:text-left"
+                                    aria-current={active ? "step" : undefined}
+                                >
+                                    <span
+                                        className={cn(
+                                            "flex size-8 shrink-0 items-center justify-center rounded-full border text-sm font-bold",
+                                            done &&
+                                                "border-primary bg-primary text-primary-foreground",
+                                            active &&
+                                                "border-highlight bg-highlight text-highlight-foreground",
+                                            !done &&
+                                                !active &&
+                                                "border-border bg-muted text-muted-foreground"
+                                        )}
+                                    >
+                                        {done ? <Check className="size-4" /> : n}
+                                    </span>
+                                    <span
+                                        className={cn(
+                                            "text-xs font-semibold leading-tight sm:text-sm",
+                                            active
+                                                ? "text-foreground"
+                                                : "text-muted-foreground"
+                                        )}
+                                    >
+                                        {label}
+                                    </span>
+                                    {n < steps.length && (
+                                        <span className="hidden h-px flex-1 bg-border lg:block" />
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ol>
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
+                    <div className="tls-card overflow-hidden">
                         {step === 1 && (
                             <Form {...form}>
-                                <div className="mb-4 text-center">
-                                    <p>
-                                        <strong>Langkah 1:</strong> Verifikasi
-                                        Identitas Wajib Pajak
-                                    </p>
+                                <div className="tls-card-head">
+                                    <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-highlight/20 text-xs font-bold text-brand-900 dark:bg-highlight/15 dark:text-highlight">
+                                        1
+                                    </span>
+                                    <h2 className="text-sm font-bold md:text-base">
+                                        Langkah 1: Verifikasi Identitas Wajib Pajak
+                                    </h2>
                                 </div>
                                 <form
-                                    className="grid grid-cols-1 md:grid-cols-3 md:gap-8"
+                                    className="grid grid-cols-1 gap-4 p-4 md:grid-cols-3 md:gap-8 md:p-6"
                                     onSubmit={form.handleSubmit(() =>
                                         nextStep({
                                             npwp: form.getValues("npwp"),
@@ -333,14 +389,14 @@ export default function LayananMandiriKodeBilling({
                                         })
                                     )}
                                 >
-                                    <div className="w-3/4 md:w-full mx-auto">
+                                    <div className="mx-auto hidden w-full max-w-xs self-center md:block">
                                         <img
                                             src="/images/Tax-pana.svg"
                                             alt="Kemenkeu"
                                             className="w-full object-cover"
                                         />
                                     </div>
-                                    <div className="col-span-2 gap-4 p-4 flex flex-col justify-between">
+                                    <div className="flex flex-col justify-between gap-6 md:col-span-2">
                                         <div className="space-y-4">
                                             <p className="text-sm">
                                                 Pastikan identitas wajib pajak
@@ -411,7 +467,7 @@ export default function LayananMandiriKodeBilling({
                                             />
                                         </div>
 
-                                        <div className="flex justify-end">
+                                        <div className="flex justify-end border-t border-border pt-4">
                                             <Button
                                                 type="submit"
                                                 className="px-8"
@@ -426,14 +482,16 @@ export default function LayananMandiriKodeBilling({
 
                         {step === 2 && (
                             <Form {...form}>
-                                <div className="flex justify-center items-center mb-4">
-                                    <p className="text-center">
-                                        <strong>Langkah 2:</strong> Memilih
-                                        Periode Pajak
-                                    </p>
+                                <div className="tls-card-head">
+                                    <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-highlight/20 text-xs font-bold text-brand-900 dark:bg-highlight/15 dark:text-highlight">
+                                        2
+                                    </span>
+                                    <h2 className="text-sm font-bold md:text-base">
+                                        Langkah 2: Memilih Periode Pajak
+                                    </h2>
                                 </div>
                                 <form
-                                    className="grid grid-cols-1 md:grid-cols-3 md:gap-8"
+                                    className="grid grid-cols-1 gap-4 p-4 md:grid-cols-3 md:gap-8 md:p-6"
                                     onSubmit={form.handleSubmit(() =>
                                         nextStep({
                                             billing_type_id:
@@ -448,7 +506,7 @@ export default function LayananMandiriKodeBilling({
                                         })
                                     )}
                                 >
-                                    <div className="w-3/4 md:w-full mx-auto">
+                                    <div className="mx-auto hidden w-full max-w-xs self-center md:block">
                                         <img
                                             src="/images/Tax-bro.svg"
                                             alt="Kemenkeu"
@@ -456,7 +514,7 @@ export default function LayananMandiriKodeBilling({
                                         />
                                     </div>
 
-                                    <div className="col-span-2 gap-4 p-4 flex flex-col justify-between">
+                                    <div className="flex flex-col justify-between gap-6 md:col-span-2">
                                         <div className="space-y-4">
                                             <p className="text-sm">
                                                 <strong>KAP</strong> adalah kode
@@ -840,9 +898,10 @@ export default function LayananMandiriKodeBilling({
                                             </FormItem>
                                         </div>
 
-                                        <div className="flex justify-between">
+                                        <div className="flex justify-between gap-2 border-t border-border pt-4">
                                             <Button
                                                 type="button"
+                                                variant="outline"
                                                 onClick={() =>
                                                     setStep(step - 1)
                                                 }
@@ -864,17 +923,19 @@ export default function LayananMandiriKodeBilling({
 
                         {step === 3 && (
                             <Form {...form}>
-                                <div className="flex justify-center items-center mb-4">
-                                    <p className="text-center">
-                                        <strong>Langkah 3:</strong> Selesai,
-                                        Unduh Kode Pembayaran
-                                    </p>
+                                <div className="tls-card-head">
+                                    <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-highlight/20 text-xs font-bold text-brand-900 dark:bg-highlight/15 dark:text-highlight">
+                                        3
+                                    </span>
+                                    <h2 className="text-sm font-bold md:text-base">
+                                        Langkah 3: Selesai, Unduh Kode Pembayaran
+                                    </h2>
                                 </div>
                                 <form
-                                    className="grid grid-cols-1 md:grid-cols-3 md:gap-8"
+                                    className="grid grid-cols-1 gap-4 p-4 md:grid-cols-3 md:gap-8 md:p-6"
                                     onSubmit={form.handleSubmit(onSubmit)}
                                 >
-                                    <div className="w-3/4 md:w-full mx-auto">
+                                    <div className="mx-auto hidden w-full max-w-xs self-center md:block">
                                         <img
                                             src="/images/Tax-rafiki.svg"
                                             alt="Kemenkeu"
@@ -882,7 +943,7 @@ export default function LayananMandiriKodeBilling({
                                         />
                                     </div>
 
-                                    <div className="col-span-2 gap-4 p-4 flex flex-col justify-between">
+                                    <div className="flex flex-col justify-between gap-6 md:col-span-2">
                                         <div className="space-y-4">
                                             <p className="text-sm">
                                                 Harap pastikan dengan cermat
@@ -1337,9 +1398,10 @@ export default function LayananMandiriKodeBilling({
                                             />
                                         </div>
 
-                                        <div className="flex justify-between">
+                                        <div className="flex justify-between gap-2 border-t border-border pt-4">
                                             <Button
                                                 type="button"
+                                                variant="outline"
                                                 onClick={() =>
                                                     setStep(step - 1)
                                                 }

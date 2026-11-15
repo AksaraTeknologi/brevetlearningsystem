@@ -27,6 +27,12 @@ import { Input } from "@/Components/ui/input";
 import { DataTablePagination } from "../DataTablePagination";
 import { DataTableViewOptions } from "../DataTableViewOption";
 import {
+    countTextFilters,
+    DataTableExport,
+    DataTableFilterRow,
+    DataTableFilterToggle,
+} from "../DataTableTools";
+import {
     Banknote,
     CalendarIcon,
     CreditCard,
@@ -153,12 +159,13 @@ export function DataTableLedger<TData, TValue>({
             columnVisibility,
         },
     });
+    const [showColumnFilters, setShowColumnFilters] = React.useState(false);
 
     const isFiltered = table.getState().columnFilters.length > 0;
 
     return (
         <>
-            <div className="flex items-center py-4 gap-2">
+            <div className="tls-table-toolbar flex items-center py-4 gap-2">
                 <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                     <PopoverTrigger asChild>
                         <Button
@@ -233,6 +240,12 @@ export function DataTableLedger<TData, TValue>({
                     )}
                 </div>
                 <DataTableViewOptions table={table} />
+                <DataTableFilterToggle
+                    active={showColumnFilters}
+                    onToggle={() => setShowColumnFilters((v) => !v)}
+                    activeCount={countTextFilters(table)}
+                />
+                <DataTableExport table={table} fileName="buku-besar" />
             </div>
             <div className="rounded-md border">
                 <Table>
@@ -254,6 +267,7 @@ export function DataTableLedger<TData, TValue>({
                                 })}
                             </TableRow>
                         ))}
+                        {showColumnFilters && <DataTableFilterRow table={table} />}
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (

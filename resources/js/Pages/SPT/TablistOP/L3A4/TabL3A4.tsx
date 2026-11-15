@@ -311,15 +311,15 @@ export default function TabL3A4({
     };
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
             <h2 className="text-xl font-semibold">LAMPIRAN 3A-4</h2>
 
             {/* Header */}
             <div>
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
                             <Label className="text-sm">Tahun Pajak</Label>
@@ -327,7 +327,7 @@ export default function TabL3A4({
                                 type="text"
                                 value={String(spt.year)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
@@ -336,7 +336,7 @@ export default function TabL3A4({
                                 type="text"
                                 value={user.npwp}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </div>
@@ -346,11 +346,11 @@ export default function TabL3A4({
             <Accordion type="multiple" defaultValue={["a", "b"]}>
                 {/* A */}
                 <AccordionItem value="a">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         A. PENGHASILAN NETO DALAM NEGERI DARI USAHA DAN/ATAU
                         PEKERJAAN BEBAS BERDASARKAN PENCATATAN
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full space-y-3">
+                    <AccordionContent className="p-4 bg-card w-full space-y-3">
                         <p className="text-sm text-muted-foreground">
                             Wajib Pajak yang menyelenggarakan pencatatan wajib
                             mengisi Lampiran 3B untuk menyampaikan rincian
@@ -438,7 +438,7 @@ export default function TabL3A4({
                                     )}
 
                                     {/* Totals */}
-                                    <TableRow className="bg-gray-50 font-semibold">
+                                    <TableRow className="bg-muted/50 font-semibold">
                                         <TableCell
                                             colSpan={3}
                                             className="text-right"
@@ -450,7 +450,7 @@ export default function TabL3A4({
                                         </TableCell>
                                         <TableCell colSpan={2} />
                                     </TableRow>
-                                    <TableRow className="bg-gray-50 font-semibold">
+                                    <TableRow className="bg-muted/50 font-semibold">
                                         <TableCell
                                             colSpan={4}
                                             className="text-right"
@@ -469,14 +469,14 @@ export default function TabL3A4({
 
                 {/* B */}
                 <AccordionItem value="b">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         B. PENGHASILAN NETO DALAM NEGERI LAINNYA
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full space-y-3">
+                    <AccordionContent className="p-4 bg-card w-full space-y-3">
                         <div>
                             <Button
                                 type="button"
-                                className="bg-blue-950 hover:bg-blue-900 gap-2"
+                                className="gap-2"
                                 onClick={openAddB}
                             >
                                 <Plus className="w-4 h-4" />
@@ -543,7 +543,7 @@ export default function TabL3A4({
                                                                 removeBRow(idx)
                                                             }
                                                         >
-                                                            <Trash2 className="w-4 h-4 text-red-600" />
+                                                            <Trash2 className="w-4 h-4 text-destructive" />
                                                         </Button>
                                                     </div>
                                                 </TableCell>
@@ -565,7 +565,7 @@ export default function TabL3A4({
                                         ))
                                     )}
 
-                                    <TableRow className="bg-gray-50 font-semibold">
+                                    <TableRow className="bg-muted/50 font-semibold">
                                         <TableCell
                                             colSpan={4}
                                             className="text-right"
@@ -586,7 +586,6 @@ export default function TabL3A4({
             <div className="mt-2 flex gap-3">
                 <Button
                     type="button"
-                    className="bg-blue-950 hover:bg-blue-900"
                     onClick={handleSync}
                     disabled={isSaving}
                 >

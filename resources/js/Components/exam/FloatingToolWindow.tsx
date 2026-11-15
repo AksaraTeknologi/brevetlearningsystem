@@ -118,7 +118,7 @@ export default function FloatingToolWindow({
         <div
             onPointerDown={() => onFocus?.()}
             style={style}
-            className="exam-allow-select select-text fixed flex flex-col bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden"
+            className="exam-allow-select select-text fixed flex flex-col bg-card border border-border rounded-xl shadow-2xl overflow-hidden"
         >
             {/* Header / Drag Handle */}
             <div
@@ -156,7 +156,7 @@ export default function FloatingToolWindow({
             </div>
 
             {/* Body */}
-            <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-white">
+            <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-card">
                 {children}
             </div>
         </div>

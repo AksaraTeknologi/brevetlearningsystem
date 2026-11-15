@@ -72,7 +72,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 value={rupiahFormatter.format(field.value || 0)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -138,7 +138,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 value={rupiahFormatter.format(field.value || 0)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -160,7 +160,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 value={rupiahFormatter.format(field.value || 0)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -182,7 +182,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 value={rupiahFormatter.format(field.value || 0)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -204,7 +204,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 value={rupiahFormatter.format(field.value || 0)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -230,7 +230,7 @@ export default function FormFieldPph21({ form }: any) {
                                 }
                                 autoComplete="off"
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -276,7 +276,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 value={rupiahFormatter.format(field.value || 0)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -322,7 +322,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 value={rupiahFormatter.format(field.value || 0)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -344,7 +344,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 autoComplete="off"
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -366,7 +366,7 @@ export default function FormFieldPph21({ form }: any) {
                                 type="text"
                                 autoComplete="off"
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />

@@ -114,7 +114,7 @@ export default function ResetPassword({
                                                 setShowPassword(!showPassword)
                                             }
                                             disabled={processing}
-                                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+                                            className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                             {showPassword ? (
                                                 <Eye className="h-4 w-4" />
@@ -158,7 +158,7 @@ export default function ResetPassword({
                                                 )
                                             }
                                             disabled={processing}
-                                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+                                            className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                             {showPasswordConfirmation ? (
                                                 <Eye className="h-4 w-4" />

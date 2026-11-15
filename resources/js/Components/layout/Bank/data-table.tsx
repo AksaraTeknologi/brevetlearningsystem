@@ -26,6 +26,12 @@ import React from "react";
 import { Input } from "@/Components/ui/input";
 import { DataTablePagination } from "../DataTablePagination";
 import { DataTableViewOptions } from "../DataTableViewOption";
+import {
+    countTextFilters,
+    DataTableExport,
+    DataTableFilterRow,
+    DataTableFilterToggle,
+} from "../DataTableTools";
 import { X } from "lucide-react";
 import {
     Select,
@@ -66,12 +72,13 @@ export function DataTableBank<TData, TValue>({
             columnVisibility,
         },
     });
+    const [showColumnFilters, setShowColumnFilters] = React.useState(false);
 
     const isFiltered = table.getState().columnFilters.length > 0;
 
     return (
         <>
-            <div className="flex flex-col lg:flex-row lg:items-center py-4 gap-2 flex-wrap">
+            <div className="tls-table-toolbar flex flex-col lg:flex-row lg:items-center py-4 gap-2 flex-wrap">
                 <Input
                     placeholder="Cari nama bank..."
                     value={
@@ -135,12 +142,18 @@ export function DataTableBank<TData, TValue>({
                     )}
                 </div>
 
-                <div className="lg:ml-auto">
+                <div className="flex items-center gap-2 lg:ml-auto">
                     <DataTableViewOptions table={table} />
+                    <DataTableFilterToggle
+                        active={showColumnFilters}
+                        onToggle={() => setShowColumnFilters((v) => !v)}
+                        activeCount={countTextFilters(table)}
+                    />
+                    <DataTableExport table={table} fileName="rekening-bank" />
                 </div>
             </div>
             <div className="rounded-md border overflow-x-auto w-full">
-                <Table className="min-w-[800px] w-full table-fixed">
+                <Table className="min-w-[800px] w-full table-auto">
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
@@ -159,6 +172,7 @@ export function DataTableBank<TData, TValue>({
                                 })}
                             </TableRow>
                         ))}
+                        {showColumnFilters && <DataTableFilterRow table={table} />}
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (

@@ -267,7 +267,7 @@ export default function TabL4A({
     };
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
             <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                 <li>
                     A. PENGHITUNGAN ANGSURAN PPh PASAL 25 TAHUN PAJAK BERIKUTNYA
@@ -279,10 +279,10 @@ export default function TabL4A({
 
             {/* HEADER */}
             <div>
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
                             <Label className="text-sm">Tahun Pajak</Label>
@@ -290,7 +290,7 @@ export default function TabL4A({
                                 type="text"
                                 value={String(spt.year)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
@@ -299,7 +299,7 @@ export default function TabL4A({
                                 type="text"
                                 value={user.npwp}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </div>
@@ -308,15 +308,15 @@ export default function TabL4A({
 
             <Accordion type="multiple" defaultValue={["l4a"]}>
                 <AccordionItem value="l4a">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         A. PERHITUNGAN ANGSURAN PPh PASAL 25 TAHUN PAJAK
                         BERIKUTNYA
                     </AccordionTrigger>
-                    <AccordionContent className="p-6 bg-white w-full border border-t-0 rounded-b-xl">
+                    <AccordionContent className="p-6 bg-card w-full border border-t-0 rounded-b-xl">
                         <div className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-3 items-center">
                             <Label>
                                 Penghasilan neto{" "}
-                                <span className="text-red-500">*</span>
+                                <span className="text-destructive">*</span>
                             </Label>
                             <Input
                                 value={regularNetDisplay}
@@ -355,7 +355,7 @@ export default function TabL4A({
                                     computed.total_net_income,
                                 )}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
 
                             <Label>Penghasilan tidak kena pajak</Label>
@@ -444,7 +444,7 @@ export default function TabL4A({
                                     computed.taxable_income,
                                 )}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
 
                             <Label>Pajak Terutang</Label>
@@ -453,7 +453,7 @@ export default function TabL4A({
                                     computed.income_tax_payable,
                                 )}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
 
                             <Label>Pengurang PPh Terutang</Label>
@@ -482,7 +482,7 @@ export default function TabL4A({
                                     computed.income_tax_must_paid,
                                 )}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
 
                             <Label>
@@ -493,7 +493,7 @@ export default function TabL4A({
                                     computed.tax_installments,
                                 )}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </AccordionContent>
@@ -505,7 +505,7 @@ export default function TabL4A({
                     type="button"
                     onClick={sync}
                     disabled={isSaving}
-                    className="bg-blue-950 hover:bg-blue-900 gap-2"
+                    className="gap-2"
                 >
                     <Save className="w-4 h-4" />
                     {isSaving ? "Menyimpan..." : "Simpan Konsep"}

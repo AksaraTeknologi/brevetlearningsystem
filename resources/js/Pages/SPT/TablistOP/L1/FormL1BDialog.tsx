@@ -221,14 +221,14 @@ export function FormL1BDialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-2xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>UTANG PADA AKHIR TAHUN PAJAK</DialogTitle>
                 </DialogHeader>
 
                 <div className="p-4 sm:p-6 space-y-4 overflow-y-auto min-h-0">
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Kode <span className="text-red-500">*</span>
+                            Kode <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -238,11 +238,11 @@ export function FormL1BDialog({
                                 }
                                 placeholder="Masukkan kode"
                                 className={cn(
-                                    errors.code && "border-red-500"
+                                    errors.code && "border-destructive"
                                 )}
                             />
                             {errors.code && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.code}
                                 </p>
                             )}
@@ -250,7 +250,7 @@ export function FormL1BDialog({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-start gap-4">
-                        <Label className="pt-2">Deskripsi<span className="text-red-500">*</span></Label>
+                        <Label className="pt-2">Deskripsi<span className="text-destructive">*</span></Label>
                         <div className="space-y-1">
                             <Input
                                 value={formData.description}
@@ -259,11 +259,11 @@ export function FormL1BDialog({
                                 }
                                 placeholder="Masukkan deskripsi"
                                 className={cn(
-                                    errors.description && "border-red-500"
+                                    errors.description && "border-destructive"
                                 )}
                             />
                             {errors.description && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.description}
                                 </p>
                             )}
@@ -271,7 +271,7 @@ export function FormL1BDialog({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-start gap-4">
-                        <Label className="pt-2">Nomor Identitas WP<span className="text-red-500">*</span></Label>
+                        <Label className="pt-2">Nomor Identitas WP<span className="text-destructive">*</span></Label>
                         <div className="space-y-1">
                             <Input
                                 inputMode="numeric"
@@ -280,11 +280,11 @@ export function FormL1BDialog({
                                 maxLength={16}
                                 placeholder="Masukkan nomor identitas"
                                 className={cn(
-                                    errors.creditor_id && "border-red-500"
+                                    errors.creditor_id && "border-destructive"
                                 )}
                             />
                             {errors.creditor_id && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.creditor_id}
                                 </p>
                             )}
@@ -292,7 +292,7 @@ export function FormL1BDialog({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-start gap-4">
-                        <Label className="pt-2">Nama<span className="text-red-500">*</span></Label>
+                        <Label className="pt-2">Nama<span className="text-destructive">*</span></Label>
                         <div className="space-y-1">
                             <Input
                                 value={formData.creditor_name}
@@ -301,11 +301,11 @@ export function FormL1BDialog({
                                 }
                                 placeholder="Masukkan nama"
                                 className={cn(
-                                    errors.creditor_name && "border-red-500"
+                                    errors.creditor_name && "border-destructive"
                                 )}
                             />
                             {errors.creditor_name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.creditor_name}
                                 </p>
                             )}
@@ -313,7 +313,7 @@ export function FormL1BDialog({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-start gap-4">
-                        <Label className="pt-2">Negara Kreditur<span className="text-red-500">*</span></Label>
+                        <Label className="pt-2">Negara Kreditur<span className="text-destructive">*</span></Label>
                         <div className="space-y-1">
                             <Popover
                                 open={openCountry}
@@ -326,7 +326,7 @@ export function FormL1BDialog({
                                         aria-expanded={openCountry}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.creditor_country && "border-red-500"
+                                            errors.creditor_country && "border-destructive"
                                         )}
                                     >
                                         {formData.creditor_country
@@ -380,7 +380,7 @@ export function FormL1BDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.creditor_country && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.creditor_country}
                                 </p>
                             )}
@@ -388,7 +388,7 @@ export function FormL1BDialog({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-start gap-4">
-                        <Label className="pt-2">Tahun Peminjaman<span className="text-red-500">*</span></Label>
+                        <Label className="pt-2">Tahun Peminjaman<span className="text-destructive">*</span></Label>
                         <div className="space-y-1">
                             <Input
                                 inputMode="numeric"
@@ -397,11 +397,11 @@ export function FormL1BDialog({
                                 maxLength={4}
                                 placeholder="Contoh: 2024"
                                 className={cn(
-                                    errors.loan_year && "border-red-500"
+                                    errors.loan_year && "border-destructive"
                                 )}
                             />
                             {errors.loan_year && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.loan_year}
                                 </p>
                             )}
@@ -410,7 +410,7 @@ export function FormL1BDialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Saldo <span className="text-red-500">*</span>
+                            Saldo <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -424,12 +424,12 @@ export function FormL1BDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.balance && "border-red-500"
+                                        errors.balance && "border-destructive"
                                     )}
                                 />
                             </div>
                             {errors.balance && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.balance}
                                 </p>
                             )}
@@ -505,7 +505,6 @@ export function FormL1BDialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

@@ -17,13 +17,13 @@ export default function RelatedPersons({ onNext }: Props) {
     return (
         <div>
             <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold text-gray-800 mb-2">
+                <h1 className="text-2xl font-bold text-foreground mb-2">
                     Masukkan orang terkait wajib pajak.
                 </h1>
             </div>
 
             <div className="text-center mb-8">
-                <h2 className="text-xl font-semibold text-gray-700 mb-8">
+                <h2 className="text-xl font-semibold text-foreground mb-8">
                     Tambahkan Orang yang Mempunyai Hubungan Istimewa
                 </h2>
 
@@ -32,7 +32,7 @@ export default function RelatedPersons({ onNext }: Props) {
                         variant="outline"
                         className="flex items-center space-x-2"
                     >
-                        <div className="flex flex-col items-center bg-blue-900 p-1 rounded-full">
+                        <div className="flex flex-col items-center bg-brand p-1 rounded-full text-brand-foreground">
                             <Plus className="w-12 h-12 text-white" />
                         </div>
                     </Button>
@@ -43,7 +43,7 @@ export default function RelatedPersons({ onNext }: Props) {
                 <div className="flex justify-end items-center pt-6">
                     <Button
                         type="submit"
-                        className="bg-blue-900 hover:bg-blue-800"
+                        className="bg-brand hover:bg-brand/90 text-brand-foreground"
                     >
                         Lanjut
                     </Button>

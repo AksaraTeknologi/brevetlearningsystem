@@ -1,3 +1,8 @@
+import {
+    FormPageHeader,
+    FormSection,
+    FormActions,
+} from "@/Components/app-shell/FormPage";
 import { Button } from "@/Components/ui/button";
 import { Form } from "@/Components/ui/form";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
@@ -404,82 +409,72 @@ function handleSubmitWithStatus(status: "created" | "draft") {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Buat eBupot BPA1
-                    </h1>
+                    <FormPageHeader
+                        title="Buat eBupot BPA1"
+                        backHref={route("bpa1.notIssued")}
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
+                    <div>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <File size={16} />
-                                    <h3 className="font-medium">
-                                        Informasi Umum
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<File />}
+                                    title="Informasi Umum"
+                                >
                                     <FormFieldsGeneralInformation
                                         form={form}
                                         objects={objects}
                                         bupots={bupots}
                                         isEditMode={false}
                                     />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Banknote size={16} />
-                                    <h3 className="font-medium">
-                                        Penghasilan Bruto
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<Banknote />}
+                                    title="Penghasilan Bruto"
+                                >
                                     <FormFieldsIncomeTax
                                         form={form}
                                         objects={objects}
                                         user={user}
                                     />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Banknote size={16} />
-                                    <h3 className="font-medium">
-                                        Pengurang
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<Banknote />}
+                                    title="Pengurang"
+                                >
                                     <FormFieldReducer
                                         form={form}
                                         objects={objects}
                                         user={user}
                                     />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Banknote size={16} />
-                                    <h3 className="font-medium">
-                                        Penghitungan PPh Pasal 21
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<Banknote />}
+                                    title="Penghitungan PPh Pasal 21"
+                                >
                                     <FormFieldPph21
                                         form={form}
                                         objects={objects}
                                         user={user}
                                     />
-                                </div>
-                                <Button
-                                    type="button"
-                                    className="mr-2"
-                                    onClick={() => handleSubmitWithStatus("created")}
-                                >
-                                    Kirim
-                                </Button>
-                                <Button
-                                    type="button"
-                                    onClick={() => handleSubmitWithStatus("draft")}
-                                >
-                                    Simpan Draf
-                                </Button>
+                                </FormSection>
+                                <FormActions cancelHref={route("bpa1.notIssued")}>
+                                    <Button
+                                        type="button"
+                                        onClick={() => handleSubmitWithStatus("created")}
+                                    >
+                                        Kirim
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        onClick={() => handleSubmitWithStatus("draft")}
+                                    >
+                                        Simpan Draf
+                                    </Button>
+                                </FormActions>
                             </form>
                         </Form>
                     </div>

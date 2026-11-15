@@ -1,3 +1,8 @@
+import {
+    FormPageHeader,
+    FormSection,
+    FormActions,
+} from "@/Components/app-shell/FormPage";
 import { columns } from "@/Components/layout/InvoiceItems/columns";
 import { DataTableInvoiceItems } from "@/Components/layout/InvoiceItems/data-table";
 import { Button } from "@/Components/ui/button";
@@ -160,44 +165,36 @@ export default function FormOutputInvoice({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Buat Faktur Pajak Keluaran
-                    </h1>
+                    <FormPageHeader
+                        title="Buat Faktur Pajak Keluaran"
+                        backHref={route("invoice.output")}
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
+                    <div>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <File size={16} />
-                                    <h3 className="font-medium">
-                                        Dokumen Transaksi
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<File />}
+                                    title="Dokumen Transaksi"
+                                >
                                     <FormFieldsTransactionDocument
                                         form={form}
                                         transactions={transactions}
                                         invoiceCount={invoiceCount}
                                     />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <UserPen size={16} />
-                                    <h3 className="font-medium">
-                                        Data Pembeli
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<UserPen />}
+                                    title="Data Pembeli"
+                                >
                                     <FormFieldBuyerInformation form={form} />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Sheet size={16} />
-                                    <h3 className="font-medium">
-                                        Data Barang / Jasa
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4 max-w-xl lg:max-w-3xl xl:max-w-5xl 2xl:max-w-6xl">
+                                <FormSection
+                                    icon={<Sheet />}
+                                    title="Data Barang / Jasa"
+                                >
                                     <div className="flex flex-col lg:flex-row gap-2 mb-2">
                                         <FormCreateTransactionItems
                                             invoiceId={defaultId}
@@ -230,8 +227,10 @@ export default function FormOutputInvoice({
                                         data={items}
                                         setSelectedItemIds={setSelectedItemIds}
                                     />
-                                </div>
-                                <Button type="submit">Kirim</Button>
+                                </FormSection>
+                                <FormActions cancelHref={route("invoice.output")}>
+                                    <Button type="submit">Kirim</Button>
+                                </FormActions>
                             </form>
                         </Form>
                     </div>

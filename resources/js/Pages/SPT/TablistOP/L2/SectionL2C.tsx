@@ -66,7 +66,6 @@ export function SectionL2C({ data, sptOpId, onRefresh }: SectionL2CProps) {
             <div className="flex flex-wrap gap-2">
                 <Button
                     type="button"
-                    className="bg-blue-950 hover:bg-blue-900"
                     onClick={handleAdd}
                 >
                     <Plus className="w-4 h-4 mr-2" />
@@ -84,7 +83,7 @@ export function SectionL2C({ data, sptOpId, onRefresh }: SectionL2CProps) {
                 <Button
                     type="button"
                     variant="outline"
-                    className="border-blue-950 text-blue-950"
+                    className="border-brand text-brand-ink"
                     disabled
                 >
                     <Upload className="w-4 h-4 mr-2" />

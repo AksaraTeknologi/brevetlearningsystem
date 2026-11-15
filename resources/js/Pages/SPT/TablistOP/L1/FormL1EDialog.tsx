@@ -240,7 +240,7 @@ export function FormL1EDialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-2xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         DAFTAR BUKTI PEMOTONGAN/PEMUNGUTAN PPh
                     </DialogTitle>
@@ -250,7 +250,7 @@ export function FormL1EDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama Pemotong/Pemungut PPh{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -264,11 +264,11 @@ export function FormL1EDialog({
                                 placeholder="Masukkan nama pemotong/pemungut"
                                 className={cn(
                                     errors.tax_withholder_name &&
-                                        "border-red-500",
+                                        "border-destructive",
                                 )}
                             />
                             {errors.tax_withholder_name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_withholder_name}
                                 </p>
                             )}
@@ -278,7 +278,7 @@ export function FormL1EDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             NPWP Pemotong/Pemungut PPh{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -289,11 +289,11 @@ export function FormL1EDialog({
                                 placeholder="Masukkan NPWP"
                                 className={cn(
                                     errors.tax_withholder_id &&
-                                        "border-red-500",
+                                        "border-destructive",
                                 )}
                             />
                             {errors.tax_withholder_id && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_withholder_id}
                                 </p>
                             )}
@@ -303,7 +303,7 @@ export function FormL1EDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nomor Bukti Pemotongan/Pemungutan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -317,11 +317,11 @@ export function FormL1EDialog({
                                 placeholder="Masukkan nomor bukti"
                                 className={cn(
                                     errors.tax_withholder_slip_number &&
-                                        "border-red-500",
+                                        "border-destructive",
                                 )}
                             />
                             {errors.tax_withholder_slip_number && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_withholder_slip_number}
                                 </p>
                             )}
@@ -331,7 +331,7 @@ export function FormL1EDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Tanggal Bukti Pemotongan/Pemungutan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -346,7 +346,7 @@ export function FormL1EDialog({
                                             !formData.tax_withholder_slip_date &&
                                                 "text-muted-foreground",
                                             errors.tax_withholder_slip_date &&
-                                                "border-red-500",
+                                                "border-destructive",
                                         )}
                                         onClick={() => setIsCalendarOpen(true)}
                                     >
@@ -395,7 +395,7 @@ export function FormL1EDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.tax_withholder_slip_date && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_withholder_slip_date}
                                 </p>
                             )}
@@ -404,7 +404,7 @@ export function FormL1EDialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Jenis Pajak <span className="text-red-500">*</span>
+                            Jenis Pajak <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -418,7 +418,7 @@ export function FormL1EDialog({
                                         aria-expanded={openTaxType}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.tax_type && "border-red-500",
+                                            errors.tax_type && "border-destructive",
                                         )}
                                     >
                                         {taxTypeLabel || "Silakan Pilih"}
@@ -470,7 +470,7 @@ export function FormL1EDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.tax_type && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_type}
                                 </p>
                             )}
@@ -480,7 +480,7 @@ export function FormL1EDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Penghasilan Bruto{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -494,12 +494,12 @@ export function FormL1EDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.gross_income && "border-red-500",
+                                        errors.gross_income && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.gross_income && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.gross_income}
                                 </p>
                             )}
@@ -509,7 +509,7 @@ export function FormL1EDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             PPh yang Dipotong/Dipungut{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -523,12 +523,12 @@ export function FormL1EDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.amount && "border-red-500",
+                                        errors.amount && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.amount && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.amount}
                                 </p>
                             )}
@@ -546,7 +546,6 @@ export function FormL1EDialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

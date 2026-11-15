@@ -264,7 +264,7 @@ export function FormL1A1Dialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>KAS DAN SETARA KAS</DialogTitle>
                 </DialogHeader>
 
@@ -272,7 +272,7 @@ export function FormL1A1Dialog({
                     {/* Kode - Read only, auto-filled from Deskripsi */}
                     <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Kode <span className="text-red-500">*</span>
+                            Kode <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -280,13 +280,13 @@ export function FormL1A1Dialog({
                                 readOnly
                                 disabled
                                 className={cn(
-                                    "bg-gray-100",
-                                    errors.code && "border-red-500"
+                                    "bg-muted",
+                                    errors.code && "border-destructive"
                                 )}
                                 placeholder="Otomatis terisi"
                             />
                             {errors.code && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.code}
                                 </p>
                             )}
@@ -296,7 +296,7 @@ export function FormL1A1Dialog({
                     {/* Deskripsi - Popover Select */}
                     <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Deskripsi <span className="text-red-500">*</span>
+                            Deskripsi <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -310,7 +310,7 @@ export function FormL1A1Dialog({
                                         aria-expanded={openDescription}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.description && "border-red-500"
+                                            errors.description && "border-destructive"
                                         )}
                                     >
                                         {formData.description || "Silakan Pilih"}
@@ -356,7 +356,7 @@ export function FormL1A1Dialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.description && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.description}
                                 </p>
                             )}
@@ -365,7 +365,7 @@ export function FormL1A1Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Nomor Akun <span className="text-red-500">*</span>
+                            Nomor Akun <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -375,11 +375,11 @@ export function FormL1A1Dialog({
                                 }
                                 placeholder="Masukkan nomor akun"
                                 className={cn(
-                                    errors.account_number && "border-red-500"
+                                    errors.account_number && "border-destructive"
                                 )}
                             />
                             {errors.account_number && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.account_number}
                                 </p>
                             )}
@@ -388,7 +388,7 @@ export function FormL1A1Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Atas Nama <span className="text-red-500">*</span>
+                            Atas Nama <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -398,11 +398,11 @@ export function FormL1A1Dialog({
                                 }
                                 placeholder="Masukkan nama pemilik"
                                 className={cn(
-                                    errors.on_behalf && "border-red-500"
+                                    errors.on_behalf && "border-destructive"
                                 )}
                             />
                             {errors.on_behalf && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.on_behalf}
                                 </p>
                             )}
@@ -412,7 +412,7 @@ export function FormL1A1Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama Bank/Institusi{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -422,11 +422,11 @@ export function FormL1A1Dialog({
                                 }
                                 placeholder="Masukkan nama bank"
                                 className={cn(
-                                    errors.bank && "border-red-500"
+                                    errors.bank && "border-destructive"
                                 )}
                             />
                             {errors.bank && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.bank}
                                 </p>
                             )}
@@ -436,7 +436,7 @@ export function FormL1A1Dialog({
                     {/* Lokasi Harta - Popover Select */}
                     <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Lokasi Harta <span className="text-red-500">*</span>
+                            Lokasi Harta <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -450,7 +450,7 @@ export function FormL1A1Dialog({
                                         aria-expanded={openCountry}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.country && "border-red-500"
+                                            errors.country && "border-destructive"
                                         )}
                                     >
                                         {formData.country
@@ -498,7 +498,7 @@ export function FormL1A1Dialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.country && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.country}
                                 </p>
                             )}
@@ -508,7 +508,7 @@ export function FormL1A1Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Tahun Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -520,11 +520,11 @@ export function FormL1A1Dialog({
                                 placeholder="Contoh: 2020"
                                 maxLength={4}
                                 className={cn(
-                                    errors.acquisition_year && "border-red-500"
+                                    errors.acquisition_year && "border-destructive"
                                 )}
                             />
                             {errors.acquisition_year && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.acquisition_year}
                                 </p>
                             )}
@@ -534,7 +534,7 @@ export function FormL1A1Dialog({
                     {/* Saldo - Format Rupiah */}
                     <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Saldo <span className="text-red-500">*</span>
+                            Saldo <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -548,12 +548,12 @@ export function FormL1A1Dialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.integer && "border-red-500"
+                                        errors.integer && "border-destructive"
                                     )}
                                 />
                             </div>
                             {errors.integer && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.integer}
                                 </p>
                             )}
@@ -630,7 +630,6 @@ export function FormL1A1Dialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

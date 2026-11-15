@@ -124,7 +124,7 @@ export function TableL2C({
         }
     };
 
-    const headerClass = "text-black font-semibold";
+    const headerClass = "text-foreground font-semibold";
 
     return (
         <div className="w-full overflow-x-auto">
@@ -194,10 +194,10 @@ export function TableL2C({
                     </TableRow>
 
                     <TableRow>
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
 
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card">
                             <Input
                                 value={filterName}
                                 onChange={(e) => setFilterName(e.target.value)}
@@ -205,7 +205,7 @@ export function TableL2C({
                                 className="h-8"
                             />
                         </TableHead>
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card">
                             <Popover
                                 open={openCountry}
                                 onOpenChange={setOpenCountry}
@@ -279,8 +279,8 @@ export function TableL2C({
                                 </PopoverContent>
                             </Popover>
                         </TableHead>
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card">
                             <Popover
                                 open={openIncomeType}
                                 onOpenChange={setOpenIncomeType}
@@ -356,10 +356,10 @@ export function TableL2C({
                                 </PopoverContent>
                             </Popover>
                         </TableHead>
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card">
                             <Popover
                                 open={openCurrency}
                                 onOpenChange={setOpenCurrency}
@@ -473,7 +473,7 @@ export function TableL2C({
                                             type="button"
                                             size="icon"
                                             variant="ghost"
-                                            className="h-8 w-8 text-red-500 hover:text-red-600"
+                                            className="h-8 w-8 text-destructive hover:text-destructive/80"
                                             onClick={() => onDelete(item.id!)}
                                         >
                                             <Trash2 className="h-4 w-4" />

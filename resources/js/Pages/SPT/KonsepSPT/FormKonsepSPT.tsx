@@ -611,7 +611,7 @@ export default function FormKonsepSPT({ forms, spts }: any) {
                                                     <FormItem>
                                                         <FormLabel>
                                                             Jenis Periode SPT{" "}
-                                                            <span className="text-red-500">
+                                                            <span className="text-destructive">
                                                                 *
                                                             </span>
                                                         </FormLabel>
@@ -669,7 +669,7 @@ export default function FormKonsepSPT({ forms, spts }: any) {
                                                 <FormItem>
                                                     <FormLabel>
                                                         Periode & Tahun Pajak{" "}
-                                                        <span className="text-red-500">
+                                                        <span className="text-destructive">
                                                             *
                                                         </span>
                                                     </FormLabel>
@@ -897,7 +897,7 @@ export default function FormKonsepSPT({ forms, spts }: any) {
                                             <FormItem>
                                                 <FormLabel>
                                                     Model SPT{" "}
-                                                    <span className="text-red-500">
+                                                    <span className="text-destructive">
                                                         *
                                                     </span>
                                                 </FormLabel>

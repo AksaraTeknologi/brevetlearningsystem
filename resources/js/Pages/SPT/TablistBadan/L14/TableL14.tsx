@@ -47,8 +47,8 @@ export function TableL14({
             <Table className="min-w-[2000px] text-xs">
                 <TableHeader>
                     {/* Row 1 */}
-                    <TableRow className="bg-gray-100">
-                        <TableHead rowSpan={3} className="border border-gray-300 w-8 text-center align-middle">
+                    <TableRow className="bg-muted">
+                        <TableHead rowSpan={3} className="border border-input w-8 text-center align-middle">
                             <Checkbox
                                 checked={allSelected || (someSelected ? "indeterminate" : false)}
                                 onCheckedChange={(c) =>
@@ -56,35 +56,35 @@ export function TableL14({
                                 }
                             />
                         </TableHead>
-                        <TableHead rowSpan={3} className="border border-gray-300 text-center align-middle w-16">Aksi</TableHead>
-                        <TableHead rowSpan={3} className="border border-gray-300 text-center align-middle">
+                        <TableHead rowSpan={3} className="border border-input text-center align-middle w-16">Aksi</TableHead>
+                        <TableHead rowSpan={3} className="border border-input text-center align-middle">
                             TAHUN PAJAK/BAGIAN<br />TAHUN PAJAK<br />(1)
                         </TableHead>
-                        <TableHead rowSpan={3} className="border border-gray-300 text-center align-middle">
+                        <TableHead rowSpan={3} className="border border-input text-center align-middle">
                             PENYEDIAAN SISA LEBIH<br />UNTUK DITANAMKAN KEMBALI<br />SELAMA 4 TAHUN<br />(Rp)<br />(2)
                         </TableHead>
-                        <TableHead rowSpan={3} className="border border-gray-300 text-center align-middle">
+                        <TableHead rowSpan={3} className="border border-input text-center align-middle">
                             BENTUK PENANAMAN<br />KEMBALI<br />SISA LEBIH<br />(3)
                         </TableHead>
-                        <TableHead colSpan={4} className="border border-gray-300 text-center">
+                        <TableHead colSpan={4} className="border border-input text-center">
                             PENGGUNAAN SISA LEBIH UNTUK PEMBANGUNAN DAN<br />PENGADAAN SARANA DAN PRASARANA
                         </TableHead>
-                        <TableHead rowSpan={3} className="border border-gray-300 text-center align-middle">
+                        <TableHead rowSpan={3} className="border border-input text-center align-middle">
                             JUMLAH PENGGUNAAN<br />SISA LEBIH<br />(Rp)<br />(8)
                         </TableHead>
-                        <TableHead rowSpan={3} className="border border-gray-300 text-center align-middle">
+                        <TableHead rowSpan={3} className="border border-input text-center align-middle">
                             SISA LEBIH YANG BELUM<br />DITANAMKAN KEMBALI<br />(Rp)<br />(9)
                         </TableHead>
-                        <TableHead rowSpan={3} className="border border-gray-300 text-center align-middle">
+                        <TableHead rowSpan={3} className="border border-input text-center align-middle">
                             SISA LEBIH YANG<br />MELEWATI JANGKA WAKTU<br />PENANAMAN KEMBALI<br />DALAM JANGKA<br />WAKTU 4 TAHUN<br />(Rp)<br />(10)
                         </TableHead>
                     </TableRow>
                     {/* Row 2 */}
-                    <TableRow className="bg-gray-100">
-                        <TableHead className="border border-gray-300 text-center">TAHUN KE-1<br />(Rp)<br />(4)</TableHead>
-                        <TableHead className="border border-gray-300 text-center">TAHUN KE-2<br />(Rp)<br />(5)</TableHead>
-                        <TableHead className="border border-gray-300 text-center">TAHUN KE-3<br />(Rp)<br />(6)</TableHead>
-                        <TableHead className="border border-gray-300 text-center">TAHUN KE-4<br />(Rp)<br />(7)</TableHead>
+                    <TableRow className="bg-muted">
+                        <TableHead className="border border-input text-center">TAHUN KE-1<br />(Rp)<br />(4)</TableHead>
+                        <TableHead className="border border-input text-center">TAHUN KE-2<br />(Rp)<br />(5)</TableHead>
+                        <TableHead className="border border-input text-center">TAHUN KE-3<br />(Rp)<br />(6)</TableHead>
+                        <TableHead className="border border-input text-center">TAHUN KE-4<br />(Rp)<br />(7)</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -97,7 +97,7 @@ export function TableL14({
                     ) : (
                         data.map((item, idx) => (
                             <TableRow key={item.id ?? idx}>
-                                <TableCell className="border border-gray-200">
+                                <TableCell className="border border-border">
                                     <Checkbox
                                         checked={selectedIds.includes(item.id!)}
                                         onCheckedChange={(c) =>
@@ -109,51 +109,51 @@ export function TableL14({
                                         }
                                     />
                                 </TableCell>
-                                <TableCell className="border border-gray-200">
+                                <TableCell className="border border-border">
                                     <div className="flex gap-1">
                                         <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => onEdit(item)}>
                                             <Pencil className="h-3 w-3" />
                                         </Button>
-                                        <Button size="icon" variant="ghost" className="h-7 w-7 text-red-500" onClick={() => onDelete(item.id!)}>
+                                        <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => onDelete(item.id!)}>
                                             <Trash2 className="h-3 w-3" />
                                         </Button>
                                     </div>
                                 </TableCell>
-                                <TableCell className="border border-gray-200">{item.tax_year ?? "-"}</TableCell>
-                                <TableCell className="border border-gray-200 text-right">{formatMoney(item.provision_remaining)}</TableCell>
-                                <TableCell className="border border-gray-200">{item.replanting_form_surfer ?? "-"}</TableCell>
-                                <TableCell className="border border-gray-200 text-right">{formatMoney(item.year_1)}</TableCell>
-                                <TableCell className="border border-gray-200 text-right">{formatMoney(item.year_2)}</TableCell>
-                                <TableCell className="border border-gray-200 text-right">{formatMoney(item.year_3)}</TableCell>
-                                <TableCell className="border border-gray-200 text-right">{formatMoney(item.year_4)}</TableCell>
-                                <TableCell className="border border-gray-200 text-right">{formatMoney(item.remaining_amount)}</TableCell>
-                                <TableCell className="border border-gray-200 text-right">{formatMoney(item.unreplaced_excess)}</TableCell>
-                                <TableCell className="border border-gray-200 text-right">{formatMoney(item.surplus_year_replanting_period)}</TableCell>
+                                <TableCell className="border border-border">{item.tax_year ?? "-"}</TableCell>
+                                <TableCell className="border border-border text-right">{formatMoney(item.provision_remaining)}</TableCell>
+                                <TableCell className="border border-border">{item.replanting_form_surfer ?? "-"}</TableCell>
+                                <TableCell className="border border-border text-right">{formatMoney(item.year_1)}</TableCell>
+                                <TableCell className="border border-border text-right">{formatMoney(item.year_2)}</TableCell>
+                                <TableCell className="border border-border text-right">{formatMoney(item.year_3)}</TableCell>
+                                <TableCell className="border border-border text-right">{formatMoney(item.year_4)}</TableCell>
+                                <TableCell className="border border-border text-right">{formatMoney(item.remaining_amount)}</TableCell>
+                                <TableCell className="border border-border text-right">{formatMoney(item.unreplaced_excess)}</TableCell>
+                                <TableCell className="border border-border text-right">{formatMoney(item.surplus_year_replanting_period)}</TableCell>
                             </TableRow>
                         ))
                     )}
                 </TableBody>
                 <TableFooter>
                     <TableRow>
-                        <TableCell colSpan={9} className="border border-gray-300 text-center font-semibold">
+                        <TableCell colSpan={9} className="border border-input text-center font-semibold">
                             JUMLAH
                         </TableCell>
-                        <TableCell className="border border-gray-300" />
-                        <TableCell className="border border-gray-300 text-right font-semibold ">
+                        <TableCell className="border border-input" />
+                        <TableCell className="border border-input text-right font-semibold ">
                             {formatMoney(totalUnreplaced)} <span className="ml-1 text-yellow-700 font-bold"></span>
                         </TableCell>
-                        <TableCell className="border border-gray-300 text-right font-semibold ">
+                        <TableCell className="border border-input text-right font-semibold ">
                             {formatMoney(totalSurplus)} <span className="ml-1 text-yellow-700 font-bold"></span>
                         </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell colSpan={9} className="border border-gray-300 text-center font-semibold">
+                        <TableCell colSpan={9} className="border border-input text-center font-semibold">
                             SISA LEBIH YANG DAPAT DIGUNAKAN KEMBALI
                         </TableCell>
-                        <TableCell className="border border-gray-300 text-center font-semibold text-yellow-700">
+                        <TableCell className="border border-input text-center font-semibold text-yellow-700">
                             
                         </TableCell>
-                        <TableCell colSpan={2} className="border border-gray-300 text-right font-semibold">
+                        <TableCell colSpan={2} className="border border-input text-right font-semibold">
                             {formatMoney(sisaLebihDigunakanKembali)}
                         </TableCell>
                     </TableRow>

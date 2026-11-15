@@ -227,7 +227,7 @@ export function FormL2ADialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-3xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         A. PENGHASILAN YANG DIKENAKAN PPh FINAL
                     </DialogTitle>
@@ -237,7 +237,7 @@ export function FormL2ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             NPWP Pemotong/Pemungut{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -248,11 +248,11 @@ export function FormL2ADialog({
                                 placeholder="Masukkan NPWP"
                                 className={cn(
                                     errors.tax_withholder_id &&
-                                        "border-red-500",
+                                        "border-destructive",
                                 )}
                             />
                             {errors.tax_withholder_id && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_withholder_id}
                                 </p>
                             )}
@@ -262,7 +262,7 @@ export function FormL2ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama Pemotong/Pemungut{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -276,11 +276,11 @@ export function FormL2ADialog({
                                 placeholder="Masukkan nama pemotong/pemungut"
                                 className={cn(
                                     errors.tax_withholder_name &&
-                                        "border-red-500",
+                                        "border-destructive",
                                 )}
                             />
                             {errors.tax_withholder_name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_withholder_name}
                                 </p>
                             )}
@@ -290,7 +290,7 @@ export function FormL2ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Jenis Penghasilan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -305,7 +305,7 @@ export function FormL2ADialog({
                                         className={cn(
                                             "w-full justify-between font-normal",
                                             errors.object_id &&
-                                                "border-red-500",
+                                                "border-destructive",
                                         )}
                                     >
                                         {selectedObject?.name ||
@@ -361,7 +361,7 @@ export function FormL2ADialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.object_id && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.object_id}
                                 </p>
                             )}
@@ -371,7 +371,7 @@ export function FormL2ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Kode Objek Pajak{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -386,7 +386,7 @@ export function FormL2ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Dasar Pengenaan Pajak (Rupiah){" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -400,12 +400,12 @@ export function FormL2ADialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.dpp && "border-red-500",
+                                        errors.dpp && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.dpp && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.dpp}
                                 </p>
                             )}
@@ -414,7 +414,7 @@ export function FormL2ADialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            PPh Terutang <span className="text-red-500">*</span>
+                            PPh Terutang <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -428,12 +428,12 @@ export function FormL2ADialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.pph_owed && "border-red-500",
+                                        errors.pph_owed && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.pph_owed && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.pph_owed}
                                 </p>
                             )}
@@ -451,7 +451,6 @@ export function FormL2ADialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

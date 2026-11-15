@@ -662,7 +662,7 @@ export default function Address({ onNext, existingData }: Props) {
     };
 
     const renderAddressForm = (address: AddressItem, index: number) => (
-        <div key={address.id} className="bg-white rounded-lg border p-6 mb-6">
+        <div key={address.id} className="bg-card rounded-lg border p-6 mb-6">
             <div className="flex justify-between items-center mb-4">
                 {addresses.length > 1 && (
                     <Button
@@ -670,7 +670,7 @@ export default function Address({ onNext, existingData }: Props) {
                         variant="outline"
                         size="sm"
                         onClick={() => handleDeleteAddress(index)}
-                        className="text-red-600 hover:text-red-700"
+                        className="text-destructive hover:text-destructive/80"
                     >
                         <Trash2 className="w-4 h-4 mr-1" />
                         Hapus
@@ -682,7 +682,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Jenis Alamat */}
                 <div className="space-y-2">
                     <Label>
-                        Jenis Alamat <span className="text-red-500">*</span>
+                        Jenis Alamat <span className="text-destructive">*</span>
                     </Label>
                     <Popover
                         open={openPopovers[`address_type_${index}`]}
@@ -699,7 +699,7 @@ export default function Address({ onNext, existingData }: Props) {
                                     !address.address_type &&
                                         "text-muted-foreground",
                                     errors[index]?.address_type &&
-                                        "border-red-500"
+                                        "border-destructive"
                                 )}
                             >
                                 <span className="truncate">
@@ -755,7 +755,7 @@ export default function Address({ onNext, existingData }: Props) {
                         </PopoverContent>
                     </Popover>
                     {errors[index]?.address_type && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].address_type}
                         </p>
                     )}
@@ -764,7 +764,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Detail Alamat */}
                 <div className="space-y-2">
                     <Label>
-                        Detail Alamat <span className="text-red-500">*</span>
+                        Detail Alamat <span className="text-destructive">*</span>
                     </Label>
                     <Input
                         placeholder="Masukkan detail alamat (jalan, nomor, gedung...)"
@@ -777,11 +777,11 @@ export default function Address({ onNext, existingData }: Props) {
                             )
                         }
                         className={cn(
-                            errors[index]?.address_detail && "border-red-500"
+                            errors[index]?.address_detail && "border-destructive"
                         )}
                     />
                     {errors[index]?.address_detail && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].address_detail}
                         </p>
                     )}
@@ -790,7 +790,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* RT */}
                 <div className="space-y-2">
                     <Label>
-                        RT <span className="text-red-500">*</span>
+                        RT <span className="text-destructive">*</span>
                     </Label>
                     <Input
                         placeholder="Masukkan RT (contoh: 001)"
@@ -798,13 +798,13 @@ export default function Address({ onNext, existingData }: Props) {
                         onChange={(e) =>
                             handleFieldChange(index, "rt", e.target.value)
                         }
-                        className={cn(errors[index]?.rt && "border-red-500")}
+                        className={cn(errors[index]?.rt && "border-destructive")}
                     />
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                         Jika RT/RW tidak ada, masukkan 000
                     </p>
                     {errors[index]?.rt && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].rt}
                         </p>
                     )}
@@ -813,7 +813,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* RW */}
                 <div className="space-y-2">
                     <Label>
-                        RW <span className="text-red-500">*</span>
+                        RW <span className="text-destructive">*</span>
                     </Label>
                     <Input
                         placeholder="Masukkan RW (contoh: 001)"
@@ -821,13 +821,13 @@ export default function Address({ onNext, existingData }: Props) {
                         onChange={(e) =>
                             handleFieldChange(index, "rw", e.target.value)
                         }
-                        className={cn(errors[index]?.rw && "border-red-500")}
+                        className={cn(errors[index]?.rw && "border-destructive")}
                     />
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                         Jika RT/RW tidak ada, masukkan 000
                     </p>
                     {errors[index]?.rw && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].rw}
                         </p>
                     )}
@@ -836,7 +836,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Provinsi */}
                 <div className="space-y-2">
                     <Label>
-                        Provinsi <span className="text-red-500">*</span>
+                        Provinsi <span className="text-destructive">*</span>
                     </Label>
                     <Popover
                         open={openPopovers[`province_${index}`]}
@@ -851,7 +851,7 @@ export default function Address({ onNext, existingData }: Props) {
                                     "w-full justify-between",
                                     !address.province &&
                                         "text-muted-foreground",
-                                    errors[index]?.province && "border-red-500"
+                                    errors[index]?.province && "border-destructive"
                                 )}
                             >
                                 <span className="truncate">
@@ -907,7 +907,7 @@ export default function Address({ onNext, existingData }: Props) {
                         </PopoverContent>
                     </Popover>
                     {errors[index]?.province && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].province}
                         </p>
                     )}
@@ -916,7 +916,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Kota/Wilayah */}
                 <div className="space-y-2">
                     <Label>
-                        Kota/Wilayah <span className="text-red-500">*</span>
+                        Kota/Wilayah <span className="text-destructive">*</span>
                     </Label>
                     <Popover
                         open={openPopovers[`region_${index}`]}
@@ -935,12 +935,12 @@ export default function Address({ onNext, existingData }: Props) {
                                 className={cn(
                                     "w-full justify-between",
                                     !address.region && "text-muted-foreground",
-                                    errors[index]?.region && "border-red-500",
+                                    errors[index]?.region && "border-destructive",
                                     (!address.province_id ||
                                         loadingStates[
                                             `regions-${address.province_id}`
                                         ]) &&
-                                        "bg-gray-50"
+                                        "bg-muted/50"
                                 )}
                             >
                                 <span className="truncate">
@@ -1004,13 +1004,13 @@ export default function Address({ onNext, existingData }: Props) {
                         </PopoverContent>
                     </Popover>
                     {loadingStates[`regions-${address.province_id}`] && (
-                        <div className="flex items-center text-sm text-gray-500">
+                        <div className="flex items-center text-sm text-muted-foreground">
                             <Loader2 className="w-3 h-3 mr-1 animate-spin" />
                             Memuat data kota...
                         </div>
                     )}
                     {errors[index]?.region && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].region}
                         </p>
                     )}
@@ -1019,7 +1019,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Kecamatan */}
                 <div className="space-y-2">
                     <Label>
-                        Kecamatan <span className="text-red-500">*</span>
+                        Kecamatan <span className="text-destructive">*</span>
                     </Label>
                     <Popover
                         open={openPopovers[`district_${index}`]}
@@ -1039,12 +1039,12 @@ export default function Address({ onNext, existingData }: Props) {
                                     "w-full justify-between",
                                     !address.district &&
                                         "text-muted-foreground",
-                                    errors[index]?.district && "border-red-500",
+                                    errors[index]?.district && "border-destructive",
                                     (!address.region_id ||
                                         loadingStates[
                                             `districts-${address.region_id}`
                                         ]) &&
-                                        "bg-gray-50"
+                                        "bg-muted/50"
                                 )}
                             >
                                 <span className="truncate">
@@ -1107,13 +1107,13 @@ export default function Address({ onNext, existingData }: Props) {
                         </PopoverContent>
                     </Popover>
                     {loadingStates[`districts-${address.region_id}`] && (
-                        <div className="flex items-center text-sm text-gray-500">
+                        <div className="flex items-center text-sm text-muted-foreground">
                             <Loader2 className="w-3 h-3 mr-1 animate-spin" />
                             Memuat data kecamatan...
                         </div>
                     )}
                     {errors[index]?.district && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].district}
                         </p>
                     )}
@@ -1122,7 +1122,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Desa/Kelurahan */}
                 <div className="space-y-2">
                     <Label>
-                        Desa/Kelurahan <span className="text-red-500">*</span>
+                        Desa/Kelurahan <span className="text-destructive">*</span>
                     </Label>
                     <Popover
                         open={openPopovers[`sub_district_${index}`]}
@@ -1145,12 +1145,12 @@ export default function Address({ onNext, existingData }: Props) {
                                     !address.sub_district &&
                                         "text-muted-foreground",
                                     errors[index]?.sub_district &&
-                                        "border-red-500",
+                                        "border-destructive",
                                     (!address.district_id ||
                                         loadingStates[
                                             `villages-${address.district_id}`
                                         ]) &&
-                                        "bg-gray-50"
+                                        "bg-muted/50"
                                 )}
                             >
                                 <span className="truncate">
@@ -1215,13 +1215,13 @@ export default function Address({ onNext, existingData }: Props) {
                         </PopoverContent>
                     </Popover>
                     {loadingStates[`villages-${address.district_id}`] && (
-                        <div className="flex items-center text-sm text-gray-500">
+                        <div className="flex items-center text-sm text-muted-foreground">
                             <Loader2 className="w-3 h-3 mr-1 animate-spin" />
                             Memuat data desa/kelurahan...
                         </div>
                     )}
                     {errors[index]?.sub_district && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].sub_district}
                         </p>
                     )}
@@ -1230,7 +1230,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Kode Wilayah */}
                 <div className="space-y-2">
                     <Label>
-                        Kode Wilayah <span className="text-red-500">*</span>
+                        Kode Wilayah <span className="text-destructive">*</span>
                     </Label>
                     <Input
                         placeholder="Kode wilayah (otomatis dari kelurahan)"
@@ -1243,13 +1243,13 @@ export default function Address({ onNext, existingData }: Props) {
                             )
                         }
                         className={cn(
-                            errors[index]?.region_code && "border-red-500",
-                            address.region_code && "bg-gray-50"
+                            errors[index]?.region_code && "border-destructive",
+                            address.region_code && "bg-muted/50"
                         )}
                         readOnly={!!address.region_code}
                     />
                     {errors[index]?.region_code && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].region_code}
                         </p>
                     )}
@@ -1258,7 +1258,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Kode Pos */}
                 <div className="space-y-2">
                     <Label>
-                        Kode Pos <span className="text-red-500">*</span>
+                        Kode Pos <span className="text-destructive">*</span>
                     </Label>
                     <Input
                         placeholder="Masukkan kode pos (5 digit)"
@@ -1270,12 +1270,12 @@ export default function Address({ onNext, existingData }: Props) {
                             }
                         }}
                         className={cn(
-                            errors[index]?.post_code && "border-red-500"
+                            errors[index]?.post_code && "border-destructive"
                         )}
                         maxLength={5}
                     />
                     {errors[index]?.post_code && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].post_code}
                         </p>
                     )}
@@ -1297,7 +1297,7 @@ export default function Address({ onNext, existingData }: Props) {
                             }
                             className={cn(
                                 errors[index]?.geometric_data &&
-                                    "border-red-500"
+                                    "border-destructive"
                             )}
                         />
                         <Button
@@ -1308,7 +1308,7 @@ export default function Address({ onNext, existingData }: Props) {
                                 isCoordinateLoading(address)
                             }
                             className={cn(
-                                "bg-blue-900 hover:bg-blue-800",
+                                "bg-brand hover:bg-brand/90 text-brand-foreground",
                                 !isMarkAddressEnabled(address, index) &&
                                     "bg-gray-400 cursor-not-allowed"
                             )}
@@ -1331,13 +1331,13 @@ export default function Address({ onNext, existingData }: Props) {
 
                     {/* Show coordinate info */}
                     {address.geometric_data && (
-                        <div className="text-xs text-gray-600 bg-gray-50 p-2 rounded">
+                        <div className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
                             📍 Koordinat: {address.geometric_data}
                         </div>
                     )}
 
                     {errors[index]?.geometric_data && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].geometric_data}
                         </p>
                     )}
@@ -1346,7 +1346,7 @@ export default function Address({ onNext, existingData }: Props) {
                 {/* Seksi Pengawasan */}
                 <div className="space-y-2">
                     <Label>
-                        Seksi Pengawasan <span className="text-red-500">*</span>
+                        Seksi Pengawasan <span className="text-destructive">*</span>
                     </Label>
                     <Popover
                         open={openPopovers[`supervisory_section_${index}`]}
@@ -1363,7 +1363,7 @@ export default function Address({ onNext, existingData }: Props) {
                                     !address.supervisory_section &&
                                         "text-muted-foreground",
                                     errors[index]?.supervisory_section &&
-                                        "border-red-500"
+                                        "border-destructive"
                                 )}
                             >
                                 <span className="truncate">
@@ -1418,7 +1418,7 @@ export default function Address({ onNext, existingData }: Props) {
                         </PopoverContent>
                     </Popover>
                     {errors[index]?.supervisory_section && (
-                        <p className="text-sm text-red-500">
+                        <p className="text-sm text-destructive">
                             {errors[index].supervisory_section}
                         </p>
                     )}
@@ -1430,7 +1430,7 @@ export default function Address({ onNext, existingData }: Props) {
     return (
         <div className="space-y-6">
             <div className="text-center mb-8">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                <h2 className="text-xl font-semibold text-foreground mb-2">
                     Masukkan detail Alamat wajib pajak.
                 </h2>
             </div>
@@ -1451,7 +1451,7 @@ export default function Address({ onNext, existingData }: Props) {
                         <Button
                             type="button"
                             onClick={handleCopyFromKtpAddress}
-                            className="bg-blue-900 hover:bg-blue-800"
+                            className="bg-brand hover:bg-brand/90 text-brand-foreground"
                         >
                             <Copy className="w-4 h-4 mr-2" />
                             Salin dari Alamat KTP
@@ -1475,7 +1475,7 @@ export default function Address({ onNext, existingData }: Props) {
                     <Button
                         type="submit"
                         disabled={processing}
-                        className="bg-blue-900 hover:bg-blue-800"
+                        className="bg-brand hover:bg-brand/90 text-brand-foreground"
                     >
                         {processing ? "Menyimpan..." : "Lanjutkan"}
                     </Button>

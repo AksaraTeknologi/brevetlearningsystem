@@ -1,3 +1,7 @@
+import {
+    FormPageHeader,
+    FormSection,
+} from "@/Components/app-shell/FormPage";
 import ItemDetail from "@/Components/layout/ItemDetail";
 import {
     Breadcrumb,
@@ -40,16 +44,22 @@ export default function BPPU({ user, bupot }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Detail eBupot MP
-                    </h1>
+                    <FormPageHeader
+                        title="Detail eBupot MP"
+                        backHref={route("mp.notIssued")}
+                        actions={
+                            <Button
+                                onClick={() =>
+                                    router.get(route("mp.edit", bupot.id))
+                                }
+                            >
+                                Edit
+                            </Button>
+                        }
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
-                        <div className="flex items-center gap-2 mb-2">
-                            <File size={16} />
-                            <h3 className="font-medium">Informasi Umum</h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                    <div>
+                        <FormSection icon={<File />} title="Informasi Umum">
                             <ItemDetail
                                 title="Masa Pajak"
                                 detail={`${bupot.bupot_period} ${bupot.bupot_year}`}
@@ -99,15 +109,12 @@ export default function BPPU({ user, bupot }: any) {
                                 title="Posisi"
                                 detail={bupot.customer_position}
                             />
-                        </div>
+                        </FormSection>
 
-                        <div className="flex items-center gap-2 mb-2">
-                            <Banknote size={16} />
-                            <h3 className="font-medium">
-                                Fasilitas Perpajakan
-                            </h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection
+                            icon={<Banknote />}
+                            title="Fasilitas Perpajakan"
+                        >
                             <ItemDetail
                                 title="Fasilitas Pajak yang Dimiliki oleh Penerima
                             Penghasilan"
@@ -148,15 +155,7 @@ export default function BPPU({ user, bupot }: any) {
                                 title="NITKU / Nomor Identitas Sub Unit Organisasi*"
                                 detail={`${user.npwp}000000 - ${user.name}`}
                             />
-                        </div>
-
-                        <Button
-                            onClick={() =>
-                                router.get(route("mp.edit", bupot.id))
-                            }
-                        >
-                            Edit
-                        </Button>
+                        </FormSection>
                     </div>
                 </div>
             </div>

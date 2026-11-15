@@ -539,7 +539,7 @@ export default function ExamWorkspace({
                 title={<span className="font-semibold">{test?.title ?? "Ujian"}</span>}
                 right={
                     <div className="flex items-center gap-3">
-                        <span className="flex items-center gap-1 text-sm rounded-full border px-2.5 py-0.5 bg-white">
+                        <span className="flex items-center gap-1 text-sm font-semibold tabular-nums rounded-full border border-[#FDE68A] px-3 py-1 bg-highlight-soft text-brand-950">
                             <AlarmClock size={14} className="text-amber-600" />
                             <span>
                                 {durationMinutes > 0
@@ -547,12 +547,12 @@ export default function ExamWorkspace({
                                     : "0:00"}
                             </span>
                         </span>
-                        <span className="text-xs text-gray-500 whitespace-nowrap">
+                        <span className="text-xs text-muted-foreground whitespace-nowrap">
                             {combinedAnsweredCount}/{total} dikerjakan
                         </span>
                         <div className="hidden md:block w-28 h-2 rounded-full bg-gray-200 overflow-hidden">
                             <div
-                                className="h-2 bg-green-400 transition-all"
+                                className="h-2 bg-highlight transition-all"
                                 style={{
                                     width: total
                                         ? `${Math.round(
@@ -568,7 +568,7 @@ export default function ExamWorkspace({
                 backHref={backHref}
             >
                 <Head title={`Ujian - ${test?.title ?? "Ujian"}`} />
-                <div className="py-4 mx-auto px-4 bg-slate-50/40 min-h-[calc(100vh-4rem)] select-none">
+                <div className="px-3 pb-6 pt-4 md:px-6 md:pt-5 min-h-[calc(100vh-5rem)] select-none">
                     <div
                         className={`max-w-[1600px] mx-auto grid grid-cols-1 gap-4 items-start ${gridColumnsClass}`}
                     >
@@ -580,12 +580,12 @@ export default function ExamWorkspace({
                         />
 
                         {/* TENGAH: Soal dan Jawaban (Paling Besar) */}
-                        <div className="bg-white border rounded-xl p-5 sm:p-6 shadow-sm min-w-0">
+                        <div className="tls-card p-5 sm:p-6 min-w-0">
                             {currentQuestion ? (
                                 <div>
                                     <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b">
                                         <div className="flex items-center gap-2">
-                                            <h2 className="text-lg font-semibold text-gray-900">
+                                            <h2 className="text-lg font-semibold text-foreground">
                                                 Soal No. {currentNumber}
                                             </h2>
                                             {isCurrentFlagged && (
@@ -603,7 +603,7 @@ export default function ExamWorkspace({
                                             onClick={() => toggleFlag(currentQuestion.id)}
                                             className={`gap-1.5 transition-colors ${
                                                 isCurrentFlagged
-                                                    ? "bg-amber-400 hover:bg-amber-500 text-amber-950 border-amber-500 font-semibold shadow-sm"
+                                                    ? "bg-highlight hover:bg-amber-500 text-amber-950 border-amber-500 font-semibold shadow-sm"
                                                     : "border-amber-300 text-amber-800 hover:bg-amber-50"
                                             }`}
                                         >
@@ -620,7 +620,7 @@ export default function ExamWorkspace({
                                         </Button>
                                     </div>
 
-                                    <p className="mb-3 font-semibold text-gray-900 leading-relaxed whitespace-pre-line">
+                                    <p className="mb-3 font-semibold text-foreground leading-relaxed whitespace-pre-line">
                                         {currentQuestion.question_text}
                                     </p>
 
@@ -643,8 +643,8 @@ export default function ExamWorkspace({
                                                         key={opt.id}
                                                         className={`flex items-start gap-2.5 p-3 border rounded-xl cursor-pointer transition-colors ${
                                                             effectiveAnswer?.option_id === opt.id
-                                                                ? "bg-blue-50/70 border-blue-400"
-                                                                : "hover:bg-gray-50 border-gray-200"
+                                                                ? "bg-highlight-soft/70 border-highlight ring-1 ring-highlight"
+                                                                : "hover:bg-muted/50 border-border"
                                                         }`}
                                                     >
                                                         <input
@@ -668,7 +668,7 @@ export default function ExamWorkspace({
                                                             }}
                                                         />
                                                         <div className="flex-1 min-w-0">
-                                                            <span className="text-gray-800 whitespace-pre-line">
+                                                            <span className="text-foreground whitespace-pre-line">
                                                                 {opt.option_text}
                                                             </span>
                                                             {opt.image_url && (
@@ -689,7 +689,7 @@ export default function ExamWorkspace({
                                     {currentQuestion.question_type === "short_answer" && (
                                         <textarea
                                             key={currentQuestion.id}
-                                            className="exam-allow-select w-full border rounded-lg p-3 select-text focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2"
+                                            className="exam-allow-select w-full border rounded-lg p-3 select-text focus:outline-none focus:ring-2 focus:ring-brand-900/25 focus:border-brand-900 mt-2"
                                             rows={4}
                                             placeholder="Tulis jawaban Anda"
                                             defaultValue={effectiveAnswer?.answer}
@@ -738,7 +738,7 @@ export default function ExamWorkspace({
                                     </div>
                                 </div>
                             ) : (
-                                <p className="text-gray-500">Belum ada soal yang tersedia.</p>
+                                <p className="text-muted-foreground">Belum ada soal yang tersedia.</p>
                             )}
                         </div>
 
@@ -844,7 +844,7 @@ export default function ExamWorkspace({
                                     <span>Masih Ada Soal Ragu-ragu</span>
                                 </AlertDialogTitle>
                                 <AlertDialogDescription asChild>
-                                    <div className="space-y-3 text-sm text-slate-600">
+                                    <div className="space-y-3 text-sm text-muted-foreground">
                                         <p>
                                             Anda masih menandai{" "}
                                             <strong>

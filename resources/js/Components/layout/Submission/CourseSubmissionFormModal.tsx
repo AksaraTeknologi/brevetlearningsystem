@@ -136,7 +136,7 @@ export default function CourseSubmissionFormModal({
 
                 <form onSubmit={handleSubmit} className="space-y-4 pt-2">
                     <div className="space-y-1.5">
-                        <label className="text-xs md:text-sm font-medium text-gray-700">
+                        <label className="text-xs md:text-sm font-medium text-foreground">
                             Nama / Judul Submission <span className="text-rose-500">*</span>
                         </label>
                         <Input
@@ -148,7 +148,7 @@ export default function CourseSubmissionFormModal({
                     </div>
 
                     <div className="space-y-1.5">
-                        <label className="text-xs md:text-sm font-medium text-gray-700">
+                        <label className="text-xs md:text-sm font-medium text-foreground">
                             Petunjuk / Instruksi Tugas (Opsional)
                         </label>
                         <Textarea
@@ -161,7 +161,7 @@ export default function CourseSubmissionFormModal({
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div className="space-y-1.5">
-                            <label className="text-xs md:text-sm font-medium text-gray-700">
+                            <label className="text-xs md:text-sm font-medium text-foreground">
                                 Batas Tanggal (Deadline)
                             </label>
                             <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
@@ -198,7 +198,7 @@ export default function CourseSubmissionFormModal({
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-xs md:text-sm font-medium text-gray-700">
+                            <label className="text-xs md:text-sm font-medium text-foreground">
                                 Batas Jam (Deadline)
                             </label>
                             <Input
@@ -210,10 +210,10 @@ export default function CourseSubmissionFormModal({
                     </div>
 
                     <div className="space-y-1.5">
-                        <label className="text-xs md:text-sm font-medium text-gray-700">
+                        <label className="text-xs md:text-sm font-medium text-foreground">
                             Lampiran Berkas / Template Soal (Opsional)
                         </label>
-                        <div className="border border-dashed rounded-lg p-3 text-center bg-slate-50/50 hover:bg-slate-50 transition cursor-pointer relative">
+                        <div className="border border-dashed rounded-lg p-3 text-center bg-muted/25 hover:bg-muted/50 transition cursor-pointer relative">
                             <input
                                 type="file"
                                 className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
@@ -222,7 +222,7 @@ export default function CourseSubmissionFormModal({
                             />
                             <div className="flex flex-col items-center justify-center gap-1">
                                 <Upload className="h-5 w-5 text-gray-400" />
-                                <span className="text-xs text-gray-600">
+                                <span className="text-xs text-muted-foreground">
                                     {file ? (
                                         <span className="font-semibold text-primary">{file.name}</span>
                                     ) : courseSubmission?.original_filename ? (

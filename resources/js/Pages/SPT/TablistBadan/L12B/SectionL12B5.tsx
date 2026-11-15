@@ -156,7 +156,7 @@ function FormDialog({ open, onClose, sptBadanId, editData }: FormDialogProps) {
     return (
         <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
             <DialogContent className="w-[95vw] max-w-xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle className="text-lg font-semibold">
                         {editData ? "UBAH" : "TAMBAH"}
                     </DialogTitle>
@@ -165,7 +165,7 @@ function FormDialog({ open, onClose, sptBadanId, editData }: FormDialogProps) {
                     {/* Nama Perusahaan */}
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-center gap-4">
                         <Label className="text-sm font-normal">
-                            Nama Perusahaan <span className="text-red-500">*</span>
+                            Nama Perusahaan <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             value={name}
@@ -176,7 +176,7 @@ function FormDialog({ open, onClose, sptBadanId, editData }: FormDialogProps) {
                     {/* NPWP */}
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-center gap-4">
                         <Label className="text-sm font-normal">
-                            NPWP <span className="text-red-500">*</span>
+                            NPWP <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             value={npwp}
@@ -320,7 +320,7 @@ function FormDialog({ open, onClose, sptBadanId, editData }: FormDialogProps) {
                         type="button"
                         onClick={handleSave}
                         disabled={isSaving}
-                        className="bg-blue-950 hover:bg-blue-900 gap-2"
+                        className="gap-2"
                     >
                         <span>💾</span>
                         {isSaving ? "Menyimpan..." : "Simpan"}
@@ -367,7 +367,6 @@ export function SectionL12B5({ data, sptBadanId }: SectionL12B5Props) {
             <div className="flex flex-wrap gap-2">
                 <Button
                     type="button"
-                    className="bg-blue-950 hover:bg-blue-900"
                     onClick={() => {
                         setEditItem(null);
                         setIsFormOpen(true);
@@ -392,9 +391,9 @@ export function SectionL12B5({ data, sptBadanId }: SectionL12B5Props) {
             <div className="w-full overflow-x-auto border">
                 <Table className="min-w-[1200px] text-xs">
                     <TableHeader>
-                        <TableRow className="bg-gray-100">
+                        <TableRow className="bg-muted">
                             <TableHead
-                                className="border border-gray-300 w-10"
+                                className="border border-input w-10"
                                 rowSpan={2}
                             >
                                 <Checkbox
@@ -415,68 +414,68 @@ export function SectionL12B5({ data, sptBadanId }: SectionL12B5Props) {
                                 />
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center w-10"
+                                className="border border-input text-center w-10"
                                 rowSpan={2}
                             >
                                 NO.
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center w-16"
+                                className="border border-input text-center w-16"
                                 rowSpan={2}
                             >
                                 Aksi
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center"
+                                className="border border-input text-center"
                                 rowSpan={2}
                             >
                                 NAMA PERUSAHAAN
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center"
+                                className="border border-input text-center"
                                 rowSpan={2}
                             >
                                 NPWP
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center"
+                                className="border border-input text-center"
                                 rowSpan={2}
                             >
                                 ALAMAT
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center"
+                                className="border border-input text-center"
                                 rowSpan={2}
                             >
                                 JENIS USAHA
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center"
+                                className="border border-input text-center"
                                 colSpan={3}
                             >
                                 AKTA PENDIRIAN
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center"
+                                className="border border-input text-center"
                                 rowSpan={2}
                             >
                                 NILAI INVESTASI (Rp)
                             </TableHead>
                             <TableHead
-                                className="border border-gray-300 text-center"
+                                className="border border-input text-center"
                                 rowSpan={2}
                             >
                                 MASA AKTIF
                             </TableHead>
                         </TableRow>
-                        <TableRow className="bg-gray-100">
-                            <TableHead className="border border-gray-300 text-center">
+                        <TableRow className="bg-muted">
+                            <TableHead className="border border-input text-center">
                                 NOMOR
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center">
+                            <TableHead className="border border-input text-center">
                                 TANGGAL
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center">
+                            <TableHead className="border border-input text-center">
                                 NOTARIS
                             </TableHead>
                         </TableRow>
@@ -494,7 +493,7 @@ export function SectionL12B5({ data, sptBadanId }: SectionL12B5Props) {
                         ) : (
                             data.map((item, idx) => (
                                 <TableRow key={item.id ?? idx}>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         <Checkbox
                                             checked={selectedIds.includes(
                                                 item.id!,
@@ -515,10 +514,10 @@ export function SectionL12B5({ data, sptBadanId }: SectionL12B5Props) {
                                             }
                                         />
                                     </TableCell>
-                                    <TableCell className="border border-gray-200 text-center">
+                                    <TableCell className="border border-border text-center">
                                         {idx + 1}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         <div className="flex gap-1">
                                             <Button
                                                 size="icon"
@@ -534,7 +533,7 @@ export function SectionL12B5({ data, sptBadanId }: SectionL12B5Props) {
                                             <Button
                                                 size="icon"
                                                 variant="ghost"
-                                                className="h-7 w-7 text-red-500"
+                                                className="h-7 w-7 text-destructive"
                                                 onClick={() => {
                                                     setDeleteId(item.id!);
                                                     setIsDeleteConfirmOpen(
@@ -546,33 +545,33 @@ export function SectionL12B5({ data, sptBadanId }: SectionL12B5Props) {
                                             </Button>
                                         </div>
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         {item.name}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         {item.npwp}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         {item.address ?? "-"}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         {item.business_type ?? "-"}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         {item.deed_incorporation_number ?? "-"}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200 text-center">
+                                    <TableCell className="border border-border text-center">
                                         {formatDate(
                                             item.deed_incorporation_date,
                                         )}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         {item.deed_incorporation_notary ?? "-"}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200 text-right">
+                                    <TableCell className="border border-border text-right">
                                         {formatMoney(item.investment_value)}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200 text-center">
+                                    <TableCell className="border border-border text-center">
                                         {item.active_period ?? "-"}
                                     </TableCell>
                                 </TableRow>
@@ -584,14 +583,14 @@ export function SectionL12B5({ data, sptBadanId }: SectionL12B5Props) {
                             <TableRow>
                                 <TableCell
                                     colSpan={11}
-                                    className="border border-gray-300 text-right font-semibold"
+                                    className="border border-input text-right font-semibold"
                                 >
                                     JUMLAH
                                 </TableCell>
-                                <TableCell className="border border-gray-300 text-right font-semibold">
+                                <TableCell className="border border-input text-right font-semibold">
                                     {formatMoney(totalInvestment)}
                                 </TableCell>
-                                <TableCell className="border border-gray-300" />
+                                <TableCell className="border border-input" />
                             </TableRow>
                         </TableFooter>
                     )}

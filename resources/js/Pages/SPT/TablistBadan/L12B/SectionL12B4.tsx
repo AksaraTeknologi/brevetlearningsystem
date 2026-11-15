@@ -128,7 +128,7 @@ function ChildFormDialog({
     return (
         <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
             <DialogContent className="max-w-md p-0 overflow-hidden flex flex-col">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData ? "Edit" : "Tambah"} Realisasi Penanaman
                         Kembali
@@ -172,7 +172,6 @@ function ChildFormDialog({
                     <Button
                         onClick={handleSave}
                         disabled={isSaving}
-                        className="bg-blue-950 hover:bg-blue-900"
                     >
                         {isSaving ? "Menyimpan..." : "Simpan"}
                     </Button>
@@ -310,7 +309,6 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                     <Button
                         type="button"
                         size="sm"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSaveA}
                         disabled={isSavingA}
                     >
@@ -327,7 +325,6 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
             <div className="flex flex-wrap gap-2">
                 <Button
                     type="button"
-                    className="bg-blue-950 hover:bg-blue-900"
                     size="sm"
                     onClick={() => {
                         const firstParent = data[0];
@@ -363,8 +360,8 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
             <div className="w-full overflow-x-auto border">
                 <Table className="min-w-[600px] text-xs">
                     <TableHeader>
-                        <TableRow className="bg-gray-100">
-                            <TableHead className="border border-gray-300 w-10">
+                        <TableRow className="bg-muted">
+                            <TableHead className="border border-input w-10">
                                 <Checkbox
                                     checked={
                                         allSelected ||
@@ -377,19 +374,19 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                                     }
                                 />
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center w-10">
+                            <TableHead className="border border-input text-center w-10">
                                 NO.
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center">
+                            <TableHead className="border border-input text-center">
                                 BENTUK PENANAMAN KEMBALI
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center">
+                            <TableHead className="border border-input text-center">
                                 NILAI REALISASI (Rp)
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center">
+                            <TableHead className="border border-input text-center">
                                 TAHUN REALISASI
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center w-20">
+                            <TableHead className="border border-input text-center w-20">
                                 Aksi
                             </TableHead>
                         </TableRow>
@@ -409,23 +406,23 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                                 <>
                                     <TableRow
                                         key={`parent-${parent.id ?? idx}`}
-                                        className="bg-gray-50"
+                                        className="bg-muted/50"
                                     >
-                                        <TableCell className="border border-gray-200" />
+                                        <TableCell className="border border-border" />
                                         <TableCell
-                                            className="border border-gray-200 text-center font-semibold"
+                                            className="border border-border text-center font-semibold"
                                             colSpan={1}
                                         >
                                             {idx + 1}
                                         </TableCell>
-                                        <TableCell className="border border-gray-200 font-semibold">
+                                        <TableCell className="border border-border font-semibold">
                                             <div className="flex items-center gap-2">
                                                 <button
                                                     type="button"
                                                     onClick={() =>
                                                         toggleExpand(parent.id!)
                                                     }
-                                                    className="text-gray-500 hover:text-gray-900"
+                                                    className="text-muted-foreground hover:text-foreground"
                                                 >
                                                     {expandedIds.includes(
                                                         parent.id!,
@@ -438,7 +435,7 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                                                 {parent.investment_form ?? "-"}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="border border-gray-200 text-right font-semibold">
+                                        <TableCell className="border border-border text-right font-semibold">
                                             {formatMoney(
                                                 (parent.items ?? []).reduce(
                                                     (s, i) =>
@@ -449,8 +446,8 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                                                 ),
                                             )}
                                         </TableCell>
-                                        <TableCell className="border border-gray-200" />
-                                        <TableCell className="border border-gray-200">
+                                        <TableCell className="border border-border" />
+                                        <TableCell className="border border-border">
                                             <Button
                                                 size="icon"
                                                 variant="ghost"
@@ -474,7 +471,7 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                                                 <TableRow
                                                     key={`child-${child.id ?? cidx}`}
                                                 >
-                                                    <TableCell className="border border-gray-200">
+                                                    <TableCell className="border border-border">
                                                         <Checkbox
                                                             checked={selectedChildIds.includes(
                                                                 child.id!,
@@ -489,23 +486,23 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                                                             }
                                                         />
                                                     </TableCell>
-                                                    <TableCell className="border border-gray-200 text-center text-muted-foreground">
+                                                    <TableCell className="border border-border text-center text-muted-foreground">
                                                         {idx + 1}.{cidx + 1}
                                                     </TableCell>
-                                                    <TableCell className="border border-gray-200 pl-8">
+                                                    <TableCell className="border border-border pl-8">
                                                         {child.investment_name ??
                                                             "-"}
                                                     </TableCell>
-                                                    <TableCell className="border border-gray-200 text-right">
+                                                    <TableCell className="border border-border text-right">
                                                         {formatMoney(
                                                             child.realization_value,
                                                         )}
                                                     </TableCell>
-                                                    <TableCell className="border border-gray-200 text-center">
+                                                    <TableCell className="border border-border text-center">
                                                         {child.realization_year ??
                                                             "-"}
                                                     </TableCell>
-                                                    <TableCell className="border border-gray-200">
+                                                    <TableCell className="border border-border">
                                                         <div className="flex gap-1">
                                                             <Button
                                                                 size="icon"
@@ -528,7 +525,7 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                                                             <Button
                                                                 size="icon"
                                                                 variant="ghost"
-                                                                className="h-7 w-7 text-red-500"
+                                                                className="h-7 w-7 text-destructive"
                                                                 onClick={() => {
                                                                     setDeleteTarget(
                                                                         {
@@ -559,15 +556,15 @@ export function SectionL12B4({ data, sptBadanId }: SectionL12B4Props) {
                             <TableRow>
                                 <TableCell
                                     colSpan={3}
-                                    className="border border-gray-300 text-right font-semibold"
+                                    className="border border-input text-right font-semibold"
                                 >
                                     JUMLAH
                                 </TableCell>
-                                <TableCell className="border border-gray-300 text-right font-semibold">
+                                <TableCell className="border border-input text-right font-semibold">
                                     {formatMoney(totalRealizationValue)}
                                 </TableCell>
-                                <TableCell className="border border-gray-300" />
-                                <TableCell className="border border-gray-300" />
+                                <TableCell className="border border-input" />
+                                <TableCell className="border border-input" />
                             </TableRow>
                         </TableFooter>
                     )}

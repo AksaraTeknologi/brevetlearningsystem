@@ -1,3 +1,8 @@
+import {
+    FormPageHeader,
+    FormSection,
+    FormActions,
+} from "@/Components/app-shell/FormPage";
 import { Button } from "@/Components/ui/button";
 import { Form } from "@/Components/ui/form";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
@@ -293,71 +298,63 @@ export default function FormCreateBPA2({ user, objects, bupots, ter }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Buat eBupot BPA2
-                    </h1>
+                    <FormPageHeader
+                        title="Buat eBupot BPA2"
+                        backHref={route("bpa2.notIssued")}
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
+                    <div>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <File size={16} />
-                                    <h3 className="font-medium">
-                                        Informasi Umum
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<File />}
+                                    title="Informasi Umum"
+                                >
                                     <FormFieldsGeneralInformation
                                         form={form}
                                         objects={objects}
                                         user={user}
                                         bupots={bupots}
                                     />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Banknote size={16} />
-                                    <h3 className="font-medium">
-                                        Penghasilan Bruto
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<Banknote />}
+                                    title="Penghasilan Bruto"
+                                >
                                     <FormFieldGrossIncome form={form} />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Banknote size={16} />
-                                    <h3 className="font-medium">Pengurang</h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<Banknote />}
+                                    title="Pengurang"
+                                >
                                     <FormFieldReducer form={form} />
-                                </div>
+                                </FormSection>
 
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Banknote size={16} />
-                                    <h3 className="font-medium">
-                                        Penghitungan PPh Pasal 21
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<Banknote />}
+                                    title="Penghitungan PPh Pasal 21"
+                                >
                                     <FormFieldPph21 form={form} />
-                                </div>
-
-                                <div className="flex justify-start gap-4 mt-4">
-                                    <Button
-                                        type="submit"
-                                        onClick={() => handleSetStatus("created")}
-                                    >
-                                        Simpan
-                                    </Button>
-                                    <Button
-                                        type="submit"
-                                        variant="outline"
-                                        onClick={() => handleSetStatus("draft")}
-                                    >
-                                        Simpan Draft
-                                    </Button>
-                                </div>
+                                </FormSection>
+                                <FormActions cancelHref={route("bpa2.notIssued")}>
+                                    <div className="flex justify-start gap-4 mt-4">
+                                        <Button
+                                            type="submit"
+                                            onClick={() => handleSetStatus("created")}
+                                        >
+                                            Simpan
+                                        </Button>
+                                        <Button
+                                            type="submit"
+                                            variant="outline"
+                                            onClick={() => handleSetStatus("draft")}
+                                        >
+                                            Simpan Draft
+                                        </Button>
+                                    </div>
+                                </FormActions>
                             </form>
                         </Form>
                     </div>

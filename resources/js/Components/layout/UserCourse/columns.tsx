@@ -87,7 +87,7 @@ export const participantColumns = (
                                         <Button
                                             size="sm"
                                             variant="outline"
-                                            className="text-red-700 bg-red-50 border-red-200 hover:bg-red-100"
+                                            className="text-destructive bg-red-50 border-red-200 hover:bg-red-100"
                                         >
                                             <Trash size={14} />
                                         </Button>
@@ -116,7 +116,7 @@ export const participantColumns = (
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Batal</AlertDialogCancel>
                                 <AlertDialogAction
-                                    className="bg-red-600 hover:bg-red-700"
+                                    className="bg-destructive hover:bg-red-700 text-destructive-foreground"
                                     onClick={() =>
                                         handleRemoveParticipant(row.original.id)
                                     }
@@ -140,29 +140,28 @@ export const participantColumns = (
         ),
         cell: ({ row }) => {
             const user = row.original.user;
-            const getInitials = (name: string) => {
-                return name
+            const getInitials = (name: string) =>
+                name
                     ?.split(" ")
                     .map((n) => n[0])
                     .join("")
                     .substring(0, 2)
                     .toUpperCase() || "??";
-            };
 
             return (
-                <div className="flex items-center gap-3 w-[220px]">
+                <div className="flex w-[220px] items-center gap-3">
                     {user?.profile_url ? (
                         <img
                             src={user.profile_url}
                             alt={`Foto profil ${user.name}`}
-                            className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-teal-100"
+                            className="h-8 w-8 shrink-0 rounded-xl object-cover shadow-sm ring-1 ring-border"
                         />
                     ) : (
-                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-teal-600 to-cyan-700 text-xs font-bold text-white shadow-sm shrink-0">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-700 to-brand-900 text-xs font-bold text-white shadow-sm">
                             {getInitials(user?.name || "??")}
                         </div>
                     )}
-                    <p className="font-medium text-slate-700">{user?.name || "-"}</p>
+                    <p className="font-medium text-foreground">{user?.name || "-"}</p>
                 </div>
             );
         },

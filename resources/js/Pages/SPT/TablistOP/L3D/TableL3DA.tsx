@@ -170,7 +170,7 @@ export function TableL3DA({
                                             type="button"
                                             size="icon"
                                             variant="ghost"
-                                            className="h-8 w-8 text-red-500 hover:text-red-600"
+                                            className="h-8 w-8 text-destructive hover:text-destructive/80"
                                             onClick={() =>
                                                 item.id && onDelete(item.id)
                                             }

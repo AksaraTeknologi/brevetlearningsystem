@@ -55,15 +55,15 @@ export default function RegistrationConfirmation({ taxpayer }: Props) {
                             </div>
                         </div>
 
-                        <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                        <h1 className="text-3xl font-bold text-foreground mb-4">
                             Selamat! Pendaftaran NPWP Berhasil
                         </h1>
 
-                        <p className="text-lg text-gray-600 mb-2">
+                        <p className="text-lg text-muted-foreground mb-2">
                             Terima kasih telah mengirimkan permohonan Anda
                         </p>
 
-                        <p className="text-gray-500">
+                        <p className="text-muted-foreground">
                             NPWP Anda telah berhasil dibuat dan siap untuk
                             diunduh
                         </p>
@@ -80,25 +80,25 @@ export default function RegistrationConfirmation({ taxpayer }: Props) {
                             <CardContent className="p-6">
                                 <div className="space-y-4">
                                     {/* <div>
-                                        <label className="text-sm font-medium text-gray-500">
+                                        <label className="text-sm font-medium text-muted-foreground">
                                             NIK
                                         </label>
-                                        <p className="text-lg font-semibold text-gray-800">
+                                        <p className="text-lg font-semibold text-foreground">
                                             {taxpayer.nik}
                                         </p>
                                     </div> */}
 
                                     <div>
-                                        <label className="text-sm font-medium text-gray-500">
+                                        <label className="text-sm font-medium text-muted-foreground">
                                             Nama Lengkap
                                         </label>
-                                        <p className="text-lg font-semibold text-gray-800">
+                                        <p className="text-lg font-semibold text-foreground">
                                             {taxpayer.name}
                                         </p>
                                     </div>
 
                                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                                        <label className="text-sm font-medium text-green-700">
+                                        <label className="text-sm font-medium text-success">
                                             NPWP
                                         </label>
                                         <p className="text-2xl font-bold text-green-800 tracking-wider">
@@ -107,19 +107,19 @@ export default function RegistrationConfirmation({ taxpayer }: Props) {
                                     </div>
 
                                     <div>
-                                        <label className="text-sm font-medium text-gray-500">
+                                        <label className="text-sm font-medium text-muted-foreground">
                                             Email
                                         </label>
-                                        <p className="text-gray-800">
+                                        <p className="text-foreground">
                                             {taxpayer.email}
                                         </p>
                                     </div>
 
                                     <div>
-                                        <label className="text-sm font-medium text-gray-500">
+                                        <label className="text-sm font-medium text-muted-foreground">
                                             No. Handphone
                                         </label>
-                                        <p className="text-gray-800">
+                                        <p className="text-foreground">
                                             {taxpayer.mobile_phone_number}
                                         </p>
                                     </div>
@@ -138,17 +138,17 @@ export default function RegistrationConfirmation({ taxpayer }: Props) {
                                     </CardHeader>
                                     <CardContent className="p-6">
                                         <div className="space-y-2">
-                                            <p className="font-medium text-gray-800">
+                                            <p className="font-medium text-foreground">
                                                 {mainAddress.address_type}
                                             </p>
-                                            <p className="text-gray-700">
+                                            <p className="text-foreground">
                                                 {mainAddress.address_detail}
                                             </p>
-                                            <p className="text-gray-600">
+                                            <p className="text-muted-foreground">
                                                 {mainAddress.sub_district},{" "}
                                                 {mainAddress.district}
                                             </p>
-                                            <p className="text-gray-600">
+                                            <p className="text-muted-foreground">
                                                 {mainAddress.region},{" "}
                                                 {mainAddress.province}
                                             </p>
@@ -167,11 +167,11 @@ export default function RegistrationConfirmation({ taxpayer }: Props) {
                                 <CardContent className="p-6">
                                     <div className="text-center">
                                         <div className="mb-6">
-                                            <FileText className="w-14 h-14 text-red-500 mx-auto mb-4" />
-                                            <p className="text-lg font-semibold text-gray-800 mb-2">
+                                            <FileText className="w-14 h-14 text-destructive mx-auto mb-4" />
+                                            <p className="text-lg font-semibold text-foreground mb-2">
                                                 Kartu NPWP Anda
                                             </p>
-                                            <p className="text-gray-600 mb-6">
+                                            <p className="text-muted-foreground mb-6">
                                                 Unduh dan simpan kartu NPWP Anda
                                                 dalam format PDF
                                             </p>
@@ -185,7 +185,7 @@ export default function RegistrationConfirmation({ taxpayer }: Props) {
                                             Unduh Kartu NPWP (PDF)
                                         </Button>
 
-                                        <p className="text-xs text-gray-500 mt-4">
+                                        <p className="text-xs text-muted-foreground mt-4">
                                             * Kartu NPWP ini hanya contoh untuk
                                             edukasi/pembelajaran.
                                         </p>
@@ -198,7 +198,7 @@ export default function RegistrationConfirmation({ taxpayer }: Props) {
                     <div className="text-center">
                         <Button
                             asChild
-                            className="bg-blue-900 text-white hover:bg-blue-800 mt-8"
+                            className="bg-brand text-white hover:bg-brand/90 mt-8"
                         >
                             <Link href="/registration-portal">
                                 Kembali ke Beranda

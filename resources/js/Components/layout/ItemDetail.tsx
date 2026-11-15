@@ -4,23 +4,24 @@ interface ItemDetailProps {
     className?: string;
 }
 
+/* Baris label–nilai pada halaman detail (label kiri, nilai kanan; bertumpuk di HP). */
 export default function ItemDetail({
     title,
     detail,
     className = "",
 }: ItemDetailProps) {
     return (
-        <div className="flex flex-col gap-1 md:flex-row md:items-center md:gap-4">
-            <label className="md:w-1/4 text-sm font-medium text-zinc-600">
+        <div className="flex flex-col gap-0.5 border-b border-border/60 py-2.5 first:pt-0 last:border-b-0 last:pb-0 dark:border-white/10 md:flex-row md:items-start md:gap-4">
+            <span className="text-sm font-medium text-muted-foreground md:w-1/3 lg:w-1/4">
                 {title}
-            </label>
-            <div className="hidden md:block"> : </div>
+            </span>
             <p
                 className={
-                    "w-3/4 mb-4 md:mb-0 font-semibold text-primary " + className
+                    "min-w-0 break-words text-sm font-semibold text-foreground md:flex-1 " +
+                    className
                 }
             >
-                {detail}
+                {detail || "-"}
             </p>
         </div>
     );

@@ -59,14 +59,14 @@ export default function ExamNotesPopup({
             onFocus={onFocus}
         >
             <div className="flex-1 min-h-0 flex flex-col p-3 gap-2">
-                <div className="flex items-center justify-between gap-2 text-[11px] text-slate-500">
+                <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                     <span>Tersimpan otomatis selama sesi ujian ini</span>
                     <div className="flex items-center gap-1.5">
                         <button
                             type="button"
                             onClick={handleCopy}
                             disabled={!state.content}
-                            className="inline-flex items-center gap-1 px-2 py-1 rounded border border-slate-200 hover:bg-slate-100 disabled:opacity-40 text-slate-700"
+                            className="inline-flex items-center gap-1 px-2 py-1 rounded border border-border hover:bg-muted disabled:opacity-40 text-foreground"
                         >
                             {copied ? <Check className="h-3 w-3 text-emerald-600" /> : <Copy className="h-3 w-3" />}
                             <span>Salin</span>
@@ -78,7 +78,7 @@ export default function ExamNotesPopup({
                             className={`inline-flex items-center gap-1 px-2 py-1 rounded border transition-colors disabled:opacity-40 ${
                                 confirmClear
                                     ? "bg-rose-600 text-white border-rose-600"
-                                    : "border-slate-200 hover:bg-rose-50 hover:text-rose-700 text-slate-700"
+                                    : "border-border hover:bg-rose-50 hover:text-rose-700 text-foreground"
                             }`}
                         >
                             <Trash2 className="h-3 w-3" />
@@ -96,7 +96,7 @@ export default function ExamNotesPopup({
                         })
                     }
                     placeholder="Tulis catatan perhitungan pajak, poin penting, atau coretan sementara di sini..."
-                    className="exam-allow-select select-text flex-1 min-h-[220px] w-full rounded-lg border border-slate-200 p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none font-sans leading-relaxed"
+                    className="exam-allow-select select-text flex-1 min-h-[220px] w-full rounded-lg border border-border p-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none font-sans leading-relaxed"
                 />
 
                 <div className="flex items-center justify-between text-[11px] text-slate-400">

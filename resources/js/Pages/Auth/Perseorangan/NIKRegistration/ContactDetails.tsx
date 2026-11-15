@@ -154,10 +154,10 @@ export default function ContactDetails({ onNext, existingData }: Props) {
     return (
         <div>
             <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold text-gray-800 mb-2">
+                <h1 className="text-2xl font-bold text-foreground mb-2">
                     Mohon verifikasi detail kontak wajib pajak.
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                     Email dan nomor handphone harus diverifikasi untuk
                     melanjutkan
                 </p>
@@ -167,7 +167,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="space-y-2">
                         <Label htmlFor="email">
-                            E-mail <span className="text-red-500">*</span>
+                            E-mail <span className="text-destructive">*</span>
                         </Label>
                         <div className="flex gap-2">
                             <Input
@@ -180,7 +180,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                                 }
                                 className={cn(
                                     "flex-1",
-                                    errors.email ? "border-red-500" : "",
+                                    errors.email ? "border-destructive" : "",
                                     emailVerified
                                         ? "border-green-500 bg-green-50"
                                         : ""
@@ -192,8 +192,8 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                                 className={cn(
                                     "px-6",
                                     emailVerified
-                                        ? "bg-green-600 hover:bg-green-700"
-                                        : "bg-blue-900 hover:bg-blue-800"
+                                        ? "bg-success hover:bg-green-700 text-success-foreground"
+                                        : "bg-brand hover:bg-brand/90 text-brand-foreground"
                                 )}
                                 disabled={emailVerified}
                             >
@@ -201,7 +201,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                             </Button>
                         </div>
                         {errors.email && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.email}
                             </p>
                         )}
@@ -210,7 +210,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label htmlFor="mobile_phone_number">
                             Nomor Handphone{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="flex gap-2">
                             <Input
@@ -229,7 +229,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                                 className={cn(
                                     "flex-1",
                                     errors.mobile_phone_number
-                                        ? "border-red-500"
+                                        ? "border-destructive"
                                         : "",
                                     phoneVerified
                                         ? "border-green-500 bg-green-50"
@@ -242,8 +242,8 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                                 className={cn(
                                     "px-6",
                                     phoneVerified
-                                        ? "bg-green-600 hover:bg-green-700"
-                                        : "bg-blue-900 hover:bg-blue-800"
+                                        ? "bg-success hover:bg-green-700 text-success-foreground"
+                                        : "bg-brand hover:bg-brand/90 text-brand-foreground"
                                 )}
                                 disabled={phoneVerified}
                             >
@@ -251,7 +251,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                             </Button>
                         </div>
                         {errors.mobile_phone_number && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.mobile_phone_number}
                             </p>
                         )}
@@ -273,7 +273,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                                 }
                             }}
                         />
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-muted-foreground">
                             Phone number start with 0, min 8 characters, max 15
                             characters, and digits only
                         </p>
@@ -295,7 +295,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                                 }
                             }}
                         />
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-muted-foreground">
                             Phone number start with 0, min 8 characters, max 15
                             characters, and digits only
                         </p>
@@ -309,7 +309,7 @@ export default function ContactDetails({ onNext, existingData }: Props) {
                             processing || !emailVerified || !phoneVerified
                         }
                         className={cn(
-                            "bg-blue-900 hover:bg-blue-800",
+                            "bg-brand hover:bg-brand/90 text-brand-foreground",
                             (!emailVerified || !phoneVerified) &&
                                 "opacity-50 cursor-not-allowed"
                         )}

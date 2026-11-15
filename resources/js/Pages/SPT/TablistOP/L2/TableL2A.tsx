@@ -103,7 +103,7 @@ export function TableL2A({
         }
     };
 
-    const headerClass = "text-black font-semibold";
+    const headerClass = "text-foreground font-semibold";
 
     return (
         <div className="w-full overflow-x-auto">
@@ -145,10 +145,10 @@ export function TableL2A({
                         </TableHead>
                     </TableRow>
                     <TableRow>
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card">
                             <Input
                                 value={filterNpwp}
                                 onChange={(e) =>
@@ -163,7 +163,7 @@ export function TableL2A({
                                 inputMode="numeric"
                             />
                         </TableHead>
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card">
                             <Input
                                 value={filterName}
                                 onChange={(e) => setFilterName(e.target.value)}
@@ -171,7 +171,7 @@ export function TableL2A({
                                 className="h-8"
                             />
                         </TableHead>
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card">
                             <Input
                                 value={filterObjectCode}
                                 onChange={(e) =>
@@ -181,9 +181,9 @@ export function TableL2A({
                                 className="h-8"
                             />
                         </TableHead>
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
                     </TableRow>
                 </TableHeader>
 
@@ -234,7 +234,7 @@ export function TableL2A({
                                                 type="button"
                                                 size="icon"
                                                 variant="ghost"
-                                                className="h-8 w-8 text-red-500 hover:text-red-600"
+                                                className="h-8 w-8 text-destructive hover:text-destructive/80"
                                                 onClick={() =>
                                                     onDelete(item.id!)
                                                 }

@@ -216,7 +216,7 @@ export function FormL2BDialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-2xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         B. DAFTAR PENGHASILAN YANG DIKENAKAN PAJAK BERSIFAT
                         FINAL
@@ -226,7 +226,7 @@ export function FormL2BDialog({
                 <div className="p-4 sm:p-6 space-y-4 overflow-y-auto min-h-0">
                     <div className="grid grid-cols-1 sm:grid-cols-[240px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Kode <span className="text-red-500">*</span>
+                            Kode <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -238,12 +238,12 @@ export function FormL2BDialog({
                                 readOnly
                                 disabled
                                 className={cn(
-                                    "bg-gray-100",
-                                    errors.code && "border-red-500"
+                                    "bg-muted",
+                                    errors.code && "border-destructive"
                                 )}
                             />
                             {errors.code && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.code}
                                 </p>
                             )}
@@ -253,7 +253,7 @@ export function FormL2BDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[240px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Jenis Penghasilan
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -267,7 +267,7 @@ export function FormL2BDialog({
                                         aria-expanded={openIncomeType}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.income_type && "border-red-500"
+                                            errors.income_type && "border-destructive"
                                         )}
                                     >
                                         <span className="block truncate text-left">
@@ -319,7 +319,7 @@ export function FormL2BDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.income_type && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.income_type}
                                 </p>
                             )}
@@ -329,7 +329,7 @@ export function FormL2BDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[240px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             NIK/NPWP
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -339,11 +339,11 @@ export function FormL2BDialog({
                                 maxLength={16}
                                 placeholder="Masukkan NIK/NPWP"
                                 className={cn(
-                                    errors.npwp && "border-red-500"
+                                    errors.npwp && "border-destructive"
                                 )}
                             />
                             {errors.npwp && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.npwp}
                                 </p>
                             )}
@@ -353,7 +353,7 @@ export function FormL2BDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[240px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -363,11 +363,11 @@ export function FormL2BDialog({
                                 }
                                 placeholder="Masukkan nama"
                                 className={cn(
-                                    errors.name && "border-red-500"
+                                    errors.name && "border-destructive"
                                 )}
                             />
                             {errors.name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.name}
                                 </p>
                             )}
@@ -377,7 +377,7 @@ export function FormL2BDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[240px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Penghasilan Bruto{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -391,12 +391,12 @@ export function FormL2BDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.gross_income && "border-red-500"
+                                        errors.gross_income && "border-destructive"
                                     )}
                                 />
                             </div>
                             {errors.gross_income && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.gross_income}
                                 </p>
                             )}
@@ -414,7 +414,6 @@ export function FormL2BDialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

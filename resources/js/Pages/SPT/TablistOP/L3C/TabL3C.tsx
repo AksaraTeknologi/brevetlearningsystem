@@ -28,17 +28,17 @@ export default function TabL3C({
     l3c: L3CItem[];
 }) {
     return (
-        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
             <h2 className="text-2xl font-semibold">
                 DAFTAR PENYUSUTAN DAN AMORTISASI FISKAL
             </h2>
 
             {/* HEADER */}
             <div>
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
                             <Label className="text-sm">Tahun Pajak</Label>
@@ -46,7 +46,7 @@ export default function TabL3C({
                                 type="text"
                                 value={String(spt.year)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
@@ -55,7 +55,7 @@ export default function TabL3C({
                                 type="text"
                                 value={user.npwp}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </div>
@@ -65,7 +65,7 @@ export default function TabL3C({
             <div>
                 <Button
                     variant="outline"
-                    className="border-blue-950 text-blue-950"
+                    className="border-brand text-brand-ink"
                     disabled
                 >
                     <Upload className="w-4 h-4 mr-2" />
@@ -78,10 +78,10 @@ export default function TabL3C({
                 defaultValue={["tangible", "building", "intangible"]}
             >
                 <AccordionItem value="tangible">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         HARTA BERWUJUD
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full space-y-8">
+                    <AccordionContent className="p-4 bg-card w-full space-y-8">
                         <SectionL3C
                             data={l3c ?? []}
                             sptOpId={sptOpId}
@@ -121,10 +121,10 @@ export default function TabL3C({
                 </AccordionItem>
 
                 <AccordionItem value="building">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         BANGUNAN
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full space-y-8">
+                    <AccordionContent className="p-4 bg-card w-full space-y-8">
                         <SectionL3C
                             data={l3c ?? []}
                             sptOpId={sptOpId}
@@ -143,10 +143,10 @@ export default function TabL3C({
                 </AccordionItem>
 
                 <AccordionItem value="intangible">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         HARTA TIDAK BERWUJUD
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full space-y-8">
+                    <AccordionContent className="p-4 bg-card w-full space-y-8">
                         <SectionL3C
                             data={l3c ?? []}
                             sptOpId={sptOpId}

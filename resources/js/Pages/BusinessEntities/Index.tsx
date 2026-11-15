@@ -68,7 +68,7 @@ export default function Index(props: {
                             <h3 className="font-medium">Daftar Badan Usaha</h3>
                         </div>
 
-                        <div className="p-6 rounded-xl bg-white border overflow-hidden">
+                        <div className="p-6 rounded-xl bg-card border overflow-hidden">
                             <DataTableBusinessEntity
                                 columns={columns}
                                 data={businessEntities}

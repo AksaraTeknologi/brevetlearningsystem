@@ -209,7 +209,7 @@ const TabLII = forwardRef(
                 <div className="bg-muted p-4 w-full rounded-t-xl">
                     <p className="font-semibold text-sm">List-II</p>
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl">
+                <div className="p-4 bg-card w-full rounded-b-xl">
                     <div className="flex flex-col space-y-4">
                     <div className="flex items-center">
                             <Label className="min-w-[180px] text-base font-medium">
@@ -240,10 +240,10 @@ const TabLII = forwardRef(
                 <div className="bg-muted p-4 mt-8 w-full rounded-t-xl">
                     <p className="font-semibold text-sm">Daftar Slip Pemotongan</p>
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl">
+                <div className="p-4 bg-card w-full rounded-b-xl">
                 <Accordion type="single" collapsible className="w-full" defaultValue="II">
                         <AccordionItem value="II">
-                            <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                            <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                 LIST-II (BPA1 & BPA2)
                             </AccordionTrigger>
                             <AccordionContent className="p-4">

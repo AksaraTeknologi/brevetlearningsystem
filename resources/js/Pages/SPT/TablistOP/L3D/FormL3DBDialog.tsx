@@ -212,7 +212,7 @@ export function FormL3DBDialog({
     return (
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="w-[95vw] max-w-3xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData?.id ? "Ubah" : "Tambah"} Data Bagian B
                     </DialogTitle>
@@ -221,7 +221,7 @@ export function FormL3DBDialog({
                 <div className="p-4 sm:p-6 space-y-4 overflow-y-auto min-h-0">
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            NPWP <span className="text-red-500">*</span>
+                            NPWP <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -236,7 +236,7 @@ export function FormL3DBDialog({
                                 maxLength={16}
                             />
                             {errors.npwp && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.npwp}
                                 </p>
                             )}
@@ -244,7 +244,7 @@ export function FormL3DBDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Nama<span className="text-red-500">*</span>
+                            Nama<span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -254,7 +254,7 @@ export function FormL3DBDialog({
                                 }
                             />
                             {errors.name && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.name}
                                 </p>
                             )}
@@ -262,7 +262,7 @@ export function FormL3DBDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Alamat<span className="text-red-500">*</span>
+                            Alamat<span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -272,7 +272,7 @@ export function FormL3DBDialog({
                                 }
                             />
                             {errors.address && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.address}
                                 </p>
                             )}
@@ -280,7 +280,7 @@ export function FormL3DBDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Tanggal<span className="text-red-500">*</span>
+                            Tanggal<span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover>
@@ -316,7 +316,7 @@ export function FormL3DBDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.date && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.date}
                                 </p>
                             )}
@@ -324,7 +324,7 @@ export function FormL3DBDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Jenis Biaya<span className="text-red-500">*</span>
+                            Jenis Biaya<span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Select
@@ -345,7 +345,7 @@ export function FormL3DBDialog({
                                 </SelectContent>
                             </Select>
                             {errors.type_of_cost && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.type_of_cost}
                                 </p>
                             )}
@@ -353,7 +353,7 @@ export function FormL3DBDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Jumlah<span className="text-red-500">*</span>
+                            Jumlah<span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -374,12 +374,12 @@ export function FormL3DBDialog({
                                     inputMode="numeric"
                                     className={cn(
                                         "pl-10",
-                                        errors.amount && "border-red-500",
+                                        errors.amount && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.amount && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.amount}
                                 </p>
                             )}
@@ -387,7 +387,7 @@ export function FormL3DBDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Keterangan <span className="text-red-500">*</span>
+                            Keterangan <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -397,7 +397,7 @@ export function FormL3DBDialog({
                                 }
                             />
                             {errors.notes && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.notes}
                                 </p>
                             )}
@@ -405,7 +405,7 @@ export function FormL3DBDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            PPh Dipotong <span className="text-red-500">*</span>
+                            PPh Dipotong <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -430,12 +430,12 @@ export function FormL3DBDialog({
                                     className={cn(
                                         "pl-10",
                                         errors.income_tax_with_holding &&
-                                            "border-red-500",
+                                            "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.income_tax_with_holding && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.income_tax_with_holding}
                                 </p>
                             )}
@@ -444,7 +444,7 @@ export function FormL3DBDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             No. Bukti Potong{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -457,7 +457,7 @@ export function FormL3DBDialog({
                                 }
                             />
                             {errors.with_holding_slip_number && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.with_holding_slip_number}
                                 </p>
                             )}
@@ -476,7 +476,6 @@ export function FormL3DBDialog({
                     </Button>
                     <Button
                         onClick={handleSubmit}
-                        className="bg-blue-950 hover:bg-blue-900"
                         disabled={isSubmitting}
                     >
                         <Save className="w-4 h-4 mr-2" />

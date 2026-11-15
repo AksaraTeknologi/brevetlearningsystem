@@ -216,7 +216,7 @@ export function FormL1DDialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-2xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         PENGHASILAN NETO DALAM NEGERI DARI PEKERJAAN
                     </DialogTitle>
@@ -226,7 +226,7 @@ export function FormL1DDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nomor Identitas Pemberi Kerja{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -236,11 +236,11 @@ export function FormL1DDialog({
                                 maxLength={16}
                                 placeholder="Masukkan nomor identitas"
                                 className={cn(
-                                    errors.employer_id && "border-red-500"
+                                    errors.employer_id && "border-destructive"
                                 )}
                             />
                             {errors.employer_id && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.employer_id}
                                 </p>
                             )}
@@ -250,7 +250,7 @@ export function FormL1DDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama Pemberi Kerja{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -260,11 +260,11 @@ export function FormL1DDialog({
                                 }
                                 placeholder="Masukkan nama pemberi kerja"
                                 className={cn(
-                                    errors.employer_name && "border-red-500"
+                                    errors.employer_name && "border-destructive"
                                 )}
                             />
                             {errors.employer_name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.employer_name}
                                 </p>
                             )}
@@ -274,7 +274,7 @@ export function FormL1DDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Penghasilan Bruto{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -288,12 +288,12 @@ export function FormL1DDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.gross_income && "border-red-500"
+                                        errors.gross_income && "border-destructive"
                                     )}
                                 />
                             </div>
                             {errors.gross_income && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.gross_income}
                                 </p>
                             )}
@@ -317,12 +317,12 @@ export function FormL1DDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.deduction_gross_income && "border-red-500"
+                                        errors.deduction_gross_income && "border-destructive"
                                     )}
                                 />
                             </div>
                             {errors.deduction_gross_income && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.deduction_gross_income}
                                 </p>
                             )}
@@ -332,7 +332,7 @@ export function FormL1DDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Penghasilan Neto{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -360,7 +360,6 @@ export function FormL1DDialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

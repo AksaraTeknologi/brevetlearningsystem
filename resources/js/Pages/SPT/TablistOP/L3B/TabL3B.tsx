@@ -715,7 +715,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* JUMLAH PEREDARAN BRUTO (same as user) */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell className="font-semibold max-w-[200px] break-words">
                                 JUMLAH PEREDARAN BRUTO
@@ -734,7 +734,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* AKUMULASI PEREDARAN BRUTO (cumulative) */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell className="font-semibold max-w-[200px] break-words">
                                 AKUMULASI PEREDARAN BRUTO
@@ -753,7 +753,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* PEREDARAN BRUTO TIDAK KENA PAJAK (merged 500jt) */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell className="font-semibold max-w-[200px] break-words">
                                 PEREDARAN BRUTO TIDAK KENA PAJAK
@@ -770,7 +770,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* PEREDARAN BRUTO KENA PAJAK */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell className="font-semibold max-w-[200px] break-words">
                                 PEREDARAN BRUTO KENA PAJAK
@@ -789,7 +789,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* JUMLAH PPh FINAL TERUTANG (e) */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell className="font-semibold max-w-[200px] break-words">
                                 JUMLAH PPh FINAL TERUTANG
@@ -808,7 +808,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* PPH FINAL YANG DISETOR SENDIRI (f) - Manual Input */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell className="font-semibold max-w-[200px] break-words">
                                 PPh FINAL YANG DISETOR SENDIRI
@@ -839,7 +839,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* JUMLAH PPH FINAL YANG DIPOTONG/DIPUNGUT PIHAK LAIN (g) - Manual Input */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell className="font-semibold max-w-[200px] break-words">
                                 JUMLAH PPh FINAL YANG DIPOTONG/DIPUNGUT PIHAK
@@ -871,7 +871,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* SELISIH (e-f-g) */}
-                        <TableRow className="bg-gray-100">
+                        <TableRow className="bg-muted">
                             <TableCell />
                             <TableCell className="font-semibold max-w-[200px] break-words">
                                 SELISIH (e-f-g)
@@ -979,7 +979,7 @@ export default function TabL3B({
                             </TableRow>
 
                             {/* JUMLAH PEREDARAN BRUTO (auto-fill from user) */}
-                            <TableRow className="bg-gray-50">
+                            <TableRow className="bg-muted/50">
                                 <TableCell />
                                 <TableCell
                                     className="font-semibold max-w-[200px] break-words"
@@ -1001,7 +1001,7 @@ export default function TabL3B({
                             </TableRow>
 
                             {/* JUMLAH PPh (always 0) */}
-                            <TableRow className="bg-gray-50">
+                            <TableRow className="bg-muted/50">
                                 <TableCell />
                                 <TableCell
                                     className="font-semibold max-w-[200px] break-words"
@@ -1099,7 +1099,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* JUMLAH PEREDARAN BRUTO (auto-fill from user) */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell
                                 className="font-semibold max-w-[200px] break-words"
@@ -1121,7 +1121,7 @@ export default function TabL3B({
                         </TableRow>
 
                         {/* JUMLAH PPh (always 0) */}
-                        <TableRow className="bg-gray-50">
+                        <TableRow className="bg-muted/50">
                             <TableCell />
                             <TableCell
                                 className="font-semibold max-w-[200px] break-words"
@@ -1148,15 +1148,15 @@ export default function TabL3B({
     };
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
             <h2 className="text-xl font-semibold">LAMPIRAN 3B</h2>
 
             {/* HEADER */}
             <div>
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
                             <Label className="text-sm">Tahun Pajak</Label>
@@ -1164,7 +1164,7 @@ export default function TabL3B({
                                 type="text"
                                 value={String(spt.year)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
@@ -1173,7 +1173,7 @@ export default function TabL3B({
                                 type="text"
                                 value={user.npwp}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </div>
@@ -1182,10 +1182,10 @@ export default function TabL3B({
 
             <Accordion type="multiple" defaultValue={["tku", "a", "b", "c"]}>
                 <AccordionItem value="tku">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         DAFTAR TEMPAT KEGIATAN USAHA (TKU)
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full">
+                    <AccordionContent className="p-4 bg-card w-full">
                         <div className="w-full overflow-x-auto">
                             <Table>
                                 <TableHeader>
@@ -1244,28 +1244,28 @@ export default function TabL3B({
                 </AccordionItem>
 
                 <AccordionItem value="a">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         {SECTION_TITLE.a}
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full">
+                    <AccordionContent className="p-4 bg-card w-full">
                         {renderA()}
                     </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="b">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         {SECTION_TITLE.b}
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full">
+                    <AccordionContent className="p-4 bg-card w-full">
                         {renderB()}
                     </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="c">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         {SECTION_TITLE.c}
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full">
+                    <AccordionContent className="p-4 bg-card w-full">
                         {renderC()}
                     </AccordionContent>
                 </AccordionItem>

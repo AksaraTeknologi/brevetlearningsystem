@@ -25,11 +25,16 @@ import {
     Calendar,
     Clock,
     Edit,
+    FileInput,
+    FileOutput,
+    FileSpreadsheet,
     GraduationCap,
     Key,
+    Receipt,
     Shield,
     User as UserIcon,
 } from "lucide-react";
+import { StatTile } from "@/Components/app-shell/kit";
 import FakturKeluaran from "./UserData/FakturKeluaran";
 import FakturMasukan from "./UserData/FakturMasukan";
 import Bupot from "./UserData/Bupot";
@@ -151,7 +156,7 @@ export default function DetailPengguna({
                                         </Badge>
                                     )}
                                 </div>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-muted-foreground">
                                     {user.email} &bull; {user.phone_number}
                                 </p>
                             </div>
@@ -211,77 +216,77 @@ export default function DetailPengguna({
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        <div className="col-span-2 p-5 rounded-xl bg-sidebar border">
+                        <div className="tls-card p-5 lg:col-span-2">
                             <h3 className="text-lg font-semibold text-primary mb-3">
                                 Biodata & Informasi Pengguna
                             </h3>
                             <table className="w-full text-sm">
                                 <tbody className="divide-y divide-gray-100">
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600 w-44">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground w-44">
                                             Nama Pengguna
                                         </td>
                                         <td className="py-2 pr-2 w-4">:</td>
-                                        <td className="py-2 font-semibold text-gray-900">
+                                        <td className="py-2 font-semibold text-foreground">
                                             {user.name}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground">
                                             Email
                                         </td>
                                         <td className="py-2 pr-2">:</td>
-                                        <td className="py-2 text-gray-800">
+                                        <td className="py-2 text-foreground">
                                             {user.email}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground">
                                             No. Telepon
                                         </td>
                                         <td className="py-2 pr-2">:</td>
-                                        <td className="py-2 font-mono text-gray-800">
+                                        <td className="py-2 font-mono text-foreground">
                                             {user.phone_number}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground">
                                             NPWP
                                         </td>
                                         <td className="py-2 pr-2">:</td>
-                                        <td className="py-2 font-mono text-gray-800">
+                                        <td className="py-2 font-mono text-foreground">
                                             {user.npwp ?? "-"}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground">
                                             Alamat
                                         </td>
                                         <td className="py-2 pr-2">:</td>
-                                        <td className="py-2 text-gray-800">
+                                        <td className="py-2 text-foreground">
                                             {user.address ?? "-"}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground">
                                             Platform
                                         </td>
                                         <td className="py-2 pr-2">:</td>
-                                        <td className="py-2 text-gray-800">
+                                        <td className="py-2 text-foreground">
                                             {user.platform?.name ?? "-"}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground">
                                             Event
                                         </td>
                                         <td className="py-2 pr-2">:</td>
-                                        <td className="py-2 text-gray-800">
+                                        <td className="py-2 text-foreground">
                                             {user.event?.name ?? "-"}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground">
                                             Kelas yang Diikuti
                                         </td>
                                         <td className="py-2 pr-2">:</td>
@@ -314,7 +319,7 @@ export default function DetailPengguna({
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="py-2 font-medium pr-4 text-gray-600">
+                                        <td className="py-2 font-medium pr-4 text-muted-foreground">
                                             Status Kata Sandi
                                         </td>
                                         <td className="py-2 pr-2">:</td>
@@ -335,10 +340,10 @@ export default function DetailPengguna({
                                                 ) : (
                                                     <>
                                                         <Shield
-                                                            className="text-green-600"
+                                                            className="text-success"
                                                             size={16}
                                                         />
-                                                        <span className="text-green-600 font-medium text-xs sm:text-sm">
+                                                        <span className="text-success font-medium text-xs sm:text-sm">
                                                             Kata sandi masih
                                                             asli
                                                         </span>
@@ -351,44 +356,16 @@ export default function DetailPengguna({
                             </table>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 text-center space-y-2 rounded-xl bg-sidebar border flex flex-col justify-center">
-                                <h2 className="text-sm font-medium text-gray-600">
-                                    Faktur Keluaran
-                                </h2>
-                                <p className="text-4xl lg:text-5xl font-bold text-emerald-800">
-                                    {fakturKeluaranCount}
-                                </p>
-                            </div>
-                            <div className="p-4 text-center space-y-2 rounded-xl bg-sidebar border flex flex-col justify-center">
-                                <h2 className="text-sm font-medium text-gray-600">
-                                    Faktur Masukan
-                                </h2>
-                                <p className="text-4xl lg:text-5xl font-bold text-sky-800">
-                                    {fakturMasukanCount}
-                                </p>
-                            </div>
-                            <div className="p-4 text-center space-y-2 rounded-xl bg-sidebar border flex flex-col justify-center">
-                                <h2 className="text-sm font-medium text-gray-600">
-                                    Bupot
-                                </h2>
-                                <p className="text-4xl lg:text-5xl font-bold text-orange-800">
-                                    {bupotCount}
-                                </p>
-                            </div>
-                            <div className="p-4 text-center space-y-2 rounded-xl bg-sidebar border flex flex-col justify-center">
-                                <h2 className="text-sm font-medium text-gray-600">
-                                    SPT
-                                </h2>
-                                <p className="text-4xl lg:text-5xl font-bold text-fuchsia-800">
-                                    {sptCount}
-                                </p>
-                            </div>
+                        <div className="grid grid-cols-2 content-start gap-3 lg:grid-cols-1 xl:grid-cols-2">
+                            <StatTile icon={FileOutput} label="Faktur Keluaran" value={fakturKeluaranCount} tone="success" />
+                            <StatTile icon={FileInput} label="Faktur Masukan" value={fakturMasukanCount} tone="info" />
+                            <StatTile icon={Receipt} label="Bupot" value={bupotCount} tone="warning" />
+                            <StatTile icon={FileSpreadsheet} label="SPT" value={sptCount} tone="brand" />
                         </div>
                     </div>
 
                     {/* Section: Kelas yang Diikuti */}
-                    <div className="rounded-xl bg-sidebar border p-5 mt-2">
+                    <div className="tls-card p-5 mt-2">
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2.5">
                                 <div className="p-2 bg-teal-100 text-teal-700 rounded-lg">
@@ -462,7 +439,7 @@ export default function DetailPengguna({
                                                                 {isMyCourse && (
                                                                     <Badge
                                                                         variant="outline"
-                                                                        className="ml-1 text-[10px] py-0 px-1 bg-green-50 text-green-700 border-green-200"
+                                                                        className="ml-1 text-[10px] py-0 px-1 bg-green-50 text-success border-green-200"
                                                                     >
                                                                         Kelas Anda
                                                                     </Badge>
@@ -629,7 +606,7 @@ export default function DetailPengguna({
                         <h2 className="text-xl font-semibold text-primary">
                             Data Perpajakan Pengguna
                         </h2>
-                        <p className="text-gray-500 text-sm mb-4">
+                        <p className="text-muted-foreground text-sm mb-4">
                             Berikut adalah data Faktur Keluaran, Faktur Masukan,
                             Bupot, dan SPT yang telah dibuat oleh pengguna ini.
                         </p>

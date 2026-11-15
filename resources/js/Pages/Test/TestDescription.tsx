@@ -1,18 +1,52 @@
 import { Head, Link, usePage, router } from "@inertiajs/react";
 import HeaderOnlyLayout from "@/Layouts/HeaderOnlyLayout";
 import { Button } from "@/Components/ui/button";
-import { FileText, User as UserIcon, AlertTriangle } from "lucide-react";
+import {
+    AlertTriangle,
+    CalendarDays,
+    CalendarX,
+    CheckCircle2,
+    Eye,
+    History,
+    ListChecks,
+    Lock,
+    Mail,
+    PlayCircle,
+    Target,
+    Timer,
+    User as UserIcon,
+} from "lucide-react";
+import {
+    EmptyState,
+    fmtDate,
+    InfoGrid,
+    Notice,
+    Section,
+    StatusPill,
+    Timeline,
+    TONE,
+    toneFromStatus,
+} from "@/Components/app-shell/kit";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/Components/ui/table";
+import { cn } from "@/lib/utils";
 
 function getTestStatusDisplay(serverStatus: string) {
     switch (serverStatus) {
         case 'upcoming':
-            return { label: "Belum Mulai", color: "bg-gray-100 text-gray-500" };
+            return { label: "Belum Mulai", color: "bg-muted text-muted-foreground" };
         case 'finished':
-            return { label: "Selesai", color: "bg-red-100 text-red-700" };
+            return { label: "Selesai", color: "bg-red-100 text-destructive" };
         case 'ongoing':
-            return { label: "Sedang Berlangsung", color: "bg-green-100 text-green-700" };
+            return { label: "Sedang Berlangsung", color: "bg-green-100 text-success" };
         default:
-            return { label: "-", color: "bg-gray-100 text-gray-500" };
+            return { label: "-", color: "bg-muted text-muted-foreground" };
     }
 }
 
@@ -32,10 +66,17 @@ export default function TestDescription({
     const hasOtherActive = active_test?.id && active_test?.id !== test?.id;
     const isClosed = test?.test_status === 'finished';
     const notStarted = test?.test_status === 'upcoming';
-    const noProfilePhoto = !user?.profile_url;
 
     const startDate = test?.start_date ? new Date(test.start_date) : null;
     const endDate = test?.end_date ? new Date(test.end_date) : null;
+
+    const noProfilePhoto = !user?.profile_url;
+    const canStart = !noProfilePhoto && !(!isActive && (Boolean(hasOtherActive) || notStarted || isClosed));
+    const tone = toneFromStatus(status.label);
+    const showResultLabel =
+        Boolean(test?.show_score ?? true) && Boolean(test?.show_correct_answers ?? true)
+            ? "Lihat Hasil & Pembahasan"
+            : "Lihat Hasil";
 
     return (
         <HeaderOnlyLayout
@@ -43,329 +84,170 @@ export default function TestDescription({
             backHref={route("tests.index")}
         >
             <Head title={`Deskripsi Ujian - ${test?.title ?? "Ujian"}`} />
-            <div className="py-6 mx-auto px-4  min-h-[calc(100vh-3.5rem)]">
-                <div className="max-w-7xl px-4 mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {/* Left: Deskripsi Ujian */}
-                        <div className="bg-white border rounded-xl shadow p-0 overflow-hidden">
-                            <div className="px-5 pt-4 pb-3 border-b-2 border-gray-300 flex items-center gap-2">
-                                <FileText className="text-primary" size={18} />
-                                <h1 className="font-semibold text-xl text-gray-800">
-                                    Deskripsi Ujian
-                                </h1>
-                            </div>
-                            <div className="p-5">
-                                <h1 className="text-xl font-semibold text-primary mb-1">
-                                    {test?.title}
-                                </h1>
-                                <p className="text-md text-gray-600 mb-5">
-                                    {test?.description || "-"}
-                                </p>
-
-                                <div className="rounded-lg border md:text-base text-sm border-yellow-200 bg-yellow-50 text-yellow-800 p-4">
-                                    <div className="flex items-center gap-2 font-medium mb-2">
-                                        <AlertTriangle size={18} /> Perhatian:
-                                    </div>
-                                    <ul className="list-disc ml-5 text-md space-y-1">
-                                        <li>
-                                            Ujian dapat diulang selama jadwal
-                                            berlangsung
-                                        </li>
-                                        <li>
-                                            Pastikan koneksi internet stabil
-                                        </li>
-                                        <li>
-                                            Tidak diperbolehkan membuka
-                                            tab/aplikasi lain
-                                        </li>
-                                        <li>
-                                            Waktu akan berjalan otomatis setelah
-                                            mulai
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+            <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-6">
+                {/* Hero ujian */}
+                <section className="relative overflow-hidden rounded-2xl bg-brand p-5 text-brand-foreground shadow-[0_20px_40px_-24px_rgba(13,77,64,0.6)] md:p-7">
+                    <span aria-hidden className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-highlight/15" />
+                    <span aria-hidden className="pointer-events-none absolute -bottom-20 right-24 size-40 rounded-full bg-white/5" />
+                    <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+                        <div className="min-w-0 space-y-2">
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold">
+                                <span className={cn("size-1.5 rounded-full", TONE[tone].dot)} />
+                                {status.label}
+                            </span>
+                            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{test?.title}</h1>
+                            <p className="max-w-2xl text-sm text-white/75 md:text-base">{test?.description || "-"}</p>
                         </div>
-
-                        {/* Right: Informasi Peserta */}
-                        <div className="bg-white border rounded-xl shadow p-0 overflow-hidden h-max">
-                            <div className="px-5 pt-4 pb-3 border-b-2 border-gray-300 flex items-center gap-2">
-                                <UserIcon className="text-primary" size={18} />
-                                <h1 className="font-semibold text-xl text-gray-800">
-                                    Informasi Peserta
-                                </h1>
-                            </div>
-                            <div className="p-5">
-                                <div className="md:text-base text-sm text-gray-800 space-y-2">
-                                    <div className="grid grid-cols-[120px,10px,1fr]">
-                                        <span className="text-gray-500">
-                                            Nama
-                                        </span>
-                                        <span>:</span>
-                                        <span className="font-medium">
-                                            {user?.name ?? "-"}
-                                        </span>
-                                    </div>
-                                    <div className="grid grid-cols-[120px,10px,1fr]">
-                                        <span className="text-gray-500">
-                                            Email
-                                        </span>
-                                        <span>:</span>
-                                        <span className="font-medium">
-                                            {user?.email ?? "-"}
-                                        </span>
-                                    </div>
-                                    <div className="grid grid-cols-[120px,10px,1fr]">
-                                        <span className="text-gray-500">
-                                            Ujian
-                                        </span>
-                                        <span>:</span>
-                                        <span className="font-medium">
-                                            {test?.title ?? "-"}
-                                        </span>
-                                    </div>
-                                    <div className="grid grid-cols-[120px,10px,1fr]">
-                                        <span className="text-gray-500">
-                                            Durasi
-                                        </span>
-                                        <span>:</span>
-                                        <span className="font-medium">
-                                            {test?.duration
-                                                ? `${test.duration} Menit`
-                                                : "-"}
-                                        </span>
-                                    </div>
-                                    <div className="grid grid-cols-[120px,10px,1fr]">
-                                        <span className="text-gray-500">
-                                            Passing Grade
-                                        </span>
-                                        <span>:</span>
-                                        <span className="font-medium">
-                                            {typeof test?.passing_score ===
-                                            "number"
-                                                ? `${test.passing_score}`
-                                                : "-"}
-                                        </span>
-                                    </div>
-                                    <div className="grid grid-cols-[120px,10px,1fr]">
-                                        <span className="text-gray-500">
-                                            Mulai
-                                        </span>
-                                        <span>:</span>
-                                        <span className="font-medium">
-                                            {startDate
-                                                ? `${startDate.toLocaleDateString(
-                                                      "id-ID",
-                                                      {
-                                                          day: "numeric",
-                                                          month: "long",
-                                                          year: "numeric",
-                                                      }
-                                                  )} ${startDate.toLocaleTimeString(
-                                                      "id-ID",
-                                                      {
-                                                          hour: "2-digit",
-                                                          minute: "2-digit",
-                                                      }
-                                                  )}`
-                                                : "-"}
-                                        </span>
-                                    </div>
-                                    <div className="grid grid-cols-[120px,10px,1fr]">
-                                        <span className="text-gray-500">
-                                            Selesai
-                                        </span>
-                                        <span>:</span>
-                                        <span className="font-medium">
-                                            {endDate
-                                                ? `${endDate.toLocaleDateString(
-                                                      "id-ID",
-                                                      {
-                                                          day: "numeric",
-                                                          month: "long",
-                                                          year: "numeric",
-                                                      }
-                                                  )} ${endDate.toLocaleTimeString(
-                                                      "id-ID",
-                                                      {
-                                                          hour: "2-digit",
-                                                          minute: "2-digit",
-                                                      }
-                                                  )}`
-                                                : "-"}
-                                        </span>
-                                    </div>
-
-                                    <div className="grid grid-cols-[120px,10px,1fr]">
-                                        <span className="text-gray-500">
-                                            Jenis Ujian
-                                        </span>
-                                        <span>:</span>
-                                        <span className="font-medium">
-                                            Pilihan Ganda
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div className="mt-5 space-y-2">
-                                    <Button
-                                        className="w-full"
-                                        disabled={
-                                            noProfilePhoto ||
-                                            (!isActive &&
-                                            (Boolean(hasOtherActive) ||
-                                                notStarted ||
-                                                isClosed))
-                                        }
-                                        onClick={() =>
-                                            router.post(
-                                                route("tests.start", test.id),
-                                                {},
-                                                {
-                                                    onSuccess: () =>
-                                                        router.visit(
-                                                            route(
-                                                                "tests.exam",
-                                                                test.id
-                                                            )
-                                                        ),
-                                                }
-                                            )
-                                        }
-                                    >
-                                        {isActive
-                                            ? "Lanjutkan Ujian"
-                                            : isSubmitted
-                                            ? "Ulangi Mengerjakan"
-                                            : `Mulai Ujian ${
-                                                  test?.title ?? "Ujian"
-                                              }`}
-                                    </Button>
-
-                                    {/* Hapus tombol Lihat Hasil Terakhir sesuai permintaan */}
-
-                                    {(noProfilePhoto ||
-                                        isClosed ||
-                                        hasOtherActive ||
-                                        notStarted) && (
-                                        <div className="text-xs text-red-600 space-y-1">
-                                            {noProfilePhoto && (
-                                                <div className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-amber-800">
-                                                    <p className="font-semibold text-sm">⚠ Foto Profil Diperlukan</p>
-                                                    <p className="mt-1">
-                                                        Anda harus mengunggah foto profil terlebih dahulu sebelum mengerjakan ujian.{" "}
-                                                        <a
-                                                            href={route("dashboard")}
-                                                            className="font-semibold underline hover:text-amber-900"
-                                                        >
-                                                            Upload di Dashboard →
-                                                        </a>
-                                                    </p>
-                                                </div>
-                                            )}
-                                            {isClosed && (
-                                                <p>Ujian telah ditutup.</p>
-                                            )}
-                                            {hasOtherActive && (
-                                                <p>
-                                                    Anda sedang memiliki ujian
-                                                    aktif lain. Selesaikan
-                                                    terlebih dahulu.
-                                                </p>
-                                            )}
-                                            {notStarted && (
-                                                <p>
-                                                    Ujian belum mulai. Tunggu
-                                                    waktu mulai untuk dapat
-                                                    mengerjakan.
-                                                </p>
-                                            )}
-                                        </div>
-                                    )}
-                                    {hasOtherActive && !isSubmitted && (
-                                        <p className="text-xs text-red-600">
-                                            Anda sedang memiliki ujian aktif
-                                            lain. Selesaikan terlebih dahulu.
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                        {/* Full width: Riwayat Nilai Ujian */}
-                        <div className="lg:col-span-2 bg-white border rounded-xl shadow overflow-hidden">
-                            <div className="px-5 pt-4 pb-3 border-b-2 border-gray-300 flex items-center gap-2">
-                                <FileText className="text-primary" size={18} />
-                                <h2 className="font-semibold text-xl text-gray-800">Riwayat Nilai Ujian</h2>
-                            </div>
-                            <div className="p-5">
-                                {test?.show_score ? (
-                                    Array.isArray(attemptHistory) && attemptHistory.length > 0 ? (
-                                        <div className="overflow-x-auto">
-                                            <table className="min-w-full text-sm md:text-base">
-                                                <thead>
-                                                    <tr className="text-left text-gray-500 border-b">
-                                                        <th className="py-2 pr-4">#</th>
-                                                        <th className="py-2 pr-4">Tanggal</th>
-                                                        <th className="py-2 pr-4 text-center">Nilai</th>
-                                                        <th className="py-2 pr-4 text-center">Status</th>
-                                                        <th className="py-2 pr-0 text-right">Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {attemptHistory.map((a: any, idx: number) => {
-                                                        const dt = a.submitted_at ? new Date(a.submitted_at) : null;
-                                                        return (
-                                                            <tr key={a.id} className="border-b last:border-b-0">
-                                                                <td className="py-2 pr-4">{idx + 1}</td>
-                                                                <td className="py-2 pr-4">
-                                                                    {dt
-                                                                        ? `${dt.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })} ${dt.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}`
-                                                                        : '-'}
-                                                                </td>
-                                                                <td className="py-2 pr-4 font-semibold text-center">
-                                                                    {typeof a.score === 'number' ? a.score : '-'}
-                                                                </td>
-                                                                <td className="py-2 pr-4 text-center">
-                                                                    <span className={`inline-flex text-xs px-2 py-0.5 rounded-full ${a.passed ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
-                                                                        {a.passed ? 'Lulus' : 'Tidak Lulus'}
-                                                                    </span>
-                                                                </td>
-                                                                <td className="py-2 pr-0 text-right">
-                                                                    <Button size="sm" variant="outline" asChild>
-                                                                        <Link href={route("tests.result", [test.id, a.id])}>
-                                                                            {Boolean(test?.show_score ?? true) &&
-                                                                                Boolean(test?.show_correct_answers ?? true)
-                                                                                ? "Lihat Hasil & Pembahasan"
-                                                                                : "Lihat Hasil"}
-                                                                        </Link>
-                                                                    </Button>
-                                                                </td>
-                                                            </tr>
-                                                        );
-                                                    })}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    ) : (
-                                        <div className="text-gray-500 text-sm">Belum ada riwayat nilai. Ayo mulai mengerjakan ujian ini.</div>
+                        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+                            <Button
+                                variant="highlight"
+                                size="lg"
+                                className="px-6"
+                                disabled={!canStart}
+                                onClick={() =>
+                                    router.post(
+                                        route("tests.start", test.id),
+                                        {},
+                                        { onSuccess: () => router.visit(route("tests.exam", test.id)) }
                                     )
-                                ) : (
-                                    <div className="text-center py-8">
-                                        <div className="mb-3">
-                                            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                            </svg>
-                                        </div>
-                                        <h3 className="text-lg font-semibold text-gray-700 mb-1">Nilai Belum Diumumkan</h3>
-                                        <p className="text-gray-500 text-sm">
-                                            Pengajar belum mengumumkan nilai ujian ini. Silakan tunggu pengumuman dari pengajar.
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
+                                }
+                            >
+                                <PlayCircle />
+                                {isActive
+                                    ? "Lanjutkan Ujian"
+                                    : isSubmitted
+                                    ? "Ulangi Mengerjakan"
+                                    : `Mulai Ujian ${test?.title ?? "Ujian"}`}
+                            </Button>
                         </div>
                     </div>
+                    <div className="relative mt-6 grid grid-cols-2 gap-2 md:grid-cols-4">
+                        {[
+                            { icon: Timer, label: "Durasi", value: test?.duration ? `${test.duration} Menit` : "-" },
+                            { icon: Target, label: "Passing Grade", value: typeof test?.passing_score === "number" ? `${test.passing_score}` : "-" },
+                            { icon: ListChecks, label: "Jenis Ujian", value: "Pilihan Ganda" },
+                            { icon: History, label: "Percobaan", value: Array.isArray(attemptHistory) ? `${attemptHistory.length}x` : "-" },
+                        ].map((m) => (
+                            <div key={m.label} className="flex items-center gap-2.5 rounded-xl bg-white/10 px-3 py-2.5">
+                                <m.icon className="size-4 shrink-0 text-highlight" />
+                                <div className="min-w-0">
+                                    <p className="truncate text-[11px] font-semibold uppercase tracking-wide text-white/60">{m.label}</p>
+                                    <p className="truncate text-sm font-semibold">{m.value}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {(noProfilePhoto || isClosed || hasOtherActive || notStarted) && (
+                    <div className="space-y-2">
+                        {noProfilePhoto && (
+                            <Notice tone="warning" title="Foto Profil Diperlukan">
+                                Anda harus mengunggah foto profil terlebih dahulu sebelum mengerjakan ujian.{" "}
+                                <Link href={route("dashboard")} className="font-semibold underline hover:opacity-80">
+                                    Upload di Dashboard →
+                                </Link>
+                            </Notice>
+                        )}
+                        {isClosed && <Notice tone="steel">Ujian telah ditutup.</Notice>}
+                        {hasOtherActive && (
+                            <Notice tone="destructive">
+                                Anda sedang memiliki ujian aktif lain. Selesaikan terlebih dahulu.
+                            </Notice>
+                        )}
+                        {notStarted && (
+                            <Notice tone="info">
+                                Ujian belum mulai. Tunggu waktu mulai untuk dapat mengerjakan.
+                            </Notice>
+                        )}
+                    </div>
+                )}
+
+                <div className="grid grid-cols-1 gap-5 lg:grid-cols-5">
+                    <Section icon={AlertTriangle} title="Perhatian" className="lg:col-span-2">
+                        <ul className="space-y-2.5">
+                            {[
+                                "Ujian dapat diulang selama jadwal berlangsung",
+                                "Pastikan koneksi internet stabil",
+                                "Tidak diperbolehkan membuka tab/aplikasi lain",
+                                "Waktu akan berjalan otomatis setelah mulai",
+                            ].map((t) => (
+                                <li key={t} className="flex items-start gap-2.5 text-sm text-foreground">
+                                    <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-highlight" />
+                                    {t}
+                                </li>
+                            ))}
+                        </ul>
+                    </Section>
+
+                    <Section icon={UserIcon} title="Informasi Peserta" className="lg:col-span-3">
+                        <InfoGrid
+                            items={[
+                                { icon: UserIcon, label: "Nama", value: user?.name ?? "-" },
+                                { icon: Mail, label: "Email", value: user?.email ?? "-" },
+                                { icon: CalendarDays, label: "Mulai", value: fmtDate(startDate, true) },
+                                { icon: CalendarX, label: "Selesai", value: fmtDate(endDate, true) },
+                            ]}
+                        />
+                        <div className="mt-4">
+                            <Timeline start={startDate} end={endDate} tone={tone} startLabel="Progres jadwal ujian" />
+                        </div>
+                    </Section>
                 </div>
+
+                <Section icon={History} title="Riwayat Nilai Ujian" bodyClassName={test?.show_score && attemptHistory?.length ? "p-0" : undefined}>
+                    {test?.show_score ? (
+                        Array.isArray(attemptHistory) && attemptHistory.length > 0 ? (
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead className="w-12">#</TableHead>
+                                        <TableHead>Tanggal</TableHead>
+                                        <TableHead className="text-center">Nilai</TableHead>
+                                        <TableHead className="text-center">Status</TableHead>
+                                        <TableHead className="text-right">Aksi</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {attemptHistory.map((a: any, idx: number) => (
+                                        <TableRow key={a.id}>
+                                            <TableCell>{idx + 1}</TableCell>
+                                            <TableCell>{a.submitted_at ? fmtDate(a.submitted_at, true) : "-"}</TableCell>
+                                            <TableCell className="text-center text-base font-bold text-brand-ink">
+                                                {typeof a.score === "number" ? a.score : "-"}
+                                            </TableCell>
+                                            <TableCell className="text-center">
+                                                <StatusPill tone={a.passed ? "success" : "destructive"}>
+                                                    {a.passed ? "Lulus" : "Tidak Lulus"}
+                                                </StatusPill>
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                <Button size="sm" variant="outline" asChild>
+                                                    <Link href={route("tests.result", [test.id, a.id])}>
+                                                        <Eye />
+                                                        {showResultLabel}
+                                                    </Link>
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        ) : (
+                            <EmptyState
+                                icon={History}
+                                title="Belum ada riwayat nilai"
+                                description="Ayo mulai mengerjakan ujian ini."
+                            />
+                        )
+                    ) : (
+                        <EmptyState
+                            icon={Lock}
+                            title="Nilai Belum Diumumkan"
+                            description="Pengajar belum mengumumkan nilai ujian ini. Silakan tunggu pengumuman dari pengajar."
+                        />
+                    )}
+                </Section>
             </div>
         </HeaderOnlyLayout>
     );

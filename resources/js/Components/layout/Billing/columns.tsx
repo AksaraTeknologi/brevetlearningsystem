@@ -64,7 +64,7 @@ export const columns: ColumnDef<BillingColumns>[] = [
         cell: ({ row }) => (
             <div className="w-[250px]">
                 <p className="text-sm">{row.original.description}</p>
-                {/* <p className="text-xs text-gray-500">
+                {/* <p className="text-xs text-muted-foreground">
                     {row.original.billing_count} billing(s)
                 </p> */}
             </div>

@@ -111,7 +111,7 @@
                                             <td className="pr-2">:</td>
                                             <td>
                                                 {totalKelas} Kelas{" "}
-                                                <span className="text-sm text-gray-500">
+                                                <span className="text-sm text-muted-foreground">
                                                     {totalKelas == user.max_class
                                                         ? "(Kuota Kelas Penuh)"
                                                         : ""}
@@ -136,7 +136,7 @@
                                             <td className="pr-2">:</td>
                                             <td>
                                                 {totalUjian} Ujian{" "}
-                                                <span className="text-sm text-gray-500">
+                                                <span className="text-sm text-muted-foreground">
                                                     {totalUjian == user.max_test
                                                         ? "(Kuota Ujian Penuh)"
                                                         : ""}
@@ -203,7 +203,7 @@
                                     <h2 className="text-xl font-semibold text-primary">
                                         Daftar Kelas
                                     </h2>
-                                    <p className="text-gray-500 text-sm mb-4">
+                                    <p className="text-muted-foreground text-sm mb-4">
                                         Berikut adalah daftar kelas yang telah
                                         dibuat oleh pengajar ini.
                                     </p>
@@ -229,7 +229,7 @@
                                 {courses.map((course: any) => (
                                     <div
                                         key={course.id}
-                                        className="rounded-xl bg-white border shadow p-5 flex flex-col gap-2 hover:shadow-lg transition"
+                                        className="rounded-xl bg-card border shadow p-5 flex flex-col gap-2 hover:shadow-lg transition"
                                     >
                                         <div className="flex items-center justify-between">
                                             <h3 className="text-lg font-bold text-primary">
@@ -239,10 +239,10 @@
                                                 Kode: {course.code}
                                             </span>
                                         </div>
-                                        <p className="text-gray-600 text-sm mb-2">
+                                        <p className="text-muted-foreground text-sm mb-2">
                                             {course.description || "-"}
                                         </p>
-                                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                             {course.access_rights ? (
                                                 JSON.parse(
                                                     course.access_rights
@@ -270,7 +270,7 @@
                                                 </span>
                                             )}
                                         </div>
-                                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                             <span>
                                                 Durasi Pengerjaan:{" "}
                                                 {course.start_date
@@ -327,7 +327,7 @@
                         <div className="flex flex-col sm:flex-row justify-between mb-2 sm:mb-0">
                             <div>
                                 <h2 className="text-xl font-semibold text-primary">Daftar Ujian</h2>
-                                <p className="text-gray-500 text-sm mb-4">
+                                <p className="text-muted-foreground text-sm mb-4">
                                     Berikut adalah daftar ujian yang dibuat oleh pengajar ini.
                                 </p>
                             </div>
@@ -340,13 +340,13 @@
                                 </div>
                             )}
                             {tests.map((t: any) => (
-                                <div key={t.id} className="rounded-xl bg-white border shadow p-5 flex flex-col gap-2 hover:shadow-lg transition">
+                                <div key={t.id} className="rounded-xl bg-card border shadow p-5 flex flex-col gap-2 hover:shadow-lg transition">
                                     <div className="flex items-center justify-between">
                                         <h3 className="text-lg font-bold text-primary">{t.title}</h3>
                                         <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded font-mono">Kode: {t.code}</span>
                                     </div>
-                                    <p className="text-gray-600 text-sm mb-2">{t.description || '-'}</p>
-                                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                                    <p className="text-muted-foreground text-sm mb-2">{t.description || '-'}</p>
+                                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                         <span>
                                             Jadwal:
                                             {t.start_date
@@ -358,7 +358,7 @@
                                                 : '-'}
                                         </span>
                                     </div>
-                                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                         <span>Durasi: {typeof t.duration === 'number' ? `${t.duration} menit` : '-'}</span>
                                         <span className="mx-1">•</span>
                                         <span>KKM: {typeof t.passing_score === 'number' ? t.passing_score : '-'}</span>

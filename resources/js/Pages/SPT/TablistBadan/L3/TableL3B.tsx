@@ -76,7 +76,7 @@ export function TableL3B({
         <div className="w-full overflow-x-auto">
             <Table>
                 <TableHeader>
-                    <TableRow className="bg-gray-100">
+                    <TableRow className="bg-muted">
                         <TableHead
                             rowSpan={2}
                             className="w-[50px] text-center align-middle"
@@ -120,7 +120,7 @@ export function TableL3B({
                             BUKTI PEMOTONGAN/SSP/SSPCP
                         </TableHead>
                     </TableRow>
-                    <TableRow className="bg-gray-100">
+                    <TableRow className="bg-muted">
                         <TableHead className="text-center">NAMA</TableHead>
                         <TableHead className="text-center">NPWP</TableHead>
                         <TableHead className="text-center">NOMOR</TableHead>
@@ -161,7 +161,7 @@ export function TableL3B({
                                         <Button
                                             size="icon"
                                             variant="ghost"
-                                            className="h-8 w-8 text-red-500 hover:text-red-600"
+                                            className="h-8 w-8 text-destructive hover:text-destructive/80"
                                             onClick={() => onDelete(item.id!)}
                                         >
                                             <Trash2 className="h-4 w-4" />

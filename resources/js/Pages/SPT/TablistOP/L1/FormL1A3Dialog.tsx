@@ -299,14 +299,14 @@ export function FormL1A3Dialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-2xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>INVESTASI/SEKURITAS</DialogTitle>
                 </DialogHeader>
 
                 <div className="p-4 sm:p-6 space-y-4 overflow-y-auto min-h-0">
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Kode <span className="text-red-500">*</span>
+                            Kode <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -314,13 +314,13 @@ export function FormL1A3Dialog({
                                 readOnly
                                 disabled
                                 className={cn(
-                                    "bg-gray-100",
-                                    errors.code && "border-red-500"
+                                    "bg-muted",
+                                    errors.code && "border-destructive"
                                 )}
                                 placeholder="Otomatis terisi"
                             />
                             {errors.code && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.code}
                                 </p>
                             )}
@@ -329,7 +329,7 @@ export function FormL1A3Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Deskripsi <span className="text-red-500">*</span>
+                            Deskripsi <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -343,7 +343,7 @@ export function FormL1A3Dialog({
                                         aria-expanded={openDescription}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.description && "border-red-500"
+                                            errors.description && "border-destructive"
                                         )}
                                     >
                                         {formData.description || "Silakan Pilih"}
@@ -389,7 +389,7 @@ export function FormL1A3Dialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.description && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.description}
                                 </p>
                             )}
@@ -398,7 +398,7 @@ export function FormL1A3Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Lokasi Harta <span className="text-red-500">*</span>
+                            Lokasi Harta <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -412,7 +412,7 @@ export function FormL1A3Dialog({
                                         aria-expanded={openCountry}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.country && "border-red-500"
+                                            errors.country && "border-destructive"
                                         )}
                                     >
                                         {formData.country
@@ -460,7 +460,7 @@ export function FormL1A3Dialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.country && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.country}
                                 </p>
                             )}
@@ -471,7 +471,7 @@ export function FormL1A3Dialog({
                         <Label className="pt-2">
                             Nomor Identitas Bank/Institusi/Penerima Investasi
                             (NPWP)
-                            <span className="text-red-500"> *</span>
+                            <span className="text-destructive"> *</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -487,11 +487,11 @@ export function FormL1A3Dialog({
                                 }}
                                 placeholder="Contoh: 16 digit angka"
                                 className={cn(
-                                    errors.recipient_id && "border-red-500"
+                                    errors.recipient_id && "border-destructive"
                                 )}
                             />
                             {errors.recipient_id && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.recipient_id}
                                 </p>
                             )}
@@ -501,7 +501,7 @@ export function FormL1A3Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama Bank/Institusi/Penerima Investasi{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -511,11 +511,11 @@ export function FormL1A3Dialog({
                                 }
                                 placeholder="Masukkan nama"
                                 className={cn(
-                                    errors.recipient_name && "border-red-500"
+                                    errors.recipient_name && "border-destructive"
                                 )}
                             />
                             {errors.recipient_name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.recipient_name}
                                 </p>
                             )}
@@ -524,7 +524,7 @@ export function FormL1A3Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Nomor Akun <span className="text-red-500">*</span>
+                            Nomor Akun <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -534,11 +534,11 @@ export function FormL1A3Dialog({
                                 }
                                 placeholder="Masukkan nomor rekening"
                                 className={cn(
-                                    errors.account_number && "border-red-500"
+                                    errors.account_number && "border-destructive"
                                 )}
                             />
                             {errors.account_number && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.account_number}
                                 </p>
                             )}
@@ -548,7 +548,7 @@ export function FormL1A3Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Harga Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -562,12 +562,12 @@ export function FormL1A3Dialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.acquisition_cost && "border-red-500"
+                                        errors.acquisition_cost && "border-destructive"
                                     )}
                                 />
                             </div>
                             {errors.acquisition_cost && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.acquisition_cost}
                                 </p>
                             )}
@@ -577,7 +577,7 @@ export function FormL1A3Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Tahun Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -589,11 +589,11 @@ export function FormL1A3Dialog({
                                 placeholder="Contoh: 2020"
                                 maxLength={4}
                                 className={cn(
-                                    errors.acquisition_year && "border-red-500"
+                                    errors.acquisition_year && "border-destructive"
                                 )}
                             />
                             {errors.acquisition_year && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.acquisition_year}
                                 </p>
                             )}
@@ -601,7 +601,7 @@ export function FormL1A3Dialog({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
-                        <Label className="pt-2">Nilai Saat Ini<span className="text-red-500">*</span></Label>
+                        <Label className="pt-2">Nilai Saat Ini<span className="text-destructive">*</span></Label>
                         <div className="space-y-1">
                             <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -612,11 +612,11 @@ export function FormL1A3Dialog({
                                     value={nilaiAkhirDisplay}
                                     onChange={handleNilaiAkhirChange}
                                     placeholder="0"
-                                    className={cn("pl-10", errors.amount_now && "border-red-500")}
+                                    className={cn("pl-10", errors.amount_now && "border-destructive")}
                                 />
                             </div>
                             {errors.amount_now && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.amount_now}
                                 </p>
                             )}
@@ -636,7 +636,7 @@ export function FormL1A3Dialog({
                                         aria-expanded={openNotes}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.notes && "border-red-500"
+                                            errors.notes && "border-destructive"
                                         )}
                                     >
                                         {formData.notes
@@ -684,7 +684,7 @@ export function FormL1A3Dialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.notes && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.notes}
                                 </p>
                             )}
@@ -702,7 +702,6 @@ export function FormL1A3Dialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

@@ -186,7 +186,7 @@ export function FormL11B1({ sptBadanId, l11b1 }: FormL11B1Props) {
         <div className="space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-[1fr_260px] gap-2 sm:gap-4 items-center">
                 <div className="hidden sm:block" />
-                <div className="bg-blue-950 text-white text-xs font-semibold text-center px-3 py-1.5 rounded">
+                <div className="bg-brand text-white text-xs font-semibold text-center px-3 py-1.5 rounded">
                     JUMLAH (Rp)
                 </div>
             </div>
@@ -197,7 +197,7 @@ export function FormL11B1({ sptBadanId, l11b1 }: FormL11B1Props) {
                     className="grid grid-cols-1 sm:grid-cols-[1fr_260px] gap-2 sm:gap-4 items-start sm:items-center"
                 >
                     <div className="flex items-start gap-2 min-w-0">
-                        <span className=" text-black font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
+                        <span className=" text-foreground font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
                             {row.number}
                         </span>
                         <Label className="font-semibold uppercase tracking-wide text-xs sm:text-sm leading-relaxed break-words">
@@ -205,7 +205,7 @@ export function FormL11B1({ sptBadanId, l11b1 }: FormL11B1Props) {
                         </Label>
                     </div>
                     <div className={INPUT_COLUMN_CLASS}>
-                        <div className="flex items-center justify-center rounded-l-md border border-r-0 border-input bg-gray-100 text-sm font-medium text-gray-600">
+                        <div className="flex items-center justify-center rounded-l-md border border-r-0 border-input bg-muted text-sm font-medium text-muted-foreground">
                             Rp.
                         </div>
                         <Input
@@ -217,7 +217,7 @@ export function FormL11B1({ sptBadanId, l11b1 }: FormL11B1Props) {
                                     : handleChange(row.key as EditKey)
                             }
                             readOnly={row.readonly}
-                            className={`rounded-l-none text-right ${row.readonly ? "bg-gray-100 font-semibold" : ""}`}
+                            className={`rounded-l-none text-right ${row.readonly ? "bg-muted font-semibold" : ""}`}
                         />
                     </div>
                 </div>

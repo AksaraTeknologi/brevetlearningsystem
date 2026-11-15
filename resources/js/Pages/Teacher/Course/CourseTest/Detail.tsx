@@ -141,14 +141,14 @@ export default function CourseTestTeacherDetail({
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <div className="flex items-center gap-2">
-                                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+                                <h1 className="text-2xl font-bold text-foreground tracking-tight">
                                     {courseTest?.title}
                                 </h1>
                             </div>
-                            <p className="text-sm text-gray-500 mt-1">
-                                Kelas: <span className="font-medium text-gray-800">{course?.name || "-"}</span>
+                            <p className="text-sm text-muted-foreground mt-1">
+                                Kelas: <span className="font-medium text-foreground">{course?.name || "-"}</span>
                                 {courseTest?.question_bank?.name && (
-                                    <> &bull; Bank Soal: <span className="font-medium text-gray-800">{courseTest.question_bank.name}</span></>
+                                    <> &bull; Bank Soal: <span className="font-medium text-foreground">{courseTest.question_bank.name}</span></>
                                 )}
                             </p>
                         </div>
@@ -165,21 +165,21 @@ export default function CourseTestTeacherDetail({
 
                     {/* Quick Stats */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="rounded-xl border bg-white p-4 shadow-sm">
+                        <div className="rounded-xl border bg-card p-4 shadow-sm">
                             <div className="flex items-center justify-between">
-                                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                                     Total Peserta
                                 </p>
                                 <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
                                     <Users size={18} />
                                 </div>
                             </div>
-                            <p className="text-2xl font-bold text-gray-800 mt-2">
-                                {totalParticipants} <span className="text-xs font-normal text-gray-500">siswa</span>
+                            <p className="text-2xl font-bold text-foreground mt-2">
+                                {totalParticipants} <span className="text-xs font-normal text-muted-foreground">siswa</span>
                             </p>
                         </div>
 
-                        <div className="rounded-xl border bg-white p-4 shadow-sm">
+                        <div className="rounded-xl border bg-card p-4 shadow-sm">
                             <div className="flex items-center justify-between">
                                 <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">
                                     Sudah Mengerjakan
@@ -193,7 +193,7 @@ export default function CourseTestTeacherDetail({
                             </p>
                         </div>
 
-                        <div className="rounded-xl border bg-white p-4 shadow-sm">
+                        <div className="rounded-xl border bg-card p-4 shadow-sm">
                             <div className="flex items-center justify-between">
                                 <p className="text-xs font-semibold uppercase tracking-wider text-indigo-600">
                                     Passing Score (KKM)
@@ -207,7 +207,7 @@ export default function CourseTestTeacherDetail({
                             </p>
                         </div>
 
-                        <div className="rounded-xl border bg-white p-4 shadow-sm">
+                        <div className="rounded-xl border bg-card p-4 shadow-sm">
                             <div className="flex items-center justify-between">
                                 <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">
                                     Nilai Tertinggi
@@ -219,41 +219,41 @@ export default function CourseTestTeacherDetail({
                             <p className="text-2xl font-bold text-amber-700 mt-2">
                                 {bestScore !== null ? bestScore : "-"}
                             </p>
-                            <p className="text-xs text-gray-500 truncate mt-1" title={statistics?.best_score_user?.name}>
+                            <p className="text-xs text-muted-foreground truncate mt-1" title={statistics?.best_score_user?.name}>
                                 {statistics?.best_score_user?.name ? `Oleh: ${statistics.best_score_user.name}` : "Belum ada data"}
                             </p>
                         </div>
                     </div>
 
                     {/* Test Info Parameters */}
-                    <div className="rounded-xl border bg-white p-5 shadow-sm space-y-4">
-                        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">
+                    <div className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
+                        <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">
                             Pengaturan &amp; Jadwal Ujian
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                            <div className="rounded-lg border bg-slate-50/70 p-3">
-                                <p className="text-xs text-gray-500">Durasi Pengerjaan</p>
-                                <p className="font-semibold text-gray-800 mt-0.5">
+                            <div className="rounded-lg border bg-muted/35 p-3">
+                                <p className="text-xs text-muted-foreground">Durasi Pengerjaan</p>
+                                <p className="font-semibold text-foreground mt-0.5">
                                     {courseTest?.duration || 0} Menit
                                 </p>
                             </div>
-                            <div className="rounded-lg border bg-slate-50/70 p-3">
-                                <p className="text-xs text-gray-500">Batas Percobaan</p>
-                                <p className="font-semibold text-gray-800 mt-0.5">
+                            <div className="rounded-lg border bg-muted/35 p-3">
+                                <p className="text-xs text-muted-foreground">Batas Percobaan</p>
+                                <p className="font-semibold text-foreground mt-0.5">
                                     {Number(courseTest?.max_attempts ?? 0) <= 0
                                         ? "Tidak terbatas"
                                         : `${courseTest?.max_attempts}x`}
                                 </p>
                             </div>
-                            <div className="rounded-lg border bg-slate-50/70 p-3">
-                                <p className="text-xs text-gray-500">Mulai Ujian</p>
-                                <p className="font-semibold text-gray-800 mt-0.5">
+                            <div className="rounded-lg border bg-muted/35 p-3">
+                                <p className="text-xs text-muted-foreground">Mulai Ujian</p>
+                                <p className="font-semibold text-foreground mt-0.5">
                                     {formatLocalDateTime(courseTest?.start_date)}
                                 </p>
                             </div>
-                            <div className="rounded-lg border bg-slate-50/70 p-3">
-                                <p className="text-xs text-gray-500">Selesai Ujian</p>
-                                <p className="font-semibold text-gray-800 mt-0.5">
+                            <div className="rounded-lg border bg-muted/35 p-3">
+                                <p className="text-xs text-muted-foreground">Selesai Ujian</p>
+                                <p className="font-semibold text-foreground mt-0.5">
                                     {formatLocalDateTime(courseTest?.end_date)}
                                 </p>
                             </div>
@@ -262,7 +262,7 @@ export default function CourseTestTeacherDetail({
                     </div>
 
                     {/* Participants & Scores Section */}
-                    <div className="rounded-xl border bg-white p-6 shadow-sm">
+                    <div className="rounded-xl border bg-card p-6 shadow-sm">
                         <Tabs defaultValue="participants">
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b pb-4">
                                 <TabsList>
@@ -276,7 +276,7 @@ export default function CourseTestTeacherDetail({
                                     </TabsTrigger>
                                 </TabsList>
 
-                                <Button variant="outline" asChild className="text-green-700 bg-green-50 border-green-200 hover:bg-green-100 gap-2">
+                                <Button variant="outline" asChild className="text-success bg-green-50 border-green-200 hover:bg-green-100 gap-2">
                                     <a
                                         href={route(
                                             "teacher.courseTests.exportParticipants",
@@ -325,7 +325,7 @@ export default function CourseTestTeacherDetail({
                                 {filteredParticipants.length > 0 ? (
                                     <div className="overflow-x-auto rounded-lg border">
                                         <table className="w-full text-sm">
-                                            <thead className="bg-slate-50 text-gray-600 border-b">
+                                            <thead className="bg-muted/50 text-muted-foreground border-b">
                                                 <tr>
                                                     <th className="py-3 px-4 text-left font-medium w-12">No</th>
                                                     <th className="py-3 px-4 text-left font-medium">Nama Siswa</th>
@@ -338,17 +338,17 @@ export default function CourseTestTeacherDetail({
                                                 {filteredParticipants.map((participant: any, index: number) => {
                                                     const hasScore = participant?.best_score !== null && typeof participant?.best_score !== "undefined";
                                                     return (
-                                                        <tr key={participant.id || index} className="hover:bg-slate-50/60 transition-colors">
-                                                            <td className="py-3 px-4 text-gray-500">{index + 1}</td>
-                                                            <td className="py-3 px-4 font-semibold text-gray-900">
+                                                        <tr key={participant.id || index} className="hover:bg-muted/30 transition-colors">
+                                                            <td className="py-3 px-4 text-muted-foreground">{index + 1}</td>
+                                                            <td className="py-3 px-4 font-semibold text-foreground">
                                                                 {participant?.user?.name || "-"}
                                                             </td>
-                                                            <td className="py-3 px-4 text-gray-600">
+                                                            <td className="py-3 px-4 text-muted-foreground">
                                                                 {participant?.user?.email || "-"}
                                                             </td>
                                                             <td className="py-3 px-4 text-center">
                                                                 {hasScore ? (
-                                                                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-slate-100 text-gray-900 border">
+                                                                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-muted text-foreground border">
                                                                         {participant.best_score}
                                                                     </span>
                                                                 ) : (
@@ -357,7 +357,7 @@ export default function CourseTestTeacherDetail({
                                                             </td>
                                                             <td className="py-3 px-4 text-center">
                                                                 {!hasScore ? (
-                                                                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 border border-gray-200">
+                                                                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
                                                                         Belum Mengerjakan
                                                                     </span>
                                                                 ) : participant?.passed ? (
@@ -379,8 +379,8 @@ export default function CourseTestTeacherDetail({
                                         </table>
                                     </div>
                                 ) : (
-                                    <div className="text-center py-12 border rounded-lg bg-slate-50/50">
-                                        <p className="text-sm text-gray-500 font-medium">
+                                    <div className="text-center py-12 border rounded-lg bg-muted/25">
+                                        <p className="text-sm text-muted-foreground font-medium">
                                             Tidak ada siswa yang sesuai dengan filter.
                                         </p>
                                     </div>
@@ -402,7 +402,7 @@ export default function CourseTestTeacherDetail({
                                 {filteredHistory.length > 0 ? (
                                     <div className="overflow-x-auto rounded-lg border">
                                         <table className="w-full text-sm">
-                                            <thead className="bg-slate-50 text-gray-600 border-b">
+                                            <thead className="bg-muted/50 text-muted-foreground border-b">
                                                 <tr>
                                                     <th className="py-3 px-4 text-left font-medium w-12">No</th>
                                                     <th className="py-3 px-4 text-left font-medium">Peserta</th>
@@ -414,15 +414,15 @@ export default function CourseTestTeacherDetail({
                                             </thead>
                                             <tbody className="divide-y divide-gray-100">
                                                 {filteredHistory.map((attempt: any, index: number) => (
-                                                    <tr key={attempt.id || index} className="hover:bg-slate-50/60 transition-colors">
-                                                        <td className="py-3 px-4 text-gray-500">{index + 1}</td>
-                                                        <td className="py-3 px-4 font-semibold text-gray-900">
+                                                    <tr key={attempt.id || index} className="hover:bg-muted/30 transition-colors">
+                                                        <td className="py-3 px-4 text-muted-foreground">{index + 1}</td>
+                                                        <td className="py-3 px-4 font-semibold text-foreground">
                                                             {attempt?.user?.name || "-"}
                                                         </td>
-                                                        <td className="py-3 px-4 text-gray-600">
+                                                        <td className="py-3 px-4 text-muted-foreground">
                                                             {attempt?.user?.email || "-"}
                                                         </td>
-                                                        <td className="py-3 px-4 text-center font-bold text-gray-800">
+                                                        <td className="py-3 px-4 text-center font-bold text-foreground">
                                                             {attempt?.score ?? 0}
                                                         </td>
                                                         <td className="py-3 px-4 text-center">
@@ -438,7 +438,7 @@ export default function CourseTestTeacherDetail({
                                                                 </span>
                                                             )}
                                                         </td>
-                                                        <td className="py-3 px-4 text-gray-600">
+                                                        <td className="py-3 px-4 text-muted-foreground">
                                                             {formatLocalDateTime(attempt?.submitted_at)}
                                                         </td>
                                                     </tr>
@@ -447,8 +447,8 @@ export default function CourseTestTeacherDetail({
                                         </table>
                                     </div>
                                 ) : (
-                                    <div className="text-center py-12 border rounded-lg bg-slate-50/50">
-                                        <p className="text-sm text-gray-500 font-medium">
+                                    <div className="text-center py-12 border rounded-lg bg-muted/25">
+                                        <p className="text-sm text-muted-foreground font-medium">
                                             Belum ada riwayat pengerjaan.
                                         </p>
                                     </div>

@@ -62,7 +62,7 @@ export function TableL13BC({
         <div className="w-full overflow-x-auto">
             <Table className="text-xs border">
                 <TableHeader>
-                    <TableRow className="bg-gray-100">
+                    <TableRow className="bg-muted">
                         <TableHead className="w-8 text-center border">
                             <Checkbox
                                 checked={allSelected || (someSelected && "indeterminate")}
@@ -152,7 +152,7 @@ export function TableL13BC({
                                             type="button"
                                             size="icon"
                                             variant="ghost"
-                                            className="h-7 w-7 text-red-500 hover:text-red-600"
+                                            className="h-7 w-7 text-destructive hover:text-destructive/80"
                                             onClick={() => onDelete(item.id!)}
                                         >
                                             <Trash2 className="h-3.5 w-3.5" />

@@ -22,9 +22,16 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
+    <!-- Terapkan tema tersimpan sebelum halaman tampil (mencegah kedip) -->
+    <script>
+        try {
+            if (localStorage.getItem('bls-theme') === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {}
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=manrope:400,500,600,700,800&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
     @routes

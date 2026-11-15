@@ -329,14 +329,14 @@ export function FormL1A4Dialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-2xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>HARTA BERGERAK</DialogTitle>
                 </DialogHeader>
 
                 <div className="p-4 sm:p-6 space-y-4 overflow-y-auto min-h-0">
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Kode <span className="text-red-500">*</span>
+                            Kode <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -344,13 +344,13 @@ export function FormL1A4Dialog({
                                 readOnly
                                 disabled
                                 className={cn(
-                                    "bg-gray-100",
-                                    errors.code && "border-red-500"
+                                    "bg-muted",
+                                    errors.code && "border-destructive"
                                 )}
                                 placeholder="Otomatis terisi"
                             />
                             {errors.code && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.code}
                                 </p>
                             )}
@@ -359,7 +359,7 @@ export function FormL1A4Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Tipe <span className="text-red-500">*</span>
+                            Tipe <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover open={openType} onOpenChange={setOpenType}>
@@ -370,7 +370,7 @@ export function FormL1A4Dialog({
                                         aria-expanded={openType}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.type && "border-red-500"
+                                            errors.type && "border-destructive"
                                         )}
                                     >
                                         {formData.type || "Silakan Pilih"}
@@ -416,7 +416,7 @@ export function FormL1A4Dialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.type && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.type}
                                 </p>
                             )}
@@ -425,7 +425,7 @@ export function FormL1A4Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Merk/Model <span className="text-red-500">*</span>
+                            Merk/Model <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -435,11 +435,11 @@ export function FormL1A4Dialog({
                                 }
                                 placeholder="Masukkan merk/model"
                                 className={cn(
-                                    errors.brand && "border-red-500"
+                                    errors.brand && "border-destructive"
                                 )}
                             />
                             {errors.brand && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.brand}
                                 </p>
                             )}
@@ -449,7 +449,7 @@ export function FormL1A4Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nomor Polisi/Registrasi{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -459,11 +459,11 @@ export function FormL1A4Dialog({
                                 }
                                 placeholder="Masukkan nomor polisi/registrasi"
                                 className={cn(
-                                    errors.police_number && "border-red-500"
+                                    errors.police_number && "border-destructive"
                                 )}
                             />
                             {errors.police_number && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.police_number}
                                 </p>
                             )}
@@ -472,7 +472,7 @@ export function FormL1A4Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Kepemilikan <span className="text-red-500">*</span>
+                            Kepemilikan <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -486,7 +486,7 @@ export function FormL1A4Dialog({
                                         aria-expanded={openOwnership}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.ownership && "border-red-500"
+                                            errors.ownership && "border-destructive"
                                         )}
                                     >
                                         {formData.ownership
@@ -534,7 +534,7 @@ export function FormL1A4Dialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.ownership && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.ownership}
                                 </p>
                             )}
@@ -544,7 +544,7 @@ export function FormL1A4Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nomor Identitas Pemilik (NIK/NPWP)
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -554,8 +554,8 @@ export function FormL1A4Dialog({
                                 maxLength={16}
                                 disabled={!isOwnerEditable}
                                 className={cn(
-                                    !isOwnerEditable && "bg-gray-100",
-                                    errors.owner_id && "border-red-500"
+                                    !isOwnerEditable && "bg-muted",
+                                    errors.owner_id && "border-destructive"
                                 )}
                                 onChange={(e) => {
                                     const sanitized = e.target.value
@@ -566,7 +566,7 @@ export function FormL1A4Dialog({
                                 placeholder="Contoh: 16 digit angka"
                             />
                             {errors.owner_id && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.owner_id}
                                 </p>
                             )}
@@ -575,15 +575,15 @@ export function FormL1A4Dialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Nama pemilik <span className="text-red-500">*</span>
+                            Nama pemilik <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
                                 value={formData.owner_name}
                                 disabled={!isOwnerEditable}
                                 className={cn(
-                                    !isOwnerEditable && "bg-gray-100",
-                                    errors.owner_name && "border-red-500"
+                                    !isOwnerEditable && "bg-muted",
+                                    errors.owner_name && "border-destructive"
                                 )}
                                 onChange={(e) =>
                                     handleChange("owner_name", e.target.value)
@@ -591,7 +591,7 @@ export function FormL1A4Dialog({
                                 placeholder="Masukkan nama pemilik"
                             />
                             {errors.owner_name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.owner_name}
                                 </p>
                             )}
@@ -601,7 +601,7 @@ export function FormL1A4Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Tahun Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -613,11 +613,11 @@ export function FormL1A4Dialog({
                                 placeholder="Contoh: 2020"
                                 maxLength={4}
                                 className={cn(
-                                    errors.acquisition_year && "border-red-500"
+                                    errors.acquisition_year && "border-destructive"
                                 )}
                             />
                             {errors.acquisition_year && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.acquisition_year}
                                 </p>
                             )}
@@ -627,7 +627,7 @@ export function FormL1A4Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Harga Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -641,12 +641,12 @@ export function FormL1A4Dialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.acquisition_cost && "border-red-500"
+                                        errors.acquisition_cost && "border-destructive"
                                     )}
                                 />
                             </div>
                             {errors.acquisition_cost && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.acquisition_cost}
                                 </p>
                             )}
@@ -656,7 +656,7 @@ export function FormL1A4Dialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nilai Saat Ini{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -670,12 +670,12 @@ export function FormL1A4Dialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.amount_now && "border-red-500"
+                                        errors.amount_now && "border-destructive"
                                     )}
                                 />
                             </div>
                             {errors.amount_now && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.amount_now}
                                 </p>
                             )}
@@ -751,7 +751,6 @@ export function FormL1A4Dialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

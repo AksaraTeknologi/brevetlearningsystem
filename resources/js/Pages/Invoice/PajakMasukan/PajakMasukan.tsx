@@ -199,19 +199,19 @@ export default function PajakMasukan({ invoices }: any) {
                         <div className="flex gap-2">
                             <div className="flex gap-2">
                                 <Button
-                                    className="bg-yellow-400 text-primary hover:bg-yellow-400/90 hover:text-primary"
+                                    className="bg-highlight text-highlight-foreground hover:bg-highlight/90"
                                     onClick={handleRefresh}
                                 >
                                     <RefreshCcw />
                                 </Button>
                                 <Button
-                                    className="bg-zinc-400 hover:bg-zinc-400/90"
+                                    className="bg-steel text-steel-foreground hover:bg-steel/90"
                                     disabled
                                 >
                                     <File />
                                 </Button>
                                 <Button
-                                    className="bg-green-600 hover:bg-green-600/90"
+                                    className="bg-success hover:bg-success/90 text-success-foreground"
                                     disabled
                                 >
                                     <FileX />

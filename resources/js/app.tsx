@@ -1,6 +1,7 @@
 import "../css/app.css";
 import "./bootstrap";
 
+import { TooltipProvider } from "@/Components/ui/tooltip";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
@@ -17,9 +18,16 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        // TooltipProvider global: sebelumnya disediakan oleh sidebar shadcn di
+        // layout lama; kini dipasang di akar agar semua halaman yang memakai
+        // Tooltip tetap berfungsi di layout mana pun.
+        root.render(
+            <TooltipProvider delayDuration={200}>
+                <App {...props} />
+            </TooltipProvider>
+        );
     },
     progress: {
-        color: "#4B5563",
+        color: "#F7B519",
     },
 });

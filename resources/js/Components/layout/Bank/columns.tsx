@@ -145,7 +145,7 @@ export const columns: ColumnDef<BankColumns>[] = [
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="text-red-600 hover:text-red-700"
+                        className="text-destructive hover:text-destructive/80"
                         onClick={() => {
                             if (!confirm("Hapus bank ini?")) return;
                             router.delete(route("banks.destroy", bank.id));

@@ -1,3 +1,4 @@
+import { FormPageHeader } from "@/Components/app-shell/FormPage";
 import { usePage, router, Link } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
 import axios from "axios";
@@ -2191,9 +2192,9 @@ const DetailSPTBadan = ({
         bg?: "white" | "gray";
     }) => (
         <div
-            className={`grid grid-cols-1 md:grid-cols-[60px_1fr_280px] gap-4 p-4 items-start border-t ${bg === "gray" ? "bg-gray-50" : "bg-white"}`}
+            className={`grid grid-cols-1 md:grid-cols-[60px_1fr_280px] gap-4 p-4 items-start border-t ${bg === "gray" ? "bg-muted/50" : "bg-card"}`}
         >
-            <div className="text-sm font-medium text-gray-500">{number}</div>
+            <div className="text-sm font-medium text-muted-foreground">{number}</div>
             <div className="text-sm">{label}</div>
             <div>{children}</div>
         </div>
@@ -2228,7 +2229,7 @@ const DetailSPTBadan = ({
             <Head title="Detail SPT PPh Wajib Pajak Badan" />
 
             <div className="py-8 mx-auto w-full max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
-                <div className="flex flex-1 flex-col gap-4 px-4 pt-0">
+                <div className="tls-spt flex flex-1 flex-col gap-4">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -2245,9 +2246,10 @@ const DetailSPTBadan = ({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-bold text-primary mb-2">
-                        SPT TAHUNAN PAJAK PENGHASILAN (PPh) WAJIB PAJAK BADAN
-                    </h1>
+                    <FormPageHeader
+                        title="SPT TAHUNAN PAJAK PENGHASILAN (PPh) WAJIB PAJAK BADAN"
+                        backHref={route("spt.konsep")}
+                    />
 
                     <Form {...form}>
                         <form
@@ -2362,7 +2364,7 @@ const DetailSPTBadan = ({
 
                                 {/* ======================== TAB INDUK ======================== */}
                                 <TabsContent value="induk">
-                                    <div className="p-3 sm:p-4 md:p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+                                    <div className="p-3 sm:p-4 md:p-6 bg-card rounded-lg shadow dark:bg-gray-800">
                                         {/* HEADER */}
                                         <Accordion
                                             type="single"
@@ -2370,10 +2372,10 @@ const DetailSPTBadan = ({
                                             defaultValue="header"
                                         >
                                             <AccordionItem value="header">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <div className="space-y-4">
                                                         <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] items-center gap-3">
                                                             <Label>
@@ -2481,7 +2483,6 @@ const DetailSPTBadan = ({
                                                     <div className="pt-6">
                                                         <Button
                                                             type="button"
-                                                            className="bg-blue-950 hover:bg-blue-900"
                                                             onClick={() =>
                                                                 toast.error(
                                                                     "Fitur Posting SPT belum diaktifkan di halaman ini.",
@@ -2506,7 +2507,7 @@ const DetailSPTBadan = ({
                                             defaultValue="identitas"
                                         >
                                             <AccordionItem value="identitas">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     A. IDENTITAS WAJIB PAJAK
                                                 </AccordionTrigger>
                                                 <AccordionContent>
@@ -2577,7 +2578,7 @@ const DetailSPTBadan = ({
                                             defaultValue="informasiLaporanKeuangan"
                                         >
                                             <AccordionItem value="informasiLaporanKeuangan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     B. INFORMASI LAPORAN
                                                     KEUANGAN
                                                 </AccordionTrigger>
@@ -2959,7 +2960,7 @@ const DetailSPTBadan = ({
                                             defaultValue="penghasilan"
                                         >
                                             <AccordionItem value="penghasilan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     C. PENGHASILAN BERSIFAT
                                                     FINAL & TIDAK TERMASUK OBJEK
                                                     PAJAK
@@ -2992,7 +2993,7 @@ const DetailSPTBadan = ({
                                                             </colgroup>
                                                             <tbody>
                                                                 {/* C.1a */}
-                                                                <tr className="bg-white">
+                                                                <tr className="bg-card">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         1.a
                                                                     </td>
@@ -3096,7 +3097,7 @@ const DetailSPTBadan = ({
                                                                 {form.watch(
                                                                     "c_1a",
                                                                 ) === true && (
-                                                                    <tr className="bg-gray-50 border-t">
+                                                                    <tr className="bg-muted/50 border-t">
                                                                         <td className="p-4 text-sm font-medium align-middle">
                                                                             1.b
                                                                         </td>
@@ -3198,7 +3199,7 @@ const DetailSPTBadan = ({
                                                                 )}
 
                                                                 {/* C.2 */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         2
                                                                     </td>
@@ -3337,7 +3338,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* C.3 */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         3
                                                                     </td>
@@ -3488,7 +3489,7 @@ const DetailSPTBadan = ({
                                             defaultValue="pphPenghitungan"
                                         >
                                             <AccordionItem value="pphPenghitungan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     D. PENGHITUNGAN PPh
                                                 </AccordionTrigger>
                                                 <AccordionContent>
@@ -3519,7 +3520,7 @@ const DetailSPTBadan = ({
                                                             </colgroup>
                                                             <tbody>
                                                                 {/* D.4 */}
-                                                                <tr className="bg-white">
+                                                                <tr className="bg-card">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         4
                                                                     </td>
@@ -3542,7 +3543,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* D.5 */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         5
                                                                     </td>
@@ -3681,7 +3682,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* D.6 */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         6
                                                                     </td>
@@ -3832,7 +3833,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* D.7 */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         7
                                                                     </td>
@@ -3855,7 +3856,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* D.8 */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         8
                                                                     </td>
@@ -3987,7 +3988,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* D.9 */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         9
                                                                     </td>
@@ -4007,7 +4008,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* D.10 */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         10
                                                                     </td>
@@ -4145,7 +4146,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* D.11 */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         11
                                                                     </td>
@@ -4283,7 +4284,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* D.12 */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         12
                                                                     </td>
@@ -4314,7 +4315,7 @@ const DetailSPTBadan = ({
                                             defaultValue="penghitunganPphTerutang"
                                         >
                                             <AccordionItem value="penghitunganPphTerutang">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     E. PENGHITUNGAN PPh TERUTANG
                                                 </AccordionTrigger>
                                                 <AccordionContent>
@@ -4345,7 +4346,7 @@ const DetailSPTBadan = ({
                                                             </colgroup>
                                                             <tbody>
                                                                 {/* E.13 */}
-                                                                <tr className="bg-white">
+                                                                <tr className="bg-card">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         13
                                                                     </td>
@@ -4485,7 +4486,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* E.14 */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         14
                                                                     </td>
@@ -4536,7 +4537,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* E.15 */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         15
                                                                     </td>
@@ -4592,7 +4593,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* E.16 */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         16
                                                                     </td>
@@ -4742,7 +4743,7 @@ const DetailSPTBadan = ({
                                             defaultValue="kurangLebihBayar"
                                         >
                                             <AccordionItem value="kurangLebihBayar">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     F. PPH KURANG/LEBIH BAYAR
                                                 </AccordionTrigger>
                                                 <AccordionContent>
@@ -4773,7 +4774,7 @@ const DetailSPTBadan = ({
                                                             </colgroup>
                                                             <tbody>
                                                                 {/* 17.a */}
-                                                                <tr className="bg-white">
+                                                                <tr className="bg-card">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         17.a
                                                                     </td>
@@ -4824,7 +4825,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* 17.b */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         17.b
                                                                     </td>
@@ -4950,7 +4951,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* 17.c */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         17.c
                                                                     </td>
@@ -4995,7 +4996,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* 18.a */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         18.a
                                                                     </td>
@@ -5119,7 +5120,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* 18.b */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         18.b
                                                                     </td>
@@ -5164,7 +5165,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* 19.a */}
-                                                                <tr className="bg-gray-50 border-t">
+                                                                <tr className="bg-muted/50 border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         19.a
                                                                     </td>
@@ -5275,7 +5276,7 @@ const DetailSPTBadan = ({
                                                                 </tr>
 
                                                                 {/* 19.b - Informasi Rekening */}
-                                                                <tr className="bg-white border-t ">
+                                                                <tr className="bg-card border-t ">
                                                                     <td
                                                                         colSpan={
                                                                             5
@@ -5288,7 +5289,7 @@ const DetailSPTBadan = ({
                                                                             rekening
                                                                         </p>
                                                                         <div className="flex justify-end">
-                                                                            <div className="w-full grid grid-cols-1 md:grid-cols-2 rounded-lg border border-gray-200 bg-gray-50 p-4 gap-4 md:gap-0">
+                                                                            <div className="w-full grid grid-cols-1 md:grid-cols-2 rounded-lg border border-border bg-muted/50 p-4 gap-4 md:gap-0">
                                                                                 <div></div>
                                                                                 <div className="order-last md:order-none grid grid-cols-1 sm:grid-cols-[190px_1fr] gap-y-3 gap-x-4 items-center">
                                                                                     <div className="flex items-center text-sm text-muted-foreground">
@@ -5332,7 +5333,7 @@ const DetailSPTBadan = ({
                                                                                                         }
                                                                                                         readOnly
                                                                                                         placeholder=""
-                                                                                                        className="w-full bg-gray-100"
+                                                                                                        className="w-full bg-muted"
                                                                                                     />
                                                                                                 </FormControl>
                                                                                                 <FormMessage />
@@ -5361,7 +5362,7 @@ const DetailSPTBadan = ({
                                                                                                         }
                                                                                                         readOnly
                                                                                                         placeholder=""
-                                                                                                        className="w-full bg-gray-100"
+                                                                                                        className="w-full bg-muted"
                                                                                                     />
                                                                                                 </FormControl>
                                                                                                 <FormMessage />
@@ -5391,7 +5392,7 @@ const DetailSPTBadan = ({
                                                                                                         }
                                                                                                         readOnly
                                                                                                         placeholder=""
-                                                                                                        className="w-full bg-gray-100"
+                                                                                                        className="w-full bg-muted"
                                                                                                     />
                                                                                                 </FormControl>
                                                                                                 <FormMessage />
@@ -5417,7 +5418,7 @@ const DetailSPTBadan = ({
                                             defaultValue="angsuran"
                                         >
                                             <AccordionItem value="angsuran">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     G. PERHITUNGAN ANGSURAN PPh
                                                     PASAL 25 TAHUN BERJALAN
                                                 </AccordionTrigger>
@@ -5448,7 +5449,7 @@ const DetailSPTBadan = ({
                                                                 />
                                                             </colgroup>
                                                             <tbody>
-                                                                <tr className="bg-white">
+                                                                <tr className="bg-card">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         20
                                                                     </td>
@@ -5563,7 +5564,7 @@ const DetailSPTBadan = ({
                                             defaultValue="pernyataanTransaksi"
                                         >
                                             <AccordionItem value="pernyataanTransaksi">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     H. PERNYATAAN TRANSAKSI
                                                 </AccordionTrigger>
                                                 <AccordionContent>
@@ -5656,8 +5657,8 @@ const DetailSPTBadan = ({
                                                                                 idx %
                                                                                     2 ===
                                                                                 0
-                                                                                    ? "bg-white"
-                                                                                    : "bg-gray-50 border-t"
+                                                                                    ? "bg-card"
+                                                                                    : "bg-muted/50 border-t"
                                                                             }
                                                                         >
                                                                             <td className="p-4 text-sm font-medium align-middle">
@@ -5752,7 +5753,7 @@ const DetailSPTBadan = ({
                                                                 )}
 
                                                                 {/* 21.j - nilai input */}
-                                                                <tr className="bg-white border-t">
+                                                                <tr className="bg-card border-t">
                                                                     <td className="p-4 text-sm font-medium align-middle">
                                                                         21.j
                                                                     </td>
@@ -5827,13 +5828,13 @@ const DetailSPTBadan = ({
                                             defaultValue="lampiranLainnya"
                                         >
                                             <AccordionItem value="lampiranLainnya">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     I. LAMPIRAN LAINNYA
                                                 </AccordionTrigger>
                                                 <AccordionContent>
                                                     <div className="rounded-lg overflow-x-auto">
                                                         {/* a.1 */}
-                                                        <div className="bg-white flex flex-col lg:flex-row w-full">
+                                                        <div className="bg-card flex flex-col lg:flex-row w-full">
                                                             <div className="p-4 border-b lg:border-b-0 flex-1 min-w-0 flex items-start">
                                                                 <span className="text-sm">
                                                                     a. 1.
@@ -5844,7 +5845,7 @@ const DetailSPTBadan = ({
                                                                     Diaudit*
                                                                 </span>
                                                             </div>
-                                                            <div className="p-4 bg-gray-50 w-full lg:max-w-4xl lg:my-2">
+                                                            <div className="p-4 bg-muted/50 w-full lg:max-w-4xl lg:my-2">
                                                                 <input
                                                                     ref={
                                                                         iA1FileInputRef
@@ -5864,7 +5865,7 @@ const DetailSPTBadan = ({
                                                                 <div className="flex flex-wrap gap-2 items-center mb-3">
                                                                     <Button
                                                                         type="button"
-                                                                        className="bg-blue-950 hover:bg-blue-900 h-8 px-3 text-xs"
+                                                                        className="h-8 px-3 text-xs"
                                                                         disabled={
                                                                             iFileUploading.i_a_1
                                                                         }
@@ -5893,13 +5894,13 @@ const DetailSPTBadan = ({
                                                                         × Batal
                                                                     </Button>
                                                                 </div>
-                                                                <div className="border rounded bg-white p-3 min-h-[48px]">
+                                                                <div className="border rounded bg-card p-3 min-h-[48px]">
                                                                     <p className="text-xs text-muted-foreground font-semibold mb-1">
                                                                         File
                                                                         yang
                                                                         Diunggah
                                                                     </p>
-                                                                    <p className="text-sm text-gray-700">
+                                                                    <p className="text-sm text-foreground">
                                                                         {iFileUploading.i_a_1 ? (
                                                                             "Sedang mengunggah..."
                                                                         ) : iFileNames.i_a_1 ? (
@@ -5919,7 +5920,7 @@ const DetailSPTBadan = ({
                                                         </div>
 
                                                         {/* a.2 */}
-                                                        <div className="bg-white border-t flex flex-col lg:flex-row w-full">
+                                                        <div className="bg-card border-t flex flex-col lg:flex-row w-full">
                                                             <div className="p-4 border-b lg:border-b-0 flex-1 min-w-0 flex items-start">
                                                                 <span className="text-sm">
                                                                     a. 2.
@@ -5930,7 +5931,7 @@ const DetailSPTBadan = ({
                                                                     Pajak Grup
                                                                 </span>
                                                             </div>
-                                                            <div className="p-4 bg-gray-50 w-full lg:max-w-4xl lg:my-2">
+                                                            <div className="p-4 bg-muted/50 w-full lg:max-w-4xl lg:my-2">
                                                                 <input
                                                                     ref={
                                                                         iA2FileInputRef
@@ -5950,7 +5951,7 @@ const DetailSPTBadan = ({
                                                                 <div className="flex flex-wrap gap-2 items-center mb-3">
                                                                     <Button
                                                                         type="button"
-                                                                        className="bg-blue-950 hover:bg-blue-900 h-8 px-3 text-xs"
+                                                                        className="h-8 px-3 text-xs"
                                                                         disabled={
                                                                             iFileUploading.i_a_2
                                                                         }
@@ -5979,13 +5980,13 @@ const DetailSPTBadan = ({
                                                                         × Batal
                                                                     </Button>
                                                                 </div>
-                                                                <div className="border rounded bg-white p-3 min-h-[48px]">
+                                                                <div className="border rounded bg-card p-3 min-h-[48px]">
                                                                     <p className="text-xs text-muted-foreground font-semibold mb-1">
                                                                         File
                                                                         yang
                                                                         Diunggah
                                                                     </p>
-                                                                    <p className="text-sm text-gray-700">
+                                                                    <p className="text-sm text-foreground">
                                                                         {iFileUploading.i_a_2 ? (
                                                                             "Sedang mengunggah..."
                                                                         ) : iFileNames.i_a_2 ? (
@@ -6087,7 +6088,7 @@ const DetailSPTBadan = ({
                                                             }) => (
                                                                 <div
                                                                     key={field}
-                                                                    className="border-t bg-white flex flex-col lg:flex-row w-full"
+                                                                    className="border-t bg-card flex flex-col lg:flex-row w-full"
                                                                 >
                                                                     <div className="p-4 border-b lg:border-b-0 flex-1 min-w-0 flex items-start">
                                                                         <span className="text-sm">
@@ -6096,7 +6097,7 @@ const DetailSPTBadan = ({
                                                                             }
                                                                         </span>
                                                                     </div>
-                                                                    <div className="p-4 bg-gray-50 w-full lg:max-w-4xl lg:my-2">
+                                                                    <div className="p-4 bg-muted/50 w-full lg:max-w-4xl lg:my-2">
                                                                         <input
                                                                             ref={
                                                                                 iFileRefMap[
@@ -6118,7 +6119,7 @@ const DetailSPTBadan = ({
                                                                         <div className="flex flex-wrap gap-2 items-center mb-3">
                                                                             <Button
                                                                                 type="button"
-                                                                                className="bg-blue-950 hover:bg-blue-900  text-xs"
+                                                                                className="text-xs"
                                                                                 disabled={
                                                                                     iFileUploading[
                                                                                         field
@@ -6158,13 +6159,13 @@ const DetailSPTBadan = ({
                                                                                 Batal
                                                                             </Button>
                                                                         </div>
-                                                                        <div className="border rounded bg-white p-3 min-h-[48px]">
+                                                                        <div className="border rounded bg-card p-3 min-h-[48px]">
                                                                             <p className="text-xs text-muted-foreground font-semibold mb-1">
                                                                                 File
                                                                                 yang
                                                                                 Diunggah
                                                                             </p>
-                                                                            <p className="text-sm text-gray-700">
+                                                                            <p className="text-sm text-foreground">
                                                                                 {iFileUploading[
                                                                                     field
                                                                                 ] ? (
@@ -6201,7 +6202,7 @@ const DetailSPTBadan = ({
                                             defaultValue="pernyataanJ"
                                         >
                                             <AccordionItem value="pernyataanJ">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     J. PERNYATAAN
                                                 </AccordionTrigger>
                                                 <AccordionContent>
@@ -6224,7 +6225,7 @@ const DetailSPTBadan = ({
                                                             />
                                                             <label
                                                                 htmlFor="pernyataanJ"
-                                                                className="text-sm text-gray-700 leading-relaxed break-words"
+                                                                className="text-sm text-foreground leading-relaxed break-words"
                                                             >
                                                                 Dengan menyadari
                                                                 sepenuhnya akan
@@ -6415,7 +6416,6 @@ const DetailSPTBadan = ({
                                             </Button>
                                             <Button
                                                 type="submit"
-                                                className="bg-blue-950 hover:bg-blue-900"
                                             >
                                                 Submit SPT
                                             </Button>
@@ -6653,15 +6653,15 @@ const DetailSPTBadan = ({
 
                                 {/* ======================== TAB L2 ======================== */}
                                 <TabsContent value="l2">
-                                    <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-8">
+                                    <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-8">
                                         <div>
                                             <h2 className="text-xl font-semibold mb-6">
                                                 DAFTAR KEPEMILIKAN
                                             </h2>
-                                            <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                            <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                 HEADER
                                             </div>
-                                            <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                            <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div>
                                                         <Label className="text-sm">
@@ -6673,7 +6673,7 @@ const DetailSPTBadan = ({
                                                                 spt.year,
                                                             )}
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                     <div>
@@ -6687,14 +6687,14 @@ const DetailSPTBadan = ({
                                                                 ""
                                                             }
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div>
-                                            <p className="text-sm font-semibold text-white mb-4 bg-blue-950 p-4 rounded-lg">
+                                            <p className="text-sm font-semibold text-white mb-4 bg-brand p-4 rounded-lg">
                                                 A. DAFTAR PEMEGANG SAHAM/PEMILIK
                                                 MODAL DAN JUMLAH
                                                 DIVIDEN/PEMBAGIAN LABA YANG
@@ -6707,7 +6707,7 @@ const DetailSPTBadan = ({
                                             />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-semibold text-white mb-4 bg-blue-950 p-4 rounded-lg">
+                                            <p className="text-sm font-semibold text-white mb-4 bg-brand p-4 rounded-lg">
                                                 B. DAFTAR PENYERTAAN MODAL,
                                                 UTANG, DAN/ATAU PIUTANG PADA
                                                 PERUSAHAAN AFILIASI
@@ -6722,17 +6722,17 @@ const DetailSPTBadan = ({
 
                                 {isL3Enabled ? (
                                     <TabsContent value="l3">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-8">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-8">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     DAFTAR PAJAK PENGHASILAN
                                                     YANG DIPOTONG/ DIPUNGUT OLEH
                                                     PIHAK LAIN
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -6744,7 +6744,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -6758,14 +6758,14 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div>
-                                                <p className="text-sm font-semibold text-white mb-4 bg-blue-950 p-4 rounded-lg">
+                                                <p className="text-sm font-semibold text-white mb-4 bg-brand p-4 rounded-lg">
                                                     A. PENGHASILAN DARI LUAR
                                                     NEGERI
                                                 </p>
@@ -6777,7 +6777,7 @@ const DetailSPTBadan = ({
                                                 />
                                             </div>
                                             <div>
-                                                <p className="text-sm font-semibold text-white mb-4 bg-blue-950 p-4 rounded-lg">
+                                                <p className="text-sm font-semibold text-white mb-4 bg-brand p-4 rounded-lg">
                                                     B. PPh YANG
                                                     DIPOTONG/DIPUNGUT PIHAK LAIN
                                                 </p>
@@ -6795,7 +6795,7 @@ const DetailSPTBadan = ({
 
                                 {isL4Enabled ? (
                                     <TabsContent value="l4">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-8">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-8">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     PENGHASILAN YANG DIKENAKAN
@@ -6803,10 +6803,10 @@ const DetailSPTBadan = ({
                                                     PENGHASILAN YANG BUKAN OBJEK
                                                     PAJAK
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -6818,7 +6818,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -6832,14 +6832,14 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div>
-                                                <p className="text-sm font-semibold text-white mb-4 bg-blue-950 p-4 rounded-lg">
+                                                <p className="text-sm font-semibold text-white mb-4 bg-brand p-4 rounded-lg">
                                                     A. PENGHASILAN YANG
                                                     DIKENAKAN PPh YANG BERSIFAT
                                                     FINAL
@@ -6852,7 +6852,7 @@ const DetailSPTBadan = ({
                                                 />
                                             </div>
                                             <div>
-                                                <p className="text-sm font-semibold text-white mb-4 bg-blue-950 p-4 rounded-lg">
+                                                <p className="text-sm font-semibold text-white mb-4 bg-brand p-4 rounded-lg">
                                                     B. PENGHASILAN YANG TIDAK
                                                     TERMASUK OBJEK PAJAK
                                                 </p>
@@ -6870,15 +6870,15 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L5 ======================== */}
                                 {isL5Enabled ? (
                                     <TabsContent value="l5">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-8">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-8">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     REKAPITULASI PEREDARAN BRUTO
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -6890,7 +6890,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -6904,14 +6904,14 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div>
-                                                <p className="text-sm font-semibold text-white mb-4 bg-blue-950 p-4 rounded-lg">
+                                                <p className="text-sm font-semibold text-white mb-4 bg-brand p-4 rounded-lg">
                                                     A. ALAMAT TEMPAT KEGIATAN
                                                     USAHA
                                                 </p>
@@ -6923,7 +6923,7 @@ const DetailSPTBadan = ({
                                                 />
                                             </div>
                                             <div>
-                                                <p className="text-sm font-semibold text-white mb-4 bg-blue-950 p-4 rounded-lg">
+                                                <p className="text-sm font-semibold text-white mb-4 bg-brand p-4 rounded-lg">
                                                     B. REKAPITULASI PEREDARAN
                                                     BRUTO DAN PPh YANG TELAH
                                                     DIBAYAR
@@ -6955,16 +6955,16 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L7 ======================== */}
                                 {isL7Enabled ? (
                                     <TabsContent value="l7">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-8 mb-0">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-8 mb-0">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     PENGHITUNGAN KOMPENSASI
                                                     KERUGIAN FISKAL
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -6976,7 +6976,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -6990,7 +6990,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7031,16 +7031,16 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L9 ======================== */}
                                 {isL9Enabled ? (
                                     <TabsContent value="l9">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-8">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-8">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     DAFTAR PENYUSUTAN DAN/ATAU
                                                     AMORTISASI FISKAL
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7052,7 +7052,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7066,7 +7066,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7083,17 +7083,17 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L10-A ======================== */}
                                 {isL10ABCEnabled ? (
                                     <TabsContent value="l10a">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     DAFTAR TRANSAKSI YANG
                                                     DIPENGARUHI HUBUNGAN
                                                     ISTIMEWA
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7105,7 +7105,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7119,7 +7119,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7136,17 +7136,17 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L10-B ======================== */}
                                 {isL10ABCEnabled ? (
                                     <TabsContent value="l10b">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     PERNYATAAN TERKAIT TRANSAKSI
                                                     YANG DIPENGARUHI HUBUNGAN
                                                     ISTIMEWA
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7158,7 +7158,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7172,7 +7172,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7189,17 +7189,17 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L10-C ======================== */}
                                 {isL10ABCEnabled ? (
                                     <TabsContent value="l10c">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     PERNYATAAN TRANSAKSI DENGAN
                                                     PIHAK YANG MERUPAKAN
                                                     PENDUDUK TAX HAVEN COUNTRY
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7211,7 +7211,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7225,7 +7225,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7242,16 +7242,16 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L10-D ======================== */}
                                 {isL10DEnabled ? (
                                     <TabsContent value="l10d">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     IKHTISAR DOKUMEN INDUK DAN
                                                     DOKUMEN LOKAL
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7263,7 +7263,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7277,7 +7277,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7294,15 +7294,15 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L11-A ======================== */}
                                 {isL11AEnabled ? (
                                     <TabsContent value="l11a">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     RINCIAN BIAYA TERTENTU
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7314,7 +7314,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7328,7 +7328,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7349,17 +7349,17 @@ const DetailSPTBadan = ({
 
                                 {/* ======================== TAB L11-B ======================== */}
                                 <TabsContent value="l11b">
-                                    <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                    <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                         <div>
                                             <h2 className="text-xl font-semibold mb-6">
                                                 PENGHITUNGAN BIAYA PINJAMAN YANG
                                                 DAPAT DIBEBANKAN UNTUK KEPERLUAN
                                                 PENGHITUNGAN PAJAK PENGHASILAN
                                             </h2>
-                                            <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                            <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                 HEADER
                                             </div>
-                                            <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                            <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div>
                                                         <Label className="text-sm">
@@ -7371,7 +7371,7 @@ const DetailSPTBadan = ({
                                                                 spt.year,
                                                             )}
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                     <div>
@@ -7385,7 +7385,7 @@ const DetailSPTBadan = ({
                                                                 ""
                                                             }
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                 </div>
@@ -7403,15 +7403,15 @@ const DetailSPTBadan = ({
 
                                 {/* ======================== TAB L11-C ======================== */}
                                 <TabsContent value="l11c">
-                                    <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                    <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                         <div>
                                             <h2 className="text-xl font-semibold mb-6">
                                                 LAPORAN UTANG SWASTA LUAR NEGERI
                                             </h2>
-                                            <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                            <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                 HEADER
                                             </div>
-                                            <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                            <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div>
                                                         <Label className="text-sm">
@@ -7423,7 +7423,7 @@ const DetailSPTBadan = ({
                                                                 spt.year,
                                                             )}
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                     <div>
@@ -7437,7 +7437,7 @@ const DetailSPTBadan = ({
                                                                 ""
                                                             }
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                 </div>
@@ -7452,16 +7452,16 @@ const DetailSPTBadan = ({
 
                                 {/* ======================== TAB L12-A ======================== */}
                                 <TabsContent value="l12a">
-                                    <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                    <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                         <div>
                                             <h2 className="text-xl font-semibold mb-6">
                                                 PENGHITUNGAN PPh PASAL 26 AYAT
                                                 (4)
                                             </h2>
-                                            <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                            <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                 HEADER
                                             </div>
-                                            <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                            <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div>
                                                         <Label className="text-sm">
@@ -7473,7 +7473,7 @@ const DetailSPTBadan = ({
                                                                 spt.year,
                                                             )}
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                     <div>
@@ -7487,7 +7487,7 @@ const DetailSPTBadan = ({
                                                                 ""
                                                             }
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                 </div>
@@ -7502,7 +7502,7 @@ const DetailSPTBadan = ({
 
                                 {/* ======================== TAB L12-B ======================== */}
                                 <TabsContent value="l12b">
-                                    <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                    <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                         <div>
                                             <h2 className="text-xl font-semibold mb-6">
                                                 PEMBERITAHUAN PENANAMAN KEMBALI
@@ -7510,10 +7510,10 @@ const DetailSPTBadan = ({
                                                 DIKURANGI PAJAK BAGI WAJIB PAJAK
                                                 BENTUK USAHA TETAP
                                             </h2>
-                                            <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                            <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                 HEADER
                                             </div>
-                                            <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                            <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div>
                                                         <Label className="text-sm">
@@ -7525,7 +7525,7 @@ const DetailSPTBadan = ({
                                                                 spt.year,
                                                             )}
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                     <div>
@@ -7539,7 +7539,7 @@ const DetailSPTBadan = ({
                                                                 ""
                                                             }
                                                             disabled
-                                                            className="bg-gray-100"
+                                                            className="bg-muted"
                                                         />
                                                     </div>
                                                 </div>
@@ -7561,16 +7561,16 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L13-A ======================== */}
                                 {isL13Enabled ? (
                                     <TabsContent value="l13a">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     DAFTAR FASILITAS PENANAMAN
                                                     MODAL
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7582,7 +7582,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7596,7 +7596,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7613,16 +7613,16 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L13-B ======================== */}
                                 {isL13BEnabled ? (
                                     <TabsContent value="l13b">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     DAFTAR TAMBAHAN PENGURANGAN
                                                     PENGHASILAN BRUTO
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7634,7 +7634,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7648,7 +7648,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7668,16 +7668,16 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L13-C ======================== */}
                                 {isL13CEnabled ? (
                                     <TabsContent value="l13c">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     DAFTAR FASILITAS PENGURANGAN
                                                     PPh BADAN
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7689,7 +7689,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7703,7 +7703,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>
@@ -7720,17 +7720,17 @@ const DetailSPTBadan = ({
                                 {/* ======================== TAB L14 ======================== */}
                                 {isL14Enabled ? (
                                     <TabsContent value="l14">
-                                        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-4">
+                                        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-4">
                                             <div>
                                                 <h2 className="text-xl font-semibold mb-6">
                                                     PENGGUNAAN SISA LEBIH UNTUK
                                                     PEMBANGUNAN DAN PENGADAAN
                                                     SARANA DAN PRASARANA
                                                 </h2>
-                                                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </div>
-                                                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                                                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <Label className="text-sm">
@@ -7742,7 +7742,7 @@ const DetailSPTBadan = ({
                                                                     spt.year,
                                                                 )}
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                         <div>
@@ -7756,7 +7756,7 @@ const DetailSPTBadan = ({
                                                                     ""
                                                                 }
                                                                 disabled
-                                                                className="bg-gray-100"
+                                                                className="bg-muted"
                                                             />
                                                         </div>
                                                     </div>

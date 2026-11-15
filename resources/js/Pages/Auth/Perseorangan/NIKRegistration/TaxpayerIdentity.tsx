@@ -183,15 +183,15 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
     return (
         <div>
             <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold text-gray-800 mb-2">
+                <h1 className="text-2xl font-bold text-foreground mb-2">
                     Masukkan data identitas wajib pajak.
                 </h1>
             </div>
 
             {nikExists && (
-                <Alert className="mb-6 border-red-500 bg-red-50">
-                    <AlertCircle className="h-4 w-4 text-red-500" />
-                    <AlertDescription className="text-red-700 mt-1.5">
+                <Alert className="mb-6 border-destructive bg-red-50">
+                    <AlertCircle className="h-4 w-4 text-destructive" />
+                    <AlertDescription className="text-destructive mt-1.5">
                         NIK sudah terdaftar dalam sistem! Silakan gunakan NIK
                         yang berbeda.
                     </AlertDescription>
@@ -203,7 +203,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label htmlFor="nik">
                             Nomor Identitas Kependudukan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="relative">
                             <Input
@@ -221,9 +221,9 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                 }}
                                 maxLength={16}
                                 className={cn(
-                                    errors.nik ? "border-red-500" : "",
-                                    nikExists ? "border-red-500 bg-red-50" : "",
-                                    nikCheckLoading ? "bg-gray-50" : ""
+                                    errors.nik ? "border-destructive" : "",
+                                    nikExists ? "border-destructive bg-red-50" : "",
+                                    nikCheckLoading ? "bg-muted/50" : ""
                                 )}
                                 disabled={nikCheckLoading}
                             />
@@ -234,10 +234,10 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             )}
                         </div>
                         {errors.nik && (
-                            <p className="text-sm text-red-500">{errors.nik}</p>
+                            <p className="text-sm text-destructive">{errors.nik}</p>
                         )}
                         {nikExists && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 NIK sudah terdaftar dalam sistem
                             </p>
                         )}
@@ -246,17 +246,17 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label htmlFor="name">
                             Nama Wajib Pajak{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             id="name"
                             placeholder="Masukkan nama Wajib Pajak"
                             value={data.name}
                             onChange={(e) => setData("name", e.target.value)}
-                            className={errors.name ? "border-red-500" : ""}
+                            className={errors.name ? "border-destructive" : ""}
                         />
                         {errors.name && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.name}
                             </p>
                         )}
@@ -265,18 +265,18 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label>
                             Jenis Wajib Pajak{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             value="Orang Pribadi atau Warisan Belum Terbagi"
                             disabled
-                            className="bg-gray-50"
+                            className="bg-muted/50"
                         />
                     </div>
 
                     <div className="space-y-2">
                         <Label htmlFor="birth_place">
-                            Tempat Lahir <span className="text-red-500">*</span>
+                            Tempat Lahir <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             id="birth_place"
@@ -286,11 +286,11 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                 setData("birth_place", e.target.value)
                             }
                             className={
-                                errors.birth_place ? "border-red-500" : ""
+                                errors.birth_place ? "border-destructive" : ""
                             }
                         />
                         {errors.birth_place && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.birth_place}
                             </p>
                         )}
@@ -298,7 +298,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
 
                     <div className="space-y-2">
                         <Label>
-                            Negara Asal <span className="text-red-500">*</span>
+                            Negara Asal <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.country}
@@ -312,7 +312,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                         "w-full justify-between",
                                         !data.country &&
                                             "text-muted-foreground",
-                                        errors.country && "border-red-500"
+                                        errors.country && "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -362,7 +362,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             </PopoverContent>
                         </Popover>
                         {errors.country && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.country}
                             </p>
                         )}
@@ -371,7 +371,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label htmlFor="birth_date">
                             Tanggal Lahir{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.birth_date}
@@ -385,7 +385,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                         "w-full justify-start text-left font-normal",
                                         !data.birth_date &&
                                             "text-muted-foreground",
-                                        errors.birth_date && "border-red-500"
+                                        errors.birth_date && "border-destructive"
                                     )}
                                 >
                                     <CalendarIcon className="mr-2 h-4 w-4" />
@@ -412,7 +412,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             </PopoverContent>
                         </Popover>
                         {errors.birth_date && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.birth_date}
                             </p>
                         )}
@@ -421,7 +421,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label>
                             Jenis Kelamin{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.gender}
@@ -434,7 +434,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                     className={cn(
                                         "w-full justify-between",
                                         !data.gender && "text-muted-foreground",
-                                        errors.gender && "border-red-500"
+                                        errors.gender && "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -485,7 +485,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             </PopoverContent>
                         </Popover>
                         {errors.gender && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.gender}
                             </p>
                         )}
@@ -494,7 +494,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label>
                             Status Perkawinan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.marital_status}
@@ -509,7 +509,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                         !data.marital_status &&
                                             "text-muted-foreground",
                                         errors.marital_status &&
-                                            "border-red-500"
+                                            "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -563,7 +563,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             </PopoverContent>
                         </Popover>
                         {errors.marital_status && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.marital_status}
                             </p>
                         )}
@@ -571,7 +571,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
 
                     <div className="space-y-2">
                         <Label>
-                            Agama <span className="text-red-500">*</span>
+                            Agama <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.religion}
@@ -585,7 +585,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                         "w-full justify-between",
                                         !data.religion &&
                                             "text-muted-foreground",
-                                        errors.religion && "border-red-500"
+                                        errors.religion && "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -637,7 +637,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             </PopoverContent>
                         </Popover>
                         {errors.religion && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.religion}
                             </p>
                         )}
@@ -646,7 +646,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label>
                             Jenis Pekerjaan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.occupation}
@@ -660,7 +660,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                         "w-full justify-between",
                                         !data.occupation &&
                                             "text-muted-foreground",
-                                        errors.occupation && "border-red-500"
+                                        errors.occupation && "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -713,7 +713,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             </PopoverContent>
                         </Popover>
                         {errors.occupation && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.occupation}
                             </p>
                         )}
@@ -722,7 +722,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label htmlFor="mother_name">
                             Nama Ibu Kandung{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             id="mother_name"
@@ -732,11 +732,11 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                 setData("mother_name", e.target.value)
                             }
                             className={
-                                errors.mother_name ? "border-red-500" : ""
+                                errors.mother_name ? "border-destructive" : ""
                             }
                         />
                         {errors.mother_name && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.mother_name}
                             </p>
                         )}
@@ -745,7 +745,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label htmlFor="family_card_number">
                             Nomor Kartu Keluarga{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             id="family_card_number"
@@ -756,12 +756,12 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             }
                             className={
                                 errors.family_card_number
-                                    ? "border-red-500"
+                                    ? "border-destructive"
                                     : ""
                             }
                         />
                         {errors.family_card_number && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.family_card_number}
                             </p>
                         )}
@@ -770,7 +770,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <div className="space-y-2">
                         <Label>
                             Status Hubungan Keluarga{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.family_relationship_status}
@@ -787,7 +787,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                         !data.family_relationship_status &&
                                             "text-muted-foreground",
                                         errors.family_relationship_status &&
-                                            "border-red-500"
+                                            "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -845,7 +845,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             </PopoverContent>
                         </Popover>
                         {errors.family_relationship_status && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.family_relationship_status}
                             </p>
                         )}
@@ -868,7 +868,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                                         !data.individual_category &&
                                             "text-muted-foreground",
                                         errors.individual_category &&
-                                            "border-red-500"
+                                            "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -923,7 +923,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                             </PopoverContent>
                         </Popover>
                         {errors.individual_category && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.individual_category}
                             </p>
                         )}
@@ -934,7 +934,7 @@ export default function TaxpayerIdentity({ onNext, existingData }: Props) {
                     <Button
                         type="submit"
                         disabled={processing || nikCheckLoading || nikExists}
-                        className="bg-blue-900 hover:bg-blue-800"
+                        className="bg-brand hover:bg-brand/90 text-brand-foreground"
                     >
                         {processing ? "Memverifikasi..." : "Verifikasi"}
                     </Button>

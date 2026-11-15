@@ -251,7 +251,7 @@ export default function FormFieldGrossIncome({ form, objects, user }: any) {
                                     field.onChange(parseRupiah(e.target.value))
                                 }
                                 disabled
-                                className="bg-gray-50"
+                                className="bg-muted/50"
                             />
                         </FormControl>
                         <FormMessage />

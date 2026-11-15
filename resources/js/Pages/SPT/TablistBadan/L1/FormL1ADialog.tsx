@@ -132,7 +132,7 @@ export default function FormL1ADialog({
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-[95vw] max-w-xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle className="text-lg font-semibold">
                         UBAH
                     </DialogTitle>
@@ -145,7 +145,7 @@ export default function FormL1ADialog({
                         <Input
                             value={account?.code ?? ""}
                             disabled
-                            className="bg-gray-100"
+                            className="bg-muted"
                         />
                     </div>
 
@@ -157,7 +157,7 @@ export default function FormL1ADialog({
                         <Input
                             value={account?.name ?? ""}
                             disabled
-                            className="bg-gray-100"
+                            className="bg-muted"
                         />
                     </div>
 
@@ -195,7 +195,7 @@ export default function FormL1ADialog({
                             <Input
                                 value={formatMoney(editForm?.non_taxable)}
                                 onChange={(e) => setEditMoney("non_taxable", e.target.value)}
-                                className={`rounded-l-none text-right ${disableTaxInputs ? "bg-gray-100" : ""}`}
+                                className={`rounded-l-none text-right ${disableTaxInputs ? "bg-muted" : ""}`}
                                 disabled={disableTaxInputs}
                             />
                         </div>
@@ -213,7 +213,7 @@ export default function FormL1ADialog({
                             <Input
                                 value={formatMoney(editForm?.subject_to_final)}
                                 onChange={(e) => setEditMoney("subject_to_final", e.target.value)}
-                                className={`rounded-l-none text-right ${disableTaxInputs ? "bg-gray-100" : ""}`}
+                                className={`rounded-l-none text-right ${disableTaxInputs ? "bg-muted" : ""}`}
                                 disabled={disableTaxInputs}
                             />
                         </div>
@@ -230,7 +230,7 @@ export default function FormL1ADialog({
                             </span>
                             <Input
                                 value={formatMoney(editForm?.non_final)}
-                                className="rounded-l-none text-right bg-gray-100"
+                                className="rounded-l-none text-right bg-muted"
                                 disabled
                                 readOnly
                             />              
@@ -382,7 +382,7 @@ export default function FormL1ADialog({
                                 value={formatMoney(editForm?.fiscal_amount)}
                                 disabled
                                 readOnly
-                                className="rounded-l-none text-right bg-gray-100"
+                                className="rounded-l-none text-right bg-muted"
                             />
                         </div>
                     </div>
@@ -400,7 +400,7 @@ export default function FormL1ADialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900 gap-2"
+                        className="gap-2"
                         onClick={onSave}
                     >
                         <span>💾</span>

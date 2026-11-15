@@ -215,7 +215,7 @@ export function FormL4ADialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         Daftar Pemotongan/Pemungutan PPh oleh Pihak Ketiga
                     </DialogTitle>
@@ -225,7 +225,7 @@ export function FormL4ADialog({
                     {/* NPWP */}
                     <div className="grid grid-cols-1 sm:grid-cols-[200px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            NPWP <span className="text-red-500">*</span>
+                            NPWP <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -234,10 +234,10 @@ export function FormL4ADialog({
                                     handleChange("npwp", e.target.value)
                                 }
                                 placeholder="Masukkan NPWP"
-                                className={cn(errors.npwp && "border-red-500")}
+                                className={cn(errors.npwp && "border-destructive")}
                             />
                             {errors.npwp && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.npwp}
                                 </p>
                             )}
@@ -247,7 +247,7 @@ export function FormL4ADialog({
                     {/* Nama */}
                     <div className="grid grid-cols-1 sm:grid-cols-[200px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Nama <span className="text-red-500">*</span>
+                            Nama <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -256,10 +256,10 @@ export function FormL4ADialog({
                                     handleChange("name", e.target.value)
                                 }
                                 placeholder="Masukkan nama"
-                                className={cn(errors.name && "border-red-500")}
+                                className={cn(errors.name && "border-destructive")}
                             />
                             {errors.name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.name}
                                 </p>
                             )}
@@ -412,7 +412,6 @@ export function FormL4ADialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

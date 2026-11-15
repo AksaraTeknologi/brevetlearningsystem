@@ -2,76 +2,148 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design tokens — Brevet Learning System (BLS) · gaya "Emerald × lime fintech"
+ * Emerald tua #0D4D40 sebagai warna utama, lime #C5F24A (teks #0D3B30) sebagai sorotan,
+ * latar halaman #F5F7F4 dengan kartu putih, font Manrope + angka tabular.
+ * Nilai dalam format HSL tanpa hsl() agar kompatibel dengan shadcn
+ * (dipakai sebagai hsl(var(--token) / alpha)).
+ */
 @layer base {
-    :root {
-        --background: 0 0% 100%;
-        --foreground: 215 28% 17%;
+    /* `.light` = paksa terang di dalam halaman bermode gelap */
+    :root,
+    .light {
+        --page: 100 14% 96%; /* #F5F7F4 putih keabu-hijauan */
+        --highlight-soft: 80 89% 89%; /* #ECFCCB lime muda */
+        --background: 100 14% 98%;
+        --foreground: 165 30% 9%; /* #10201C */
+
         --card: 0 0% 100%;
-        --card-foreground: 215 28% 17%;
+        --card-foreground: 165 30% 9%;
         --popover: 0 0% 100%;
-        --popover-foreground: 215 28% 17%;
-        --primary: 175 84% 32%;
+        --popover-foreground: 165 30% 9%;
+
+        --primary: 168 71% 18%; /* #0D4D40 emerald tua */
         --primary-foreground: 0 0% 100%;
-        --secondary: 173 47% 94%;
-        --secondary-foreground: 176 84% 24%;
-        --muted: 210 40% 96%;
-        --muted-foreground: 215 16% 47%;
-        --accent: 48 96% 89%;
-        --accent-foreground: 32 95% 26%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 20% 98%;
-        --border: 174 31% 88%;
-        --input: 174 31% 88%;
-        --ring: 175 84% 32%;
-        --chart-1: 175 84% 32%;
-        --chart-2: 38 92% 50%;
-        --chart-3: 192 82% 31%;
-        --chart-4: 160 84% 39%;
-        --chart-5: 215 14% 46%;
-        --radius: 0.5rem;
+        --primary-gradient: linear-gradient(135deg, #0d4d40 0%, #0f6b59 100%);
+        --primary-shadow: none;
+
+        --secondary: 100 14% 94%;
+        --secondary-foreground: 168 71% 16%;
+
+        --muted: 100 14% 95%;
+        --muted-foreground: 160 8% 40%; /* #5E6E68 */
+
+        /* shadcn memakai accent untuk hover ghost/outline — sengaja lembut */
+        --accent: 100 16% 93%;
+        --accent-foreground: 168 71% 16%;
+
+        --destructive: 0 72% 51%;
+        --destructive-foreground: 0 0% 100%;
+
+        /* Sorotan lime (menu aktif, CTA sekunder, lencana) */
+        --highlight: 76 87% 62%; /* #C5F24A */
+        --highlight-foreground: 166 64% 14%; /* #0D3B30 */
+        --success: 85 85% 25%; /* #3F6212 olive-lime */
+        --success-foreground: 0 0% 100%;
+        --warning: 28 90% 38%;
+        --warning-foreground: 0 0% 100%;
+        --info: 192 78% 34%;
+        --info-foreground: 0 0% 100%;
+        /* Emerald identitas: tetap gelap di kedua mode (kartu angka utama, header dialog) */
+        --brand: 168 71% 18%;
+        --brand-foreground: 0 0% 100%;
+        --brand-ink: 168 71% 18%;
+        --steel: 160 8% 44%;
+        --steel-foreground: 0 0% 100%;
+
+        --border: 100 12% 90%; /* #E3E8E1 */
+        --input: 100 10% 85%;
+        --ring: 168 71% 24%;
+
+        --card-shadow: none; /* gaya flat: tanpa bayangan */
+
+        --chart-1: 168 71% 22%;
+        --chart-2: 76 87% 55%;
+        --chart-3: 192 70% 45%;
+        --chart-4: 158 60% 40%;
+        --chart-5: 0 72% 63%;
+
+        --radius: 1rem; /* 16px */
+
         --sidebar-background: 0 0% 100%;
-        --sidebar-foreground: 215 25% 27%;
-        --sidebar-primary: 175 84% 32%;
+        --sidebar-foreground: 165 15% 26%;
+        --sidebar-primary: 168 71% 18%;
         --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 173 47% 95%;
-        --sidebar-accent-foreground: 176 84% 24%;
-        --sidebar-border: 174 31% 88%;
-        --sidebar-ring: 175 84% 32%;
+        --sidebar-accent: 100 14% 94%;
+        --sidebar-accent-foreground: 168 71% 16%;
+        --sidebar-border: 100 12% 90%;
+        --sidebar-ring: 168 71% 24%;
     }
 
+    /* Dark mode BLS: hitam kehijauan + aksen lime (teks gelap di atas lime) */
     .dark {
-        --background: 210 27% 11%;
-        --foreground: 210 20% 98%;
-        --card: 210 27% 13%;
-        --card-foreground: 210 20% 98%;
-        --popover: 210 27% 13%;
-        --popover-foreground: 210 20% 98%;
-        --primary: 172 66% 45%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 210 19% 20%;
-        --secondary-foreground: 210 20% 98%;
-        --muted: 210 19% 18%;
-        --muted-foreground: 214 17% 68%;
-        --accent: 34 56% 25%;
-        --accent-foreground: 48 100% 88%;
-        --destructive: 0 70% 45%;
-        --destructive-foreground: 210 20% 98%;
-        --border: 210 18% 24%;
-        --input: 210 18% 24%;
-        --ring: 172 66% 45%;
-        --chart-1: 173 58% 47%;
-        --chart-2: 43 96% 56%;
-        --chart-3: 188 86% 53%;
-        --chart-4: 158 64% 52%;
-        --chart-5: 215 20% 65%;
-        --sidebar-background: 210 27% 12%;
-        --sidebar-foreground: 210 20% 96%;
-        --sidebar-primary: 172 66% 45%;
-        --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 210 19% 18%;
-        --sidebar-accent-foreground: 210 20% 96%;
-        --sidebar-border: 210 18% 24%;
-        --sidebar-ring: 172 66% 45%;
+        --page: 160 14% 5%; /* #0B0F0E */
+        --highlight-soft: 80 40% 15%;
+        --background: 160 12% 6%;
+        --foreground: 90 15% 94%;
+
+        --card: 160 10% 9%; /* #151A18 */
+        --card-foreground: 90 15% 94%;
+        --popover: 160 10% 11%;
+        --popover-foreground: 90 15% 94%;
+
+        --primary: 76 87% 62%; /* lime jadi tombol utama di gelap */
+        --primary-foreground: 166 64% 10%;
+        --primary-gradient: none;
+        --primary-shadow: none;
+
+        --secondary: 160 8% 15%;
+        --secondary-foreground: 90 15% 94%;
+
+        --muted: 160 8% 13%;
+        --muted-foreground: 100 6% 64%;
+
+        --accent: 160 8% 16%;
+        --accent-foreground: 90 15% 94%;
+
+        --destructive: 0 72% 51%;
+        --destructive-foreground: 0 0% 100%;
+
+        --highlight: 76 87% 62%;
+        --highlight-foreground: 166 64% 10%;
+        --success: 80 70% 60%;
+        --success-foreground: 166 64% 10%;
+        --warning: 36 95% 54%;
+        --warning-foreground: 166 40% 10%;
+        --info: 192 81% 56%;
+        --info-foreground: 166 40% 10%;
+        --brand: 168 71% 18%;
+        --brand-foreground: 0 0% 100%;
+        --brand-ink: 90 22% 92%;
+        --steel: 160 6% 36%;
+        --steel-foreground: 0 0% 100%;
+
+        --border: 160 8% 17%;
+        --input: 160 8% 22%;
+        --ring: 76 87% 62%;
+
+        --card-shadow: none;
+
+        --chart-1: 76 87% 62%;
+        --chart-2: 168 60% 45%;
+        --chart-3: 192 81% 56%;
+        --chart-4: 158 70% 48%;
+        --chart-5: 0 72% 63%;
+
+        --sidebar-background: 160 10% 8%;
+        --sidebar-foreground: 100 8% 84%;
+        --sidebar-primary: 76 87% 62%;
+        --sidebar-primary-foreground: 166 64% 10%;
+        --sidebar-accent: 160 8% 14%;
+        --sidebar-accent-foreground: 90 15% 94%;
+        --sidebar-border: 160 8% 16%;
+        --sidebar-ring: 76 87% 62%;
     }
 }
 
@@ -80,36 +152,561 @@
         @apply border-border outline-ring/50;
     }
 
+    /* Gaya flat BLS: semua utilitas bayangan Tailwind (shadow-*, termasuk arbitrary)
+       dinetralkan lewat variabelnya. Cincin fokus (ring-*) tetap berfungsi. */
+    *,
+    ::before,
+    ::after {
+        --tw-shadow: 0 0 #0000 !important;
+        --tw-shadow-colored: 0 0 #0000 !important;
+    }
+
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background font-sans text-foreground antialiased;
+        /* Angka tabular di seluruh aplikasi (nominal pajak, NPWP, tanggal) */
+        font-feature-settings: "tnum" 1, "cv11" 1;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        @apply font-heading tracking-tight;
+    }
+
+    /* Angka rata kolom agar nominal pajak mudah dibandingkan */
+    table {
+        font-variant-numeric: tabular-nums;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+
+    .dark {
+        color-scheme: dark;
+    }
+    .light {
+        color-scheme: light;
+        color: hsl(var(--foreground));
     }
 }
 
-/* ─── Teacher Layout Utilities ──────────────────────────────────────────────
-   Defines the structural shell used by all Teacher pages.
-   These replace the previously undefined teacher-page-* class names.
-   ─────────────────────────────────────────────────────────────────────────── */
+/*
+ * Komponen kartu bersama (gaya Coretax) untuk halaman kelas, ujian, bank soal, dll.
+ */
 @layer components {
-    /* Outermost page wrapper — radial gradient background + overflow guard */
-    .teacher-page-shell {
-        @apply relative overflow-hidden;
-        background-image:
-            radial-gradient(circle at top left, rgba(13, 148, 136, 0.12), transparent 40%),
-            radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.12), transparent 40%);
+    .tls-card {
+        @apply rounded-2xl border border-border/80 bg-white dark:border-white/[0.07] dark:bg-card;
+    }
+    .tls-card-hover {
+        @apply transition-colors duration-200 hover:border-primary/30 dark:hover:border-white/20;
+    }
+    .tls-card-head {
+        @apply flex items-center gap-2.5 border-b border-border/70 px-5 py-4 text-base font-bold text-brand-950;
+    }
+    .tls-stat {
+        @apply rounded-2xl bg-muted/70 px-4 py-3 dark:bg-white/[0.04];
+    }
+    .tls-panel {
+        @apply rounded-2xl bg-muted/50 p-4 md:p-5 dark:bg-white/[0.03];
+    }
+}
+
+/* Kartu angka utama (StatTile pertama di StatGrid): blok emerald, label & ikon lime */
+.tls-stat-grid > .tls-stat-tile:first-child {
+    background-color: #0d4d40;
+    border-color: transparent;
+    color: #fff;
+}
+.tls-stat-grid > .tls-stat-tile:first-child .tls-stat-label {
+    color: #c5f24a !important;
+}
+.tls-stat-grid > .tls-stat-tile:first-child .tls-stat-value {
+    color: #fff !important;
+}
+.tls-stat-grid > .tls-stat-tile:first-child .tls-stat-hint {
+    color: rgb(255 255 255 / 0.7) !important;
+}
+.tls-stat-grid > .tls-stat-tile:first-child .tls-stat-icon {
+    background-color: #c5f24a !important;
+    color: #0d3b30 !important;
+}
+
+/*
+ * Jembatan mode gelap untuk kelas warna lama yang ditulis langsung di halaman
+ * (bg-white, text-gray-800, border-gray-200, ...). Halaman baru sebaiknya
+ * memakai token semantik (bg-card, text-foreground, border-border).
+ * Elemen di dalam `.light` tidak terpengaruh.
+ */
+@layer utilities {
+    .dark :is(.bg-white, .bg-white\/60, .bg-white\/70, .bg-white\/80, .bg-white\/85, .bg-white\/90, .bg-white\/95):not(.light *) {
+        background-color: hsl(var(--card) / 0.92);
+    }
+    .dark :is(.bg-gray-50, .bg-slate-50, .bg-gray-100, .bg-slate-100, .bg-blue-50, .bg-slate-100\/80):not(.light *) {
+        background-color: hsl(var(--muted));
+    }
+    /* Filter tabel lama memakai bg-primary-foreground (navy di mode gelap) */
+    .dark .bg-primary-foreground:not(.light *):is(input, button, [role="combobox"]) {
+        background-color: hsl(var(--card));
+    }
+    /* Latar pastel berwarna (info, sukses, gagal, peringatan) → versi gelap bernuansa sama */
+    .dark :is(.bg-blue-50\/70, .bg-blue-50\/60, .bg-blue-100, .bg-sky-50, .bg-indigo-50):not(.light *) {
+        background-color: hsl(217 35% 17%);
+    }
+    .dark :is(.bg-emerald-50, .bg-emerald-100, .bg-green-50, .bg-green-100, .bg-teal-50):not(.light *) {
+        background-color: hsl(152 30% 14%);
+    }
+    .dark :is(.bg-rose-50, .bg-rose-100, .bg-red-50, .bg-red-100):not(.light *) {
+        background-color: hsl(350 30% 16%);
+    }
+    .dark :is(.bg-yellow-50, .bg-amber-50, .bg-amber-100, .bg-orange-50, .bg-orange-100):not(.light *) {
+        background-color: hsl(40 40% 14%);
+    }
+    /* Teks berwarna tua → versi terang agar terbaca di latar gelap */
+    .dark :is(.text-blue-700, .text-blue-800, .text-blue-900, .text-sky-700, .text-indigo-700):not(.light *) {
+        color: hsl(213 90% 76%);
+    }
+    .dark :is(.text-emerald-700, .text-emerald-800, .text-green-700, .text-green-800, .text-teal-700):not(.light *) {
+        color: hsl(152 55% 64%);
+    }
+    .dark :is(.text-rose-700, .text-rose-800, .text-red-700, .text-red-800):not(.light *) {
+        color: hsl(350 85% 76%);
+    }
+    .dark :is(.text-amber-700, .text-amber-800, .text-amber-900, .text-yellow-800, .text-orange-700, .text-orange-800):not(.light *) {
+        color: hsl(43 90% 70%);
+    }
+    .dark :is(.border-blue-200, .border-blue-300, .border-emerald-200, .border-green-200, .border-rose-200, .border-red-200, .border-red-300, .border-teal-100, .border-teal-200, .border-amber-200, .border-yellow-200, .border-orange-200):not(.light *) {
+        border-color: rgb(255 255 255 / 0.12);
+    }
+    .dark :is(.bg-gray-200, .bg-slate-200):not(.light *) {
+        background-color: hsl(var(--secondary));
+    }
+    .dark :is(.text-black, .text-gray-900, .text-gray-800, .text-gray-700, .text-slate-900, .text-slate-800, .text-slate-700, .text-brand-950, .text-brand-900, .text-navy-900, .text-navy-800, .text-navy-700, .text-blue-950):not(.light *) {
+        color: hsl(var(--foreground));
+    }
+    .dark :is(.text-gray-600, .text-gray-500, .text-slate-600, .text-slate-500):not(.light *) {
+        color: hsl(var(--muted-foreground));
+    }
+    .dark :is(.text-gray-400, .text-slate-400, .text-slate-300):not(.light *) {
+        color: hsl(0 0% 55%);
+    }
+    .dark :is(.border-white, .border-gray-100, .border-gray-200, .border-gray-300, .border-gray-400, .border-slate-100, .border-slate-200, .border-slate-300):not(.light *) {
+        border-color: hsl(var(--border));
+    }
+    .dark :is(.hover\:bg-gray-50, .hover\:bg-gray-100, .hover\:bg-slate-50, .hover\:bg-slate-100, .hover\:bg-white):hover:not(.light *) {
+        background-color: hsl(var(--accent));
+    }
+    .dark :is(.bg-slate-100, .bg-gray-100) :is(.text-brand-950, .text-navy-900):not(.light *) {
+        color: hsl(var(--foreground));
+    }
+    /* Di atas pil/blok lime, ikon & teks tetap hijau tua */
+    .dark .bg-highlight :is(.text-brand-900, .text-brand-950, .text-navy-900):not(.light *) {
+        color: hsl(var(--highlight-foreground));
     }
 
-    /* Centered content stack with max-width and vertical padding */
-    .teacher-page-stack {
-        @apply mx-auto max-w-7xl space-y-6 px-4 py-8 md:py-10;
+    /*
+     * Konten halaman di dalam layout aplikasi: pembungkus halaman lama memakai
+     * max-w sempit (mis. xl:max-w-6xl) sehingga menyisakan margin besar di
+     * kartu konten. Di sini dibuat penuh dengan jarak tepi yang wajar.
+     */
+    .app-content > :is(div, section, main, form) {
+        max-width: none !important;
+        width: 100%;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        padding-top: 0.75rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+    @media (min-width: 768px) {
+        .app-content > :is(div, section, main, form) {
+            /* jarak atas & samping disamakan agar seimbang */
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+            padding-top: 1.25rem !important;
+            padding-bottom: 1.75rem !important;
+        }
     }
 
-    /* White/glass card panel — consistent with BLS card pattern */
-    .teacher-panel {
-        @apply rounded-2xl border border-teal-100 bg-white/90 p-5 shadow-md backdrop-blur-sm md:p-6;
+    /* Pembungkus kedua bawaan halaman ("flex flex-col gap-4 p-4 pt-0") tidak
+       perlu menambah jarak samping lagi */
+    .app-content > :is(div, section, main, form) > .flex.flex-col:is(.p-4, .px-4) {
+        padding-left: 0;
+        padding-right: 0;
     }
 
-    /* Page-level H1 — matches the type hierarchy in UI_DESIGN_RULES.md */
-    .teacher-page-title {
-        @apply text-2xl font-semibold text-slate-800 md:text-3xl;
+    /* Kartu konten halaman (p-5 lg:p-8 / p-8) dibuat lebih ringkas */
+    .app-content .rounded-xl.border:is(.lg\:p-8, .md\:p-8, .p-8) {
+        padding: 1rem;
     }
+    @media (min-width: 768px) {
+        .app-content .rounded-xl.border:is(.lg\:p-8, .md\:p-8, .p-8) {
+            padding: 1.25rem;
+        }
+    }
+
+    /* ===================== Tabel gaya fintech ===================== */
+    /* Header abu sangat terang, teks abu kecil kapital, garis baris tipis.
+       Menimpa kelas warna lama di sel header (bg-white, text-black, dll). */
+    .tls-thead tr,
+    .tls-thead tr:hover {
+        background-color: #f7f9f6;
+        border-bottom: 1px solid hsl(var(--border));
+    }
+    .tls-thead th {
+        color: hsl(var(--muted-foreground)) !important;
+        background-color: transparent !important;
+        border-color: hsl(var(--border) / 0.7) !important;
+    }
+    .dark .tls-thead tr,
+    .dark .tls-thead tr:hover {
+        background-color: rgb(255 255 255 / 0.03);
+    }
+    .tls-thead tr:first-child th:first-child {
+        border-top-left-radius: 0.75rem;
+    }
+    .tls-thead tr:first-child th:last-child {
+        border-top-right-radius: 0.75rem;
+    }
+    /* Tombol urut kolom & checkbox di header */
+    .tls-thead button {
+        color: inherit !important;
+        text-transform: inherit;
+        letter-spacing: inherit;
+        font-size: inherit;
+    }
+    .tls-thead button:hover,
+    .tls-thead button[data-state="open"] {
+        background-color: hsl(var(--accent)) !important;
+        color: hsl(var(--foreground)) !important;
+    }
+    .tls-thead [role="checkbox"] {
+        border-color: hsl(var(--input));
+    }
+    .tls-thead [role="checkbox"][data-state="checked"] {
+        background-color: hsl(var(--primary));
+        border-color: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+    }
+
+    /* ===================== Form berlabel kiri ===================== */
+    /* FormItem shadcn memberi space-y-2; pada baris (md:flex-row) itu membuat
+       input turun dibanding label. Matikan, lalu sejajarkan teks label. */
+    @media (min-width: 768px) {
+        .md\:flex-row.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0;
+        }
+        .md\:flex-row.md\:items-start > label:first-child {
+            padding-top: 0.5rem;
+        }
+    }
+
+    /* HP: tombol boleh turun baris agar tidak meluber keluar layar */
+    @media (max-width: 639px) {
+        .app-content button,
+        .app-content a[class*="inline-flex"] {
+            max-width: 100%;
+        }
+        .app-content button:not([role="checkbox"]):not([role="combobox"]):not(.size-8):not([class*="w-8"]),
+        .app-content a[class*="inline-flex"][class*="whitespace-nowrap"] {
+            white-space: normal;
+            height: auto;
+            min-height: 2.25rem;
+        }
+    }
+
+    /* Kartu putih kedua yang hanya membungkus tabel di dalam kartu lain:
+       hilangkan bingkai & padding supaya tabel penuh kiri-kanan */
+    .app-content .rounded-xl.border > .rounded-xl:is(.bg-white, .bg-card).border:has(table) {
+        padding: 0;
+        border-width: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+/*
+ * ===================== Halaman detail SPT (gaya Coretax) =====================
+ * Halaman SPT sangat besar (DetailSPT*.tsx + Pages/SPT/Tablist*). Agar seragam
+ * tanpa menyentuh ribuan baris JSX, pembungkus halaman diberi kelas `tls-spt`
+ * dan gaya tab, accordion, serta bar judul bagian diatur di sini.
+ * Tabel ber-`table-fixed` sengaja tidak disentuh.
+ */
+/* Sengaja di luar @layer: Tailwind memangkas/menggandakan aturan di layer utilities. */
+/* --- Tab lampiran: kartu berisi pil; di HP bisa digulir horizontal --- */
+.tls-spt [role="tablist"] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    height: auto;
+    width: 100%;
+    padding: 0.375rem;
+    border-radius: 1rem;
+    border: 1px solid hsl(var(--border));
+    background-color: #fff;
+    color: hsl(var(--muted-foreground));
+}
+.dark .tls-spt [role="tablist"] {
+    border-color: rgb(255 255 255 / 0.1);
+    background-color: hsl(var(--card));
+}
+.tls-spt [role="tab"] {
+    white-space: nowrap !important;
+    min-height: 2.25rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+.tls-spt [role="tab"]:hover:not([data-state="active"]) {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--foreground));
+}
+.tls-spt [role="tab"][data-state="active"] {
+    background-color: #c5f24a;
+    color: #0d3b30;
+    box-shadow: none;
+}
+@media (max-width: 767px) {
+    .tls-spt [role="tablist"] {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
+}
+
+/* --- Item accordion = kartu bagian form --- */
+.tls-spt div[data-orientation="vertical"]:has(> h3[data-orientation]) {
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    border: 1px solid hsl(var(--border));
+    border-radius: 1rem;
+    background-color: #fff;
+}
+.dark .tls-spt div[data-orientation="vertical"]:has(> h3[data-orientation]) {
+    border-color: rgb(255 255 255 / 0.1);
+    background-color: hsl(var(--card));
+}
+
+/* --- Bar judul bagian: kepala accordion & bar navy/kuning lama --- */
+.tls-spt h3[data-orientation] > button,
+.tls-spt :is(div, p):is(.bg-blue-950, .bg-brand):is(.text-white, .text-brand-foreground).font-semibold,
+.tls-spt p:is(.bg-blue-950, .bg-brand):is(.text-white, .text-brand-foreground) {
+    background-color: #f7f9f6 !important;
+    color: #0d3b30 !important;
+    font-weight: 700;
+    border-radius: 0 !important;
+    text-decoration: none !important;
+}
+.tls-spt h3[data-orientation] > button {
+    padding: 0.875rem 1.25rem !important;
+    gap: 0.75rem;
+}
+.tls-spt h3[data-orientation] > button:hover {
+    background-color: #eef2ec !important;
+}
+.tls-spt h3[data-orientation] > button[data-state="open"] {
+    border-bottom: 1px solid rgb(241 245 249);
+}
+.tls-spt h3[data-orientation] > button > svg {
+    color: #0d3b30;
+}
+/* Bar lepas (bukan accordion) tetap membulat */
+.tls-spt :is(div, p):is(.bg-blue-950, .bg-brand):is(.text-white, .text-brand-foreground).font-semibold,
+.tls-spt p:is(.bg-blue-950, .bg-brand):is(.text-white, .text-brand-foreground) {
+    border-radius: 0.75rem !important;
+}
+.dark .tls-spt h3[data-orientation] > button,
+.dark .tls-spt :is(div, p):is(.bg-blue-950, .bg-brand):is(.text-white, .text-brand-foreground).font-semibold,
+.dark .tls-spt p:is(.bg-blue-950, .bg-brand):is(.text-white, .text-brand-foreground) {
+    background-color: rgb(255 255 255 / 0.04) !important;
+    color: hsl(var(--foreground)) !important;
+}
+.dark .tls-spt h3[data-orientation] > button:hover {
+    background-color: rgb(255 255 255 / 0.07) !important;
+}
+.dark .tls-spt h3[data-orientation] > button[data-state="open"] {
+    border-bottom-color: rgb(255 255 255 / 0.1);
+}
+.dark .tls-spt h3[data-orientation] > button > svg {
+    color: #c5f24a;
+}
+
+/* Isi accordion: jarak dalam seragam */
+.tls-spt [role="region"][data-orientation] > div {
+    padding: 1rem 1.25rem 1.25rem;
+}
+.tls-spt [role="region"][data-orientation] > div.p-0 {
+    padding: 0;
+}
+
+/* --- Kartu lama "bg-muted rounded-t-xl" + "bg-white rounded-b-xl" (tab lampiran) --- */
+.tls-spt .bg-muted.rounded-t-xl {
+    background-color: #f7f9f6;
+    color: #0d3b30;
+    border: 1px solid hsl(var(--border));
+    border-radius: 1rem 1rem 0 0;
+    padding: 0.875rem 1.25rem;
+}
+.tls-spt .bg-muted.rounded-t-xl + .rounded-b-xl {
+    border: 1px solid hsl(var(--border));
+    border-top: 0;
+    border-radius: 0 0 1rem 1rem;
+    padding: 1rem 1.25rem 1.25rem;
+}
+.dark .tls-spt .bg-muted.rounded-t-xl {
+    background-color: rgb(255 255 255 / 0.04);
+    color: hsl(var(--foreground));
+    border-color: rgb(255 255 255 / 0.1);
+}
+.dark .tls-spt .bg-muted.rounded-t-xl + .rounded-b-xl {
+    border-color: rgb(255 255 255 / 0.1);
+}
+
+/* --- Baris label–input (label min-w-[180/200px]) bertumpuk di HP --- */
+@media (max-width: 639px) {
+    .tls-spt .flex.flex-row:has(> label),
+    .tls-spt .flex:has(> label[class*="min-w-"]) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.375rem;
+    }
+    .tls-spt .flex.flex-row:has(> label) > label,
+    .tls-spt .flex > label[class*="min-w-"] {
+        min-width: 0 !important;
+        width: auto !important;
+    }
+}
+
+/* HP: jarak dalam kartu bertingkat SPT dipersempit agar tabel tidak terlalu sempit */
+@media (max-width: 639px) {
+    .tls-spt [role="region"][data-orientation] > div,
+    .tls-spt .bg-muted.rounded-t-xl + .rounded-b-xl {
+        padding: 0.75rem;
+    }
+    .tls-spt h3[data-orientation] > button,
+    .tls-spt .bg-muted.rounded-t-xl {
+        padding: 0.75rem 1rem !important;
+    }
+}
+
+/* Pembungkus kartu lama di dalam tab SPT (p-6 bg-white shadow dark:bg-gray-800):
+   item accordion sudah berupa kartu, jadi pembungkus ini dibuat polos */
+.tls-spt :is(.bg-white, .bg-card).rounded-lg.shadow:has(> div > div[data-orientation] > h3),
+.tls-spt .p-6:is(.bg-white, .bg-card).rounded-lg.shadow {
+    padding: 0;
+    background-color: transparent !important;
+    box-shadow: none;
+}
+
+/* Tombol lama "bg-blue-950 hover:bg-blue-900" memakai warna teks primary-foreground
+   yang di mode gelap ikut navy (teks tak terlihat). Samakan dengan tombol utama gelap. */
+.dark button.bg-blue-950:not(.text-white):not(.light *) {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+}
+.dark button.bg-blue-950:not(.text-white):not(.light *):hover {
+    background-color: hsl(var(--primary) / 0.9);
+}
+
+/* ===================== Baris filter per kolom (DataTableTools) ===================== */
+.tls-thead tr.tls-filter-row,
+.tls-thead tr.tls-filter-row:hover {
+    background-color: #fbfcfa;
+}
+.tls-thead tr.tls-filter-row th {
+    border-top: 1px solid rgb(7 49 41 / 0.12);
+    height: auto;
+}
+.dark .tls-thead tr.tls-filter-row,
+.dark .tls-thead tr.tls-filter-row:hover {
+    background-color: hsl(var(--card));
+}
+.dark .tls-thead tr.tls-filter-row th {
+    border-top-color: rgb(255 255 255 / 0.1) !important;
+}
+
+/* Tombol kuning lama "bg-yellow-400 text-primary": di mode gelap text-primary ikut kuning
+   sehingga ikon/teks hilang. Kuning selalu memakai teks navy. */
+.dark .bg-yellow-400:is(.text-primary, .hover\:text-primary):not(.light *) {
+    color: #0d3b30;
+}
+
+/* ===================== Toolbar tabel ===================== */
+/* Semua ukuran: boleh turun baris (tidak meluber), kotak cari tidak mengecil */
+.tls-table-toolbar {
+    flex-wrap: wrap;
+}
+.tls-table-toolbar input {
+    min-width: 12rem;
+    border-radius: 9999px;
+    padding-left: 1rem;
+}
+.tls-table-toolbar > div:has(input) {
+    flex-wrap: wrap;
+}
+/* Deretan tombol aksi halaman (flex-col lg:flex-row) boleh turun baris saat ada sidebar */
+@media (min-width: 1024px) {
+    .app-content .flex.flex-col.lg\:flex-row:has(> button, > a) {
+        flex-wrap: wrap;
+    }
+}
+
+/* ----- HP ----- */
+/* Toolbar data-table (kelas `tls-table-toolbar`): di HP kotak cari penuh satu baris,
+   filter pilihan & tombol alat turun ke baris berikutnya, tombol tidak dipatah dua baris. */
+@media (max-width: 639px) {
+    .tls-table-toolbar {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 0.5rem !important;
+    }
+    /* Grup yang berisi kotak cari ikut melebar & boleh turun baris */
+    .tls-table-toolbar > div:has(input) {
+        flex: 1 1 100%;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .tls-table-toolbar > div:has(input) > * {
+        margin-left: 0 !important; /* menetralkan space-x-2 */
+    }
+    .tls-table-toolbar input,
+    .tls-table-toolbar div:has(> input) {
+        flex: 1 1 100%;
+        width: 100% !important;
+        max-width: none !important;
+    }
+    .tls-table-toolbar input {
+        height: 2.5rem;
+    }
+    .tls-table-toolbar button {
+        white-space: nowrap !important;
+        min-height: 2.25rem;
+    }
+    /* Tombol alat (Filter Kolom, Ekspor) didorong ke kanan */
+    .tls-table-toolbar button[aria-label="Filter per kolom"] {
+        margin-left: auto;
+    }
+    .tls-table-toolbar button[aria-label="Filter per kolom"],
+    .tls-table-toolbar button[aria-label="Ekspor data"] {
+        min-width: 2.5rem;
+        height: 2.25rem;
+        padding: 0 0.625rem;
+    }
+}
+
+/* Breadcrumb otomatis layout berada di luar .app-content: jarak ke judul disamakan
+   dengan breadcrumb buatan halaman (gap-4 = 1rem) */
+.app-content[data-auto-crumb] > :is(div, section, main, form) {
+    padding-top: 1rem !important;
 }

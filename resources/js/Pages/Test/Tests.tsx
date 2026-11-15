@@ -1,9 +1,32 @@
 import { Head, Link, usePage, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "@/Components/ui/button";
-import { Plus } from "lucide-react";
+import {
+    CalendarDays,
+    CalendarX,
+    CheckCircle2,
+    ClipboardCheck,
+    ClipboardList,
+    Clock,
+    PlayCircle,
+    Plus,
+    Trophy,
+} from "lucide-react";
+import {
+    EmptyState,
+    EntityCard,
+    fmtDate,
+    MetaGrid,
+    Notice,
+    PageHeader,
+    StatGrid,
+    StatTile,
+    StatusPill,
+    Timeline,
+    toneFromStatus,
+} from "@/Components/app-shell/kit";
 import {
     Dialog,
     DialogTrigger,
@@ -17,13 +40,13 @@ import { Input } from "@/Components/ui/input";
 function getTestStatusDisplay(serverStatus: string) {
     switch (serverStatus) {
         case 'upcoming':
-            return { label: "Belum Mulai", color: "text-gray-500 bg-gray-100" };
+            return { label: "Belum Mulai", color: "text-muted-foreground bg-muted" };
         case 'finished':
-            return { label: "Selesai", color: "text-red-700 bg-red-100" };
+            return { label: "Selesai", color: "text-destructive bg-red-100" };
         case 'ongoing':
-            return { label: "Sedang Berlangsung", color: "text-green-700 bg-green-100" };
+            return { label: "Sedang Berlangsung", color: "text-success bg-green-100" };
         default:
-            return { label: "-", color: "text-gray-400 bg-gray-50" };
+            return { label: "-", color: "text-gray-400 bg-muted/50" };
     }
 }
 
@@ -58,192 +81,140 @@ export default function Tests({ tests = [] }: any) {
         );
     };
 
+    const counts = {
+        total: tests.length,
+        ongoing: tests.filter((t: any) => (t.test_status ?? "ongoing") === "ongoing").length,
+        upcoming: tests.filter((t: any) => t.test_status === "upcoming").length,
+        finished: tests.filter((t: any) => t.test_status === "finished").length,
+    };
+
+    const joinDialog = (
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button variant="default">
+                    <Plus size={18} />
+                    Gabung Ujian
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Gabung Ujian</DialogTitle>
+                    <DialogDescription>
+                        Masukkan kode Ujian yang diberikan oleh pengajar untuk
+                        bergabung ke Ujian.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="flex flex-col gap-4">
+                    <Input
+                        placeholder="Kode Ujian"
+                        value={classCode}
+                        onChange={(e) => setClassCode(e.target.value)}
+                        autoFocus
+                    />
+                    <Button onClick={handleJoinClass} disabled={loading || !classCode}>
+                        {loading ? "Memproses..." : "Gabung"}
+                    </Button>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+
     return (
         <AuthenticatedLayout>
             <Head title="Daftar Ujian Saya" />
-            <div className="py-8 mx-auto px-4">
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                    <div className="flex flex-col md:flex-row justify-between gap-4">
-                        <h1 className="text-2xl font-semibold text-primary">
-                            Ujian Saya
-                        </h1>
-                        <Dialog open={open} onOpenChange={setOpen}>
-                            <DialogTrigger asChild>
-                                <Button variant="default">
-                                    <Plus size={18} />
-                                    Gabung Ujian
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>Gabung Ujian</DialogTitle>
-                                    <DialogDescription>
-                                        Masukkan kode Ujian yang diberikan oleh
-                                        pengajar untuk bergabung ke Ujian.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <div className="flex flex-col gap-4">
-                                    <Input
-                                        placeholder="Kode Ujian"
-                                        value={classCode}
-                                        onChange={(e) =>
-                                            setClassCode(e.target.value)
-                                        }
-                                        autoFocus
-                                    />
-                                    <Button
-                                        onClick={handleJoinClass}
-                                        disabled={loading || !classCode}
-                                    >
-                                        {loading ? "Memproses..." : "Gabung"}
-                                    </Button>
-                                </div>
-                            </DialogContent>
-                        </Dialog>
-                    </div>
+            <div className="flex flex-col gap-5">
+                <PageHeader
+                    icon={ClipboardCheck}
+                    title="Ujian Saya"
+                    description="Ujian yang Anda ikuti, jadwal pelaksanaan, dan nilai terbaik Anda."
+                    actions={joinDialog}
+                />
 
-                    <div className="mt-2 grid grid-cols-1 gap-4">
-                        {tests.length === 0 && (
-                            <div className="text-gray-400 text-center col-span-3 py-8">
-                                Anda belum bergabung di Ujian manapun.
-                            </div>
-                        )}
+                <StatGrid>
+                    <StatTile icon={ClipboardList} label="Total Ujian" value={counts.total} tone="brand" />
+                    <StatTile icon={PlayCircle} label="Berlangsung" value={counts.ongoing} tone="success" />
+                    <StatTile icon={Clock} label="Belum Mulai" value={counts.upcoming} tone="info" />
+                    <StatTile icon={CheckCircle2} label="Selesai" value={counts.finished} tone="steel" />
+                </StatGrid>
+
+                {tests.length === 0 ? (
+                    <EmptyState
+                        icon={ClipboardCheck}
+                        title="Belum ada ujian"
+                        description="Anda belum bergabung di Ujian manapun. Masukkan kode ujian dari pengajar untuk bergabung."
+                        action={joinDialog}
+                    />
+                ) : (
+                    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                         {tests.map((test: any) => {
-                            const status = getTestStatusDisplay(test.test_status ?? 'ongoing');
-                            const isActive = active_test?.id === test.id;
+                            const status = getTestStatusDisplay(test.test_status ?? "ongoing");
+                            const tone = toneFromStatus(status.label);
                             const hasOtherActive =
-                                active_test?.id &&
-                                active_test?.id !== test.id;
-
+                                active_test?.id && active_test?.id !== test.id;
                             const averageScore = test.score;
 
                             return (
-                                <div
+                                <EntityCard
                                     key={test.id}
-                                    className="rounded-xl bg-white border shadow p-5 flex flex-col gap-2 hover:shadow-lg transition"
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <h3 className="text-lg font-bold text-primary">
-                                            {test.title}
-                                        </h3>
-                                        <span
-                                            className={`px-2 py-1 rounded text-xs font-semibold ${status.color}`}
+                                    tone={tone}
+                                    icon={ClipboardCheck}
+                                    title={test.title}
+                                    subtitle={test.description || "-"}
+                                    badges={<StatusPill tone={tone}>{status.label}</StatusPill>}
+                                    actions={
+                                        <Button
+                                            variant="success"
+                                            onClick={() => router.visit(route("tests.detail", test.id))}
+                                            disabled={test.test_status !== "ongoing" || Boolean(hasOtherActive)}
                                         >
-                                            {status.label}
-                                        </span>
-                                    </div>
-                                    <p className="text-gray-600 text-sm">
-                                        {test.description || "-"}
-                                    </p>
-                                    <div className="text-sm text-gray-500 space-y-1">
-                                        <div>
-                                            Ujian Dimulai:{" "}
-                                            {test.start_date
-                                                ? new Date(test.start_date).toLocaleDateString("id-ID", {
-                                                      day: "numeric",
-                                                      month: "long",
-                                                      year: "numeric",
-                                                  })
-                                                : "-"}
-                                            {" - "}
-                                            {test.start_date
-                                                ? new Date(test.start_date).toLocaleTimeString("id-ID", {
-                                                      hour: "2-digit",
-                                                      minute: "2-digit",
-                                                  })
-                                                : "-"}
-                                        </div>
-                                        <div>
-                                            Ujian Ditutup:{" "}
-                                            {test.end_date
-                                                ? new Date(test.end_date).toLocaleDateString("id-ID", {
-                                                      day: "numeric",
-                                                      month: "long",
-                                                      year: "numeric",
-                                                  })
-                                                : "-"}
-                                            {" - "}
-                                            {test.end_date
-                                                ? new Date(test.end_date).toLocaleTimeString("id-ID", {
-                                                      hour: "2-digit",
-                                                      minute: "2-digit",
-                                                  })
-                                                : "-"}
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-sm mt-2">
-                                        <span className="font-medium text-gray-700">
-                                            Nilai Terbaik:
-                                        </span>
-                                        <div className="font-mono text-lg font-bold text-primary">
-                                            {test.show_score ? (
-                                                averageScore !== null ? (
-                                                    averageScore
-                                                ) : (
-                                                    <span className="italic text-base text-gray-400">
-                                                        Belum dinilai
-                                                    </span>
-                                                )
-                                            ) : (
-                                                <span className="italic text-base text-gray-500">
-                                                    Nilai belum diumumkan
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                        
-                                            <Button
-                                                onClick={() =>
-                                                    router.visit(
-                                                        route(
-                                                            "tests.detail",
-                                                            test.id
-                                                        )
+                                            <PlayCircle />
+                                            Mulai Mengerjakan
+                                        </Button>
+                                    }
+                                >
+                                    <MetaGrid
+                                        className="lg:grid-cols-3"
+                                        items={[
+                                            { icon: CalendarDays, label: "Dimulai", value: fmtDate(test.start_date, true) },
+                                            { icon: CalendarX, label: "Ditutup", value: fmtDate(test.end_date, true) },
+                                            {
+                                                icon: Trophy,
+                                                label: "Nilai Terbaik",
+                                                value: test.show_score ? (
+                                                    averageScore !== null && averageScore !== undefined ? (
+                                                        <span className="text-base text-brand-ink">{averageScore}</span>
+                                                    ) : (
+                                                        <span className="font-medium italic text-muted-foreground">Belum dinilai</span>
                                                     )
-                                                }
-                                                variant="outline"
-                                                className="text-green-700 bg-green-50 border-green-400 hover:bg-green-100 hover:text-green-700"
-                                                disabled={
-                                                    test.test_status !== 'ongoing' ||
-                                                    Boolean(hasOtherActive)
-                                                }
-                                            >
-                                                Mulai Mengerjakan
-                                            </Button>
-                                    </div>
+                                                ) : (
+                                                    <span className="font-medium italic text-muted-foreground">Belum diumumkan</span>
+                                                ),
+                                            },
+                                        ]}
+                                    />
+                                    <Timeline start={test.start_date} end={test.end_date} tone={tone} startLabel="Progres jadwal ujian" />
+
                                     {status.label === "Sedang Berlangsung" ? (
                                         hasOtherActive && (
-                                            <p className="text-sm text-red-600 mt-1">
-                                                Anda memiliki Ujian aktif lain.
-                                                Selesaikan Ujian tersebut
-                                                terlebih dahulu sebelum
-                                                mengerjakan Ujian ini.
-                                            </p>
+                                            <Notice tone="destructive">
+                                                Anda memiliki Ujian aktif lain. Selesaikan Ujian tersebut terlebih
+                                                dahulu sebelum mengerjakan Ujian ini.
+                                            </Notice>
                                         )
-                                    ) : (
-                                        <div className="text-sm text-red-600 mt-1">
-                                            {status.label === "Belum Mulai" && (
-                                                <p>
-                                                    Ujian belum mulai. Tunggu
-                                                    waktu mulai Ujian untuk
-                                                    dapat mengerjakan.
-                                                </p>
-                                            )}
-                                            {status.label === "Selesai" && (
-                                                <p>
-                                                    Ujian sudah selesai. Anda
-                                                    tidak dapat mengerjakan
-                                                    Ujian ini lagi.
-                                                </p>
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
+                                    ) : status.label === "Belum Mulai" ? (
+                                        <Notice tone="info">
+                                            Ujian belum mulai. Tunggu waktu mulai Ujian untuk dapat mengerjakan.
+                                        </Notice>
+                                    ) : status.label === "Selesai" ? (
+                                        <Notice tone="steel">
+                                            Ujian sudah selesai. Anda tidak dapat mengerjakan Ujian ini lagi.
+                                        </Notice>
+                                    ) : null}
+                                </EntityCard>
                             );
                         })}
                     </div>
-                </div>
+                )}
             </div>
         </AuthenticatedLayout>
     );

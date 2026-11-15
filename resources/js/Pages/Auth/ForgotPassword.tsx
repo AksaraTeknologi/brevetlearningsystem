@@ -1,18 +1,18 @@
+import AuthSplit, { authFieldIcon, authFieldInput } from "@/Components/auth/AuthSplit";
 import InputError from "@/Components/layout/InputError";
 import { Button } from "@/Components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import GuestLayout from "@/Layouts/GuestLayout";
+import { cn } from "@/lib/utils";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { Loader2, MailSearch } from "lucide-react";
+import { ArrowLeft, Info, Loader2, Mail, MailCheck, Send } from "lucide-react";
 import { FormEventHandler } from "react";
+
+const STEPS = [
+    "Masukkan email yang terdaftar di akun BLS Anda.",
+    "Buka tautan reset yang kami kirim ke email tersebut.",
+    "Buat kata sandi baru, lalu masuk kembali.",
+];
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -21,114 +21,100 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         post(route("password.email"));
     };
 
     return (
-        <GuestLayout>
+        <AuthSplit>
             <Head title="Lupa Kata Sandi" />
 
-            <div className="flex flex-col gap-6">
-                <Card className="overflow-hidden">
-                    <CardContent className="grid p-0 md:grid-cols-2">
-                        <form
-                            onSubmit={submit}
-                            className="py-10 px-8 md:py-12 md:px-10"
-                        >
-                            <CardHeader className="px-0 pt-0 pb-6">
-                                <img
-                                    src="/images/logo.png"
-                                    alt="Brevet Learning System"
-                                    className="w-24 mb-6"
-                                />
-                                <CardTitle className="text-2xl">
-                                    Lupa Kata Sandi
-                                </CardTitle>
-                                <CardDescription>
-                                    Masukkan email akun Anda. Kami akan mengirim
-                                    tautan untuk mengatur ulang kata sandi.
-                                </CardDescription>
-                            </CardHeader>
+            <Link
+                href={route("login")}
+                className={cn(
+                    "inline-flex items-center gap-1.5 rounded-full text-sm font-semibold text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    processing && "pointer-events-none opacity-50",
+                )}
+            >
+                <ArrowLeft className="size-4" />
+                Kembali ke login
+            </Link>
 
-                            {status && (
-                                <div className="mb-4 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-700">
-                                    {status}
-                                </div>
-                            )}
+            <h2 className="mt-6 text-[28px] font-extrabold tracking-[-0.02em] text-foreground md:text-[32px]">
+                Lupa kata sandi?
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Masukkan email akun Anda. Kami akan mengirim tautan untuk mengatur ulang kata sandi.
+            </p>
 
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    value={data.email}
-                                    autoComplete="email"
-                                    placeholder="nama@email.com"
-                                    onChange={(e) =>
-                                        setData("email", e.target.value)
-                                    }
-                                    autoFocus
-                                    required
-                                    disabled={processing}
-                                />
-                                <InputError
-                                    message={errors.email}
-                                    className="mt-1"
-                                />
-                            </div>
+            {status && (
+                <div
+                    role="status"
+                    className="mt-6 flex items-start gap-2.5 rounded-xl bg-highlight-soft px-4 py-3 text-sm font-medium text-highlight-foreground dark:bg-highlight/15 dark:text-highlight"
+                >
+                    <MailCheck className="mt-0.5 size-4 shrink-0" />
+                    {status}
+                </div>
+            )}
 
-                            <div className="mt-6 space-y-3">
-                                <Button
-                                    type="submit"
-                                    className="w-full"
-                                    disabled={processing}
-                                >
-                                    {processing ? (
-                                        <>
-                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                            Mengirim...
-                                        </>
-                                    ) : (
-                                        "Kirim Tautan Reset Kata Sandi"
-                                    )}
-                                </Button>
+            <form onSubmit={submit} className="mt-8 space-y-5">
+                <div className="space-y-2">
+                    <Label htmlFor="email" className="text-sm font-semibold">
+                        Email
+                    </Label>
+                    <div className="relative">
+                        <Mail aria-hidden className={authFieldIcon} />
+                        <Input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={data.email}
+                            autoComplete="email"
+                            placeholder="nama@email.com"
+                            onChange={(e) => setData("email", e.target.value)}
+                            aria-invalid={!!errors.email}
+                            autoFocus
+                            required
+                            disabled={processing}
+                            className={authFieldInput}
+                        />
+                    </div>
+                    <InputError message={errors.email} />
+                </div>
 
-                                <p className="text-center text-sm text-muted-foreground">
-                                    Sudah ingat kata sandi?{" "}
-                                    <Link
-                                        href={route("login")}
-                                        className="font-medium text-blue-800 hover:text-blue-700 hover:underline"
-                                    >
-                                        Kembali ke Login
-                                    </Link>
-                                </p>
-                            </div>
-                        </form>
+                <Button type="submit" size="lg" disabled={processing} className="h-12 w-full text-base font-bold">
+                    {processing ? (
+                        <>
+                            <Loader2 className="animate-spin" />
+                            Mengirim...
+                        </>
+                    ) : (
+                        <>
+                            Kirim tautan reset
+                            <Send />
+                        </>
+                    )}
+                </Button>
+            </form>
 
-                        <div className="relative hidden bg-muted md:block">
-                            <img
-                                src="/images/kemenkeu.jpg"
-                                alt="Kementerian Keuangan"
-                                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                            <div className="absolute inset-0 flex items-end justify-start px-6 py-8">
-                                <div className="text-white">
-                                    <h2 className="text-3xl font-bold leading-tight">
-                                        Pulihkan Akses <br /> Akun Anda
-                                    </h2>
-                                    <p className="mt-3 text-sm text-slate-200">
-                                        Pastikan email yang dimasukkan sesuai
-                                        dengan akun yang terdaftar di sistem.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+            <div className="mt-8 rounded-2xl bg-muted p-4">
+                <p className="flex items-center gap-2 text-sm font-bold text-foreground">
+                    <Info className="size-4 text-brand-ink" />
+                    Cara mengatur ulang
+                </p>
+                <ol className="mt-3 space-y-2 text-[13px] text-muted-foreground">
+                    {STEPS.map((t, i) => (
+                        <li key={t} className="flex gap-2.5">
+                            <span className="grid size-5 shrink-0 place-items-center rounded-full bg-highlight text-[11px] font-bold text-highlight-foreground">
+                                {i + 1}
+                            </span>
+                            {t}
+                        </li>
+                    ))}
+                </ol>
+                <p className="mt-3 text-[13px] text-muted-foreground">
+                    Tidak menerima email? Cek folder spam atau hubungi admin/pengajar kelas Anda.
+                </p>
             </div>
-        </GuestLayout>
+        </AuthSplit>
     );
 }

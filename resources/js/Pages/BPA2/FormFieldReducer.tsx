@@ -70,7 +70,7 @@ export default function FormFieldReducer({ form }: any) {
                                 }
                                 autoComplete="off"
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />
@@ -140,7 +140,7 @@ export default function FormFieldReducer({ form }: any) {
                                     field.onChange(parseRupiah(e.target.value))
                                 }
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />

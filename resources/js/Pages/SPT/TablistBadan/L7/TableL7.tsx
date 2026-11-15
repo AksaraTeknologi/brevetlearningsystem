@@ -73,7 +73,7 @@ export function TableL7({
         <div className="w-full overflow-x-auto border">
             <Table>
                 <TableHeader>
-                    <TableRow className="bg-gray-100">
+                    <TableRow className="bg-muted">
                         <TableHead
                             rowSpan={2}
                             className="w-[50px] text-center align-middle"
@@ -105,7 +105,7 @@ export function TableL7({
                             KOMPENSASI KERUGIAN FISKAL
                         </TableHead>
                     </TableRow>
-                    <TableRow className="bg-gray-100">
+                    <TableRow className="bg-muted">
                         <TableHead className="text-center">
                             TAHUN/BAGIAN TAHUN PAJAK
                         </TableHead>
@@ -175,7 +175,7 @@ export function TableL7({
                                         <Button
                                             size="icon"
                                             variant="ghost"
-                                            className="h-8 w-8 text-red-500 hover:text-red-600"
+                                            className="h-8 w-8 text-destructive hover:text-destructive/80"
                                             onClick={() => onDelete(item.id!)}
                                         >
                                             <Trash2 className="h-4 w-4" />

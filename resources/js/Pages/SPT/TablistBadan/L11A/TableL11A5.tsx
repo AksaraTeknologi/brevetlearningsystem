@@ -93,7 +93,7 @@ export function TableL11A5({
                                         <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => onEdit(item)}>
                                             <Pencil className="h-3 w-3" />
                                         </Button>
-                                        <Button size="icon" variant="ghost" className="h-7 w-7 text-red-500" onClick={() => onDelete(item.id!)}>
+                                        <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => onDelete(item.id!)}>
                                             <Trash2 className="h-3 w-3" />
                                         </Button>
                                     </div>

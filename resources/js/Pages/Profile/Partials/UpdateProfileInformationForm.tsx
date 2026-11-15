@@ -139,7 +139,7 @@ export default function UpdateProfileInformation({
                         title="NPWP harus berupa 16 digit angka"
                         required
                     />
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                         {data.npwp?.length || 0}/16 karakter
                     </p>
                     <InputError message={errors.npwp} />
@@ -161,7 +161,7 @@ export default function UpdateProfileInformation({
 
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
-                        <p className="mt-2 text-sm text-gray-800">
+                        <p className="mt-2 text-sm text-foreground">
                             Email Anda belum terverifikasi.
                             <Link
                                 href={route("verification.send")}
@@ -174,7 +174,7 @@ export default function UpdateProfileInformation({
                         </p>
 
                         {status === "verification-link-sent" && (
-                            <div className="mt-2 text-sm font-medium text-green-600">
+                            <div className="mt-2 text-sm font-medium text-success">
                                 Tautan verifikasi telah dikirim ke alamat email
                                 Anda.
                             </div>

@@ -61,10 +61,10 @@ export default function RegistrationPortal() {
                 <CardContent>
                     <div className="text-center mb-8">
                         <div className="flex justify-center mb-6"></div>
-                        <h1 className="text-2xl font-bold text-gray-800 mb-4">
+                        <h1 className="text-2xl font-bold text-foreground mb-4">
                             Persiapan Registrasi Wajib Pajak
                         </h1>
-                        <p className="text-gray-600 max-w-4xl mx-auto text-sm md:text-base">
+                        <p className="text-muted-foreground max-w-4xl mx-auto text-sm md:text-base">
                             Silahkan pilih jenis pendaftaran yang sesuai untuk
                             Nomor Induk Kependudukan (NIK) Anda.
                         </p>
@@ -84,7 +84,7 @@ export default function RegistrationPortal() {
                                             className={`${type.color} transition-all duration-300 h-32 flex items-center justify-center relative overflow-hidden`}
                                         >
                                             {!type.available && (
-                                                <div className="absolute top-2 right-2 bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full border border-white/30">
+                                                <div className="absolute top-2 right-2 bg-card/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full border border-white/30">
                                                     Segera Hadir
                                                 </div>
                                             )}
@@ -101,8 +101,8 @@ export default function RegistrationPortal() {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="p-6 text-center bg-white">
-                                            <h3 className="font-semibold text-gray-800 leading-tight">
+                                        <div className="p-6 text-center bg-card">
+                                            <h3 className="font-semibold text-foreground leading-tight">
                                                 {type.title}
                                             </h3>
                                         </div>

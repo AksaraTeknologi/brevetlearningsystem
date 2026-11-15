@@ -77,7 +77,7 @@ export function SectionL12B3({ data, sptBadanId }: SectionL12B3Props) {
         <div className="space-y-2">
             {/* a - Tahun Pajak */}
             <div className="grid grid-cols-[28px_280px_16px_1fr] items-center gap-2">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded   font-bold text-gray-900">a</span>
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded   font-bold text-foreground">a</span>
                 <Label className=" font-semibold tracking-wide uppercase">TAHUN PAJAK</Label>
                 <span className=" text-center">:</span>
                 <Input
@@ -90,7 +90,7 @@ export function SectionL12B3({ data, sptBadanId }: SectionL12B3Props) {
 
             {/* b - Penghasilan Kena Pajak */}
             <div className="grid grid-cols-[28px_1fr_16px_280px] items-center gap-2">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded   font-bold text-gray-900">b</span>
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded   font-bold text-foreground">b</span>
                 <Label className=" font-semibold tracking-wide uppercase">PENGHASILAN KENA PAJAK</Label>
                 <span className=" text-center">:</span>
                 <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ export function SectionL12B3({ data, sptBadanId }: SectionL12B3Props) {
 
             {/* c - Pajak Penghasilan */}
             <div className="grid grid-cols-[28px_1fr_16px_280px] items-center gap-2">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded   font-bold text-gray-900">c</span>
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded   font-bold text-foreground">c</span>
                 <Label className=" font-semibold tracking-wide uppercase">PAJAK PENGHASILAN</Label>
                 <span className=" text-center">:</span>
                 <div className="flex items-center gap-2">
@@ -120,13 +120,13 @@ export function SectionL12B3({ data, sptBadanId }: SectionL12B3Props) {
 
             {/* d - Penghasilan Kena Pajak Sesudah Dikurangi (auto) */}
             <div className="grid grid-cols-[28px_1fr_16px_280px] items-center gap-2">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded   font-bold text-gray-900">d</span>
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded   font-bold text-foreground">d</span>
                 <div className="flex items-center gap-2  font-semibold tracking-wide uppercase">
                     PENGHASILAN KENA PAJAK SESUDAH DIKURANGI PAJAK
                     <span className="text-muted-foreground font-normal normal-case">
-                        (<span className="inline-flex items-center justify-center px-1 rounded  text-gray-900 font-bold">IIIb</span>
+                        (<span className="inline-flex items-center justify-center px-1 rounded  text-foreground font-bold">IIIb</span>
                         &nbsp;-&nbsp;
-                        <span className="inline-flex items-center justify-center px-1 rounded  text-gray-900 font-bold">IIIc</span>)
+                        <span className="inline-flex items-center justify-center px-1 rounded  text-foreground font-bold">IIIc</span>)
                     </span>
                 </div>
                 <span className=" text-center">:</span>
@@ -136,7 +136,7 @@ export function SectionL12B3({ data, sptBadanId }: SectionL12B3Props) {
                         value={formatRupiahInput(incomeAfterReduce)}
                         readOnly
                         disabled
-                        className="h-8 text-sm text-right bg-gray-100"
+                        className="h-8 text-sm text-right bg-muted"
                     />
                 </div>
             </div>
@@ -146,7 +146,6 @@ export function SectionL12B3({ data, sptBadanId }: SectionL12B3Props) {
                     type="button"
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="bg-blue-950 hover:bg-blue-900"
                     size="sm"
                 >
                     <Save className="w-4 h-4 mr-2" />

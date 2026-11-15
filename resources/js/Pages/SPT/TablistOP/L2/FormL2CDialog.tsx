@@ -355,7 +355,7 @@ export function FormL2CDialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-3xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>Penghasilan Luar Negeri</DialogTitle>
                 </DialogHeader>
 
@@ -363,7 +363,7 @@ export function FormL2CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama Sumber/Pemberi Penghasilan
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -376,11 +376,11 @@ export function FormL2CDialog({
                                 }
                                 placeholder="Masukkan nama"
                                 className={cn(
-                                    errors.provider_name && "border-red-500",
+                                    errors.provider_name && "border-destructive",
                                 )}
                             />
                             {errors.provider_name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.provider_name}
                                 </p>
                             )}
@@ -390,7 +390,7 @@ export function FormL2CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Negara Sumber/Pemberi Penghasilan
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -404,7 +404,7 @@ export function FormL2CDialog({
                                         aria-expanded={openCountry}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.country && "border-red-500",
+                                            errors.country && "border-destructive",
                                         )}
                                     >
                                         {countryLabel || "Silakan Pilih"}
@@ -460,7 +460,7 @@ export function FormL2CDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.country && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.country}
                                 </p>
                             )}
@@ -470,7 +470,7 @@ export function FormL2CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Tanggal Transaksi{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -485,7 +485,7 @@ export function FormL2CDialog({
                                             !formData.transaction_date &&
                                                 "text-muted-foreground",
                                             errors.transaction_date &&
-                                                "border-red-500",
+                                                "border-destructive",
                                         )}
                                         onClick={() => setIsCalendarOpen(true)}
                                     >
@@ -534,7 +534,7 @@ export function FormL2CDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.transaction_date && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.transaction_date}
                                 </p>
                             )}
@@ -544,7 +544,7 @@ export function FormL2CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Jenis Penghasilan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -559,7 +559,7 @@ export function FormL2CDialog({
                                         className={cn(
                                             "w-full justify-between font-normal",
                                             errors.income_type &&
-                                                "border-red-500",
+                                                "border-destructive",
                                         )}
                                     >
                                         {formData.income_type ||
@@ -612,7 +612,7 @@ export function FormL2CDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.income_type && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.income_type}
                                 </p>
                             )}
@@ -622,7 +622,7 @@ export function FormL2CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Kode Penghasilan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -634,11 +634,11 @@ export function FormL2CDialog({
                                 readOnly
                                 className={cn(
                                     "bg-muted",
-                                    errors.income_code && "border-red-500",
+                                    errors.income_code && "border-destructive",
                                 )}
                             />
                             {errors.income_code && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.income_code}
                                 </p>
                             )}
@@ -648,7 +648,7 @@ export function FormL2CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Penghasilan Neto
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -662,12 +662,12 @@ export function FormL2CDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.net_income && "border-red-500",
+                                        errors.net_income && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.net_income && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.net_income}
                                 </p>
                             )}
@@ -678,7 +678,7 @@ export function FormL2CDialog({
                         <Label className="pt-2">
                             Pajak yang Dibayar/Dipotong/Terutang di Luar Negeri
                             dalam Mata Uang Asing{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -688,11 +688,11 @@ export function FormL2CDialog({
                                 placeholder="0"
                                 className={cn(
                                     errors.tax_foreign_currency &&
-                                        "border-red-500",
+                                        "border-destructive",
                                 )}
                             />
                             {errors.tax_foreign_currency && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_foreign_currency}
                                 </p>
                             )}
@@ -701,7 +701,7 @@ export function FormL2CDialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Mata Uang<span className="text-red-500">*</span>
+                            Mata Uang<span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -715,7 +715,7 @@ export function FormL2CDialog({
                                         aria-expanded={openCurrency}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.currency && "border-red-500",
+                                            errors.currency && "border-destructive",
                                         )}
                                     >
                                         {formData.currency || "Silakan Pilih"}
@@ -765,7 +765,7 @@ export function FormL2CDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.currency && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.currency}
                                 </p>
                             )}
@@ -775,7 +775,7 @@ export function FormL2CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Pajak yang Dibayar/Dipotong/Terutang di Luar Negeri
-                            dalam Rupiah <span className="text-red-500">*</span>
+                            dalam Rupiah <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -789,12 +789,12 @@ export function FormL2CDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.amount && "border-red-500",
+                                        errors.amount && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.amount && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.amount}
                                 </p>
                             )}
@@ -804,7 +804,7 @@ export function FormL2CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Kredit Pajak yang Dapat Diperhitungkan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -818,12 +818,12 @@ export function FormL2CDialog({
                                     placeholder="0"
                                     className={cn(
                                         "pl-10",
-                                        errors.tax_credit && "border-red-500",
+                                        errors.tax_credit && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.tax_credit && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.tax_credit}
                                 </p>
                             )}
@@ -842,7 +842,6 @@ export function FormL2CDialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

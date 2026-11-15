@@ -211,8 +211,8 @@ export default function TabL5({
 
     return (
         <div className="space-y-6">
-            <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+            <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -221,7 +221,7 @@ export default function TabL5({
                         <Input
                             value={String(taxYear)}
                             disabled
-                            className="bg-gray-100"
+                            className="bg-muted"
                         />
                     </div>
                     <div className="space-y-2">
@@ -229,7 +229,7 @@ export default function TabL5({
                         <Input
                             value={user.npwp ?? ""}
                             disabled
-                            className="bg-gray-100"
+                            className="bg-muted"
                         />
                     </div>
                 </div>
@@ -241,11 +241,11 @@ export default function TabL5({
                 defaultValue={["a", "b", "c"]}
             >
                 <AccordionItem value="a">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold px-4 rounded">
                         A. PENGHITUNGAN KOMPENSASI KERUGIAN FISKAL
                     </AccordionTrigger>
                     <AccordionContent>
-                        <div className="p-4 bg-white rounded-lg shadow">
+                        <div className="p-4 bg-card rounded-lg shadow">
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -385,11 +385,11 @@ export default function TabL5({
                 </AccordionItem>
 
                 <AccordionItem value="b">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold px-4 rounded">
                         B. PENGURANG PENGHASILAN NETO
                     </AccordionTrigger>
                     <AccordionContent>
-                        <div className="p-4 bg-white rounded-lg shadow space-y-4">
+                        <div className="p-4 bg-card rounded-lg shadow space-y-4">
                             <div>
                                 <Button
                                     type="button"
@@ -397,7 +397,7 @@ export default function TabL5({
                                         setEditingBC(null);
                                         setDialogBOpen(true);
                                     }}
-                                    className="bg-blue-950 hover:bg-blue-900 gap-2"
+                                    className="gap-2"
                                 >
                                     <Plus className="w-4 h-4 mr-2" /> Tambah
                                 </Button>
@@ -426,19 +426,19 @@ export default function TabL5({
                                         <TableHead>
                                             <Input
                                                 disabled
-                                                className="h-8 bg-gray-100"
+                                                className="h-8 bg-muted"
                                             />
                                         </TableHead>
                                         <TableHead>
                                             <Input
                                                 disabled
-                                                className="h-8 bg-gray-100"
+                                                className="h-8 bg-muted"
                                             />
                                         </TableHead>
                                         <TableHead>
                                             <Input
                                                 disabled
-                                                className="h-8 bg-gray-100"
+                                                className="h-8 bg-muted"
                                             />
                                         </TableHead>
                                     </TableRow>
@@ -448,7 +448,7 @@ export default function TabL5({
                                         <TableRow>
                                             <TableCell
                                                 colSpan={5}
-                                                className="text-center text-gray-500"
+                                                className="text-center text-muted-foreground"
                                             >
                                                 Tidak ada data untuk
                                                 ditampilkan.
@@ -514,12 +514,12 @@ export default function TabL5({
                                         JUMLAH KOMPENSASI KERUGIAN FISKAL
                                     </Label>
                                     <div className="flex items-center gap-2">
-                                        <div className="px-3 py-2 border rounded bg-gray-100 text-sm">
+                                        <div className="px-3 py-2 border rounded bg-muted text-sm">
                                             Rp
                                         </div>
                                         <Input
                                             disabled
-                                            className="bg-gray-100"
+                                            className="bg-muted"
                                             value={formatRupiah(
                                                 totalCompensationRunningYear,
                                             )}
@@ -531,12 +531,12 @@ export default function TabL5({
                                         JUMLAH PENGURANG PENGHASILAN NETO
                                     </Label>
                                     <div className="flex items-center gap-2">
-                                        <div className="px-3 py-2 border rounded bg-gray-100 text-sm">
+                                        <div className="px-3 py-2 border rounded bg-muted text-sm">
                                             Rp
                                         </div>
                                         <Input
                                             disabled
-                                            className="bg-gray-100"
+                                            className="bg-muted"
                                             value={formatRupiah(totalB)}
                                         />
                                     </div>
@@ -557,11 +557,11 @@ export default function TabL5({
                 </AccordionItem>
 
                 <AccordionItem value="c">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold px-4 rounded">
                         C. PENGURANG PPh TERUTANG
                     </AccordionTrigger>
                     <AccordionContent>
-                        <div className="p-4 bg-white rounded-lg shadow space-y-4">
+                        <div className="p-4 bg-card rounded-lg shadow space-y-4">
                             <div>
                                 <Button
                                     type="button"
@@ -569,7 +569,7 @@ export default function TabL5({
                                         setEditingBC(null);
                                         setDialogCOpen(true);
                                     }}
-                                    className="bg-blue-950 hover:bg-blue-900 gap-2"
+                                    className="gap-2"
                                 >
                                     <Plus className="w-4 h-4 mr-2" /> Tambah
                                 </Button>
@@ -598,19 +598,19 @@ export default function TabL5({
                                         <TableHead>
                                             <Input
                                                 disabled
-                                                className="h-8 bg-gray-100"
+                                                className="h-8 bg-muted"
                                             />
                                         </TableHead>
                                         <TableHead>
                                             <Input
                                                 disabled
-                                                className="h-8 bg-gray-100"
+                                                className="h-8 bg-muted"
                                             />
                                         </TableHead>
                                         <TableHead>
                                             <Input
                                                 disabled
-                                                className="h-8 bg-gray-100"
+                                                className="h-8 bg-muted"
                                             />
                                         </TableHead>
                                     </TableRow>
@@ -620,7 +620,7 @@ export default function TabL5({
                                         <TableRow>
                                             <TableCell
                                                 colSpan={5}
-                                                className="text-center text-gray-500"
+                                                className="text-center text-muted-foreground"
                                             >
                                                 Tidak ada data untuk
                                                 ditampilkan.

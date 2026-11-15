@@ -1434,17 +1434,17 @@ export default function TabL1A({
     };
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
             <h2 className="text-xl font-semibold">
                 {headingText}
             </h2>
 
             {/* Header */}
             <div>
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <Label className="text-sm">Tahun Pajak</Label>
@@ -1452,7 +1452,7 @@ export default function TabL1A({
                                 type="text"
                                 value={String(spt.year)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div>
@@ -1461,7 +1461,7 @@ export default function TabL1A({
                                 type="text"
                                 value={user.npwp}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </div>
@@ -1470,18 +1470,18 @@ export default function TabL1A({
 
             <Accordion type="multiple" defaultValue={["a"]}>
                 <AccordionItem value="a">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         A. PENGHASILAN NETO DARI USAHA DAN/ATAU PROFESI
                         BERDASARKAN LAPORAN KEUANGAN
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white w-full">
+                    <AccordionContent className="p-4 bg-card w-full">
                         <Accordion type="multiple" defaultValue={["a1", "a2"]}>
                             {/* A.1 Laporan Laba Rugi */}
                             <AccordionItem value="a1">
-                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                     A.1. LAPORAN LABA RUGI
                                 </AccordionTrigger>
-                                <AccordionContent className="p-4 bg-white w-full">
+                                <AccordionContent className="p-4 bg-card w-full">
                                     <div className="w-full overflow-x-auto">
                                         <Table>
                                             <TableHeader>
@@ -1540,7 +1540,7 @@ export default function TabL1A({
                                                             <TableRow>
                                                                 <TableCell
                                                                     colSpan={11}
-                                                                    className="font-semibold bg-gray-50"
+                                                                    className="font-semibold bg-muted/50"
                                                                 >
                                                                     {cat}
                                                                 </TableCell>
@@ -1678,10 +1678,10 @@ export default function TabL1A({
 
                             {/* A.2 Neraca */}
                             <AccordionItem value="a2">
-                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                     A.2. LAPORAN POSISI KEUANGAN (NERACA)
                                 </AccordionTrigger>
-                                <AccordionContent className="p-4 bg-white w-full">
+                                <AccordionContent className="p-4 bg-card w-full">
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                         {/* Left - Aset */}
                                         <div className="w-full overflow-x-auto">
@@ -1747,7 +1747,7 @@ export default function TabL1A({
                                                                                     colSpan={
                                                                                         3
                                                                                     }
-                                                                                    className="font-semibold bg-gray-50"
+                                                                                    className="font-semibold bg-muted/50"
                                                                                 >
                                                                                     {
                                                                                         acc.category
@@ -1901,7 +1901,7 @@ export default function TabL1A({
                                                                                     colSpan={
                                                                                         3
                                                                                     }
-                                                                                    className="font-semibold bg-gray-50"
+                                                                                    className="font-semibold bg-muted/50"
                                                                                 >
                                                                                     {
                                                                                         acc.category
@@ -1997,7 +1997,6 @@ export default function TabL1A({
                                     <div className="mt-6 flex gap-3">
                                         {/* <Button
                                             type="button"
-                                            className="bg-blue-950 hover:bg-blue-900"
                                             onClick={handleSync}
                                             disabled={isSaving}
                                         >
@@ -2007,7 +2006,6 @@ export default function TabL1A({
 
                                         <Button
                                             type="button"
-                                            className="bg-blue-950 hover:bg-blue-900"
                                             onClick={handleSyncA2}
                                             disabled={isSaving}
                                         >

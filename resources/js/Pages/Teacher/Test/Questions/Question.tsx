@@ -1,3 +1,4 @@
+import { IconTile, Notice } from "@/Components/app-shell/kit";
 import TeacherLayout from "@/Layouts/TeacherLayout";
 import { Head, Link, router, usePage, useForm } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
@@ -11,6 +12,7 @@ import {
 import {
     Plus,
     FileText,
+    ListChecks,
     BarChart3,
     Pencil,
     Trash,
@@ -471,16 +473,13 @@ export default function Question({
                     </Breadcrumb>
 
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                            <h1 className="text-xl sm:text-2xl font-semibold text-primary">
-                                Soal Bank - {bankName}
-                            </h1>
-                        </div>
+                        <h1 className="text-2xl font-semibold text-primary">
+                            Soal Bank - {bankName}
+                        </h1>
                         <div className="flex flex-wrap gap-2 w-full sm:w-auto sm:justify-end">
                             {!isBankMode && (
                                 <Button
                                     variant="outline"
-                                    className="border-indigo-200 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:text-indigo-700"
                                     onClick={openSettingsDialog}
                                     disabled={maxQuestionsToShow <= 0}
                                 >
@@ -493,7 +492,6 @@ export default function Question({
                                 <Button
                                     variant="outline"
                                     asChild
-                                    className="border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100"
                                 >
                                     <Link
                                         href={route(
@@ -511,7 +509,6 @@ export default function Question({
                                     <Button
                                         variant="outline"
                                         asChild
-                                        className="border-green-200 bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-700"
                                     >
                                         {/* Link langsung ke file publik tanpa lewat controller */}
                                         <a
@@ -531,7 +528,6 @@ export default function Question({
                                         <DialogTrigger asChild>
                                             <Button
                                                 variant="outline"
-                                                className="border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
                                             >
                                                 <FileUp className="mr-2 h-4 w-4" />
                                                 Import
@@ -568,7 +564,7 @@ export default function Question({
                                                             className="file:rounded file:border-0 file:bg-blue-50 file:px-2 hover:cursor-pointer hover:file:bg-blue-100"
                                                         />
                                                         {errors?.file && (
-                                                            <p className="text-sm text-red-500">
+                                                            <p className="text-sm text-destructive">
                                                                 {errors.file}
                                                             </p>
                                                         )}
@@ -577,8 +573,8 @@ export default function Question({
                                                     {data.file && (
                                                         <div className="rounded-md bg-green-50 p-3">
                                                             <div className="flex items-center">
-                                                                <Upload className="mr-2 h-4 w-4 text-green-600" />
-                                                                <span className="text-sm font-medium text-green-700">
+                                                                <Upload className="mr-2 h-4 w-4 text-success" />
+                                                                <span className="text-sm font-medium text-success">
                                                                     {
                                                                         data
                                                                             .file
@@ -586,7 +582,7 @@ export default function Question({
                                                                     }
                                                                 </span>
                                                             </div>
-                                                            <p className="mt-1 text-xs text-green-600">
+                                                            <p className="mt-1 text-xs text-success">
                                                                 File siap untuk
                                                                 diimport
                                                             </p>
@@ -693,17 +689,14 @@ export default function Question({
                                             {questions.length > 0 && (
                                                 <Button
                                                     variant="outline"
-                                                    className="border-red-200 bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700"
+                                                    className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
                                                     onClick={handleDeleteAll}
                                                 >
                                                     <Trash className="mr-2 h-4 w-4" />
                                                     Hapus Semua
                                                 </Button>
                                             )}
-                                            <Button
-                                                className="bg-green-600 hover:bg-green-700"
-                                                asChild
-                                            >
+                                            <Button asChild>
                                                 <Link
                                                     href={route(
                                                         "teacher.questionBankQuestions.create",
@@ -721,7 +714,7 @@ export default function Question({
                         </div>
                     </div>
 
-                    <div className="rounded-md border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800">
+                    <Notice tone="info">
                         Bank soal aktif:{" "}
                         <span className="font-semibold">
                             {bankName || "Belum dipilih"}
@@ -730,12 +723,12 @@ export default function Question({
                         {isBankMode
                             ? ` Bank ini dipakai oleh ${testsUsingBank.length} ujian.`
                             : " Halaman ujian hanya membaca soal dari bank. Tambah/edit/hapus/import soal dilakukan di modul Bank Soal."}
-                    </div>
+                    </Notice>
 
                     {/* Statistik Kelas */}
                     {!isBankMode && (
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            <Card>
+                            <Card className="tls-card">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
                                         Total Soal
@@ -749,14 +742,14 @@ export default function Question({
                                     <p className="text-xs text-muted-foreground">
                                         soal tersedia
                                     </p>
-                                    <p className="mt-1 text-xs text-green-600">
+                                    <p className="mt-1 text-xs text-success">
                                         Ditampilkan: {effectiveQuestionsToShow}{" "}
                                         soal
                                     </p>
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="tls-card">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
                                         Rata-rata Nilai
@@ -773,7 +766,7 @@ export default function Question({
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="tls-card">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
                                         Tingkat Kesulitan
@@ -791,7 +784,7 @@ export default function Question({
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="tls-card">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
                                         Peserta Lulus
@@ -813,10 +806,11 @@ export default function Question({
                     )}
 
                     {/* Daftar Soal */}
-                    <div className="rounded-xl bg-white border shadow p-6">
+                    <div className="tls-card p-5 md:p-6">
                         <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                             <div>
-                                <h2 className="text-lg font-bold text-primary">
+                                <h2 className="flex items-center gap-2.5 text-lg font-bold text-brand-950">
+                                    <IconTile icon={FileText} size="sm" />
                                     Daftar Soal ({totalItems})
                                 </h2>
                                 <p className="text-sm text-muted-foreground">
@@ -843,10 +837,10 @@ export default function Question({
                         {questions.length === 0 ? (
                             <div className="text-center py-12">
                                 <FileText className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                                <h3 className="text-lg font-medium text-foreground mb-2">
                                     Belum ada soal
                                 </h3>
-                                <p className="text-gray-500 mb-4">
+                                <p className="text-muted-foreground mb-4">
                                     {isBankMode
                                         ? "Mulai dengan menambahkan soal pertama untuk bank ini."
                                         : "Belum ada soal di bank ini. Kelola dari menu Bank Soal."}
@@ -854,7 +848,7 @@ export default function Question({
                                 {isBankMode && bankId ? (
                                     <Button
                                         asChild
-                                        className="bg-green-600 hover:bg-green-700"
+                                        className="bg-success hover:bg-green-700 text-success-foreground"
                                     >
                                         <Link
                                             href={route(
@@ -884,10 +878,10 @@ export default function Question({
                         ) : filteredQuestions.length === 0 ? (
                             <div className="text-center py-12">
                                 <FileText className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                                <h3 className="text-lg font-medium text-foreground mb-2">
                                     Tidak ada hasil
                                 </h3>
-                                <p className="text-gray-500 mb-4">
+                                <p className="text-muted-foreground mb-4">
                                     Tidak ada soal yang cocok dengan kata kunci
                                     pencarian.
                                 </p>
@@ -905,19 +899,19 @@ export default function Question({
                                         (question: any, index: number) => (
                                             <div
                                                 key={question.id}
-                                                className="border rounded-lg overflow-hidden"
+                                                className="overflow-hidden rounded-2xl border border-l-4 border-border border-l-highlight transition-shadow hover:shadow-[0_12px_28px_-20px_rgba(13,77,64,0.45)]"
                                             >
-                                                <div className="p-4 hover:bg-gray-50">
+                                                <div className="p-4 hover:bg-muted/50">
                                                     <div className="flex items-start justify-between">
                                                         <div className="flex-1">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                                                                <span className="rounded-lg bg-brand px-2.5 py-1 text-xs font-bold text-brand-foreground">
                                                                     Soal{" "}
                                                                     {startIndex +
                                                                         index +
                                                                         1}
                                                                 </span>
-                                                                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                                                                <span className="rounded-lg bg-highlight/20 px-2.5 py-1 text-xs font-semibold text-brand-ink dark:text-highlight">
                                                                     {question.question_type ===
                                                                     "multiple_choice"
                                                                         ? "Pilihan Ganda"
@@ -930,7 +924,7 @@ export default function Question({
                                                                             : "Multiple Choice"}
                                                                 </span>
                                                             </div>
-                                                            <h3 className="font-medium text-gray-900 mb-2">
+                                                            <h3 className="font-medium text-foreground mb-2">
                                                                 {question.question_text ||
                                                                     "Pertanyaan tidak tersedia"}
                                                             </h3>
@@ -944,7 +938,7 @@ export default function Question({
                                                                 </div>
                                                             )}
                                                             <div className="flex items-center gap-4">
-                                                                <p className="text-sm text-gray-600">
+                                                                <p className="text-sm text-muted-foreground">
                                                                     {question.question_type ===
                                                                     "multiple_choice"
                                                                         ? `${
@@ -970,7 +964,7 @@ export default function Question({
                                                                                 question.id,
                                                                             )
                                                                         }
-                                                                        className="text-gray-500 hover:text-gray-700 p-1 h-auto"
+                                                                        className="text-muted-foreground hover:text-foreground p-1 h-auto"
                                                                     >
                                                                         {expandedQuestions.has(
                                                                             question.id,
@@ -1035,7 +1029,7 @@ export default function Question({
                                                                 <Button
                                                                     size="sm"
                                                                     variant="outline"
-                                                                    className="text-red-600 border-red-200 hover:bg-red-50"
+                                                                    className="text-destructive border-red-200 hover:bg-red-50"
                                                                     onClick={() =>
                                                                         handleDeleteQuestion(
                                                                             question.id,
@@ -1058,12 +1052,12 @@ export default function Question({
                                                 {expandedQuestions.has(
                                                     question.id,
                                                 ) && (
-                                                    <div className="border-t bg-gray-50 p-4">
+                                                    <div className="border-t bg-muted/50 p-4">
                                                         {question.question_type ===
                                                             "multiple_choice" &&
                                                             question.options && (
                                                                 <div>
-                                                                    <h4 className="text-sm font-medium text-gray-700 mb-3">
+                                                                    <h4 className="text-sm font-medium text-foreground mb-3">
                                                                         Pilihan
                                                                         Jawaban:
                                                                     </h4>
@@ -1080,11 +1074,11 @@ export default function Question({
                                                                                     className={`flex flex-col gap-2 p-2 rounded ${
                                                                                         option.is_correct
                                                                                             ? "bg-green-100 border border-green-200"
-                                                                                            : "bg-white border border-gray-200"
+                                                                                            : "bg-card border border-border"
                                                                                     }`}
                                                                                 >
                                                                                     <div className="flex items-start gap-2">
-                                                                                        <span className="text-sm font-medium text-gray-600 mt-0.5">
+                                                                                        <span className="text-sm font-medium text-muted-foreground mt-0.5">
                                                                                             {String.fromCharCode(
                                                                                                 65 +
                                                                                                     optionIndex,
@@ -1096,7 +1090,7 @@ export default function Question({
                                                                                             className={`text-sm flex-1 ${
                                                                                                 option.is_correct
                                                                                                     ? "font-bold text-green-800"
-                                                                                                    : "text-gray-700"
+                                                                                                    : "text-foreground"
                                                                                             }`}
                                                                                         >
                                                                                             {
@@ -1104,7 +1098,7 @@ export default function Question({
                                                                                             }
                                                                                         </span>
                                                                                         {option.is_correct && (
-                                                                                            <span className="ml-auto text-xs bg-green-600 text-white px-2 py-1 rounded">
+                                                                                            <span className="ml-auto text-xs bg-success text-white px-2 py-1 rounded">
                                                                                                 Jawaban
                                                                                                 Benar
                                                                                             </span>
@@ -1129,7 +1123,7 @@ export default function Question({
                                                         {question.question_type ===
                                                             "true_false" && (
                                                             <div>
-                                                                <h4 className="text-sm font-medium text-gray-700 mb-3">
+                                                                <h4 className="text-sm font-medium text-foreground mb-3">
                                                                     Jawaban:
                                                                 </h4>
                                                                 <div className="space-y-2">
@@ -1145,14 +1139,14 @@ export default function Question({
                                                                                 className={`flex items-center gap-2 p-2 rounded ${
                                                                                     option.is_correct
                                                                                         ? "bg-green-100 border border-green-200"
-                                                                                        : "bg-white border border-gray-200"
+                                                                                        : "bg-card border border-border"
                                                                                 }`}
                                                                             >
                                                                                 <span
                                                                                     className={`text-sm ${
                                                                                         option.is_correct
                                                                                             ? "font-bold text-green-800"
-                                                                                            : "text-gray-700"
+                                                                                            : "text-foreground"
                                                                                     }`}
                                                                                 >
                                                                                     {
@@ -1160,7 +1154,7 @@ export default function Question({
                                                                                     }
                                                                                 </span>
                                                                                 {option.is_correct && (
-                                                                                    <span className="ml-auto text-xs bg-green-600 text-white px-2 py-1 rounded">
+                                                                                    <span className="ml-auto text-xs bg-success text-white px-2 py-1 rounded">
                                                                                         Jawaban
                                                                                         Benar
                                                                                     </span>
@@ -1173,8 +1167,8 @@ export default function Question({
                                                         )}
 
                                                         {question.explanation && (
-                                                            <div className="mt-4 rounded-md border border-blue-200 bg-blue-50/70 p-3 text-sm text-blue-950">
-                                                                <div className="font-medium text-blue-900 mb-1">
+                                                            <div className="mt-4 rounded-md border border-blue-200 bg-blue-50/70 p-3 text-sm text-brand-ink">
+                                                                <div className="font-medium text-brand-ink mb-1">
                                                                     Pembahasan:
                                                                 </div>
                                                                 <div className="whitespace-pre-wrap leading-relaxed">

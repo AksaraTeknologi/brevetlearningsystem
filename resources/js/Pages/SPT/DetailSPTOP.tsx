@@ -1,3 +1,4 @@
+import { FormPageHeader } from "@/Components/app-shell/FormPage";
 import { usePage, router, Link } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
 import axios from "axios";
@@ -1842,7 +1843,7 @@ const DetailSPTOP = ({
             <Head title="Detail SPT PPh Orang Pribadi" />
 
             <div className="py-8 mx-auto max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
-                <div className="flex flex-1 flex-col gap-4 px-4 pt-0">
+                <div className="tls-spt flex flex-1 flex-col gap-4">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -1859,10 +1860,10 @@ const DetailSPTOP = ({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary mb-2">
-                        SPT TAHUNAN PAJAK PENGHASILAN (PPh) WAJIB PAJAK ORANG
-                        PRIBADI
-                    </h1>
+                    <FormPageHeader
+                        title="SPT TAHUNAN PAJAK PENGHASILAN (PPh) WAJIB PAJAK ORANG PRIBADI"
+                        backHref={route("spt.konsep")}
+                    />
 
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit, (errors) => {
@@ -1948,7 +1949,7 @@ const DetailSPTOP = ({
 
                                 {/* TAB INDUK */}
                                 <TabsContent value="induk">
-                                    <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+                                    <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800">
                                         {/* HEADER */}
                                         <Accordion
                                             type="single"
@@ -1956,10 +1957,10 @@ const DetailSPTOP = ({
                                             defaultValue="header"
                                         >
                                             <AccordionItem value="header">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     HEADER
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                                         {/* Left column */}
                                                         <div className="space-y-4">
@@ -2221,7 +2222,6 @@ const DetailSPTOP = ({
                                                     <div className="pt-6">
                                                         <Button
                                                             type="button"
-                                                            className="bg-blue-950 hover:bg-blue-900"
                                                             onClick={() =>
                                                                 toast.error(
                                                                     "Fitur Posting SPT belum diaktifkan di halaman ini.",
@@ -2256,7 +2256,7 @@ const DetailSPTOP = ({
                                             defaultValue="identitas"
                                         >
                                             <AccordionItem value="identitas">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     A. IDENTITAS WAJIB PAJAK
                                                 </AccordionTrigger>
                                                 <AccordionContent>
@@ -2425,14 +2425,14 @@ const DetailSPTOP = ({
                                             defaultValue="penghasilan"
                                         >
                                             <AccordionItem value="penghasilan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     B. IKHTISAR PENGHASILAN NETO
                                                 </AccordionTrigger>
                                                 <AccordionContent>
                                                     <div className="p-4">
                                                         <div className=" rounded-lg overflow-hidden">
                                                             {/* 1.a */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center">
                                                                 <div className="text-sm font-medium">
                                                                     1.a.
                                                                 </div>
@@ -2559,7 +2559,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 1.b.1 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     1.b.1
                                                                 </div>
@@ -2652,7 +2652,7 @@ const DetailSPTOP = ({
                                                                 "b_1b_1",
                                                             ) && (
                                                                 <>
-                                                                    <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_260px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                                    <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_260px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                         <div className="text-sm font-medium">
                                                                             1.b.2
                                                                         </div>
@@ -2771,7 +2771,7 @@ const DetailSPTOP = ({
                                                                         <div />
                                                                     </div>
 
-                                                                    <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_260px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                                    <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_260px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                         <div className="text-sm font-medium">
                                                                             1.b.3
                                                                         </div>
@@ -2883,7 +2883,7 @@ const DetailSPTOP = ({
                                                                         "b_1b_3",
                                                                     ) ===
                                                                         "tidak1" && (
-                                                                        <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_260px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                                        <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_260px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                             <div className="text-sm font-medium">
                                                                                 1.b.4
                                                                             </div>
@@ -2968,7 +2968,7 @@ const DetailSPTOP = ({
                                                                         </div>
                                                                     )}
 
-                                                                    <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                                    <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                         <div className="text-sm font-medium">
                                                                             1.b.5
                                                                         </div>
@@ -3025,7 +3025,7 @@ const DetailSPTOP = ({
                                                             )}
 
                                                             {/* 1.c */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     1.c.
                                                                 </div>
@@ -3151,7 +3151,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 1.d */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     1.d.
                                                                 </div>
@@ -3287,7 +3287,7 @@ const DetailSPTOP = ({
                                             defaultValue="penghitungan"
                                         >
                                             <AccordionItem value="penghitungan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     C. PENGHITUNGAN PAJAK
                                                     TERUTANG
                                                 </AccordionTrigger>
@@ -3295,7 +3295,7 @@ const DetailSPTOP = ({
                                                     <div className="p-4">
                                                         <div className="rounded-lg overflow-hidden">
                                                             {/* 2 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center">
                                                                 <div className="text-sm font-medium">
                                                                     2
                                                                 </div>
@@ -3334,7 +3334,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 3 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     3
                                                                 </div>
@@ -3474,7 +3474,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 4 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     4
                                                                 </div>
@@ -3515,7 +3515,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 5 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     5
                                                                 </div>
@@ -3595,7 +3595,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 6 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     6
                                                                 </div>
@@ -3634,7 +3634,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 7 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     7
                                                                 </div>
@@ -3671,7 +3671,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 8 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     8
                                                                 </div>
@@ -3797,7 +3797,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 9 */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     9
                                                                 </div>
@@ -3849,14 +3849,14 @@ const DetailSPTOP = ({
                                             defaultValue="kredit"
                                         >
                                             <AccordionItem value="kredit">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     D. KREDIT PAJAK
                                                 </AccordionTrigger>
                                                 <AccordionContent>
                                                     <div className="p-4">
                                                         <div className="rounded-lg overflow-hidden">
                                                             {/* 10a */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center">
                                                                 <div className="text-sm font-medium">
                                                                     10a
                                                                 </div>
@@ -3984,7 +3984,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 10b */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     10b
                                                                 </div>
@@ -4033,7 +4033,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 10c */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     10c
                                                                 </div>
@@ -4084,7 +4084,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 10d */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     10d
                                                                 </div>
@@ -4223,14 +4223,14 @@ const DetailSPTOP = ({
                                             defaultValue="pph_kb_lb"
                                         >
                                             <AccordionItem value="pph_kb_lb">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     E. PPh KURANG/LEBIH BAYAR
                                                 </AccordionTrigger>
                                                 <AccordionContent>
                                                     <div className="p-4">
                                                         <div className="rounded-lg overflow-hidden">
                                                             {/* 11a */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_240px] gap-4 p-4 bg-white items-center">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_240px] gap-4 p-4 bg-card items-center">
                                                                 <div className="text-sm font-medium">
                                                                     11a
                                                                 </div>
@@ -4257,7 +4257,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 11b */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     11b
                                                                 </div>
@@ -4389,7 +4389,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 11c */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     11c
                                                                 </div>
@@ -4427,7 +4427,7 @@ const DetailSPTOP = ({
                                             defaultValue="pembetulan"
                                         >
                                             <AccordionItem value="pembetulan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     F. PEMBETULAN (DIISI JIKA
                                                     STATUS SPT ADALAH
                                                     PEMBETULAN)
@@ -4435,7 +4435,7 @@ const DetailSPTOP = ({
                                                 <AccordionContent>
                                                     <div className="p-4">
                                                         <div className="rounded-lg overflow-hidden">
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center">
                                                                 <div className="text-sm font-medium">
                                                                     12a
                                                                 </div>
@@ -4486,7 +4486,7 @@ const DetailSPTOP = ({
                                                                 </div>
                                                             </div>
 
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     12b
                                                                 </div>
@@ -4525,7 +4525,7 @@ const DetailSPTOP = ({
                                             defaultValue="permohonan"
                                         >
                                             <AccordionItem value="permohonan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     G. PERMOHONAN PENGEMBALIAN
                                                     PPh LEBIH BAYAR (DIISI JIKA
                                                     STATUS SPT ADALAH LEBIH
@@ -4632,7 +4632,7 @@ const DetailSPTOP = ({
                                                                                     }
                                                                                     readOnly
                                                                                     disabled={isAccordionGDisabled()}
-                                                                                    className="bg-gray-100"
+                                                                                    className="bg-muted"
                                                                                 />
                                                                             </FormControl>
                                                                             <FormMessage />
@@ -4662,7 +4662,7 @@ const DetailSPTOP = ({
                                                                                     }
                                                                                     readOnly
                                                                                     disabled={isAccordionGDisabled()}
-                                                                                    className="bg-gray-100"
+                                                                                    className="bg-muted"
                                                                                 />
                                                                             </FormControl>
                                                                             <FormMessage />
@@ -4693,7 +4693,7 @@ const DetailSPTOP = ({
                                                                                     }
                                                                                     readOnly
                                                                                     disabled={isAccordionGDisabled()}
-                                                                                    className="bg-gray-100"
+                                                                                    className="bg-muted"
                                                                                 />
                                                                             </FormControl>
                                                                             <FormMessage />
@@ -4714,14 +4714,14 @@ const DetailSPTOP = ({
                                             defaultValue="angsuran_pph25"
                                         >
                                             <AccordionItem value="angsuran_pph25">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     H. ANGSURAN PPh PASAL 25
                                                     TAHUN PAJAK BERIKUTNYA
                                                 </AccordionTrigger>
                                                 <AccordionContent>
                                                     <div className="p-4">
                                                         <div className="rounded-lg overflow-hidden">
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center">
                                                                 <div className="text-sm font-medium">
                                                                     13a
                                                                 </div>
@@ -4853,7 +4853,7 @@ const DetailSPTOP = ({
                                                                 </div>
                                                             </div>
 
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     13b
                                                                 </div>
@@ -4967,7 +4967,7 @@ const DetailSPTOP = ({
                                                                                             )}
                                                                                             readOnly
                                                                                             disabled
-                                                                                            className="w-[160px] text-right bg-gray-100"
+                                                                                            className="w-[160px] text-right bg-muted"
                                                                                         />
                                                                                     </FormControl>
                                                                                     <FormMessage />
@@ -4978,7 +4978,7 @@ const DetailSPTOP = ({
                                                                 </div>
                                                             </div>
 
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     13c
                                                                 </div>
@@ -5079,7 +5079,7 @@ const DetailSPTOP = ({
                                             defaultValue="pernyataan_transaksi"
                                         >
                                             <AccordionItem value="pernyataan_transaksi">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     I. PERNYATAAN TRANSAKSI
                                                     LAINNYA
                                                 </AccordionTrigger>
@@ -5087,7 +5087,7 @@ const DetailSPTOP = ({
                                                     <div className="p-4">
                                                         <div className="rounded-lg overflow-hidden">
                                                             {/* 14a */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center">
                                                                 <div className="text-sm font-medium">
                                                                     14a
                                                                 </div>
@@ -5135,7 +5135,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 14b */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     14b
                                                                 </div>
@@ -5251,7 +5251,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 14c */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     14c
                                                                 </div>
@@ -5382,7 +5382,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 14d */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     14d
                                                                 </div>
@@ -5510,7 +5510,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 14e */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     14e
                                                                 </div>
@@ -5603,7 +5603,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 14f */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     14f
                                                                 </div>
@@ -5706,7 +5706,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 14g */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-white items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-card items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     14g
                                                                 </div>
@@ -5803,7 +5803,7 @@ const DetailSPTOP = ({
                                                             </div>
 
                                                             {/* 14h */}
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-gray-100 items-center border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_160px_1fr_180px] gap-4 p-4 bg-muted items-center border-t">
                                                                 <div className="text-sm font-medium">
                                                                     14h
                                                                 </div>
@@ -5882,13 +5882,13 @@ const DetailSPTOP = ({
                                             defaultValue="lampiran_tambahan"
                                         >
                                             <AccordionItem value="lampiran_tambahan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     J. LAMPIRAN TAMBAHAN
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-0 bg-white w-full">
+                                                <AccordionContent className="p-0 bg-card w-full">
                                                     <div>
                                                         {/* a */}
-                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-white items-start">
+                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-card items-start">
                                                             <div className="text-sm">
                                                                 a. Laporan
                                                                 Keuangan/Laporan
@@ -5973,7 +5973,7 @@ const DetailSPTOP = ({
                                                             )}
                                                         </div>
                                                         {form.watch("j_a") === true && (
-                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-white border-t">
+                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-card border-t">
                                                             <div className="text-sm text-muted-foreground">
                                                                 File
                                                             </div>
@@ -5983,7 +5983,7 @@ const DetailSPTOP = ({
                                                                 render={({ field }) => (
                                                                     <FormItem>
                                                                         <FormControl>
-                                                                            <div className="border rounded-md p-4 bg-white">
+                                                                            <div className="border rounded-md p-4 bg-card">
                                                                                 <input
                                                                                     ref={jAFileInputRef}
                                                                                     type="file"
@@ -5996,7 +5996,6 @@ const DetailSPTOP = ({
                                                                                 <div className="flex flex-wrap gap-3 items-center">
                                                                                     <Button
                                                                                         type="button"
-                                                                                        className="bg-blue-950 hover:bg-blue-900"
                                                                                         disabled={jFileUploading.j_a_file}
                                                                                         onClick={() =>
                                                                                             jAFileInputRef.current?.click()
@@ -6040,7 +6039,7 @@ const DetailSPTOP = ({
                                                     )}
 
                                                         {/* b */}
-                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-gray-50 items-start border-t">
+                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-muted/50 items-start border-t">
                                                             <div className="text-sm">
                                                                 b. Bukti
                                                                 pembayaran
@@ -6126,7 +6125,7 @@ const DetailSPTOP = ({
                                                         </div>
                                                         {form.watch("j_b") ===
                                                             true && (
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-gray-50 border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-muted/50 border-t">
                                                                 <div className="text-sm text-muted-foreground">
                                                                     File
                                                                 </div>
@@ -6140,7 +6139,7 @@ const DetailSPTOP = ({
                                                                     }) => (
                                                                         <FormItem>
                                                                             <FormControl>
-                                                                                <div className="border rounded-md p-4 bg-white">
+                                                                                <div className="border rounded-md p-4 bg-card">
                                                                                     <input
                                                                                         ref={
                                                                                             jBFileInputRef
@@ -6155,7 +6154,6 @@ const DetailSPTOP = ({
                                                                                     <div className="flex flex-wrap gap-3 items-center">
                                                                                         <Button
                                                                                             type="button"
-                                                                                            className="bg-blue-950 hover:bg-blue-900"
                                                                                             disabled={jFileUploading.j_b_file}
                                                                                             onClick={() =>
                                                                                                 jBFileInputRef.current?.click()
@@ -6200,7 +6198,7 @@ const DetailSPTOP = ({
                                                         )}
 
                                                         {/* c */}
-                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-white items-start border-t">
+                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-card items-start border-t">
                                                             <div className="text-sm">
                                                                 c. Bukti
                                                                 pemotongan/pemungutan
@@ -6303,7 +6301,7 @@ const DetailSPTOP = ({
                                                         </div>
                                                         {form.watch("j_c") ===
                                                             true && (
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-white border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-card border-t">
                                                                 <div className="text-sm text-muted-foreground">
                                                                     File
                                                                 </div>
@@ -6317,7 +6315,7 @@ const DetailSPTOP = ({
                                                                     }) => (
                                                                         <FormItem>
                                                                             <FormControl>
-                                                                                <div className="border rounded-md p-4 bg-white">
+                                                                                <div className="border rounded-md p-4 bg-card">
                                                                                     <input
                                                                                         ref={
                                                                                             jCFileInputRef
@@ -6332,7 +6330,6 @@ const DetailSPTOP = ({
                                                                                     <div className="flex flex-wrap gap-3 items-center">
                                                                                         <Button
                                                                                             type="button"
-                                                                                            className="bg-blue-950 hover:bg-blue-900"
                                                                                             disabled={jFileUploading.j_c_file}
                                                                                             onClick={() =>
                                                                                                 jCFileInputRef.current?.click()
@@ -6377,7 +6374,7 @@ const DetailSPTOP = ({
                                                         )}
 
                                                         {/* d */}
-                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-gray-50 items-start border-t">
+                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-muted/50 items-start border-t">
                                                             <div className="text-sm">
                                                                 d. Surat kuasa
                                                                 khusus
@@ -6442,7 +6439,7 @@ const DetailSPTOP = ({
                                                         </div>
                                                         {form.watch("j_d") ===
                                                             true && (
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-gray-50 border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-muted/50 border-t">
                                                                 <div className="text-sm text-muted-foreground">
                                                                     File
                                                                 </div>
@@ -6456,7 +6453,7 @@ const DetailSPTOP = ({
                                                                     }) => (
                                                                         <FormItem>
                                                                             <FormControl>
-                                                                                <div className="border rounded-md p-4 bg-white">
+                                                                                <div className="border rounded-md p-4 bg-card">
                                                                                     <input
                                                                                         ref={
                                                                                             jDFileInputRef
@@ -6471,7 +6468,6 @@ const DetailSPTOP = ({
                                                                                     <div className="flex flex-wrap gap-3 items-center">
                                                                                         <Button
                                                                                             type="button"
-                                                                                            className="bg-blue-950 hover:bg-blue-900"
                                                                                             disabled={jFileUploading.j_d_file}
                                                                                             onClick={() =>
                                                                                                 jDFileInputRef.current?.click()
@@ -6516,7 +6512,7 @@ const DetailSPTOP = ({
                                                         )}
 
                                                         {/* e */}
-                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-white items-start border-t">
+                                                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px_1fr] gap-4 p-4 bg-card items-start border-t">
                                                             <div className="text-sm">
                                                                 e. Dokumen
                                                                 lainnya
@@ -6581,7 +6577,7 @@ const DetailSPTOP = ({
                                                         </div>
                                                         {form.watch("j_e") ===
                                                             true && (
-                                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-gray-50 border-t">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-4 p-4 bg-muted/50 border-t">
                                                                 <div className="text-sm text-muted-foreground">
                                                                     File
                                                                 </div>
@@ -6595,7 +6591,7 @@ const DetailSPTOP = ({
                                                                     }) => (
                                                                         <FormItem>
                                                                             <FormControl>
-                                                                                <div className="border rounded-md p-4 bg-white">
+                                                                                <div className="border rounded-md p-4 bg-card">
                                                                                     <input
                                                                                         ref={
                                                                                             jEFileInputRef
@@ -6610,7 +6606,6 @@ const DetailSPTOP = ({
                                                                                     <div className="flex flex-wrap gap-3 items-center">
                                                                                         <Button
                                                                                             type="button"
-                                                                                            className="bg-blue-950 hover:bg-blue-900"
                                                                                             disabled={jFileUploading.j_e_file}
                                                                                             onClick={() =>
                                                                                                 jEFileInputRef.current?.click()
@@ -6665,10 +6660,10 @@ const DetailSPTOP = ({
                                             defaultValue="pernyataan"
                                         >
                                             <AccordionItem value="pernyataan">
-                                                <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                                                     K. PERNYATAAN
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                     <div className="space-y-5">
                                                         <div className="bg-sky-200/70 text-sky-950 px-4 py-3 rounded flex items-center gap-3 w-fit">
                                                             <Info className="h-5 w-5" />
@@ -7075,21 +7070,19 @@ const DetailSPTOP = ({
                                                 toast.success("Berhasil disimpan");
                                                 router.visit(route("spt.konsep"));
                                             }}
-                                            className="bg-blue-950 hover:bg-blue-900"
                                         >
                                             Simpan Konsep
                                         </Button>
                                         <Button
                                             type="submit"
                                             disabled={!pernyataanSetuju}
-                                            className="bg-blue-950 hover:bg-blue-900"
                                         >
                                             Bayar dan Lapor
                                         </Button>
                                     </div>
                                     <Link
                                         href={route("spt.konsep")}
-                                        className="text-blue-950 font-medium inline-block hover:underline"
+                                        className="text-brand-ink font-medium inline-block hover:underline"
                                     >
                                         Pergi ke pencarian
                                     </Link>
@@ -7129,13 +7122,13 @@ const DetailSPTOP = ({
 
                     <div className="flex-1 overflow-auto">
                         {/* Toolbar */}
-                        <div className="flex items-center gap-2 mb-4 p-2 bg-blue-950 rounded">
+                        <div className="flex items-center gap-2 mb-4 p-2 bg-brand rounded text-brand-foreground">
                             <Button
                                 type="button"
                                 variant="ghost"
                                 size="icon"
                                 onClick={fetchBanks}
-                                className="text-white hover:bg-blue-900"
+                                className="text-white hover:bg-brand/90"
                             >
                                 <RefreshCw
                                     className={cn(
@@ -7149,7 +7142,7 @@ const DetailSPTOP = ({
                                 variant="ghost"
                                 size="icon"
                                 onClick={resetBankFilters}
-                                className="text-white hover:bg-blue-900"
+                                className="text-white hover:bg-brand/90"
                             >
                                 <Filter className="h-4 w-4" />
                             </Button>
@@ -7160,7 +7153,7 @@ const DetailSPTOP = ({
                                 asChild
                                 variant="secondary"
                                 size="sm"
-                                className="bg-white text-blue-900 hover:bg-amber-300"
+                                className="bg-card text-brand-ink hover:bg-amber-300"
                             >
                                 <Link href={route("banks")}>
                                     Dashboard &gt; Bank Saya
@@ -7171,35 +7164,35 @@ const DetailSPTOP = ({
                         {/* Bank Table */}
                         <div className="border rounded-lg overflow-hidden">
                             <Table>
-                                <TableHeader className="bg-amber-400">
+                                <TableHeader className="bg-highlight text-highlight-foreground">
                                     <TableRow>
-                                        <TableHead className="text-black font-semibold">
+                                        <TableHead className="text-foreground font-semibold">
                                             Aksi
                                         </TableHead>
-                                        <TableHead className="text-black font-semibold">
+                                        <TableHead className="text-foreground font-semibold">
                                             Nama Bank
                                         </TableHead>
-                                        <TableHead className="text-black font-semibold">
+                                        <TableHead className="text-foreground font-semibold">
                                             Nomor Rekening Bank
                                         </TableHead>
-                                        <TableHead className="text-black font-semibold">
+                                        <TableHead className="text-foreground font-semibold">
                                             Jenis Rekening Bank
                                         </TableHead>
-                                        <TableHead className="text-black font-semibold">
+                                        <TableHead className="text-foreground font-semibold">
                                             Apakah Rekening Bank Utama
                                         </TableHead>
-                                        <TableHead className="text-black font-semibold">
+                                        <TableHead className="text-foreground font-semibold">
                                             Keterangan
                                         </TableHead>
-                                        <TableHead className="text-black font-semibold">
+                                        <TableHead className="text-foreground font-semibold">
                                             Tanggal Mulai
                                         </TableHead>
-                                        <TableHead className="text-black font-semibold">
+                                        <TableHead className="text-foreground font-semibold">
                                             Tanggal Berakhir
                                         </TableHead>
                                     </TableRow>
                                     {/* Filter Row */}
-                                    <TableRow className="bg-white">
+                                    <TableRow className="bg-card">
                                         <TableHead></TableHead>
                                         <TableHead>
                                             <Select
@@ -7463,7 +7456,7 @@ const DetailSPTOP = ({
                                         <TableRow>
                                             <TableCell
                                                 colSpan={8}
-                                                className="text-center py-4 text-gray-500"
+                                                className="text-center py-4 text-muted-foreground"
                                             >
                                                 Tidak ada data bank yg
                                                 ditemukan.
@@ -7473,7 +7466,7 @@ const DetailSPTOP = ({
                                         filteredBanks.map((bank) => (
                                             <TableRow
                                                 key={bank.id}
-                                                className="hover:bg-gray-50"
+                                                className="hover:bg-muted/50"
                                             >
                                                 <TableCell>
                                                     <Button
@@ -7534,7 +7527,7 @@ const DetailSPTOP = ({
                         </div>
 
                         {/* Pagination info */}
-                        <div className="flex items-center justify-between mt-4 text-sm text-gray-600">
+                        <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
                             <span>
                                 Menampilkan {filteredBanks.length} dari{" "}
                                 {banks.length} entri

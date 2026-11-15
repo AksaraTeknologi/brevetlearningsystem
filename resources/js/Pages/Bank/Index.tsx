@@ -65,7 +65,7 @@ export default function Index(props: { banks: BankColumns[] }) {
                             </h3>
                         </div>
 
-                        <div className="p-6 rounded-xl bg-white border overflow-x-auto max-w-full">
+                        <div className="p-6 rounded-xl bg-card border overflow-x-auto max-w-full">
                             <DataTableBank columns={columns} data={banks} />
                         </div>
                     </div>

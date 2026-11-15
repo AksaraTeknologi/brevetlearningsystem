@@ -218,7 +218,7 @@ export default function FormFieldGrossIncome({ form }: any) {
                                 type="text"
                                 value={rupiahFormatter.format(field.value || 0)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </FormControl>
                         <FormMessage />

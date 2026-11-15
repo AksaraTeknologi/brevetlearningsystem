@@ -46,40 +46,40 @@ export function TabL11A({
         >
             {/* 1. Biaya yang Berkaitan dengan Penghasilan Bruto */}
             <AccordionItem value="1" className="border rounded-lg overflow-hidden">
-                <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-blue-900">
+                <AccordionTrigger className="bg-brand text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-brand/90">
                     1. DAFTAR NOMINATIF BIAYA PROMOSI DAN PENJUALAN, SERTA PENGGANTIAN ATAU IMBALAN DALAM BENTUK NATURA DAN/ATAU KENIKMATAN
                 </AccordionTrigger>
-                <AccordionContent className="p-4 bg-white">
+                <AccordionContent className="p-4 bg-card">
                     <SectionL11A1 data={l11a1} sptBadanId={sptBadanId} />
                 </AccordionContent>
             </AccordionItem>
 
             {/* 2. Biaya Promosi */}
             <AccordionItem value="2" className="border rounded-lg overflow-hidden">
-                <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-blue-900">
+                <AccordionTrigger className="bg-brand text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-brand/90">
                     2.  DAFTAR NOMINATIF BIAYA ENTERTAINMENT
                 </AccordionTrigger>
-                <AccordionContent className="p-4 bg-white">
+                <AccordionContent className="p-4 bg-card">
                     <SectionL11A2 data={l11a2} sptBadanId={sptBadanId} />
                 </AccordionContent>
             </AccordionItem>
 
             {/* 3. Piutang yang Nyata-Nyata Tidak Dapat Ditagih */}
             <AccordionItem value="3" className="border rounded-lg overflow-hidden">
-                <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-blue-900">
+                <AccordionTrigger className="bg-brand text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-brand/90">
                     3. PIUTANG YANG NYATA-NYATA TIDAK DAPAT DITAGIH
                 </AccordionTrigger>
-                <AccordionContent className="p-4 bg-white">
+                <AccordionContent className="p-4 bg-card">
                     <SectionL11A3 data={l11a3} sptBadanId={sptBadanId} />
                 </AccordionContent>
             </AccordionItem>
 
             {/* 4A. Penyusutan Harta Berwujud */}
             <AccordionItem value="4a" className="border rounded-lg overflow-hidden">
-                <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-blue-900">
+                <AccordionTrigger className="bg-brand text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-brand/90">
                      RINCIAN BAGI WAJIB PAJAK PEMBERI NATURA DAN/ATAU KENIKMATAN
                 </AccordionTrigger>
-                <AccordionContent className="p-4 bg-white">
+                <AccordionContent className="p-4 bg-card">
                     <SectionL11A4A data={l11a4a} sptBadanId={sptBadanId} />
                     <FormL11A4B sptBadanId={sptBadanId} l11a4b={l11a4b} />
                 </AccordionContent>
@@ -87,10 +87,10 @@ export function TabL11A({
 
             {/* 5. Kerugian dari Penanaman Modal */}
             <AccordionItem value="5" className="border rounded-lg overflow-hidden">
-                <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-blue-900">
+                <AccordionTrigger className="bg-brand text-white font-semibold px-4 py-3 w-full text-left hover:no-underline hover:bg-brand/90">
                     5.  DAFTAR DEBITUR NON-PERFORMING LOAN
                 </AccordionTrigger>
-                <AccordionContent className="p-4 bg-white">
+                <AccordionContent className="p-4 bg-card">
                     <SectionL11A5 data={l11a5} sptBadanId={sptBadanId} />
                 </AccordionContent>
             </AccordionItem>

@@ -30,14 +30,14 @@ export function TabL13B({
             {/* Bagian A */}
             <Accordion type="single" collapsible defaultValue="accA">
                 <AccordionItem value="accA">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded text-left">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded text-left">
                         A. DALAM HAL PERUSAHAAN MENDAPAT FASILITAS PENGURANGAN
                         PENGHASILAN BRUTO UNTUK KEGIATAN PRAKTIK KERJA,
                         PEMAGANGAN, DAN/ATAU PEMBELAJARAN DALAM RANGKA PEMBINAAN
                         DAN PENGEMBANGAN SUMBER DAYA MANUSIA BERBASIS KOMPETENSI
                         TERTENTU
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL13BA data={l13ba} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>
@@ -46,13 +46,13 @@ export function TabL13B({
             {/* Bagian B */}
             <Accordion type="single" collapsible defaultValue="accB">
                 <AccordionItem value="accB">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded text-left">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded text-left">
                         B. REKAPITULASI BIAYA KEGIATAN PRAKTIK KERJA,
                         PEMAGANGAN, DAN/ATAU PEMBELAJARAN DALAM RANGKA PEMBINAAN
                         DAN PENGEMBANGAN SUMBER DAYA MANUSIA BERBASIS KOMPETENSI
                         TERTENTU
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL13BB data={l13bb} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>
@@ -61,11 +61,11 @@ export function TabL13B({
             {/* Bagian C */}
             <Accordion type="single" collapsible defaultValue="accC">
                 <AccordionItem value="accC">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded text-left">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded text-left">
                         C. DALAM HAL PERUSAHAAN MENDAPAT FASILITAS PENGURANGAN
                         PENGHASILAN BRUTO UNTUK PENELITIAN DAN PENGEMBANGAN
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL13BC data={l13bc} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>
@@ -74,10 +74,10 @@ export function TabL13B({
             {/* Bagian D */}
             <Accordion type="single" collapsible defaultValue="accD">
                 <AccordionItem value="accD">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded text-left">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded text-left">
                         D. PENGHITUNGAN TAMBAHAN PENGURANGAN PENGHASILAN BRUTO
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white">
+                    <AccordionContent className="p-4 bg-card">
                         <SectionL13BD data={l13bd} sptBadanId={sptBadanId} />
                     </AccordionContent>
                 </AccordionItem>

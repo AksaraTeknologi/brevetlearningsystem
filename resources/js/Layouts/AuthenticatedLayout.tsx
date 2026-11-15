@@ -1,55 +1,44 @@
-import ConfirmDialog from "@/Components/layout/ConfirmDialog";
-import { Button } from "@/Components/ui/button";
+import AccountMenu from "@/Components/app-shell/AccountMenu";
 import {
-    NavigationMenu,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    navigationMenuTriggerStyle,
-} from "@/Components/ui/navigation-menu";
-import { Separator } from "@/Components/ui/separator";
+    activeModule,
+    isCurrent,
+    visibleModules,
+    type NavModule,
+} from "@/Components/app-shell/nav-config";
+import AppFooter, { BackToTop } from "@/Components/app-shell/AppFooter";
+import { LanguageMenu, ThemeToggle } from "@/Components/app-shell/HeaderControls";
+import SearchCommand, { type SearchEntry } from "@/Components/app-shell/SearchCommand";
+import ConfirmDialog from "@/Components/layout/ConfirmDialog";
+import { useTheme } from "@/lib/theme";
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
 } from "@/Components/ui/sheet";
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarProvider,
-    SidebarTrigger,
-} from "@/Components/ui/sidebar";
-import { Toaster } from "react-hot-toast";
 import items from "@/lib/sidebar-items";
+import { cn } from "@/lib/utils";
 import { Link, router, usePage } from "@inertiajs/react";
-import { format } from "date-fns";
-import { ChevronDown, LogOut, Menu } from "lucide-react";
-import { PropsWithChildren, useState } from "react";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
+    ChevronDown,
+    ChevronRight,
+    ChevronsLeft,
+    Home,
+    Menu,
+    School,
+} from "lucide-react";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/Components/ui/popover";
+    PropsWithChildren,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+    type ReactNode,
+} from "react";
+import { Toaster } from "react-hot-toast";
+
+const SIDEBAR_KEY = "bls-sidebar-collapsed";
 
 const getPath = (fullUrl: string) => {
     const pathWithoutQuery = fullUrl.split("?")[0].split("#")[0];
@@ -70,51 +59,432 @@ const getPath = (fullUrl: string) => {
         : pathWithoutQuery;
 };
 
-export default function Authenticated({ children }: PropsWithChildren) {
+type Identity = { id: string; name: string; npwp: string };
+
+/* ------------------------------------------------------------------ */
+/* Ikon modul dua warna (garis navy, isi kuning) ala Coretax           */
+/* ------------------------------------------------------------------ */
+function ModuleIcon({ module, className }: { module: NavModule; className?: string }) {
+    const Icon = module.icon;
+    return (
+        <Icon
+            aria-hidden
+            className={cn("size-[18px] shrink-0 text-brand-900", className)}
+            fill="#C5F24A"
+            fillOpacity={0.9}
+            strokeWidth={2.1}
+        />
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/* Menu horizontal desktop + mega menu                                 */
+/* ------------------------------------------------------------------ */
+function TopNav({
+    modules,
+    openKey,
+    setOpenKey,
+    right,
+}: {
+    modules: NavModule[];
+    openKey: string | null;
+    setOpenKey: (k: string | null) => void;
+    right?: ReactNode;
+}) {
+    const current = activeModule(modules);
+    const openModule = modules.find((m) => m.key === openKey);
+
+    return (
+        <>
+            <div className="flex items-center gap-3 border-t border-border/60 px-3 dark:border-white/10">
+            <nav aria-label="Menu utama" className="min-w-0 flex-1">
+                <ul className="flex items-center gap-1 overflow-x-auto py-1.5">
+                    {modules.map((m) => {
+                        const isActive = current?.key === m.key;
+                        const isOpen = openKey === m.key;
+                        const base = cn(
+                            "relative flex h-10 items-center gap-2 whitespace-nowrap rounded-full px-4 text-[15px] font-medium text-brand-950 transition-colors duration-200 hover:bg-slate-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-900/30 dark:hover:bg-white/5",
+                            (isActive || isOpen) &&
+                                "bg-highlight font-bold text-highlight-foreground hover:bg-highlight dark:text-highlight-foreground dark:hover:bg-highlight",
+                        );
+
+                        return (
+                            <li key={m.key} className="flex">
+                                {m.groups ? (
+                                    <button
+                                        type="button"
+                                        className={base}
+                                        aria-expanded={isOpen}
+                                        aria-haspopup="true"
+                                        onClick={() =>
+                                            setOpenKey(isOpen ? null : m.key)
+                                        }
+                                    >
+                                        <ModuleIcon module={m} />
+                                        {m.label}
+                                        <ChevronDown
+                                            className={cn(
+                                                "size-4 text-slate-400 transition-transform duration-200",
+                                                isOpen && "rotate-180",
+                                            )}
+                                        />
+                                    </button>
+                                ) : (
+                                    <Link
+                                        href={route(m.routeName!)}
+                                        className={base}
+                                        aria-current={isActive ? "page" : undefined}
+                                    >
+                                        <ModuleIcon module={m} />
+                                        {m.label}
+                                    </Link>
+                                )}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </nav>
+            {right && <div className="shrink-0 py-1.5">{right}</div>}
+            </div>
+
+            {openModule?.groups && (
+                <div
+                    role="menu"
+                    aria-label={openModule.label}
+                    className="absolute inset-x-0 top-full z-50 mt-2 grid origin-top overflow-hidden rounded-2xl border border-border bg-card shadow-[0_30px_70px_-25px_rgba(13,77,64,0.35)] duration-200 ease-out animate-in fade-in-0 slide-in-from-top-2"
+                    style={{
+                        gridTemplateColumns: `repeat(${Math.max(
+                            openModule.groups.length,
+                            openModule.groups.length === 1 ? 3 : 2,
+                        )}, minmax(0, 1fr))`,
+                    }}
+                >
+                    {openModule.groups.map((g, i) => (
+                        <div
+                            key={g.heading}
+                            className={cn(
+                                "px-6 py-6",
+                                i === 0 ? "bg-muted/50" : "border-l border-border/60",
+                            )}
+                        >
+                            <p className="px-3 pb-3 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                                {g.heading}
+                            </p>
+                            <ul className="space-y-1">
+                                {g.items.map((it) => {
+                                    const active = isCurrent(it.match);
+                                    return (
+                                        <li key={it.routeName}>
+                                            <Link
+                                                role="menuitem"
+                                                href={route(it.routeName)}
+                                                className={cn(
+                                                    "block rounded-lg px-3 py-2.5 text-[15px] font-semibold text-brand-950 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                                    active &&
+                                                        "bg-highlight-soft text-highlight-foreground hover:bg-highlight-soft dark:bg-highlight/15 dark:text-highlight dark:hover:bg-highlight/15",
+                                                )}
+                                            >
+                                                {it.title}
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </>
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar kartu per modul                                             */
+/* ------------------------------------------------------------------ */
+type SidebarCategory = ReturnType<typeof items>[number];
+
+function ModuleSidebar({
+    title,
+    module,
+    categories,
+    isActive,
+    onCollapse,
+    closing,
+}: {
+    title: string;
+    module?: NavModule;
+    categories: SidebarCategory[];
+    isActive: (url: string) => boolean;
+    onCollapse: () => void;
+    closing: boolean;
+}) {
+    const multi = categories.length > 1;
+
+    return (
+        <aside
+            className={cn(
+                "sticky top-[156px] hidden max-h-[calc(100vh-176px)] w-[280px] shrink-0 flex-col overflow-hidden rounded-[20px] border border-border/80 bg-card dark:border-white/[0.07] lg:flex",
+                // Animasi ringan (opacity + transform saja, tanpa animasi lebar)
+                closing
+                    ? "duration-200 ease-in animate-out fade-out-0 slide-out-to-left-6 fill-mode-forwards"
+                    : "duration-300 ease-out animate-in fade-in-0 slide-in-from-left-6",
+            )}
+        >
+            <div className="m-3 flex items-center gap-3 rounded-xl bg-muted/80 py-2.5 pl-4 pr-2">
+                {module && <ModuleIcon module={module} className="size-5" />}
+                <h2 className="min-w-0 flex-1 truncate text-[17px] font-bold text-brand-950">
+                    {title}
+                </h2>
+                <button
+                    type="button"
+                    onClick={onCollapse}
+                    aria-label="Sembunyikan menu samping"
+                    className="grid size-9 place-items-center rounded-lg border border-border bg-card text-brand-900 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                    <ChevronsLeft className="size-4" />
+                </button>
+            </div>
+
+            <nav
+                aria-label={`Menu ${title}`}
+                className="flex-1 overflow-y-auto px-3 pb-4"
+            >
+                {categories.map((cat) => (
+                    <div key={cat.category} className={cn(multi && "mb-3")}>
+                        {multi && (
+                            <p className="px-4 pb-1 pt-3 text-[15px] font-bold text-brand-950">
+                                {cat.category}
+                            </p>
+                        )}
+                        <ul className="space-y-0.5">
+                            {cat.items.map((item) => {
+                                const active = isActive(item.url);
+                                return (
+                                    <li key={item.title}>
+                                        <Link
+                                            href={item.url}
+                                            aria-current={active ? "page" : undefined}
+                                            className={cn(
+                                                /* Aksen kuning = border kiri pada kotak membulat, jadi ikut melengkung
+                                                   di sudut (sama seperti kepala bagian di halaman SPT) */
+                                                "relative block rounded-xl px-4 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-muted/50 hover:text-brand-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                                active &&
+                                                    "bg-brand font-semibold text-white hover:bg-brand hover:text-white dark:bg-highlight dark:text-highlight-foreground dark:hover:bg-highlight dark:hover:text-highlight-foreground",
+                                            )}
+                                        >
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                ))}
+            </nav>
+        </aside>
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/* Tab vertikal di tepi kiri saat sidebar diciutkan (ala Coretax)       */
+/* ------------------------------------------------------------------ */
+function SidebarTab({
+    title,
+    module,
+    onOpen,
+}: {
+    title: string;
+    module?: NavModule;
+    onOpen: () => void;
+}) {
+    return (
+        <button
+            type="button"
+            onClick={onOpen}
+            aria-label={`Tampilkan menu ${title}`}
+            className="fixed left-0 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center gap-3 rounded-r-2xl border border-l-0 border-highlight/60 bg-highlight py-5 pl-2.5 pr-3 text-brand-950 shadow-[0_12px_30px_-12px_rgba(13,77,64,0.35)] transition-[padding] duration-200 ease-out animate-in fade-in-0 slide-in-from-left-4 hover:pl-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-highlight/30 lg:flex"
+        >
+            {module && <ModuleIcon module={module} />}
+            <span className="rotate-180 text-sm font-bold [writing-mode:vertical-rl]">
+                {title}
+            </span>
+            <ChevronRight className="size-4" />
+        </button>
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/* Breadcrumb                                                          */
+/* ------------------------------------------------------------------ */
+function Breadcrumbs({ trail }: { trail: { label: string; href?: string }[] }) {
+    return (
+        <nav aria-label="Breadcrumb" className="px-3 pt-3 md:px-6 md:pt-5">
+            <ol className="flex flex-wrap items-center gap-1.5 text-sm">
+                <li>
+                    <Link
+                        href={route("dashboard")}
+                        className="text-muted-foreground hover:text-brand-900"
+                    >
+                        Dashboard
+                    </Link>
+                </li>
+                {trail.map((t, i) => {
+                    const last = i === trail.length - 1;
+                    return (
+                        <li key={`${t.label}-${i}`} className="inline-flex items-center gap-1.5">
+                            <ChevronRight className="size-3.5 text-slate-300" />
+                            {t.href && !last ? (
+                                <Link href={t.href} className="font-medium text-brand-900 hover:underline">
+                                    {t.label}
+                                </Link>
+                            ) : (
+                                <span
+                                    className={cn(
+                                        "font-medium",
+                                        last ? "text-brand-950" : "text-brand-900",
+                                    )}
+                                    aria-current={last ? "page" : undefined}
+                                >
+                                    {t.label}
+                                </span>
+                            )}
+                        </li>
+                    );
+                })}
+            </ol>
+        </nav>
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/* Kelas aktif                                                         */
+/* ------------------------------------------------------------------ */
+function ActiveCourse({ name, className }: { name: string; className?: string }) {
+    return (
+        <div
+            role="status"
+            aria-label={`Kelas aktif: ${name}`}
+            className={cn(
+                "flex h-9 min-w-0 items-center gap-2 rounded-full border border-highlight/60 bg-highlight-soft pl-1.5 pr-1 text-sm dark:border-highlight/30",
+                className,
+            )}
+        >
+            <span className="relative grid size-6 shrink-0 place-items-center rounded-full bg-highlight text-brand-950">
+                <School className="size-3.5" />
+                <span aria-hidden className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-green-500 ring-2 ring-highlight-soft" />
+            </span>
+            <span className="min-w-0 truncate">
+                <span className="text-muted-foreground">Kelas Aktif:</span>{" "}
+                <span className="font-bold text-brand-950">{name}</span>
+            </span>
+            <button
+                type="button"
+                onClick={() => router.post(route("courses.stop"))}
+                className="shrink-0 rounded-full border border-orange-200 bg-card px-3 py-1 text-xs font-bold text-orange-700 transition-colors hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-orange-400/30 dark:text-orange-300"
+            >
+                Berhenti
+            </button>
+        </div>
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout                                                              */
+/* ------------------------------------------------------------------ */
+export default function Authenticated({
+    children,
+    variant = "default",
+}: PropsWithChildren<{
+    /** "home": halaman sambutan tanpa sidebar & kartu konten (Beranda) */
+    variant?: "default" | "home";
+}>): ReactNode {
     const pageProps = usePage().props as any;
+    const { url } = usePage();
     const user = pageProps.auth.user;
-    const active_course = usePage().props.active_course as {
+    const active_course = pageProps.active_course as {
         id: number;
         name: string;
         access_rights: string[];
     } | null;
-    const businessEntities = (pageProps.business_entities ?? []) as Array<{
-        id: string;
-        name: string;
-        npwp: string;
-    }>;
-    const activeBusinessEntity = (pageProps.active_business_entity ?? null) as {
-        id: string;
-        name: string;
-        npwp: string;
-    } | null;
+    const businessEntities = (pageProps.business_entities ?? []) as Identity[];
+    const activeBusinessEntity = (pageProps.active_business_entity ??
+        null) as Identity | null;
     const access_rights =
         active_course && active_course.access_rights
             ? Array.isArray(active_course.access_rights)
                 ? active_course.access_rights
                 : JSON.parse(active_course.access_rights)
             : user.access_rights;
-    const menuItems = items();
-    const { url } = usePage();
-    const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
 
-    const getInitials = (name: string) => {
-        const initials = name
-            .split(" ")
-            .map((n) => n[0])
-            .join("");
-        return initials.substring(0, 2).toUpperCase();
+    const menuItems = items();
+    const modules = visibleModules(access_rights);
+    const currentModule = activeModule(modules);
+
+    const { theme, toggle: toggleTheme } = useTheme();
+    const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+    const [openKey, setOpenKey] = useState<string | null>(null);
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const mainRef = useRef<HTMLElement>(null);
+    // Banyak halaman sudah punya breadcrumb sendiri (sering lebih detail);
+    // breadcrumb layout hanya tampil jika halaman tidak punya.
+    const [pageHasCrumb, setPageHasCrumb] = useState(false);
+
+    useLayoutEffect(() => {
+        setPageHasCrumb(
+            !!mainRef.current?.querySelector('nav[aria-label="breadcrumb"]'),
+        );
+    }, [url]);
+
+    useEffect(() => {
+        try {
+            setCollapsed(localStorage.getItem(SIDEBAR_KEY) === "1");
+        } catch {}
+    }, []);
+
+    const [sidebarClosing, setSidebarClosing] = useState(false);
+    const collapseSidebar = () => {
+        setSidebarClosing(true);
+        window.setTimeout(() => {
+            setSidebarCollapsed(true);
+            setSidebarClosing(false);
+        }, 190);
     };
+
+    const setSidebarCollapsed = (v: boolean) => {
+        setCollapsed(v);
+        try {
+            localStorage.setItem(SIDEBAR_KEY, v ? "1" : "0");
+        } catch {}
+    };
+
+    // Tutup mega menu & menu mobile saat pindah halaman
+    useEffect(() => {
+        setOpenKey(null);
+        setMobileOpen(false);
+    }, [url]);
+
+    // Tutup mega menu saat klik di luar header atau tekan Escape
+    useEffect(() => {
+        if (!openKey) return;
+        const onDown = (e: MouseEvent) => {
+            if (!headerRef.current?.contains(e.target as Node)) setOpenKey(null);
+        };
+        const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenKey(null);
+        document.addEventListener("mousedown", onDown);
+        document.addEventListener("keydown", onKey);
+        return () => {
+            document.removeEventListener("mousedown", onDown);
+            document.removeEventListener("keydown", onKey);
+        };
+    }, [openKey]);
 
     const handleLogout = () => {
         router.post(
             route("logout"),
             {},
-            {
-                onSuccess: () => {
-                    setOpenLogoutDialog(false);
-                },
-            },
+            { onSuccess: () => setOpenLogoutDialog(false) },
         );
     };
 
@@ -125,17 +495,10 @@ export default function Authenticated({ children }: PropsWithChildren) {
             return false;
         }
 
-        if (
-            currentPath.match(/^\/bpa1\/(not-issued\/)?[^\/]+\/(detail|edit)$/)
-        ) {
-            const pageProps = usePage().props as any;
+        if (currentPath.match(/^\/bpa1\/(not-issued\/)?[^\/]+\/(detail|edit)$/)) {
             const bupot = pageProps.bupot;
-
             if (bupot) {
-                if (
-                    bupot.status === "approved" &&
-                    itemPath === "/bpa1/issued"
-                ) {
+                if (bupot.status === "approved" && itemPath === "/bpa1/issued") {
                     return true;
                 }
                 if (bupot.status === "draft" && itemPath === "/bpa1/invalid") {
@@ -152,1203 +515,318 @@ export default function Authenticated({ children }: PropsWithChildren) {
         if (itemPath === "/dashboard") {
             return currentPath === "/dashboard";
         }
-        return (
-            currentPath === itemPath || currentPath.startsWith(`${itemPath}/`)
-        );
+        return currentPath === itemPath || currentPath.startsWith(`${itemPath}/`);
     };
 
+    // Judul sidebar & breadcrumb
+    const sidebarTitle =
+        currentModule?.label ??
+        (menuItems.length === 1 ? menuItems[0].category : "Menu");
+    const activeItem = menuItems
+        .flatMap((c) => c.items.map((i) => ({ ...i, category: c.category })))
+        .find((i) => isActiveSidebar(i.url));
+    const trail: { label: string; href?: string }[] = [];
+    if (currentModule && !(currentModule.key === "portal" && activeItem?.title === "Beranda")) {
+        /* "Portal Saya" hanya pengelompok menu, tidak ditampilkan di breadcrumb
+           (Dashboard > Kelas Saya), sama dengan halaman yang membuat breadcrumb sendiri */
+        if (currentModule.key !== "portal") {
+            trail.push({
+                label: currentModule.label,
+                href: currentModule.routeName ? route(currentModule.routeName) : undefined,
+            });
+        }
+        if (
+            currentModule.key === "ebupot" &&
+            menuItems[0]?.category &&
+            menuItems.length === 1
+        ) {
+            trail.push({ label: menuItems[0].category });
+        }
+        if (activeItem && activeItem.title !== currentModule.label) {
+            trail.push({ label: activeItem.title });
+        }
+    }
+
+    // Data pencarian layanan (⌘K): semua menu yang bisa diakses + submenu modul aktif
+    const searchEntries: SearchEntry[] = [
+        ...modules.flatMap((m) =>
+            m.groups
+                ? m.groups.flatMap((g) =>
+                      g.items.map((it) => ({
+                          title: it.title,
+                          href: route(it.routeName),
+                          group: m.label,
+                      })),
+                  )
+                : [{ title: m.label, href: route(m.routeName!), group: "Layanan" }],
+        ),
+        ...menuItems.flatMap((c) =>
+            c.items.map((it) => ({ title: it.title, href: it.url, group: c.category })),
+        ),
+        { title: "Apa itu Brevet Learning System?", href: route("about"), group: "Bantuan" },
+    ];
+
+    const footerColumns = [
+        {
+            heading: "Portal Saya",
+            links: [
+                { label: "Beranda", href: route("dashboard") },
+                { label: "Kelas Saya", href: route("courses") },
+                { label: "Profil Saya", href: route("profile.edit") },
+            ],
+        },
+        {
+            heading: "Layanan",
+            links: modules
+                .filter((m) => m.key !== "portal")
+                .map((m) => ({
+                    label: m.label,
+                    href: route(m.routeName ?? m.groups![0].items[0].routeName),
+                })),
+        },
+        {
+            heading: "Bantuan",
+            links: [
+                { label: "Apa itu Brevet Learning System?", href: route("about") },
+                { label: "Badan Usaha", href: route("business-entities.index") },
+                { label: "Bank Saya", href: route("banks") },
+            ],
+        },
+    ];
+
     return (
-        <SidebarProvider
-            style={
-                {
-                    "--sidebar-width": "12rem",
-                    "--sidebar-width-mobile": "10rem",
-                } as React.CSSProperties
-            }
-        >
-            <Sidebar className="border-r border-teal-100 bg-white/95 backdrop-blur-sm">
-                <SidebarHeader className="border-b border-teal-100/70 bg-gradient-to-r from-teal-50/80 to-amber-50/70">
-                    <Link
-                        href={route("dashboard")}
-                        className="m-3 w-3/5 mx-auto"
-                    >
-                        <img
-                            src="/images/logo.png"
-                            alt="Brevet Learning System"
-                        />
-                    </Link>
-                </SidebarHeader>
-                <SidebarContent>
-                    {menuItems.map((category) => (
-                        <SidebarGroup key={category.category}>
-                            <SidebarGroupLabel className="text-[11px] uppercase tracking-[0.12em] text-slate-500">
-                                {category.category}
-                            </SidebarGroupLabel>
-                            <SidebarGroupContent>
-                                <SidebarMenu>
-                                    {category.items.map((item) => (
-                                        <SidebarMenuItem key={item.title}>
-                                            <SidebarMenuButton
-                                                asChild
-                                                className={
-                                                    isActiveSidebar(item.url)
-                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                        : ""
-                                                }
-                                            >
-                                                <Link href={item.url}>
-                                                    <item.icon />
-                                                    <span>{item.title}</span>
-                                                </Link>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                    ))}
-                                </SidebarMenu>
-                            </SidebarGroupContent>
-                        </SidebarGroup>
-                    ))}
-                </SidebarContent>
-                <SidebarFooter />
-            </Sidebar>
-            <div className="relative min-h-screen w-full overflow-hidden bg-slate-50/70">
-                <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(13,148,136,0.14),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_36%)]" />
-                <header className="relative z-50 border-b border-teal-100 bg-gradient-to-r from-teal-50 via-white to-amber-50/90 backdrop-blur-sm">
-                    <div className="mx-auto px-4">
-                        <div className="flex h-16 justify-between">
-                            <div className="flex">
-                                <div className="mr-4 space-x-2 flex items-center">
-                                    <SidebarTrigger />
-                                    <Link
-                                        href={route("dashboard")}
-                                        className="block md:hidden w-16"
-                                    >
-                                        <img
-                                            src="/images/logo.png"
-                                            alt="Brevet Learning System"
-                                        />
-                                    </Link>
+        <div className="relative flex min-h-screen flex-col bg-page font-sans text-foreground">
+            {/* Latar lembut statis (tanpa animasi) */}
+            <div
+                aria-hidden
+                className="pointer-events-none fixed inset-0 bg-[radial-gradient(40%_35%_at_0%_0%,rgba(247,181,25,0.14),transparent_70%),radial-gradient(45%_50%_at_100%_40%,rgba(22,163,130,0.14),transparent_70%)] dark:opacity-30"
+            />
 
-                                    {/* Mobile Active Identity Indicator */}
-                                    <div className="md:hidden flex flex-col justify-center max-w-[140px] pl-2 border-l border-slate-200">
-                                        <span className="text-[9px] text-slate-500 font-medium leading-none mb-0.5 truncate">
-                                            {activeBusinessEntity && activeBusinessEntity.id !== user.id ? "Impersonating:" : "Orang Pribadi:"}
-                                        </span>
-                                        <span className="text-[11px] font-semibold text-teal-700 leading-none truncate">
-                                            {activeBusinessEntity ? activeBusinessEntity.name : user.name}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div className="hidden md:flex md:items-center">
-                                    <h3 className="text-sm font-medium text-slate-600">
-                                        Login Terakhir :{" "}
-                                        <span>
-                                            {user.last_logout_at
-                                                ? format(
-                                                      new Date(
-                                                          user.last_logout_at,
-                                                      ),
-                                                      "dd MMM yyyy HH:mm:ss",
-                                                  )
-                                                : "-"}
-                                        </span>
-                                    </h3>
-                                </div>
-                            </div>
-                            {active_course && (
-                                <div className="my-2 ml-8 flex items-center rounded-xl border border-emerald-200 bg-emerald-50/80 px-4 text-center text-sm font-semibold text-emerald-700">
-                                    Kelas Aktif: {active_course.name}
-                                    <Button
-                                        size="sm"
-                                        className="ml-4"
-                                        variant="accentOutline"
-                                        onClick={() =>
-                                            router.post(route("courses.stop"))
-                                        }
-                                    >
-                                        Berhenti
-                                    </Button>
-                                </div>
-                            )}
-
-                            <div className="hidden lg:ms-6 lg:flex lg:items-center lg:gap-4">
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <div className="mr-6 flex items-center gap-2 rounded-xl border border-teal-100 bg-white/80 px-2 py-1 hover:cursor-pointer">
-                                            <div>
-                                                {activeBusinessEntity &&
-                                                activeBusinessEntity.id !==
-                                                    user.id ? (
-                                                    <p className="text-center text-xs font-medium text-slate-500">
-                                                        You are currently
-                                                        impersonating user
-                                                    </p>
-                                                ) : null}
-                                                <p className="text-center font-medium text-slate-700">
-                                                    {activeBusinessEntity
-                                                        ? ` ${activeBusinessEntity.npwp} ${activeBusinessEntity.name}`
-                                                        : `${user.npwp} ${user.name}`}
-                                                </p>
-                                            </div>
-                                            {(!activeBusinessEntity || activeBusinessEntity.id === user.id) && user.profile_url ? (
-                                                <img
-                                                    src={user.profile_url}
-                                                    alt={`Foto profil ${user.name}`}
-                                                    className="h-10 w-10 rounded-2xl object-cover shadow-sm ring-2 ring-teal-100"
-                                                />
-                                            ) : (
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-700 text-lg font-semibold text-white">
-                                                    {getInitials(
-                                                        activeBusinessEntity
-                                                            ? activeBusinessEntity.name
-                                                            : user.name,
-                                                    )}
-                                                </div>
-                                            )}
-                                            <ChevronDown className="h-4 w-4 text-slate-500" />
+            {/* Header mengambang */}
+            <div className="sticky top-0 z-40 px-3 pt-3 md:px-6 md:pt-4">
+                <div
+                    ref={headerRef}
+                    className="relative mx-auto max-w-[1600px] rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xl backdrop-saturate-150 dark:border-white/10 dark:bg-[#121715]/80"
+                >
+                    <div className="flex h-16 items-center gap-3 px-4 md:h-[72px] md:px-6">
+                        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+                            <SheetTrigger asChild>
+                                <button
+                                    type="button"
+                                    className="grid size-10 place-items-center rounded-lg text-brand-900 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
+                                    aria-label="Buka menu"
+                                >
+                                    <Menu className="size-5" />
+                                </button>
+                            </SheetTrigger>
+                            <SheetContent side="left" className="w-[88vw] max-w-sm overflow-y-auto p-0">
+                                <SheetHeader className="border-b px-5 py-4">
+                                    <SheetTitle asChild>
+                                        <div className="self-start">
+                                            <img
+                                                src="/images/logo.png"
+                                                alt="Brevet Learning System"
+                                                className="h-9 w-auto dark:hidden"
+                                            />
+                                            <img
+                                                src="/images/logo putih.png"
+                                                alt="Brevet Learning System"
+                                                className="hidden h-9 w-auto dark:block"
+                                            />
                                         </div>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="z-50 mt-2 w-96 rounded-xl border border-teal-100 bg-white/95 shadow-lg backdrop-blur-sm">
-                                        <DropdownMenuGroup className="p-2">
-                                            <DropdownMenuItem
-                                                onClick={() =>
-                                                    router.post(
-                                                        route(
-                                                            "impersonate.personal",
-                                                        ),
-                                                    )
-                                                }
-                                            >
-                                                <p className="w-full cursor-pointer rounded-lg p-2 text-center hover:bg-teal-50">
-                                                    {user.npwp} {user.name}
-                                                </p>
-                                            </DropdownMenuItem>
-
-                                            {businessEntities.map((e) => (
-                                                <DropdownMenuItem
-                                                    key={e.id}
-                                                    onClick={() =>
-                                                        router.post(
-                                                            route(
-                                                                "impersonate.business",
-                                                                e.id,
-                                                            ),
-                                                        )
-                                                    }
-                                                >
-                                                    <p className="w-full cursor-pointer rounded-lg p-2 text-center hover:bg-teal-50">
-                                                        {e.npwp} {e.name}
-                                                    </p>
-                                                </DropdownMenuItem>
-                                            ))}
-
-                                            <DropdownMenuSeparator className="my-2 h-[1px] bg-teal-100" />
-
-                                            <DropdownMenuItem asChild>
-                                                <Link
-                                                    href={route(
-                                                        "business-entities.create",
-                                                    )}
-                                                    className="w-full cursor-pointer"
-                                                >
-                                                    <p className="w-full rounded-lg p-2 text-center hover:bg-teal-50">
-                                                        + Tambah Badan Usaha
-                                                    </p>
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuGroup>
-
-                                        <DropdownMenuSeparator className="h-[1px] bg-teal-100" />
-
-                                        <DropdownMenuGroup>
-                                            <DropdownMenuItem
-                                                className="cursor-pointer rounded-b-lg p-2 font-bold text-slate-700 hover:bg-teal-50"
-                                                onClick={() =>
-                                                    setOpenLogoutDialog(true)
-                                                }
-                                            >
-                                                <div className="w-full flex items-center justify-between">
-                                                    <span className="w-full text-center">
-                                                        Logout
-                                                    </span>
-                                                    <LogOut />
-                                                </div>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                        </DropdownMenuGroup>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </div>
-
-                            <div className="flex items-center lg:hidden">
-                                <Sheet>
-                                    <SheetTrigger>
-                                        <Menu />
-                                    </SheetTrigger>
-                                    <SheetContent
-                                        side={"top"}
-                                        className="border-teal-100 bg-gradient-to-br from-white via-teal-50/70 to-amber-50/70 overflow-y-auto max-h-[95vh]"
-                                    >
-                                        <SheetHeader>
-                                            <SheetTitle>
-                                                <Link
-                                                    href={route("dashboard")}
-                                                    className="block lg:hidden w-28 mx-auto"
-                                                >
-                                                    <img
-                                                        src="/images/logo.png"
-                                                        alt="Brevet Learning System"
-                                                    />
-                                                </Link>
-                                            </SheetTitle>
-                                            <SheetDescription className="text-center text-slate-600">
-                                                <h2 className="text-base font-medium text-slate-700">
-                                                    {user.name}
-                                                </h2>
-                                                <h3 className="font-medium mb-2">
-                                                    Last Login :{" "}
-                                                    <span>
-                                                        {user.last_logout_at
-                                                            ? format(
-                                                                  new Date(
-                                                                      user.last_logout_at,
-                                                                  ),
-                                                                  "dd MMM yyyy HH:mm:ss",
-                                                              )
-                                                            : "-"}
-                                                    </span>
-                                                </h3>
-
-                                                {/* Impersonate & Business Entity Selector for Mobile */}
-                                                <div className="mt-4 mb-4 rounded-xl border border-teal-100 bg-white/60 p-3 text-left shadow-sm">
-                                                    <p className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">
-                                                        Pilih Identitas (Impersonate)
-                                                    </p>
-                                                    <div className="space-y-1 max-h-48 overflow-y-auto">
-                                                        <button
-                                                            onClick={() =>
-                                                                router.post(route("impersonate.personal"))
-                                                            }
-                                                            className={`w-full text-left text-xs rounded-lg p-2 transition-colors ${
-                                                                !activeBusinessEntity || activeBusinessEntity.id === user.id
-                                                                    ? "bg-teal-600 text-white font-medium shadow-sm"
-                                                                    : "hover:bg-teal-50 text-slate-700"
-                                                            }`}
+                                    </SheetTitle>
+                                </SheetHeader>
+                                <nav aria-label="Menu utama" className="px-3 py-3">
+                                    {modules.map((m) => {
+                                        const isActive = currentModule?.key === m.key;
+                                        return (
+                                            <div key={m.key} className="mb-1">
+                                                {m.groups ? (
+                                                    <>
+                                                        <p
+                                                            className={cn(
+                                                                "flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-[15px] font-bold text-brand-950",
+                                                                isActive && "bg-highlight-soft",
+                                                            )}
                                                         >
-                                                            {user.npwp} {user.name} (Personal)
-                                                        </button>
-
-                                                        {businessEntities.map((e) => (
-                                                            <button
-                                                                key={e.id}
-                                                                onClick={() =>
-                                                                    router.post(route("impersonate.business", e.id))
-                                                                }
-                                                                className={`w-full text-left text-xs rounded-lg p-2 transition-colors ${
-                                                                    activeBusinessEntity && activeBusinessEntity.id === e.id
-                                                                        ? "bg-teal-600 text-white font-medium shadow-sm"
-                                                                        : "hover:bg-teal-50 text-slate-700"
-                                                                }`}
+                                                            <ModuleIcon module={m} />
+                                                            {m.label}
+                                                        </p>
+                                                        {m.groups.flatMap((g) => g.items).map((it) => (
+                                                            <Link
+                                                                key={it.routeName}
+                                                                href={route(it.routeName)}
+                                                                className={cn(
+                                                                    "ml-[38px] block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted/50",
+                                                                    isCurrent(it.match) &&
+                                                                        "bg-muted font-semibold text-brand-950",
+                                                                )}
                                                             >
-                                                                {e.npwp} {e.name}
-                                                            </button>
+                                                                {it.title}
+                                                            </Link>
                                                         ))}
-                                                    </div>
-
-                                                    <div className="mt-2 border-t border-teal-100/50 pt-2">
-                                                        <Link
-                                                            href={route("business-entities.create")}
-                                                            className="flex items-center justify-center gap-1 w-full text-center text-xs font-medium text-teal-600 hover:text-teal-700 rounded-lg p-2 hover:bg-teal-50 transition-colors"
-                                                        >
-                                                            + Tambah Badan Usaha
-                                                        </Link>
-                                                    </div>
-                                                </div>
-
-                                                <Button asChild className="w-full">
+                                                    </>
+                                                ) : (
                                                     <Link
-                                                        href={route("logout")}
-                                                        method="post"
-                                                        as="button"
+                                                        href={route(m.routeName!)}
+                                                        className={cn(
+                                                            "flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-[15px] font-bold text-brand-950 hover:bg-muted/50",
+                                                            isActive && "bg-highlight-soft",
+                                                        )}
                                                     >
-                                                        Log Out
+                                                        <ModuleIcon module={m} />
+                                                        {m.label}
                                                     </Link>
-                                                </Button>
-                                            </SheetDescription>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </nav>
 
-                                            <Separator />
+                                {/* Sub-menu modul aktif (pengganti sidebar di mobile) */}
+                                {menuItems.length > 0 && (
+                                    <div className="border-t px-3 py-3">
+                                        {menuItems.map((cat) => (
+                                            <div key={cat.category} className="mb-2">
+                                                <p className="px-3 pb-1 pt-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                                                    {cat.category}
+                                                </p>
+                                                {cat.items.map((item) => (
+                                                    <Link
+                                                        key={item.title}
+                                                        href={item.url}
+                                                        className={cn(
+                                                            "block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted/50",
+                                                            isActiveSidebar(item.url) &&
+                                                                "bg-muted font-semibold text-brand-950",
+                                                        )}
+                                                    >
+                                                        {item.title}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </SheetContent>
+                        </Sheet>
 
-                                            <NavigationMenu className="max-w-full">
-                                                <NavigationMenuList className="flex-col gap-2">
-                                                    <NavigationMenuItem>
-                                                        <Link
-                                                            href={route(
-                                                                "dashboard",
-                                                            )}
-                                                        >
-                                                            <NavigationMenuLink
-                                                                active={
-                                                                    route().current(
-                                                                        "dashboard",
-                                                                    ) ||
-                                                                    route().current(
-                                                                        "business-entities.index",
-                                                                    ) ||
-                                                                    route().current(
-                                                                        "banks",
-                                                                    ) ||
-                                                                    route().current(
-                                                                        "courses",
-                                                                    ) ||
-                                                                    route().current(
-                                                                        "courses.*",
-                                                                    ) ||
-                                                                    route().current(
-                                                                        "tests",
-                                                                    ) ||
-                                                                    route().current(
-                                                                        "tests.*",
-                                                                    ) ||
-                                                                    route().current(
-                                                                        "profile.*",
-                                                                    )
-                                                                }
-                                                                className={navigationMenuTriggerStyle()}
-                                                            >
-                                                                Dashboard
-                                                            </NavigationMenuLink>
-                                                        </Link>
-                                                    </NavigationMenuItem>
-                                                    {access_rights?.includes(
-                                                        "efaktur",
-                                                    ) && (
-                                                        <NavigationMenuItem>
-                                                            <Link
-                                                                href={route(
-                                                                    "invoice.index",
-                                                                )}
-                                                            >
-                                                                <NavigationMenuLink
-                                                                    active={
-                                                                        route().current(
-                                                                            "invoice.*",
-                                                                        ) ||
-                                                                        route().current(
-                                                                            "retur.*",
-                                                                        ) ||
-                                                                        route().current(
-                                                                            "other.*",
-                                                                        )
-                                                                    }
-                                                                    className={navigationMenuTriggerStyle()}
-                                                                >
-                                                                    e-Faktur
-                                                                </NavigationMenuLink>
-                                                            </Link>
-                                                        </NavigationMenuItem>
-                                                    )}
-                                                    {access_rights?.includes(
-                                                        "ebupot",
-                                                    ) && (
-                                                        <NavigationMenuItem>
-                                                            <Popover>
-                                                                <PopoverTrigger
-                                                                    asChild
-                                                                >
-                                                                    <Button
-                                                                        variant="outline"
-                                                                        className={`${
-                                                                            route().current(
-                                                                                "bppu.*",
-                                                                            ) ||
-                                                                            route().current(
-                                                                                "bpnr.*",
-                                                                            ) ||
-                                                                            route().current(
-                                                                                "sp.*",
-                                                                            ) ||
-                                                                            route().current(
-                                                                                "cy.*",
-                                                                            ) ||
-                                                                            route().current(
-                                                                                "bp21.*",
-                                                                            ) ||
-                                                                            route().current(
-                                                                                "bp26.*",
-                                                                            ) ||
-                                                                            route().current(
-                                                                                "bpa1.*",
-                                                                            ) ||
-                                                                            route().current(
-                                                                                "bpa2.*",
-                                                                            ) ||
-                                                                            route().current(
-                                                                                "mp.*",
-                                                                            )
-                                                                                ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                : "border-none shadow-none"
-                                                                        }`}
-                                                                    >
-                                                                        eBupot{" "}
-                                                                        <ChevronDown />
-                                                                    </Button>
-                                                                </PopoverTrigger>
-                                                                <PopoverContent className="min-w-fit">
-                                                                    <ul className="space-y-2">
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "bppu.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "bppu.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    BPPU
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "bpnr.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "bpnr.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    BPNR
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "sp.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "sp.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    Penyetoran
-                                                                                    Sendiri
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "cy.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "cy.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    Pemotongan
-                                                                                    Secara
-                                                                                    Digunggung
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "bp21.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "bp21.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    BP
-                                                                                    21
-                                                                                    -
-                                                                                    Bukti
-                                                                                    Pemotongan
-                                                                                    Selain
-                                                                                    Pegawai
-                                                                                    Tetap
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "bp26.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "bp26.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    BP
-                                                                                    26
-                                                                                    -
-                                                                                    Bukti
-                                                                                    Pemotongan
-                                                                                    Wajib
-                                                                                    Pajak
-                                                                                    Luar
-                                                                                    Negeri
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "bpa1.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "bpa1.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    BP
-                                                                                    A1
-                                                                                    -
-                                                                                    Bukti
-                                                                                    Pemotongan
-                                                                                    A1
-                                                                                    Masa
-                                                                                    Pajak
-                                                                                    Terakhir
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "bpa2.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "bpa2.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    BP
-                                                                                    A2
-                                                                                    -
-                                                                                    Bukti
-                                                                                    Pemotongan
-                                                                                    A2
-                                                                                    Masa
-                                                                                    Pajak
-                                                                                    Terakhir
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                        <li>
-                                                                            <Link
-                                                                                href={route(
-                                                                                    "mp.notIssued",
-                                                                                )}
-                                                                            >
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    className={`w-full ${
-                                                                                        route().current(
-                                                                                            "mp.*",
-                                                                                        )
-                                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                            : ""
-                                                                                    }`}
-                                                                                >
-                                                                                    Bukti
-                                                                                    Pemotongan
-                                                                                    Bulanan
-                                                                                    Pegawai
-                                                                                    Tetap
-                                                                                </Button>
-                                                                            </Link>
-                                                                        </li>
-                                                                    </ul>
-                                                                </PopoverContent>
-                                                            </Popover>
-                                                        </NavigationMenuItem>
-                                                    )}
-                                                    {(access_rights?.includes(
-                                                        "ebupot",
-                                                    ) ||
-                                                        access_rights?.includes(
-                                                            "efaktur",
-                                                        )) && (
-                                                        <NavigationMenuItem>
-                                                            <Link
-                                                                href={route(
-                                                                    "spt.konsep",
-                                                                )}
-                                                            >
-                                                                <NavigationMenuLink
-                                                                    active={route().current(
-                                                                        "spt.*",
-                                                                    )}
-                                                                    className={navigationMenuTriggerStyle()}
-                                                                >
-                                                                    Surat
-                                                                    Pemberitahuan
-                                                                    (SPT)
-                                                                </NavigationMenuLink>
-                                                            </Link>
-                                                        </NavigationMenuItem>
-                                                    )}
-                                                    <NavigationMenuItem>
-                                                        <Popover>
-                                                            <PopoverTrigger
-                                                                asChild
-                                                            >
-                                                                <Button
-                                                                    variant="outline"
-                                                                    className={`${
-                                                                        route().current(
-                                                                            "payment",
-                                                                        ) ||
-                                                                        route().current(
-                                                                            "payment.*",
-                                                                        )
-                                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                            : "border-none shadow-none"
-                                                                    }`}
-                                                                >
-                                                                    Pembayaran{" "}
-                                                                    <ChevronDown />
-                                                                </Button>
-                                                            </PopoverTrigger>
-                                                            <PopoverContent>
-                                                                <ul>
-                                                                    <li>
-                                                                        <Link
-                                                                            href={route(
-                                                                                "payment.creation",
-                                                                            )}
-                                                                        >
-                                                                            <Button
-                                                                                variant="ghost"
-                                                                                className={`w-full ${
-                                                                                    route().current(
-                                                                                        "payment.creation",
-                                                                                    )
-                                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                        : ""
-                                                                                }`}
-                                                                            >
-                                                                                Layanan
-                                                                                Mandiri
-                                                                                Kode
-                                                                                Billing
-                                                                            </Button>
-                                                                        </Link>
-                                                                    </li>
-                                                                    <Separator className="my-1" />
-                                                                    <li>
-                                                                        <Link
-                                                                            href={route(
-                                                                                "payment.billing",
-                                                                            )}
-                                                                        >
-                                                                            <Button
-                                                                                variant="ghost"
-                                                                                className={`w-full ${
-                                                                                    route().current(
-                                                                                        "payment.billing",
-                                                                                    )
-                                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                                        : ""
-                                                                                }`}
-                                                                            >
-                                                                                Daftar
-                                                                                Kode
-                                                                                Billing
-                                                                                Belum
-                                                                                Bayar
-                                                                            </Button>
-                                                                        </Link>
-                                                                    </li>
-                                                                </ul>
-                                                            </PopoverContent>
-                                                        </Popover>
-                                                    </NavigationMenuItem>
-                                                    <NavigationMenuItem>
-                                                        <Link
-                                                            href={route(
-                                                                "ledger",
-                                                            )}
-                                                        >
-                                                            <NavigationMenuLink
-                                                                active={
-                                                                    route().current(
-                                                                        "ledger",
-                                                                    ) ||
-                                                                    route().current(
-                                                                        "ledger.*",
-                                                                    )
-                                                                }
-                                                                className={navigationMenuTriggerStyle()}
-                                                            >
-                                                                Buku Besar
-                                                            </NavigationMenuLink>
-                                                        </Link>
-                                                    </NavigationMenuItem>
-                                                </NavigationMenuList>
-                                            </NavigationMenu>
-                                        </SheetHeader>
-                                    </SheetContent>
-                                </Sheet>
+                        <Link href={route("dashboard")} className="shrink-0" aria-label="Beranda Brevet Learning System">
+                            <img
+                                src="/images/logo.png"
+                                alt="Brevet Learning System"
+                                className="h-9 w-auto dark:hidden md:h-11"
+                            />
+                            <img
+                                src="/images/logo putih.png"
+                                alt="Brevet Learning System"
+                                className="hidden h-9 w-auto dark:block md:h-11"
+                            />
+                        </Link>
+
+                        <div className="flex min-w-0 flex-1 justify-end px-1 md:justify-center md:px-6">
+                            <SearchCommand entries={searchEntries} />
+                        </div>
+
+                        <div className="flex shrink-0 items-center gap-0.5 md:gap-1.5">
+                            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+                            <div className="hidden md:block">
+                                <LanguageMenu />
                             </div>
                         </div>
-                    </div>
-                </header>
 
-                <nav className="hidden border-b border-teal-100 bg-gradient-to-r from-white via-teal-50/40 to-amber-50/50 shadow-sm lg:block">
-                    <div className="mx-auto px-4 py-4">
-                        <NavigationMenu>
-                            <NavigationMenuList>
-                                <NavigationMenuItem>
-                                    <Link href={route("dashboard")}>
-                                        <NavigationMenuLink
-                                            active={
-                                                route().current("dashboard") ||
-                                                route().current(
-                                                    "business-entities.index",
-                                                ) ||
-                                                route().current("banks") ||
-                                                route().current("courses") ||
-                                                route().current("courses.*") ||
-                                                route().current("tests") ||
-                                                route().current("tests.*") ||
-                                                route().current("profile.edit")
-                                            }
-                                            className={navigationMenuTriggerStyle()}
-                                        >
-                                            Dashboard
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuItem>
-                                {access_rights?.includes("efaktur") && (
-                                    <NavigationMenuItem>
-                                        <Link href={route("invoice.index")}>
-                                            <NavigationMenuLink
-                                                active={
-                                                    route().current(
-                                                        "invoice.*",
-                                                    ) ||
-                                                    route().current(
-                                                        "retur.*",
-                                                    ) ||
-                                                    route().current("other.*")
-                                                }
-                                                className={navigationMenuTriggerStyle()}
-                                            >
-                                                e-Faktur
-                                            </NavigationMenuLink>
-                                        </Link>
-                                    </NavigationMenuItem>
-                                )}
-                                {access_rights?.includes("ebupot") && (
-                                    <NavigationMenuItem>
-                                        <Popover>
-                                            <PopoverTrigger asChild>
-                                                <Button
-                                                    variant="outline"
-                                                    className={`${
-                                                        route().current(
-                                                            "bppu.*",
-                                                        ) ||
-                                                        route().current(
-                                                            "bpnr.*",
-                                                        ) ||
-                                                        route().current(
-                                                            "sp.*",
-                                                        ) ||
-                                                        route().current(
-                                                            "cy.*",
-                                                        ) ||
-                                                        route().current(
-                                                            "bp21.*",
-                                                        ) ||
-                                                        route().current(
-                                                            "bp26.*",
-                                                        ) ||
-                                                        route().current(
-                                                            "bpa1.*",
-                                                        ) ||
-                                                        route().current(
-                                                            "bpa2.*",
-                                                        ) ||
-                                                        route().current("mp.*")
-                                                            ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                            : "border-none shadow-none"
-                                                    }`}
-                                                >
-                                                    eBupot <ChevronDown />
-                                                </Button>
-                                            </PopoverTrigger>
-                                            <PopoverContent className="min-w-fit">
-                                                <ul className="space-y-2">
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "bppu.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "bppu.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                BPPU
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "bpnr.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "bpnr.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                BPNR
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "sp.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "sp.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                Penyetoran
-                                                                Sendiri
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "cy.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "cy.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                Pemotongan
-                                                                Secara
-                                                                Digunggung
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "bp21.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "bp21.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                BP 21 - Bukti
-                                                                Pemotongan
-                                                                Selain Pegawai
-                                                                Tetap
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "bp26.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "bp26.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                BP 26 - Bukti
-                                                                Pemotongan Wajib
-                                                                Pajak Luar
-                                                                Negeri
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "bpa1.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "bpa1.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                BP A1 - Bukti
-                                                                Pemotongan A1
-                                                                Masa Pajak
-                                                                Terakhir
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "bpa2.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "bpa2.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                BP A2 - Bukti
-                                                                Pemotongan A2
-                                                                Masa Pajak
-                                                                Terakhir
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href={route(
-                                                                "mp.notIssued",
-                                                            )}
-                                                        >
-                                                            <Button
-                                                                variant="ghost"
-                                                                className={`w-full ${
-                                                                    route().current(
-                                                                        "mp.*",
-                                                                    )
-                                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                Bukti Pemotongan
-                                                                Bulanan Pegawai
-                                                                Tetap
-                                                            </Button>
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                            </PopoverContent>
-                                        </Popover>
-                                    </NavigationMenuItem>
-                                )}
-                                {(access_rights?.includes("ebupot") ||
-                                    access_rights?.includes("efaktur")) && (
-                                    <NavigationMenuItem>
-                                        <Link href={route("spt.konsep")}>
-                                            <NavigationMenuLink
-                                                active={route().current(
-                                                    "spt.*",
-                                                )}
-                                                className={navigationMenuTriggerStyle()}
-                                            >
-                                                Surat Pemberitahuan (SPT)
-                                            </NavigationMenuLink>
-                                        </Link>
-                                    </NavigationMenuItem>
-                                )}
-                                <NavigationMenuItem>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant="outline"
-                                                className={`${
-                                                    route().current(
-                                                        "payment",
-                                                    ) ||
-                                                    route().current("payment.*")
-                                                        ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                        : "border-none shadow-none"
-                                                }`}
-                                            >
-                                                Pembayaran <ChevronDown />
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent>
-                                            <ul>
-                                                <li>
-                                                    <Link
-                                                        href={route(
-                                                            "payment.creation",
-                                                        )}
-                                                    >
-                                                        <Button
-                                                            variant="ghost"
-                                                            className={`w-full ${
-                                                                route().current(
-                                                                    "payment.creation",
-                                                                )
-                                                                    ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                    : ""
-                                                            }`}
-                                                        >
-                                                            Layanan Mandiri Kode
-                                                            Billing
-                                                        </Button>
-                                                    </Link>
-                                                </li>
-                                                <Separator className="my-1" />
-                                                <li>
-                                                    <Link
-                                                        href={route(
-                                                            "payment.billing",
-                                                        )}
-                                                    >
-                                                        <Button
-                                                            variant="ghost"
-                                                            className={`w-full ${
-                                                                route().current(
-                                                                    "payment.billing",
-                                                                )
-                                                                    ? "bg-teal-600 text-white hover:bg-teal-700 hover:text-white"
-                                                                    : ""
-                                                            }`}
-                                                        >
-                                                            Daftar Kode Billing
-                                                            Belum Bayar
-                                                        </Button>
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        </PopoverContent>
-                                    </Popover>
-                                </NavigationMenuItem>
-                                <NavigationMenuItem>
-                                    <Link href={route("ledger")}>
-                                        <NavigationMenuLink
-                                            active={
-                                                route().current("ledger") ||
-                                                route().current("ledger.*")
-                                            }
-                                            className={navigationMenuTriggerStyle()}
-                                        >
-                                            Buku Besar
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuItem>
-                            </NavigationMenuList>
-                        </NavigationMenu>
-                    </div>
-                </nav>
+                        <AccountMenu
+                            user={user}
+                            businessEntities={businessEntities}
+                            activeBusinessEntity={activeBusinessEntity}
+                            lastLogin={user.last_logout_at}
+                            onLogout={() => setOpenLogoutDialog(true)}
+                        />
 
-                <main className="relative z-10">
-                    {children}
-                </main>
+                        <Link
+                            href={route("dashboard")}
+                            aria-label="Beranda"
+                            className="hidden size-10 shrink-0 place-items-center rounded-lg text-brand-900 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid"
+                        >
+                            <Home className="size-5" />
+                        </Link>
+                    </div>
+
+                    {active_course && (
+                        <div className="border-t border-border/60 px-3 py-2 dark:border-white/10 lg:hidden">
+                            <ActiveCourse name={active_course.name} className="w-full justify-between" />
+                        </div>
+                    )}
+                    <div className="hidden lg:block">
+                        <TopNav
+                            modules={modules}
+                            openKey={openKey}
+                            setOpenKey={setOpenKey}
+                            right={
+                                active_course && (
+                                    <ActiveCourse name={active_course.name} className="max-w-[360px]" />
+                                )
+                            }
+                        />
+                    </div>
+                </div>
             </div>
+
+            {/* Lapisan gelap saat mega menu terbuka */}
+            {openKey && (
+                <div
+                    aria-hidden
+                    className="fixed inset-0 z-30 bg-brand-950/20 duration-200 animate-in fade-in-0"
+                    onClick={() => setOpenKey(null)}
+                />
+            )}
+
+            {variant === "home" ? (
+                <div className="relative mx-auto w-full max-w-[1600px] flex-1 px-3 pb-8 pt-5 md:px-6 md:pt-6">
+                    <main>{children}</main>
+                </div>
+            ) : (
+                <div className="relative mx-auto flex w-full max-w-[1600px] flex-1 gap-5 px-3 pb-8 pt-5 md:px-6 md:pt-6">
+                    {menuItems.length > 0 && !collapsed && (
+                        <ModuleSidebar
+                            title={sidebarTitle}
+                            module={currentModule}
+                            categories={menuItems}
+                            isActive={isActiveSidebar}
+                            onCollapse={collapseSidebar}
+                            closing={sidebarClosing}
+                        />
+                    )}
+                    {menuItems.length > 0 && collapsed && (
+                        <SidebarTab
+                            title={sidebarTitle}
+                            module={currentModule}
+                            onOpen={() => setSidebarCollapsed(false)}
+                        />
+                    )}
+
+                    <div className="min-w-0 flex-1">
+                        <div className="relative min-h-[calc(100vh-200px)] rounded-[20px] border border-border/80 bg-card dark:border-white/[0.07]">
+                            {!pageHasCrumb && <Breadcrumbs trail={trail} />}
+                            <main ref={mainRef} className="app-content" data-auto-crumb={!pageHasCrumb ? "" : undefined}>
+                                {children}
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <AppFooter columns={footerColumns} />
+            <BackToTop />
+
             <ConfirmDialog
                 open={openLogoutDialog}
                 onClose={() => setOpenLogoutDialog(false)}
                 onConfirm={handleLogout}
-                title="Log Out"
-                description="Apakah Anda yakin ingin logout?"
+                title="Keluar"
+                description="Apakah Anda yakin ingin keluar?"
             />
             <Toaster position="top-center" containerStyle={{ zIndex: 99999 }} />
-        </SidebarProvider>
+        </div>
     );
 }

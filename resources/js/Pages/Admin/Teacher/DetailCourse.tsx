@@ -9,7 +9,31 @@ import {
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
 import AdminLayout from "@/Layouts/AdminLayout";
-import { Download, Eye, FileText } from "lucide-react";
+import {
+    AlignLeft,
+    CalendarClock,
+    CalendarRange,
+    ClipboardCheck,
+    Download,
+    Eye,
+    FileText,
+    Info,
+    KeyRound,
+    School,
+    UserRound,
+    Users,
+} from "lucide-react";
+import {
+    Chip,
+    CodeChip,
+    IconTile,
+    InfoGrid,
+    PageHeader,
+    Section,
+    StatGrid,
+    StatTile,
+    Timeline,
+} from "@/Components/app-shell/kit";
 import { Button } from "@/Components/ui/button";
 import { DataTableParticipant } from "@/Components/layout/UserCourse/data-table";
 import { ParticipantColumns } from "@/Components/layout/UserCourse/columns";
@@ -71,14 +95,14 @@ export default function DetailCourse({
                                 <img
                                     src={user.profile_url}
                                     alt={`Foto profil ${user.name}`}
-                                    className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-teal-100"
+                                    className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-border shrink-0"
                                 />
                             ) : (
-                                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-teal-600 to-cyan-700 text-xs font-bold text-white shadow-sm shrink-0">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-brand-700 to-brand-900 text-xs font-bold text-white shadow-sm shrink-0">
                                     {getInitials(user?.name || "??")}
                                 </div>
                             )}
-                            <p className="font-medium text-slate-700">
+                            <p className="font-medium text-foreground">
                                 {user?.name || "-"}
                             </p>
                         </div>
@@ -177,150 +201,80 @@ export default function DetailCourse({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-xl sm:text-2xl font-semibold text-primary">
-                            Detail Kelas - {course.name}
-                        </h1>
-                    </div>
+                    <PageHeader
+                        icon={School}
+                        eyebrow="Detail Kelas"
+                        title={course.name}
+                        description={course.description && course.description !== "-" ? course.description : undefined}
+                        actions={<CodeChip code={course.code || "-"} onCopy={() => navigator.clipboard?.writeText(course.code || "")} />}
+                    />
+
+                    <StatGrid>
+                        <StatTile icon={CalendarClock} label="Jadwal Kelas" value={courseSchedules.length} tone="info" />
+                        <StatTile icon={ClipboardCheck} label="Ujian Kelas" value={courseTests.length} tone="brand" />
+                        <StatTile icon={Users} label="Peserta" value={participants.length} tone="success" />
+                        <StatTile icon={FileText} label="Modul" value={course.modules_count || 0} tone="highlight" />
+                    </StatGrid>
 
                     {/* Informasi Kelas */}
-                    <div className="rounded-xl bg-white border shadow p-6">
-                        <div className="flex flex-col md:flex-row gap-2 md:items-center justify-between">
-                            <h2 className="text-lg font-bold md:mb-2 text-primary">
-                                Informasi Kelas
-                            </h2>
-                            <span className="w-fit text-sm md:text-base md:mb-0 mb-4 font-mono font-bold px-3 py-1 rounded bg-blue-200 text-blue-900 border border-blue-400 tracking-widest shadow-sm">
-                                Kode : {course.code || "-"}
-                            </span>
-                        </div>
-                        <table className="w-full text-sm">
-                            <tbody>
-                                <tr>
-                                    <td className="font-medium py-1 pr-4 w-48">
-                                        Nama Kelas
-                                    </td>
-                                    <td className="py-1 w-4">:</td>
-                                    <td className="py-1">{course.name}</td>
-                                </tr>
-                                <tr>
-                                    <td className="font-medium py-1 pr-4">
-                                        Nama Pengajar
-                                    </td>
-                                    <td className="py-1">:</td>
-                                    <td className="py-1">
-                                        <Link
-                                            href={route(
-                                                "admin.showTeacher",
-                                                teacherId,
-                                            )}
-                                            className="text-blue-600 hover:underline font-medium"
-                                        >
+                    <Section icon={Info} title="Informasi Kelas">
+                        <InfoGrid
+                            items={[
+                                { icon: School, label: "Nama Kelas", value: course.name },
+                                {
+                                    icon: UserRound,
+                                    label: "Nama Pengajar",
+                                    value: (
+                                        <Link href={route("admin.showTeacher", teacherId)} className="text-info hover:underline">
                                             {course.user?.name || "-"}
                                         </Link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="font-medium py-1 pr-4">
-                                        Deskripsi
-                                    </td>
-                                    <td className="py-1">:</td>
-                                    <td className="py-1">
-                                        {course.description || "-"}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="font-medium py-1 pr-4">
-                                        Tanggal Pelaksanaan
-                                    </td>
-                                    <td className="py-1">:</td>
-                                    <td className="py-1">
-                                        {course.start_date
-                                            ? format(
-                                                  new Date(course.start_date),
-                                                  "d MMMM yyyy",
-                                                  { locale: id },
-                                              )
-                                            : "-"}
-                                        {" - "}
-                                        {course.end_date
-                                            ? format(
-                                                  new Date(course.end_date),
-                                                  "d MMMM yyyy",
-                                                  { locale: id },
-                                              )
-                                            : "-"}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="font-medium py-1 pr-4">
-                                        Akses Materi
-                                    </td>
-                                    <td className="py-1">:</td>
-                                    <td className="py-1">
-                                        {course.access_rights ? (
-                                            (Array.isArray(course.access_rights)
-                                                ? course.access_rights
-                                                : JSON.parse(
-                                                      course.access_rights,
-                                                  )
-                                            ).map((access: string) => (
-                                                <span
-                                                    key={access}
-                                                    className="inline-block bg-yellow-100 text-yellow-700 px-2 py-1 rounded mr-2 text-xs font-semibold"
-                                                >
-                                                    {access === "efaktur"
-                                                        ? "e-Faktur"
-                                                        : access === "ebupot"
-                                                          ? "e-Bupot"
-                                                          : access}
-                                                </span>
-                                            ))
-                                        ) : (
-                                            <span className="italic text-gray-400">
-                                                Tidak ada akses materi
-                                            </span>
-                                        )}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="font-medium py-1 pr-4">
-                                        Modul
-                                    </td>
-                                    <td className="py-1">:</td>
-                                    <td className="py-1">
-                                        <Button
-                                            size="sm"
-                                            variant="outline"
-                                            asChild
-                                            className="text-blue-700 bg-blue-50 border-blue-200 hover:bg-blue-100"
-                                        >
-                                            <Link
-                                                href={route(
-                                                    "admin.showTeacherCourseModules",
-                                                    {
-                                                        teacherId:
-                                                            course.teacher_id,
-                                                        courseId: course.id,
-                                                    },
-                                                )}
-                                            >
+                                    ),
+                                },
+                                { icon: AlignLeft, label: "Deskripsi", value: course.description || "-", full: true },
+                                {
+                                    icon: CalendarRange,
+                                    label: "Tanggal Pelaksanaan",
+                                    value: `${course.start_date ? format(new Date(course.start_date), "d MMMM yyyy", { locale: id }) : "-"} – ${course.end_date ? format(new Date(course.end_date), "d MMMM yyyy", { locale: id }) : "-"}`,
+                                },
+                                {
+                                    icon: KeyRound,
+                                    label: "Akses Materi",
+                                    value: course.access_rights ? (
+                                        <span className="flex flex-wrap gap-1.5">
+                                            {(Array.isArray(course.access_rights) ? course.access_rights : JSON.parse(course.access_rights)).map((access: string) => (
+                                                <Chip key={access} tone="highlight">
+                                                    {access === "efaktur" ? "e-Faktur" : access === "ebupot" ? "e-Bupot" : access}
+                                                </Chip>
+                                            ))}
+                                        </span>
+                                    ) : (
+                                        <span className="font-medium italic text-muted-foreground">Tidak ada akses materi</span>
+                                    ),
+                                },
+                                {
+                                    icon: FileText,
+                                    label: "Modul",
+                                    value: (
+                                        <Button size="sm" variant="outline" asChild>
+                                            <Link href={route("admin.showTeacherCourseModules", { teacherId: course.teacher_id, courseId: course.id })}>
                                                 <FileText size={14} />
-                                                Lihat Modul (
-                                                {course.modules_count ||
-                                                    "Belum ada modul"}
-                                                )
+                                                Lihat Modul ({course.modules_count || "Belum ada modul"})
                                             </Link>
                                         </Button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                    ),
+                                },
+                            ]}
+                        />
+                        <div className="mt-4">
+                            <Timeline start={course.start_date} end={course.end_date} startLabel="Progres durasi kelas" />
+                        </div>
+                    </Section>
 
                     {/* Jadwal Kelas */}
-                    <div className="rounded-xl bg-white border shadow p-6 space-y-3">
+                    <div className="tls-card p-5 md:p-6 space-y-3">
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                            <h2 className="text-lg font-bold text-primary">
+                            <h2 className="flex items-center gap-2.5 text-lg font-bold text-brand-950">
+                                <IconTile icon={CalendarClock} size="sm" />
                                 Jadwal Kelas ({courseSchedules.length})
                             </h2>
                         </div>
@@ -333,10 +287,10 @@ export default function DetailCourse({
                                         className="rounded-lg border p-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
                                     >
                                         <div>
-                                            <div className="font-semibold text-gray-800">
+                                            <div className="font-semibold text-foreground">
                                                 {schedule.title}
                                             </div>
-                                            <div className="text-sm text-gray-500">
+                                            <div className="text-sm text-muted-foreground">
                                                 {formatLocalDateTime(
                                                     schedule.scheduled_at,
                                                 )}
@@ -352,7 +306,7 @@ export default function DetailCourse({
                                                 Buka Link Meeting
                                             </a>
                                         ) : (
-                                            <span className="text-sm text-gray-500 italic">
+                                            <span className="text-sm text-muted-foreground italic">
                                                 Link meeting belum diisi
                                             </span>
                                         )}
@@ -360,16 +314,17 @@ export default function DetailCourse({
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-sm text-gray-500 italic">
+                            <div className="text-sm text-muted-foreground italic">
                                 Belum ada jadwal kelas.
                             </div>
                         )}
                     </div>
 
                     {/* Ujian Kelas */}
-                    <div className="rounded-xl bg-white border shadow p-6 space-y-3">
+                    <div className="tls-card p-5 md:p-6 space-y-3">
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                            <h2 className="text-lg font-bold text-primary">
+                            <h2 className="flex items-center gap-2.5 text-lg font-bold text-brand-950">
+                                <IconTile icon={ClipboardCheck} size="sm" />
                                 Ujian Kelas ({courseTests.length})
                             </h2>
                         </div>
@@ -379,14 +334,14 @@ export default function DetailCourse({
                                 {courseTests.map((courseTest: any) => (
                                     <div
                                         key={courseTest.id}
-                                        className="rounded-xl border bg-slate-50/60 p-4"
+                                        className="rounded-xl border bg-muted/30 p-4"
                                     >
                                         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
                                             <div>
-                                                <div className="font-semibold text-gray-800 text-base">
+                                                <div className="font-semibold text-foreground text-base">
                                                     {courseTest.title}
                                                 </div>
-                                                <div className="text-xs text-gray-500 mt-1">
+                                                <div className="text-xs text-muted-foreground mt-1">
                                                     Bank Soal:{" "}
                                                     {courseTest.question_bank
                                                         ?.name || "-"}
@@ -421,38 +376,38 @@ export default function DetailCourse({
                                         </div>
 
                                         <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2">
-                                            <div className="rounded-md border bg-white p-2">
-                                                <p className="text-[11px] uppercase tracking-wide text-gray-500">
+                                            <div className="rounded-md border bg-card p-2">
+                                                <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
                                                     Durasi
                                                 </p>
-                                                <p className="text-sm font-semibold text-gray-800">
+                                                <p className="text-sm font-semibold text-foreground">
                                                     {courseTest.duration || 0}{" "}
                                                     menit
                                                 </p>
                                             </div>
-                                            <div className="rounded-md border bg-white p-2">
-                                                <p className="text-[11px] uppercase tracking-wide text-gray-500">
+                                            <div className="rounded-md border bg-card p-2">
+                                                <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
                                                     Passing Score
                                                 </p>
-                                                <p className="text-sm font-semibold text-gray-800">
+                                                <p className="text-sm font-semibold text-foreground">
                                                     {courseTest.passing_score ||
                                                         0}
                                                 </p>
                                             </div>
-                                            <div className="rounded-md border bg-white p-2 col-span-2 md:col-span-1">
-                                                <p className="text-[11px] uppercase tracking-wide text-gray-500">
+                                            <div className="rounded-md border bg-card p-2 col-span-2 md:col-span-1">
+                                                <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
                                                     Soal Ditampilkan
                                                 </p>
-                                                <p className="text-sm font-semibold text-gray-800">
+                                                <p className="text-sm font-semibold text-foreground">
                                                     {courseTest.questions_to_show ||
                                                         "Semua"}
                                                 </p>
                                             </div>
-                                            <div className="rounded-md border bg-white p-2">
-                                                <p className="text-[11px] uppercase tracking-wide text-gray-500">
+                                            <div className="rounded-md border bg-card p-2">
+                                                <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
                                                     Maksimal Pengerjaan
                                                 </p>
-                                                <p className="text-sm font-semibold text-gray-800">
+                                                <p className="text-sm font-semibold text-foreground">
                                                     {Number(
                                                         courseTest.max_attempts ??
                                                             0,
@@ -463,8 +418,8 @@ export default function DetailCourse({
                                             </div>
                                         </div>
 
-                                        <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-600">
-                                            <div className="rounded-md border border-dashed bg-white p-2">
+                                        <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-muted-foreground">
+                                            <div className="rounded-md border border-dashed bg-card p-2">
                                                 Jadwal Mulai:{" "}
                                                 {courseTest.start_date
                                                     ? formatLocalDateTime(
@@ -472,7 +427,7 @@ export default function DetailCourse({
                                                       )
                                                     : "-"}
                                             </div>
-                                            <div className="rounded-md border border-dashed bg-white p-2">
+                                            <div className="rounded-md border border-dashed bg-card p-2">
                                                 Jadwal Selesai:{" "}
                                                 {courseTest.end_date
                                                     ? formatLocalDateTime(
@@ -497,22 +452,23 @@ export default function DetailCourse({
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-sm text-gray-500 italic">
+                            <div className="text-sm text-muted-foreground italic">
                                 Belum ada ujian kelas.
                             </div>
                         )}
                     </div>
 
                     {/* Daftar Peserta */}
-                    <div className="rounded-xl bg-white border shadow p-6">
+                    <div className="tls-card p-5 md:p-6">
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                            <h2 className="text-lg font-bold text-primary">
+                            <h2 className="flex items-center gap-2.5 text-lg font-bold text-brand-950">
+                                <IconTile icon={Users} size="sm" />
                                 Daftar Peserta ({participants.length})
                             </h2>
                             <div className="flex items-center gap-2">
                                 <Button
                                     variant="outline"
-                                    className="text-green-700 bg-green-50 border-green-200 hover:bg-green-100"
+                                    className="text-success bg-green-50 border-green-200 hover:bg-green-100"
                                     asChild
                                 >
                                     <a
@@ -532,7 +488,7 @@ export default function DetailCourse({
                                 </Button>
                                 <Button
                                     variant="outline"
-                                    className="text-blue-700 bg-blue-50 border-blue-200 hover:bg-blue-100"
+                                    className="text-info bg-blue-50 border-blue-200 hover:bg-blue-100"
                                     asChild
                                 >
                                     <a

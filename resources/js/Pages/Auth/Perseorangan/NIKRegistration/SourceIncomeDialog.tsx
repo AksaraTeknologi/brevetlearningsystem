@@ -192,7 +192,7 @@ export default function SourceIncomeDialog({
                     <div className="space-y-2">
                         <Label>
                             Sumber Penghasilan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.source_income}
@@ -206,7 +206,7 @@ export default function SourceIncomeDialog({
                                         "w-full justify-between",
                                         !data.source_income &&
                                             "text-muted-foreground",
-                                        errors.source_income && "border-red-500"
+                                        errors.source_income && "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -262,7 +262,7 @@ export default function SourceIncomeDialog({
                             </PopoverContent>
                         </Popover>
                         {errors.source_income && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.source_income}
                             </p>
                         )}
@@ -271,7 +271,7 @@ export default function SourceIncomeDialog({
                     {/* Kode KLU */}
                     <div className="space-y-2">
                         <Label>
-                            Kode KLU <span className="text-red-500">*</span>
+                            Kode KLU <span className="text-destructive">*</span>
                         </Label>
 
                         {/* Show selected economies */}
@@ -281,7 +281,7 @@ export default function SourceIncomeDialog({
                                     {selectedEconomies.map((economy) => (
                                         <div
                                             key={economy.id}
-                                            className="flex items-center bg-blue-100 text-blue-900 px-3 py-1 rounded-full text-sm"
+                                            className="flex items-center bg-blue-100 text-brand-ink px-3 py-1 rounded-full text-sm"
                                         >
                                             <span className="mr-2">
                                                 {economy.code} - {economy.name}
@@ -291,7 +291,7 @@ export default function SourceIncomeDialog({
                                                 onClick={() =>
                                                     onRemoveEconomy(economy.id)
                                                 }
-                                                className="text-blue-900 hover:text-blue-800"
+                                                className="text-brand-ink hover:text-blue-800"
                                             >
                                                 <X className="w-4 h-4" />
                                             </button>
@@ -307,7 +307,7 @@ export default function SourceIncomeDialog({
                             onClick={onOpenEconomySearch}
                             className={cn(
                                 "w-full justify-start",
-                                errors.economy_ids && "border-red-500"
+                                errors.economy_ids && "border-destructive"
                             )}
                         >
                             {selectedEconomies.length > 0
@@ -315,7 +315,7 @@ export default function SourceIncomeDialog({
                                 : "Pilih Kode Ekonomi"}
                         </Button>
                         {errors.economy_ids && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.economy_ids}
                             </p>
                         )}
@@ -324,7 +324,7 @@ export default function SourceIncomeDialog({
                     {/* Tempat Kerja */}
                     <div className="space-y-2">
                         <Label>
-                            Tempat Kerja <span className="text-red-500">*</span>
+                            Tempat Kerja <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             placeholder="Silakan masukkan nama tempat kerja Anda"
@@ -332,10 +332,10 @@ export default function SourceIncomeDialog({
                             onChange={(e) =>
                                 setData("workplace", e.target.value)
                             }
-                            className={cn(errors.workplace && "border-red-500")}
+                            className={cn(errors.workplace && "border-destructive")}
                         />
                         {errors.workplace && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.workplace}
                             </p>
                         )}
@@ -345,7 +345,7 @@ export default function SourceIncomeDialog({
                     <div className="space-y-2">
                         <Label>
                             Penghasilan per bulan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.monthly_income}
@@ -360,7 +360,7 @@ export default function SourceIncomeDialog({
                                         !data.monthly_income &&
                                             "text-muted-foreground",
                                         errors.monthly_income &&
-                                            "border-red-500"
+                                            "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -416,7 +416,7 @@ export default function SourceIncomeDialog({
                             </PopoverContent>
                         </Popover>
                         {errors.monthly_income && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.monthly_income}
                             </p>
                         )}
@@ -434,7 +434,7 @@ export default function SourceIncomeDialog({
                     <Button
                         type="button"
                         onClick={handleSave}
-                        className="bg-blue-900 hover:bg-blue-800"
+                        className="bg-brand hover:bg-brand/90 text-brand-foreground"
                     >
                         Simpan
                     </Button>

@@ -256,8 +256,8 @@ export default function FormEditTest({ test, questionBanks = [] }: any) {
     return (
         <TeacherLayout>
             <Head title="Edit Ujian" />
-            <div className="teacher-page-shell">
-                <div className="teacher-page-stack">
+            <div className="py-8 mx-auto lg:px-4">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -272,11 +272,11 @@ export default function FormEditTest({ test, questionBanks = [] }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="teacher-page-title">
+                    <h1 className="text-2xl font-semibold text-primary">
                         Edit Ujian
                     </h1>
 
-                    <div className="teacher-panel">
+                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8">
@@ -654,7 +654,7 @@ export default function FormEditTest({ test, questionBanks = [] }: any) {
                                                     Bank Soal.
                                                 </p>
                                                 {questionBanks.length === 0 && (
-                                                    <p className="text-xs text-red-600">
+                                                    <p className="text-xs text-destructive">
                                                         Belum ada bank soal
                                                         aktif. Buat bank soal
                                                         terlebih dahulu.

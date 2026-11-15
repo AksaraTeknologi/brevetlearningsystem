@@ -325,7 +325,7 @@ export function FormL3CDialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-4xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>{title}</DialogTitle>
                 </DialogHeader>
 
@@ -344,7 +344,7 @@ export function FormL3CDialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Jenis Harta <span className="text-red-500">*</span>
+                            Jenis Harta <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -411,7 +411,7 @@ export function FormL3CDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.asset_type && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.asset_type}
                                 </p>
                             )}
@@ -420,7 +420,7 @@ export function FormL3CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Bulan / Tahun Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="flex flex-col sm:flex-row gap-2">
@@ -469,7 +469,7 @@ export function FormL3CDialog({
                                 />
                             </div>
                             {errors.period_acquisition && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.period_acquisition}
                                 </p>
                             )}
@@ -479,7 +479,7 @@ export function FormL3CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Biaya Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -491,7 +491,7 @@ export function FormL3CDialog({
                                 placeholder=""
                             />
                             {errors.cost_acquisition && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.cost_acquisition}
                                 </p>
                             )}
@@ -501,7 +501,7 @@ export function FormL3CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Nilai Sisa Buku Fiskal Awal Tahun{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -513,7 +513,7 @@ export function FormL3CDialog({
                                 placeholder=""
                             />
                             {errors.begining_fiscal_book && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.begining_fiscal_book}
                                 </p>
                             )}
@@ -654,7 +654,7 @@ export function FormL3CDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Penyusutan/Amortisasi Fiskal Tahun Ini{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -666,7 +666,7 @@ export function FormL3CDialog({
                                 placeholder=""
                             />
                             {errors.fiscal_depreciation && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.fiscal_depreciation}
                                 </p>
                             )}
@@ -691,7 +691,6 @@ export function FormL3CDialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

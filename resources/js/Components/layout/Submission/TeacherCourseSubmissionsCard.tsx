@@ -79,14 +79,14 @@ export default function TeacherCourseSubmissionsCard({
         : null;
 
     return (
-        <div className="rounded-xl bg-white border shadow p-6 space-y-4">
+        <div className="rounded-xl bg-card border shadow p-6 space-y-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 className="text-lg font-bold text-primary flex items-center gap-2">
                         <FileText className="h-5 w-5" />
                         Submission & Tugas Kelas ({courseSubmissions.length})
                     </h2>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                         Kelola tugas submission untuk siswa dan berikan persetujuan (ACC) berkas yang dikumpulkan.
                     </p>
                 </div>
@@ -112,12 +112,12 @@ export default function TeacherCourseSubmissionsCard({
                         return (
                             <div
                                 key={submission.id}
-                                className="rounded-xl border bg-slate-50/70 p-4 transition hover:border-slate-300"
+                                className="rounded-xl border bg-muted/35 p-4 transition hover:border-input"
                             >
                                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
                                     <div className="space-y-1.5 flex-1">
                                         <div className="flex flex-wrap items-center gap-2">
-                                            <h3 className="font-semibold text-gray-800 text-base">
+                                            <h3 className="font-semibold text-foreground text-base">
                                                 {submission.title}
                                             </h3>
 
@@ -137,7 +137,7 @@ export default function TeacherCourseSubmissionsCard({
                                             ) : (
                                                 <Badge
                                                     variant="outline"
-                                                    className="bg-gray-100 text-gray-600 border-gray-200 text-xs"
+                                                    className="bg-muted text-muted-foreground border-border text-xs"
                                                 >
                                                     Tanpa Batas Waktu
                                                 </Badge>
@@ -145,7 +145,7 @@ export default function TeacherCourseSubmissionsCard({
                                         </div>
 
                                         {submission.description && (
-                                            <p className="text-xs text-gray-600 line-clamp-2">
+                                            <p className="text-xs text-muted-foreground line-clamp-2">
                                                 {submission.description}
                                             </p>
                                         )}
@@ -169,7 +169,7 @@ export default function TeacherCourseSubmissionsCard({
 
                                         {/* Submission Progress Stats */}
                                         <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-                                            <span className="inline-flex items-center gap-1 text-gray-600 bg-white border rounded px-2 py-0.5">
+                                            <span className="inline-flex items-center gap-1 text-muted-foreground bg-card border rounded px-2 py-0.5">
                                                 <Users className="h-3 w-3 text-gray-400" />
                                                 Terkumpul: <strong>{submittedCount} / {participants.length}</strong>
                                             </span>
@@ -220,7 +220,7 @@ export default function TeacherCourseSubmissionsCard({
                                             variant="outline"
                                             type="button"
                                             onClick={() => openEditModal(submission)}
-                                            className="h-8 w-8 p-0 text-gray-600 hover:text-gray-900"
+                                            className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                                             title="Edit Submission"
                                         >
                                             <Pencil className="h-3.5 w-3.5" />
@@ -262,12 +262,12 @@ export default function TeacherCourseSubmissionsCard({
                     })}
                 </div>
             ) : (
-                <div className="rounded-xl border border-dashed p-8 text-center bg-slate-50/50">
+                <div className="rounded-xl border border-dashed p-8 text-center bg-muted/25">
                     <FileText className="mx-auto h-9 w-9 text-gray-400" />
-                    <h3 className="mt-2 text-sm font-semibold text-gray-800">
+                    <h3 className="mt-2 text-sm font-semibold text-foreground">
                         Belum Ada Submission / Tugas
                     </h3>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-muted-foreground">
                         Klik tombol di atas untuk membuat tugas submission baru bagi siswa di kelas ini.
                     </p>
                     <div className="mt-4">

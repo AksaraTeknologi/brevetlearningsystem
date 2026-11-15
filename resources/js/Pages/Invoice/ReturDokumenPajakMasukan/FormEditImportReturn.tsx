@@ -1,3 +1,8 @@
+import {
+    FormPageHeader,
+    FormSection,
+    FormActions,
+} from "@/Components/app-shell/FormPage";
 import { columns } from "@/Components/layout/InvoiceItems/columns";
 import { DataTableInvoiceItems } from "@/Components/layout/InvoiceItems/data-table";
 import { Button } from "@/Components/ui/button";
@@ -73,28 +78,27 @@ export default function FormEditImportReturn({ retur, others }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Edit Retur Dokumen Masukan
-                    </h1>
+                    <FormPageHeader
+                        title="Edit Retur Dokumen Masukan"
+                        backHref={route("retur.import")}
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
+                    <div>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <File size={16} />
-                                    <h3 className="font-medium">
-                                        Dokumen Retur Dokumen Masukan
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<File />}
+                                    title="Dokumen Retur Dokumen Masukan"
+                                >
                                     <FormFieldsImportReturn
                                         form={form}
                                         others={others}
                                         isEditMode={true}
                                     />
-                                </div>
-
-                                <Button type="submit">Simpan Perubahan</Button>
+                                </FormSection>
+                                <FormActions cancelHref={route("retur.import")}>
+                                    <Button type="submit">Simpan Perubahan</Button>
+                                </FormActions>
                             </form>
                         </Form>
                     </div>

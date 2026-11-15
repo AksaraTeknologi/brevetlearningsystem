@@ -206,23 +206,23 @@ export function FormL11A4B({ sptBadanId, l11a4b }: FormL11A4BProps) {
     return (
         <div className="mt-4 border rounded-lg overflow-hidden">
             {/* 4B Header */}
-            <div className="bg-blue-950 text-white font-semibold px-4 py-3 text-sm">
+            <div className="bg-brand text-white font-semibold px-4 py-3 text-sm">
                 4B. RINCIAN PENGGANTIAN ATAU IMBALAN DALAM BENTUK NATURA
                 DAN/ATAU KENIKMATAN YANG DIBERIKAN BERKENAAN DENGAN PELAKSANAAN
                 PEKERJAAN DI DAERAH TERTENTU
             </div>
 
-            <div className="p-4 bg-white space-y-4">
+            <div className="p-4 bg-card space-y-4">
                 {/* Two-column layout: label + value */}
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-x-4 gap-y-3 items-start">
                     {/* Header row for NILAI column */}
                     <div className="hidden md:block" />
-                    <div className="bg-blue-950 text-white text-xs font-semibold text-center px-3 py-1 rounded w-full md:w-auto">
+                    <div className="bg-brand text-white text-xs font-semibold text-center px-3 py-1 rounded w-full md:w-auto">
                         NILAI (Rp)
                     </div>
                     {/* Row 1: Alamat Lokasi */}
                     <div className="flex flex-wrap items-center gap-2">
-                        <span className=" text-black text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
+                        <span className=" text-foreground text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
                             1
                         </span>
                         <Label className="text-sm">Alamat Lokasi</Label>
@@ -238,7 +238,7 @@ export function FormL11A4B({ sptBadanId, l11a4b }: FormL11A4BProps) {
                     <div /> {/* empty cell in nilai column */}
                     {/* Row 2: Keputusan Penetapan Daerah Tertentu */}
                     <div className="flex items-center gap-2 flex-wrap">
-                        <span className=" text-black text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
+                        <span className=" text-foreground text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
                             2
                         </span>
                         <Label className="text-sm">
@@ -319,7 +319,7 @@ export function FormL11A4B({ sptBadanId, l11a4b }: FormL11A4BProps) {
                     <div />
                     {/* Row 3: Keputusan Perpanjangan */}
                     <div className="flex items-center gap-2 flex-wrap">
-                        <span className=" text-black text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
+                        <span className=" text-foreground text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
                             3
                         </span>
                         <Label className="text-sm">
@@ -402,7 +402,7 @@ export function FormL11A4B({ sptBadanId, l11a4b }: FormL11A4BProps) {
                     <div />
                     {/* Row 4: Biaya yang dikeluarkan untuk header */}
                     <div className="flex items-start gap-2 col-span-full">
-                        <span className=" text-black text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
+                        <span className=" text-foreground text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
                             4
                         </span>
                         <Label className="text-sm font-medium">
@@ -419,7 +419,7 @@ export function FormL11A4B({ sptBadanId, l11a4b }: FormL11A4BProps) {
                                 key={`label-${key}`}
                                 className="flex items-start gap-2 pl-2 md:pl-6"
                             >
-                                <span className=" text-black text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
+                                <span className=" text-foreground text-xs font-bold px-1.5 py-0.5 rounded min-w-[20px] text-center">
                                     {key.replace("value_", "")}
                                 </span>
                                 <Label className="text-sm leading-relaxed">
@@ -450,7 +450,7 @@ export function FormL11A4B({ sptBadanId, l11a4b }: FormL11A4BProps) {
                         type="text"
                         value={formatRupiahInput(computedTotal)}
                         readOnly
-                        className="text-right bg-gray-100 font-semibold"
+                        className="text-right bg-muted font-semibold"
                     />
                 </div>
 
@@ -458,7 +458,7 @@ export function FormL11A4B({ sptBadanId, l11a4b }: FormL11A4BProps) {
                 <div className="flex justify-end pt-2">
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900 gap-2 w-full sm:w-auto"
+                        className="gap-2 w-full sm:w-auto"
                         onClick={sync}
                         disabled={isSaving}
                     >

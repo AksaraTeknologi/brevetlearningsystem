@@ -1,3 +1,7 @@
+import {
+    FormPageHeader,
+    FormSection,
+} from "@/Components/app-shell/FormPage";
 import ItemDetail from "@/Components/layout/ItemDetail";
 import {
     Breadcrumb,
@@ -40,16 +44,22 @@ export default function CY({ user, bupot }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Detail eBupot CY
-                    </h1>
+                    <FormPageHeader
+                        title="Detail eBupot CY"
+                        backHref={route("cy.notIssued")}
+                        actions={
+                            <Button
+                                onClick={() =>
+                                    router.get(route("cy.edit", bupot.id))
+                                }
+                            >
+                                Edit
+                            </Button>
+                        }
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
-                        <div className="flex items-center gap-2 mb-2">
-                            <File size={16} />
-                            <h3 className="font-medium">Informasi Umum</h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                    <div>
+                        <FormSection icon={<File />} title="Informasi Umum">
                             <ItemDetail
                                 title="Masa Pajak"
                                 detail={`${bupot.bupot_period} ${bupot.bupot_year}`}
@@ -71,15 +81,12 @@ export default function CY({ user, bupot }: any) {
                                 title="NITKU / Nomor Identitas Subunit Organisasi Penerima Penghasilan"
                                 detail={`${bupot.customer_id}000000 - ${bupot.customer_name}`}
                             />
-                        </div>
+                        </FormSection>
 
-                        <div className="flex items-center gap-2 mb-2">
-                            <Banknote size={16} />
-                            <h3 className="font-medium">
-                                Pajak Penghasilan (Rp)
-                            </h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection
+                            icon={<Banknote />}
+                            title="Pajak Penghasilan (Rp)"
+                        >
                             <ItemDetail
                                 title="Fasilitas Pajak yang Dimiliki oleh Penerima
                             Penghasilan"
@@ -116,13 +123,12 @@ export default function CY({ user, bupot }: any) {
                                 detail={rupiahFormatter.format(bupot.tax || 0)}
                             />
                             <ItemDetail title="KAP" detail={bupot.object.kap} />
-                        </div>
+                        </FormSection>
 
-                        <div className="flex items-center gap-2 mb-2">
-                            <BookMarked size={16} />
-                            <h3 className="font-medium">Dokumen Referensi</h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection
+                            icon={<BookMarked />}
+                            title="Dokumen Referensi"
+                        >
                             <ItemDetail
                                 title="Jenis Dokumen"
                                 detail={bupot.doc_type}
@@ -140,14 +146,7 @@ export default function CY({ user, bupot }: any) {
                                 title="NITKU / Nomor Identitas Sub Unit Organisasi*"
                                 detail={`${user.npwp}000000 - ${user.name}`}
                             />
-                        </div>
-                        <Button
-                            onClick={() =>
-                                router.get(route("cy.edit", bupot.id))
-                            }
-                        >
-                            Edit
-                        </Button>
+                        </FormSection>
                     </div>
                 </div>
             </div>

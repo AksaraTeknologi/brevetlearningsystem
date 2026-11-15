@@ -264,16 +264,16 @@ export default function TabL6({
     };
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow dark:bg-gray-800 space-y-6">
+        <div className="p-6 bg-card rounded-lg shadow dark:bg-gray-800 space-y-6">
             {/* HEADER */}
             <div>
                 <h2 className="text-xl font-semibold mb-6">
                     ANGSURAN PAJAK PENGHASILAN PASAL 25 TAHUN PAJAK BERJALAN
                 </h2>
-                <div className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                <div className="bg-brand text-white font-semibold p-4 w-full rounded">
                     HEADER
                 </div>
-                <div className="p-4 bg-white w-full rounded-b-xl border border-t-0">
+                <div className="p-4 bg-card w-full rounded-b-xl border border-t-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
                             <Label className="text-sm">Tahun Pajak</Label>
@@ -281,7 +281,7 @@ export default function TabL6({
                                 type="text"
                                 value={String(spt.year)}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div className="grid grid-cols-[120px_1fr] items-center gap-4">
@@ -290,7 +290,7 @@ export default function TabL6({
                                 type="text"
                                 value={sptBadan.npwp ?? "-"}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                     </div>
@@ -299,10 +299,10 @@ export default function TabL6({
 
             <Accordion type="multiple" defaultValue={["l6"]}>
                 <AccordionItem value="l6">
-                    <AccordionTrigger className="bg-blue-950 text-white font-semibold p-4 w-full rounded">
+                    <AccordionTrigger className="bg-brand text-white font-semibold p-4 w-full rounded">
                         ANGSURAN PAJAK PENGHASILAN TAHUN PAJAK BERJALAN
                     </AccordionTrigger>
-                    <AccordionContent className="p-6 bg-white w-full border border-t-0 rounded-b-xl">
+                    <AccordionContent className="p-6 bg-card w-full border border-t-0 rounded-b-xl">
                         <div className="space-y-3">
                             {FIELD_CONFIGS.map((config) => {
                                 const isReadOnly = READONLY_FIELDS.includes(
@@ -313,13 +313,13 @@ export default function TabL6({
                                         key={config.field}
                                         className="grid grid-cols-1 gap-3 border-b pb-3 last:border-b-0 md:grid-cols-[32px_minmax(0,1fr)_280px] md:items-center"
                                     >
-                                        <div className="flex h-8 w-8 items-center justify-center text-xs font-semibold text-black">
+                                        <div className="flex h-8 w-8 items-center justify-center text-xs font-semibold text-foreground">
                                             {config.number}
                                         </div>
-                                        <div className="min-w-0 text-sm leading-relaxed text-slate-700">
+                                        <div className="min-w-0 text-sm leading-relaxed text-foreground">
                                             <div>{config.label}</div>
                                             {config.description && (
-                                                <div className="text-xs text-slate-500">
+                                                <div className="text-xs text-muted-foreground">
                                                     {config.description}
                                                 </div>
                                             )}
@@ -340,7 +340,7 @@ export default function TabL6({
                                                 disabled={isReadOnly}
                                                 className={cn(
                                                     "rounded-l-none text-right",
-                                                    isReadOnly && "bg-gray-100",
+                                                    isReadOnly && "bg-muted",
                                                 )}
                                                 placeholder="0"
                                             />

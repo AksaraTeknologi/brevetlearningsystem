@@ -120,14 +120,14 @@ export function ReferenceLinksInput({
     };
 
     return (
-        <div className="space-y-2.5 rounded-lg border bg-slate-50/70 p-3.5">
+        <div className="space-y-2.5 rounded-lg border bg-muted/35 p-3.5">
             <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                    <label className="text-sm font-medium text-slate-800 flex items-center gap-1.5">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-1.5">
                         <BookOpen className="h-4 w-4 text-blue-600" />
                         <span>Link Referensi Ujian (Google Drive)</span>
                     </label>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
+                    <p className="text-[11px] text-muted-foreground mt-0.5">
                         Opsional. Bisa menambahkan lebih dari 1 link file/folder Google Drive untuk dibuka peserta di popup sebelah kiri selama ujian.
                     </p>
                 </div>
@@ -136,7 +136,7 @@ export function ReferenceLinksInput({
                     variant="outline"
                     size="sm"
                     onClick={handleAdd}
-                    className="gap-1.5 bg-white hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300"
+                    className="gap-1.5 bg-card hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300"
                 >
                     <Plus className="h-3.5 w-3.5" />
                     Tambah Link
@@ -144,7 +144,7 @@ export function ReferenceLinksInput({
             </div>
 
             {items.length === 0 ? (
-                <div className="rounded-md border border-dashed border-slate-300 bg-white/70 px-3 py-2.5 text-xs text-slate-500">
+                <div className="rounded-md border border-dashed border-input bg-card/70 px-3 py-2.5 text-xs text-muted-foreground">
                     Belum ada link referensi. Klik <strong>Tambah Link</strong> jika ujian membutuhkan dokumen acuan.
                 </div>
             ) : (
@@ -154,10 +154,10 @@ export function ReferenceLinksInput({
                             key={idx}
                             className={`grid grid-cols-1 ${
                                 compact ? "sm:grid-cols-[1fr_1.4fr_auto]" : "md:grid-cols-[1fr_1.5fr_auto]"
-                            } gap-2 items-start rounded-md border bg-white p-2.5`}
+                            } gap-2 items-start rounded-md border bg-card p-2.5`}
                         >
                             <div>
-                                <span className="text-[11px] font-medium text-slate-500 block mb-1">
+                                <span className="text-[11px] font-medium text-muted-foreground block mb-1">
                                     Judul Referensi #{idx + 1}
                                 </span>
                                 <Input
@@ -169,7 +169,7 @@ export function ReferenceLinksInput({
                                 />
                             </div>
                             <div>
-                                <span className="text-[11px] font-medium text-slate-500 block mb-1">
+                                <span className="text-[11px] font-medium text-muted-foreground block mb-1">
                                     URL Google Drive
                                 </span>
                                 <div className="relative">
@@ -200,13 +200,13 @@ export function ReferenceLinksInput({
                 </div>
             )}
 
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-muted-foreground">
                 Pastikan akses Google Drive disetel ke{" "}
-                <strong className="text-slate-700">Anyone with the link (Siapa saja yang memiliki link)</strong>{" "}
+                <strong className="text-foreground">Anyone with the link (Siapa saja yang memiliki link)</strong>{" "}
                 agar dapat langsung dipratinjau peserta.
             </p>
 
-            {error && <p className="text-xs font-medium text-red-600">{error}</p>}
+            {error && <p className="text-xs font-medium text-destructive">{error}</p>}
         </div>
     );
 }
@@ -238,7 +238,7 @@ export function ReferenceLinksDisplay({
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-md border border-blue-200 bg-white px-2.5 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-50 transition-colors"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-blue-200 bg-card px-2.5 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-50 transition-colors"
                     >
                         <span>{item.title || `Referensi ${idx + 1}`}</span>
                         <ExternalLink className="h-3 w-3 shrink-0" />

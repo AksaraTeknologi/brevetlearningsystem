@@ -66,8 +66,8 @@ export default function ModulesIndex({ course, modules, canManage }: any) {
         <TeacherLayout>
             <Head title={`Modul Kelas ${course.name}`} />
 
-            <div className="teacher-page-shell">
-                <div className="teacher-page-stack">
+            <div className="py-8 mx-auto lg:px-4">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -101,7 +101,7 @@ export default function ModulesIndex({ course, modules, canManage }: any) {
                                 <h1 className="text-2xl font-semibold">
                                     Modul Kelas {course.name}
                                 </h1>
-                                <p className="text-gray-600">
+                                <p className="text-muted-foreground">
                                     Total {modules.length} modul
                                 </p>
                             </div>
@@ -126,7 +126,7 @@ export default function ModulesIndex({ course, modules, canManage }: any) {
                         className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ${
                             modules.length > 0
                                 ? ""
-                                : "rounded-xl bg-white border shadow p-4"
+                                : "rounded-xl bg-card border shadow p-4"
                         }`}
                     >
                         {modules.length > 0 ? (
@@ -145,7 +145,7 @@ export default function ModulesIndex({ course, modules, canManage }: any) {
                                                     />
                                                 ) : (
                                                     <LinkIcon
-                                                        className="text-green-600"
+                                                        className="text-success"
                                                         size={20}
                                                     />
                                                 )}
@@ -173,7 +173,7 @@ export default function ModulesIndex({ course, modules, canManage }: any) {
                                     <CardContent>
                                         {module.type === "file" &&
                                             module.original_filename && (
-                                                <p className="text-xs text-gray-500 mb-2">
+                                                <p className="text-xs text-muted-foreground mb-2">
                                                     File:{" "}
                                                     {module.original_filename}
                                                 </p>
@@ -259,7 +259,7 @@ export default function ModulesIndex({ course, modules, canManage }: any) {
                                                         onClick={() =>
                                                             handleDelete(module)
                                                         }
-                                                        className="text-red-600 hover:text-red-700"
+                                                        className="text-destructive hover:text-destructive/80"
                                                     >
                                                         <Trash size={14} />
                                                     </Button>
@@ -275,10 +275,10 @@ export default function ModulesIndex({ course, modules, canManage }: any) {
                                     className="mx-auto text-gray-400"
                                     size={48}
                                 />
-                                <h3 className="text-lg font-semibold text-gray-600 mt-4">
+                                <h3 className="text-lg font-semibold text-muted-foreground mt-4">
                                     Belum ada modul
                                 </h3>
-                                <p className="text-gray-500 mt-2">
+                                <p className="text-muted-foreground mt-2">
                                     Belum ada modul yang ditambahkan untuk kelas
                                     ini
                                 </p>

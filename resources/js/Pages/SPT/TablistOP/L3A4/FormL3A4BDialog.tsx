@@ -51,7 +51,7 @@ export default function FormL3A4BDialog({
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-[95vw] max-w-2xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle className="text-lg font-semibold">
                         {title}
                     </DialogTitle>
@@ -63,7 +63,7 @@ export default function FormL3A4BDialog({
                         <Input
                             value={form?.code ?? ""}
                             disabled
-                            className="bg-gray-100"
+                            className="bg-muted"
                         />
                     </div>
 
@@ -153,7 +153,7 @@ export default function FormL3A4BDialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900 gap-2"
+                        className="gap-2"
                         onClick={() => {
                             if (!form) return;
                             

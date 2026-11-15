@@ -64,7 +64,6 @@ export function SectionL2B({ data, sptBadanId }: SectionL2BProps) {
             <div className="flex flex-wrap gap-2">
                 <Button
                     type="button"
-                    className="bg-blue-950 hover:bg-blue-900"
                     onClick={handleAdd}
                 >
                     <Plus className="w-4 h-4 mr-2" />

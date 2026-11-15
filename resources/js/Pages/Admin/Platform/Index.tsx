@@ -12,7 +12,9 @@ import {
     Users, 
     Search,
     ShieldAlert,
+    Network,
 } from "lucide-react";
+import { EmptyState, PageHeader, StatGrid, StatTile } from "@/Components/app-shell/kit";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
@@ -188,26 +190,30 @@ export default function PlatformIndex({ platforms, filters }: any) {
 
             <div className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-6">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Manajemen Platform Mitra</h1>
-                        <p className="text-sm text-gray-600">
-                            Kelola platform mitra, integrasi data siswa, dan akses API eksternal terisolasi.
-                        </p>
-                    </div>
-                    <Button
-                        onClick={() => {
-                            const suffix = Math.random().toString(36).substring(2, 7);
-                            setCreateCodeSuffix(suffix);
-                            createForm.reset();
-                            setIsCreateOpen(true);
-                        }}
-                        className="bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center gap-2"
-                    >
-                        <Plus className="w-4 h-4" />
-                        Tambah Platform
-                    </Button>
-                </div>
+                <PageHeader
+                    icon={Network}
+                    title="Manajemen Platform Mitra"
+                    description="Kelola platform mitra, integrasi data siswa, dan akses API eksternal terisolasi."
+                    actions={
+                        <Button
+                            onClick={() => {
+                                const suffix = Math.random().toString(36).substring(2, 7);
+                                setCreateCodeSuffix(suffix);
+                                createForm.reset();
+                                setIsCreateOpen(true);
+                            }}
+                        >
+                            <Plus className="w-4 h-4" />
+                            Tambah Platform
+                        </Button>
+                    }
+                />
+
+                <StatGrid className="lg:grid-cols-3">
+                    <StatTile icon={Network} label="Total Platform" value={platforms?.total ?? platformList.length} tone="brand" />
+                    <StatTile icon={Power} label="Aktif (halaman ini)" value={platformList.filter((p: any) => p.is_active).length} tone="success" />
+                    <StatTile icon={Users} label="Siswa (halaman ini)" value={platformList.reduce((n: number, p: any) => n + Number(p.users_count ?? 0), 0)} tone="info" />
+                </StatGrid>
 
                 {/* Plain Text Token Modal Dialog (Shadcn UI) */}
                 <Dialog open={isTokenModalOpen} onOpenChange={setIsTokenModalOpen}>
@@ -241,7 +247,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                     type="button"
                                     size="sm"
                                     onClick={() => generatedToken && copyToClipboard(generatedToken)}
-                                    className="h-8 gap-1.5 px-3 bg-blue-600 hover:bg-blue-700 text-white flex-shrink-0"
+                                    className="h-8 gap-1.5 px-3 bg-primary text-primary-foreground hover:bg-primary/90 flex-shrink-0"
                                 >
                                     {copiedToken ? (
                                         <>
@@ -286,7 +292,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                 />
 
                 {/* Search & Filter */}
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                <div className="tls-card flex items-center justify-between p-4">
                     <form onSubmit={handleSearch} className="flex items-center gap-2 w-full max-w-md">
                         <div className="relative w-full">
                             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -306,10 +312,10 @@ export default function PlatformIndex({ platforms, filters }: any) {
             
 
                 {/* Platform Table */}
-                <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="tls-card overflow-hidden">
                     <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
-                            <thead className="bg-gray-50 text-gray-600 font-semibold uppercase text-xs tracking-wider">
+                        <table className="min-w-full divide-y divide-border text-left text-sm">
+                            <thead className="tls-thead text-xs font-bold uppercase tracking-wider">
                                 <tr>
                                     <th className="px-6 py-3">Platform</th>
                                     <th className="px-6 py-3">Kode / Slug</th>
@@ -319,23 +325,23 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                     <th className="px-6 py-3 text-right">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-200 bg-white">
+                            <tbody className="divide-y divide-border bg-card">
                                 {platformList.length === 0 ? (
                                     <tr>
-                                        <td colSpan={6} className="px-6 py-8 text-center text-gray-400">
-                                            Belum ada platform terdaftar.
+                                        <td colSpan={6} className="p-4">
+                                            <EmptyState icon={Network} title="Belum ada platform terdaftar." description="Tambahkan platform mitra untuk mengelola integrasi data siswa." />
                                         </td>
                                     </tr>
                                 ) : (
                                     platformList.map((item: PlatformItem) => (
-                                        <tr key={item.id} className="hover:bg-gray-50 transition">
+                                        <tr key={item.id} className="hover:bg-muted/50 transition">
                                             <td className="px-6 py-4">
-                                                <div className="font-medium text-gray-900">{item.name}</div>
+                                                <div className="font-medium text-foreground">{item.name}</div>
                                                 {item.description && (
-                                                    <div className="text-xs text-gray-500 mt-0.5">{item.description}</div>
+                                                    <div className="text-xs text-muted-foreground mt-0.5">{item.description}</div>
                                                 )}
                                             </td>
-                                            <td className="px-6 py-4 font-mono text-xs text-gray-600">
+                                            <td className="px-6 py-4 font-mono text-xs text-muted-foreground">
                                                 {item.code}
                                             </td>
                                             <td className="px-6 py-4">
@@ -343,13 +349,13 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                                                         item.is_active
                                                             ? "bg-green-100 text-green-800"
-                                                            : "bg-gray-100 text-gray-800"
+                                                            : "bg-muted text-foreground"
                                                     }`}
                                                 >
                                                     {item.is_active ? "Aktif" : "Non-Aktif"}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 text-gray-600">
+                                            <td className="px-6 py-4 text-muted-foreground">
                                                 <span className="inline-flex items-center gap-1.5 font-medium">
                                                     <Users className="w-4 h-4 text-gray-400" />
                                                     {item.users_count} siswa
@@ -375,7 +381,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                                 {item.tokens && item.tokens.length > 0 && (
                                                     <button
                                                         onClick={() => promptRevokeTokens(item.id, item.name)}
-                                                        className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition"
+                                                        className="p-1.5 text-destructive hover:bg-red-50 rounded-lg transition"
                                                         title="Cabut API Token"
                                                     >
                                                         <ShieldAlert className="w-4 h-4" />
@@ -383,7 +389,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                                 )}
                                                 <button
                                                     onClick={() => handleOpenEdit(item)}
-                                                    className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                                                    className="p-1.5 text-muted-foreground hover:bg-muted rounded-lg transition"
                                                     title="Edit Platform"
                                                 >
                                                     <Edit2 className="w-4 h-4" />
@@ -393,7 +399,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                                     className={`p-1.5 rounded-lg transition ${
                                                         item.is_active
                                                             ? "text-amber-600 hover:bg-amber-50"
-                                                            : "text-green-600 hover:bg-green-50"
+                                                            : "text-success hover:bg-green-50"
                                                     }`}
                                                     title={item.is_active ? "Nonaktifkan Platform" : "Aktifkan Platform"}
                                                 >
@@ -409,7 +415,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
 
                     {/* Pagination & Records Info */}
                     {platforms && (platforms.total > 0 || (platforms.links && platforms.links.length > 0)) && (
-                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t bg-gray-50/50">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t bg-muted/25">
                             <div className="text-xs text-muted-foreground">
                                 {platforms.total !== undefined ? (
                                     <>
@@ -449,8 +455,8 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                                 preserveState
                                                 className={`px-3 py-1.5 text-xs rounded-md border font-medium transition ${
                                                     link.active
-                                                        ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                                                        : "bg-white text-gray-700 hover:bg-gray-100 border-gray-200"
+                                                        ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                                                        : "bg-card text-foreground hover:bg-muted border-border"
                                                 }`}
                                                 dangerouslySetInnerHTML={{ __html: cleanLabel }}
                                             />
@@ -492,7 +498,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                     }}
                                     placeholder="Contoh: Universitas Indonesia"
                                 />
-                                {createForm.errors.name && <p className="text-xs text-red-600">{createForm.errors.name}</p>}
+                                {createForm.errors.name && <p className="text-xs text-destructive">{createForm.errors.name}</p>}
                             </div>
                             <div className="space-y-1.5">
                                 <Label className="text-xs font-semibold uppercase">Kode Unik (Slug Otomatis)</Label>
@@ -507,7 +513,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                 <p className="text-[11px] text-muted-foreground">
                                     Otomatis dibuat dengan format <span className="font-mono font-medium">namaplatform-xxxxx</span> (bisa disesuaikan manual).
                                 </p>
-                                {createForm.errors.code && <p className="text-xs text-red-600">{createForm.errors.code}</p>}
+                                {createForm.errors.code && <p className="text-xs text-destructive">{createForm.errors.code}</p>}
                             </div>
                             <div className="space-y-1.5">
                                 <Label className="text-xs font-semibold uppercase">Deskripsi (Opsional)</Label>
@@ -529,7 +535,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                 <Button
                                     type="submit"
                                     disabled={createForm.processing}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                                    className="bg-primary text-primary-foreground hover:bg-primary/90"
                                 >
                                     Simpan Platform
                                 </Button>
@@ -556,7 +562,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                     value={editForm.data.name}
                                     onChange={(e) => editForm.setData("name", e.target.value)}
                                 />
-                                {editForm.errors.name && <p className="text-xs text-red-600">{editForm.errors.name}</p>}
+                                {editForm.errors.name && <p className="text-xs text-destructive">{editForm.errors.name}</p>}
                             </div>
                             <div className="space-y-1.5">
                                 <Label className="text-xs font-semibold uppercase">Kode Unik (Slug)</Label>
@@ -567,7 +573,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                     onChange={(e) => editForm.setData("code", e.target.value)}
                                     className="font-mono text-xs"
                                 />
-                                {editForm.errors.code && <p className="text-xs text-red-600">{editForm.errors.code}</p>}
+                                {editForm.errors.code && <p className="text-xs text-destructive">{editForm.errors.code}</p>}
                             </div>
                             <div className="space-y-1.5">
                                 <Label className="text-xs font-semibold uppercase">Deskripsi</Label>
@@ -588,7 +594,7 @@ export default function PlatformIndex({ platforms, filters }: any) {
                                 <Button
                                     type="submit"
                                     disabled={editForm.processing}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                                    className="bg-primary text-primary-foreground hover:bg-primary/90"
                                 >
                                     Simpan Perubahan
                                 </Button>

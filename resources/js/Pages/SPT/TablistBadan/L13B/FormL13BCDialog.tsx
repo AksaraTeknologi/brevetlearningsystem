@@ -122,7 +122,7 @@ export function FormL13BCDialog({
     return (
         <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
             <DialogContent className="w-[95vw] max-w-xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle className="text-lg font-semibold">
                         {editData ? "UBAH" : "TAMBAH"}
                     </DialogTitle>
@@ -238,7 +238,7 @@ export function FormL13BCDialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900 gap-2"
+                        className="gap-2"
                         onClick={handleSave}
                         disabled={isSaving}
                     >

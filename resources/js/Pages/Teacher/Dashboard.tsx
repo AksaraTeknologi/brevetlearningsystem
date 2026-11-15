@@ -12,14 +12,36 @@ import {
     CheckCircle2,
     Clock3,
     Database,
-    GraduationCap,
+    Flag,
+    LayoutDashboard,
     School,
     Target,
     TrendingUp,
     Users,
 } from "lucide-react";
+import {
+    EmptyState,
+    PageHeader,
+    StatGrid,
+    StatTile,
+    StatusPill,
+} from "@/Components/app-shell/kit";
 import { Button } from "@/Components/ui/button";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/Components/ui/card";
+import {
+    ChartContainer,
+    ChartLegend,
+    ChartLegendContent,
+    ChartTooltip,
+    ChartTooltipContent,
+} from "@/Components/ui/chart";
 import {
     Select,
     SelectContent,
@@ -43,6 +65,14 @@ function getStatus(start: string, end: string) {
     return "ongoing";
 }
 
+const getInitials = (name: string) =>
+    name
+        ?.split(" ")
+        .map((n: string) => n[0])
+        .join("")
+        .substring(0, 2)
+        .toUpperCase() || "??";
+
 export default function Dashboard({
     courses = [],
     courseStats = [],
@@ -63,22 +93,22 @@ export default function Dashboard({
     useEffect(() => {
         const now = new Date();
         const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
-        const cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+        const cutoffDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
         setFilteredStats(
-            courseStats.filter((s) => {
-                const d = new Date(s.date);
-                return d >= cutoff && d <= now;
+            courseStats.filter((stat) => {
+                const statDate = new Date(stat.date);
+                return statDate >= cutoffDate && statDate <= now;
             }),
         );
     }, [timeRange, courseStats]);
 
     const now = new Date();
     const totalKelas = courses.length;
-    const kelasAktif = courses.filter((c) =>
+    const kelasAktif = courses.filter((c: any) =>
         isWithinInterval(now, { start: new Date(c.start_date), end: new Date(c.end_date) }),
     ).length;
-    const kelasSelesai = courses.filter((c) => isAfter(now, new Date(c.end_date))).length;
-    const kelasBelumMulai = courses.filter((c) => isBefore(now, new Date(c.start_date))).length;
+    const kelasSelesai = courses.filter((c: any) => isAfter(now, new Date(c.end_date))).length;
+    const kelasBelumMulai = courses.filter((c: any) => isBefore(now, new Date(c.start_date))).length;
 
     const totalSchedules = courses.reduce(
         (acc: number, c: any) => acc + Number(c.course_schedules_count ?? 0),
@@ -92,14 +122,6 @@ export default function Dashboard({
         (acc: number, c: any) => acc + Number(c.participants_count ?? 0),
         0,
     );
-
-    const getInitials = (name: string) =>
-        name
-            ?.split(" ")
-            .map((n: string) => n[0])
-            .join("")
-            .substring(0, 2)
-            .toUpperCase() ?? "??";
 
     const upcomingSchedules = courses
         .flatMap((c: any) =>
@@ -120,296 +142,237 @@ export default function Dashboard({
         .filter((c: any) => getStatus(c.start_date, c.end_date) !== "finished")
         .slice(0, 4);
 
-    const statCards = [
-        {
-            label: "Total Kelas",
-            value: totalKelas,
-            icon: BookOpen,
-            color: "text-teal-700",
-            bg: "bg-teal-50/80 border-teal-100",
-            iconBg: "bg-teal-100",
-        },
-        {
-            label: "Kelas Aktif",
-            value: kelasAktif,
-            icon: CheckCircle2,
-            color: "text-emerald-700",
-            bg: "bg-emerald-50/80 border-emerald-100",
-            iconBg: "bg-emerald-100",
-        },
-        {
-            label: "Belum Mulai",
-            value: kelasBelumMulai,
-            icon: Clock3,
-            color: "text-slate-600",
-            bg: "bg-slate-50/80 border-slate-200",
-            iconBg: "bg-slate-100",
-        },
-        {
-            label: "Kelas Selesai",
-            value: kelasSelesai,
-            icon: GraduationCap,
-            color: "text-rose-600",
-            bg: "bg-rose-50/80 border-rose-100",
-            iconBg: "bg-rose-100",
-        },
-        {
-            label: "Total Jadwal",
-            value: totalSchedules,
-            icon: CalendarClock,
-            color: "text-cyan-700",
-            bg: "bg-cyan-50/80 border-cyan-100",
-            iconBg: "bg-cyan-100",
-        },
-        {
-            label: "Total Ujian",
-            value: totalTests,
-            icon: Target,
-            color: "text-amber-700",
-            bg: "bg-amber-50/80 border-amber-100",
-            iconBg: "bg-amber-100",
-        },
-        {
-            label: "Total Peserta",
-            value: totalParticipants,
-            icon: Users,
-            color: "text-teal-700",
-            bg: "bg-teal-50/80 border-teal-100",
-            iconBg: "bg-teal-100",
-        },
-    ];
-
-    const statusMap: Record<string, { label: string; cls: string }> = {
-        ongoing: { label: "Aktif", cls: "bg-emerald-100 text-emerald-700 border-emerald-200" },
-        upcoming: { label: "Belum Mulai", cls: "bg-slate-100 text-slate-600 border-slate-200" },
-        finished: { label: "Selesai", cls: "bg-rose-100 text-rose-700 border-rose-200" },
+    const statusToneMap: Record<string, { label: string; tone: "success" | "info" | "steel" }> = {
+        ongoing: { label: "Aktif", tone: "success" },
+        upcoming: { label: "Belum Mulai", tone: "info" },
+        finished: { label: "Selesai", tone: "steel" },
     };
 
     return (
         <TeacherLayout>
             <Head title="Dashboard Pengajar" />
 
-            <div className="teacher-page-shell">
-                <div className="teacher-page-stack">
-
-                    {/* ── Hero Header ───────────────────────────────────── */}
-                    <div className="rounded-2xl border border-teal-100 bg-gradient-to-r from-teal-50 via-white to-amber-50 p-6 shadow-sm">
-                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                            <div className="flex items-center gap-4">
-                                {user?.profile_url ? (
-                                    <img
-                                        src={user.profile_url}
-                                        alt={`Foto profil ${user.name}`}
-                                        className="h-14 w-14 rounded-2xl object-cover shadow-md ring-2 ring-white"
-                                    />
-                                ) : (
-                                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-700 text-xl font-bold text-white shadow-md">
-                                        {user ? getInitials(user.name) : "??"}
-                                    </div>
-                                )}
-                                <div>
-                                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">
-                                        Teacher Portal
-                                    </p>
-                                    <h1 className="mt-0.5 text-2xl font-semibold text-slate-800 md:text-3xl">
-                                        Selamat datang, {user?.name?.split(" ")[0] ?? "Pengajar"}!
-                                    </h1>
-                                    <p className="mt-1 text-sm text-slate-500">
-                                        Pantau seluruh aktivitas kelas, ujian, dan peserta Anda.
-                                    </p>
+            <div className="mx-auto max-w-xl py-8 lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
+                <div className="flex flex-1 flex-col gap-5 px-4 pt-0">
+                    {/* Identitas Pengajar & Aksi Utama */}
+                    <div className="tls-card flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-6">
+                        <div className="flex items-center gap-4 min-w-0">
+                            {user?.profile_url ? (
+                                <img
+                                    src={user.profile_url}
+                                    alt={`Foto profil ${user.name}`}
+                                    className="size-14 shrink-0 rounded-2xl object-cover shadow-sm ring-1 ring-border"
+                                />
+                            ) : (
+                                <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 text-lg font-bold text-white shadow-sm">
+                                    {getInitials(user?.name || "Pengajar")}
                                 </div>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                <Button asChild>
-                                    <Link href={route("teacher.createCourse")}>
-                                        <BookPlus size={16} />
-                                        Buat Kelas Baru
-                                    </Link>
-                                </Button>
-                                <Button variant="outline" asChild>
-                                    <Link href={route("teacher.courses")}>
-                                        <School size={16} />
-                                        Daftar Kelas
-                                    </Link>
-                                </Button>
-                            </div>
+                            )}
+                            <PageHeader
+                                icon={LayoutDashboard}
+                                eyebrow="Panel Pengajar"
+                                title={`Selamat datang, ${user?.name?.split(" ").slice(0, 3).join(" ") ?? "Pengajar"}`}
+                                description="Pantau seluruh aktivitas kelas, jadwal, ujian, dan peserta Brevet Learning System."
+                            />
+                        </div>
+                        <div className="flex flex-wrap gap-2 shrink-0">
+                            <Button variant="outline" asChild>
+                                <Link href={route("teacher.courses")}>
+                                    <School />
+                                    Daftar Kelas
+                                </Link>
+                            </Button>
+                            <Button asChild>
+                                <Link href={route("teacher.createCourse")}>
+                                    <BookPlus />
+                                    Buat Kelas Baru
+                                </Link>
+                            </Button>
                         </div>
                     </div>
 
-                    {/* ── Stat Cards ────────────────────────────────────── */}
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
-                        {statCards.map((s) => (
-                            <div
-                                key={s.label}
-                                className={`rounded-2xl border p-4 shadow-sm transition-all duration-300 hover:shadow-md ${s.bg}`}
-                            >
-                                <div className={`mb-2 w-fit rounded-xl p-1.5 ${s.iconBg}`}>
-                                    <s.icon size={16} className={s.color} />
-                                </div>
-                                <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
-                                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                                    {s.label}
-                                </p>
-                            </div>
-                        ))}
+                    {/* Ringkasan Statistik */}
+                    <StatGrid>
+                        <StatTile icon={BookOpen} label="Total Kelas" value={totalKelas} tone="brand" />
+                        <StatTile icon={CheckCircle2} label="Kelas Aktif" value={kelasAktif} tone="success" />
+                        <StatTile icon={Clock3} label="Belum Mulai" value={kelasBelumMulai} tone="info" />
+                        <StatTile icon={Flag} label="Kelas Selesai" value={kelasSelesai} tone="steel" />
+                    </StatGrid>
+
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <StatTile icon={CalendarClock} label="Total Jadwal" value={totalSchedules} tone="info" />
+                        <StatTile icon={Target} label="Total Ujian" value={totalTests} tone="highlight" />
+                        <StatTile icon={Users} label="Total Peserta" value={totalParticipants} tone="brand" />
                     </div>
 
-                    {/* ── Main Grid: Chart + Active Classes ─────────────── */}
-                    <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-
-                        {/* Chart */}
-                        <div className="rounded-2xl border border-teal-100 bg-white/90 p-5 shadow-md backdrop-blur-sm md:p-6">
-                            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                <div>
-                                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">
-                                        Analitik
-                                    </p>
-                                    <h2 className="mt-1 text-lg font-semibold text-slate-800">
-                                        Statistik Pendaftar
-                                    </h2>
-                                    <p className="text-sm text-slate-500">
-                                        Pendaftar kelas dan ujian dalam periode terpilih
-                                    </p>
+                    {/* Grafik & Kelas Aktif */}
+                    <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+                        <Card className="tls-card pt-0 lg:col-span-2">
+                            <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
+                                <div className="grid flex-1 gap-1">
+                                    <CardTitle className="flex items-center gap-2 text-lg">
+                                        <TrendingUp className="size-5 text-primary" />
+                                        Statistik Pendaftar Kelas dan Ujian
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Menampilkan jumlah pendaftar kelas dan ujian berdasarkan rentang waktu.
+                                    </CardDescription>
                                 </div>
                                 <Select value={timeRange} onValueChange={setTimeRange}>
-                                    <SelectTrigger className="w-[155px] rounded-xl border-teal-200 text-sm">
+                                    <SelectTrigger
+                                        className="w-[160px] rounded-lg sm:ml-auto"
+                                        aria-label="Pilih rentang waktu"
+                                    >
                                         <SelectValue placeholder="3 Bulan Terakhir" />
                                     </SelectTrigger>
                                     <SelectContent className="rounded-xl">
-                                        <SelectItem value="90d" className="rounded-lg">3 Bulan Terakhir</SelectItem>
-                                        <SelectItem value="30d" className="rounded-lg">30 Hari Terakhir</SelectItem>
-                                        <SelectItem value="7d" className="rounded-lg">7 Hari Terakhir</SelectItem>
+                                        <SelectItem value="90d" className="rounded-lg">
+                                            3 Bulan Terakhir
+                                        </SelectItem>
+                                        <SelectItem value="30d" className="rounded-lg">
+                                            30 Hari Terakhir
+                                        </SelectItem>
+                                        <SelectItem value="7d" className="rounded-lg">
+                                            7 Hari Terakhir
+                                        </SelectItem>
                                     </SelectContent>
                                 </Select>
-                            </div>
+                            </CardHeader>
+                            <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+                                <ChartContainer
+                                    config={{
+                                        courseRegistrations: {
+                                            label: "Pendaftar Kelas",
+                                            color: "#0F8268",
+                                        },
+                                        testRegistrations: {
+                                            label: "Pendaftar Ujian",
+                                            color: "#F7B519",
+                                        },
+                                    }}
+                                    className="aspect-auto h-[260px] w-full"
+                                >
+                                    <AreaChart data={filteredStats}>
+                                        <defs>
+                                            <linearGradient id="fillCourseBls" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#16A382" stopOpacity={0.35} />
+                                                <stop offset="95%" stopColor="#16A382" stopOpacity={0.04} />
+                                            </linearGradient>
+                                            <linearGradient id="fillTestBls" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#F7B519" stopOpacity={0.35} />
+                                                <stop offset="95%" stopColor="#F7B519" stopOpacity={0.04} />
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid vertical={false} />
+                                        <XAxis
+                                            dataKey="date"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            minTickGap={32}
+                                            tickFormatter={(value) => {
+                                                const date = new Date(value);
+                                                return date.toLocaleDateString("id-ID", {
+                                                    month: "short",
+                                                    day: "numeric",
+                                                });
+                                            }}
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={
+                                                <ChartTooltipContent
+                                                    labelFormatter={(value) =>
+                                                        new Date(value).toLocaleDateString("id-ID", {
+                                                            month: "short",
+                                                            day: "numeric",
+                                                        })
+                                                    }
+                                                    indicator="dot"
+                                                />
+                                            }
+                                        />
+                                        <Area
+                                            dataKey="courseRegistrations"
+                                            name="Pendaftar Kelas"
+                                            type="bump"
+                                            fill="url(#fillCourseBls)"
+                                            stroke="#0F8268"
+                                            strokeWidth={2}
+                                            stackId="1"
+                                        />
+                                        <Area
+                                            dataKey="testRegistrations"
+                                            name="Pendaftar Ujian"
+                                            type="bump"
+                                            fill="url(#fillTestBls)"
+                                            stroke="#F7B519"
+                                            strokeWidth={2}
+                                            stackId="2"
+                                        />
+                                        <ChartLegend content={<ChartLegendContent />} />
+                                    </AreaChart>
+                                </ChartContainer>
+                            </CardContent>
+                        </Card>
 
-                            {/* Legend */}
-                            <div className="mb-4 flex flex-wrap gap-4">
-                                <div className="flex items-center gap-2">
-                                    <div className="h-3 w-3 rounded-full bg-teal-500" />
-                                    <span className="text-xs font-medium text-slate-600">Pendaftar Kelas</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="h-3 w-3 rounded-full bg-amber-400" />
-                                    <span className="text-xs font-medium text-slate-600">Pendaftar Ujian</span>
-                                </div>
-                            </div>
-
-                            <div className="h-[220px] w-full">
-                                {filteredStats.length === 0 ? (
-                                    <div className="flex h-full items-center justify-center">
-                                        <div className="text-center">
-                                            <TrendingUp size={40} className="mx-auto mb-2 text-teal-200" />
-                                            <p className="text-sm text-slate-400">Belum ada data statistik.</p>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <AreaChart data={filteredStats} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
-                                            <defs>
-                                                <linearGradient id="gradCourse" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#0d9488" stopOpacity={0.25} />
-                                                    <stop offset="95%" stopColor="#0d9488" stopOpacity={0.03} />
-                                                </linearGradient>
-                                                <linearGradient id="gradTest" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.25} />
-                                                    <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.03} />
-                                                </linearGradient>
-                                            </defs>
-                                            <CartesianGrid vertical={false} stroke="#e2e8f0" />
-                                            <XAxis
-                                                dataKey="date"
-                                                tickLine={false}
-                                                axisLine={false}
-                                                tickMargin={8}
-                                                minTickGap={32}
-                                                tick={{ fontSize: 11, fill: "#94a3b8" }}
-                                                tickFormatter={(v) =>
-                                                    new Date(v).toLocaleDateString("id-ID", { month: "short", day: "numeric" })
-                                                }
-                                            />
-                                            <YAxis
-                                                tickLine={false}
-                                                axisLine={false}
-                                                tick={{ fontSize: 11, fill: "#94a3b8" }}
-                                                width={30}
-                                            />
-                                            <Tooltip
-                                                labelFormatter={(v) =>
-                                                    new Date(v).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })
-                                                }
-                                                formatter={(val: any, name: string) => [
-                                                    val,
-                                                    name === "courseRegistrations" ? "Pendaftar Kelas" : "Pendaftar Ujian",
-                                                ]}
-                                                contentStyle={{
-                                                    borderRadius: "12px",
-                                                    border: "1px solid #e2e8f0",
-                                                    fontSize: 12,
-                                                }}
-                                            />
-                                            <Area dataKey="courseRegistrations" type="bump" fill="url(#gradCourse)" stroke="#0d9488" strokeWidth={2} />
-                                            <Area dataKey="testRegistrations" type="bump" fill="url(#gradTest)" stroke="#f59e0b" strokeWidth={2} />
-                                        </AreaChart>
-                                    </ResponsiveContainer>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Active / Upcoming Classes */}
-                        <div className="rounded-2xl border border-teal-100 bg-white/90 p-5 shadow-md backdrop-blur-sm">
-                            <div className="mb-4 flex items-center justify-between">
+                        {/* Kelas Aktif & Mendatang */}
+                        <div className="tls-card flex flex-col p-5">
+                            <div className="mb-4 flex items-center justify-between gap-2">
                                 <div>
-                                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                                         Kelas
                                     </p>
-                                    <h2 className="mt-1 text-lg font-semibold text-slate-800">
-                                        Kelas Aktif & Mendatang
+                                    <h2 className="mt-0.5 text-lg font-bold text-foreground">
+                                        Aktif &amp; Mendatang
                                     </h2>
                                 </div>
-                                <Button variant="outline" size="sm" asChild className="border-teal-200 text-teal-700 hover:bg-teal-50">
+                                <Button variant="outline" size="sm" asChild>
                                     <Link href={route("teacher.courses")}>Semua</Link>
                                 </Button>
                             </div>
 
                             {activeAndUpcomingCourses.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center py-10 text-center">
-                                    <BookOpen size={36} className="mb-3 text-teal-200" />
-                                    <p className="text-sm text-slate-400">Belum ada kelas aktif.</p>
-                                    <Button asChild className="mt-4" size="sm">
-                                        <Link href={route("teacher.createCourse")}>Buat Kelas</Link>
-                                    </Button>
-                                </div>
+                                <EmptyState
+                                    icon={BookOpen}
+                                    title="Belum ada kelas aktif"
+                                    description="Buat kelas baru untuk mulai mengelola pembelajaran."
+                                    action={
+                                        <Button asChild size="sm">
+                                            <Link href={route("teacher.createCourse")}>Buat Kelas</Link>
+                                        </Button>
+                                    }
+                                />
                             ) : (
                                 <div className="space-y-3">
                                     {activeAndUpcomingCourses.map((course: any) => {
                                         const st = getStatus(course.start_date, course.end_date);
-                                        const badge = statusMap[st];
+                                        const badge = statusToneMap[st] ?? statusToneMap.upcoming;
                                         return (
                                             <Link
                                                 key={course.id}
                                                 href={route("teacher.showCourse", course.id)}
-                                                className="block rounded-xl border border-teal-100 bg-teal-50/50 px-4 py-3 transition-all duration-200 hover:border-teal-200 hover:bg-teal-50 hover:shadow-sm"
+                                                className="block rounded-xl border border-border bg-muted/40 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-muted/70"
                                             >
                                                 <div className="flex items-start justify-between gap-2">
-                                                    <p className="text-sm font-semibold text-slate-800 line-clamp-1">
+                                                    <p className="line-clamp-1 text-sm font-semibold text-foreground">
                                                         {course.name}
                                                     </p>
-                                                    <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${badge.cls}`}>
+                                                    <StatusPill tone={badge.tone}>
                                                         {badge.label}
-                                                    </span>
+                                                    </StatusPill>
                                                 </div>
-                                                <div className="mt-1.5 flex flex-wrap gap-2">
-                                                    <span className="inline-flex items-center gap-1 text-[11px] text-slate-500">
-                                                        <Users size={11} />
+                                                <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-muted-foreground">
+                                                    <span className="inline-flex items-center gap-1">
+                                                        <Users className="size-3" />
                                                         {course.participants_count ?? 0} peserta
                                                     </span>
-                                                    <span className="inline-flex items-center gap-1 text-[11px] text-slate-500">
-                                                        <CalendarClock size={11} />
+                                                    <span className="inline-flex items-center gap-1">
+                                                        <CalendarClock className="size-3" />
                                                         {course.course_schedules_count ?? 0} jadwal
                                                     </span>
-                                                    <span className="inline-flex items-center gap-1 text-[11px] text-slate-500">
-                                                        <Database size={11} />
+                                                    <span className="inline-flex items-center gap-1">
+                                                        <Database className="size-3" />
                                                         {course.course_tests_count ?? 0} ujian
                                                     </span>
                                                 </div>
@@ -421,42 +384,43 @@ export default function Dashboard({
                         </div>
                     </div>
 
-                    {/* ── Upcoming Schedules ────────────────────────────── */}
-                    <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-md backdrop-blur-sm md:p-6">
-                        <div className="mb-4 flex items-center justify-between">
+                    {/* Jadwal Kelas Mendatang */}
+                    <div className="tls-card p-5 md:p-6">
+                        <div className="mb-4 flex items-center justify-between gap-2">
                             <div>
-                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700">
+                                <p className="text-xs font-semibold uppercase tracking-wider text-info">
                                     Jadwal
                                 </p>
-                                <h2 className="mt-1 text-lg font-semibold text-slate-800">
+                                <h2 className="mt-0.5 text-lg font-bold text-foreground">
                                     Jadwal Kelas Mendatang
                                 </h2>
                             </div>
-                            <Button variant="outline" size="sm" asChild className="border-cyan-200 text-cyan-700 hover:bg-cyan-50">
+                            <Button variant="outline" size="sm" asChild>
                                 <Link href={route("teacher.courses")}>Lihat Kelas</Link>
                             </Button>
                         </div>
 
                         {upcomingSchedules.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center py-10 text-center">
-                                <CalendarClock size={36} className="mb-3 text-cyan-200" />
-                                <p className="text-sm text-slate-400">Belum ada jadwal mendatang.</p>
-                            </div>
+                            <EmptyState
+                                icon={CalendarClock}
+                                title="Belum ada jadwal mendatang"
+                                description="Jadwal pertemuan kelas yang akan datang akan muncul di sini."
+                            />
                         ) : (
                             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                                 {upcomingSchedules.map((s: any) => (
                                     <div
                                         key={s.id}
-                                        className="rounded-xl border border-cyan-100 bg-cyan-50/60 px-4 py-3"
+                                        className="rounded-xl border border-border bg-muted/40 px-4 py-3"
                                     >
-                                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-700">
+                                        <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
                                             {s.courseName}
                                         </p>
-                                        <p className="mt-1 text-sm font-semibold text-slate-800 line-clamp-1">
+                                        <p className="mt-1 line-clamp-1 text-sm font-semibold text-foreground">
                                             {s.title}
                                         </p>
-                                        <p className="mt-1.5 flex items-center gap-1 text-xs text-slate-500">
-                                            <CalendarClock size={12} className="text-cyan-500 shrink-0" />
+                                        <p className="mt-1.5 flex items-center gap-1.5 text-xs text-muted-foreground">
+                                            <CalendarClock className="size-3.5 shrink-0 text-primary" />
                                             {format(new Date(s.scheduled_at), "d MMM yyyy • HH:mm", { locale: id })}
                                         </p>
                                         {s.zoom_link && (
@@ -464,7 +428,7 @@ export default function Dashboard({
                                                 href={s.zoom_link}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="mt-2 inline-block text-xs font-medium text-teal-600 hover:underline"
+                                                className="mt-2 inline-block text-xs font-semibold text-primary hover:underline"
                                             >
                                                 Buka Link Meeting →
                                             </a>
@@ -475,9 +439,9 @@ export default function Dashboard({
                         )}
                     </div>
 
-                    {/* ── Quick Actions ─────────────────────────────────── */}
-                    <div className="rounded-2xl border border-amber-100 bg-white/90 p-5 shadow-md backdrop-blur-sm md:p-6">
-                        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">
+                    {/* Aksi Cepat */}
+                    <div className="tls-card p-5 md:p-6">
+                        <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                             Aksi Cepat
                         </p>
                         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -489,14 +453,13 @@ export default function Dashboard({
                             ].map((a) => (
                                 <Button key={a.label} variant={a.variant} asChild className="h-auto flex-col gap-2 py-4">
                                     <Link href={a.href}>
-                                        <a.icon size={20} />
+                                        <a.icon className="size-5" />
                                         <span className="text-xs font-semibold">{a.label}</span>
                                     </Link>
                                 </Button>
                             ))}
                         </div>
                     </div>
-
                 </div>
             </div>
         </TeacherLayout>

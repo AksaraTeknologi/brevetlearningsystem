@@ -134,7 +134,7 @@ export function SectionL13BD({ data, sptBadanId }: SectionL13BDProps) {
 
     const readonlyInput = (value: number) => (
         <div className="flex items-center gap-1 w-full sm:w-48 sm:shrink-0">
-            <span className="border rounded px-3 py-1.5 bg-gray-50 text-sm text-right w-full font-medium">
+            <span className="border rounded px-3 py-1.5 bg-muted/50 text-sm text-right w-full font-medium">
                 {formatRupiahInput(value)}
             </span>
         </div>
@@ -157,7 +157,7 @@ export function SectionL13BD({ data, sptBadanId }: SectionL13BDProps) {
         <div className="space-y-0">
             {/* Header */}
             <div className="flex items-center justify-start sm:justify-end mb-2">
-                <span className="text-xs font-semibold bg-blue-950 text-white px-4 py-1 rounded w-full sm:w-auto text-center">
+                <span className="text-xs font-semibold bg-brand text-white px-4 py-1 rounded w-full sm:w-auto text-center">
                     NILAI (Rp)
                 </span>
             </div>
@@ -165,7 +165,7 @@ export function SectionL13BD({ data, sptBadanId }: SectionL13BDProps) {
             {/* Row 1 */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 border-b">
                 <div className="flex items-start gap-2 min-w-0 w-full">
-                    <span className=" text-black font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
+                    <span className=" text-foreground font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
                         1
                     </span>
                     <span className="text-xs flex-1 leading-relaxed break-words">
@@ -179,7 +179,7 @@ export function SectionL13BD({ data, sptBadanId }: SectionL13BDProps) {
             {/* Row 2 */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 border-b">
                 <div className="flex items-start gap-2 min-w-0 w-full">
-                    <span className=" text-black font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
+                    <span className=" text-foreground font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
                         2
                     </span>
                     <span className="text-xs flex-1 leading-relaxed break-words">
@@ -193,7 +193,7 @@ export function SectionL13BD({ data, sptBadanId }: SectionL13BDProps) {
             {/* Row 3 — auto: (1 - 2) */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 border-b">
                 <div className="flex items-start gap-2 min-w-0 w-full">
-                    <span className=" text-black font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
+                    <span className=" text-foreground font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
                         3
                     </span>
                     <span className="text-xs flex-1 leading-relaxed break-words">
@@ -207,7 +207,7 @@ export function SectionL13BD({ data, sptBadanId }: SectionL13BDProps) {
             {/* Row 4 */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 border-b">
                 <div className="flex items-start gap-2 min-w-0 w-full">
-                    <span className=" text-black font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
+                    <span className=" text-foreground font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
                         4
                     </span>
                     <span className="text-xs flex-1 leading-relaxed break-words">
@@ -220,7 +220,7 @@ export function SectionL13BD({ data, sptBadanId }: SectionL13BDProps) {
             {/* Row 5 — auto: min(3, 4) */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 border-b">
                 <div className="flex items-start gap-2 min-w-0 w-full">
-                    <span className=" text-black font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
+                    <span className=" text-foreground font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
                         5
                     </span>
                     <span className="text-xs flex-1 leading-relaxed break-words">
@@ -234,7 +234,7 @@ export function SectionL13BD({ data, sptBadanId }: SectionL13BDProps) {
             {/* Row 6 — auto: (3 - 5) */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 border-b">
                 <div className="flex items-start gap-2 min-w-0 w-full">
-                    <span className=" text-black font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
+                    <span className=" text-foreground font-bold text-xs rounded px-2 py-0.5 shrink-0 mt-0.5">
                         6
                     </span>
                     <span className="text-xs flex-1 leading-relaxed break-words">

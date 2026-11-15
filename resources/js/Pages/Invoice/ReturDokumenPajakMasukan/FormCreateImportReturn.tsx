@@ -1,3 +1,8 @@
+import {
+    FormPageHeader,
+    FormSection,
+    FormActions,
+} from "@/Components/app-shell/FormPage";
 import { Button } from "@/Components/ui/button";
 import { Form } from "@/Components/ui/form";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
@@ -81,27 +86,27 @@ export default function FormCreateImportReturn({ others }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Tambah Retur Dokumen Masukan
-                    </h1>
+                    <FormPageHeader
+                        title="Tambah Retur Dokumen Masukan"
+                        backHref={route("retur.import")}
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
+                    <div>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <File size={16} />
-                                    <h3 className="font-medium">
-                                        Dokumen Retur Dokumen Masukan
-                                    </h3>
-                                </div>
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <FormSection
+                                    icon={<File />}
+                                    title="Dokumen Retur Dokumen Masukan"
+                                >
                                     <FormFieldsInputReturn
                                         form={form}
                                         others={others}
                                         isEditMode={false}
                                     />
-                                </div>
-                                <Button type="submit">Kirim</Button>
+                                </FormSection>
+                                <FormActions cancelHref={route("retur.import")}>
+                                    <Button type="submit">Kirim</Button>
+                                </FormActions>
                             </form>
                         </Form>
                     </div>

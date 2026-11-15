@@ -1,3 +1,7 @@
+import {
+    FormPageHeader,
+    FormSection,
+} from "@/Components/app-shell/FormPage";
 import ItemDetail from "@/Components/layout/ItemDetail";
 import {
     Breadcrumb,
@@ -40,16 +44,22 @@ export default function BPNR({ user, bupot }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Detail eBupot BPNR
-                    </h1>
+                    <FormPageHeader
+                        title="Detail eBupot BPNR"
+                        backHref={route("bpnr.notIssued")}
+                        actions={
+                            <Button
+                                onClick={() =>
+                                    router.get(route("bpnr.edit", bupot.id))
+                                }
+                            >
+                                Edit
+                            </Button>
+                        }
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
-                        <div className="flex items-center gap-2 mb-2">
-                            <File size={16} />
-                            <h3 className="font-medium">Informasi Umum</h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                    <div>
+                        <FormSection icon={<File />} title="Informasi Umum">
                             <ItemDetail
                                 title="Masa Pajak"
                                 detail={`${bupot.bupot_period} ${bupot.bupot_year}`}
@@ -59,16 +69,12 @@ export default function BPNR({ user, bupot }: any) {
                                 detail={bupot.bupot_status}
                                 className="capitalize"
                             />
-                        </div>
+                        </FormSection>
 
-                        <div className="flex items-center gap-2 mb-2">
-                            <Banknote size={16} />
-                            <h3 className="font-medium">
-                                Sertifikat Fasilitas Perpajakan yang Dimiliki
-                                oleh Wajib Pajak Luar Negeri
-                            </h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection
+                            icon={<Banknote />}
+                            title="Sertifikat Fasilitas Perpajakan yang Dimiliki oleh Wajib Pajak Luar Negeri"
+                        >
                             <ItemDetail
                                 title="Fasilitas Pajak yang Dimiliki oleh Penerima
                             Penghasilan"
@@ -137,13 +143,12 @@ export default function BPNR({ user, bupot }: any) {
                                 detail={rupiahFormatter.format(bupot.tax || 0)}
                             />
                             <ItemDetail title="KAP" detail={bupot.object.kap} />
-                        </div>
+                        </FormSection>
 
-                        <div className="flex items-center gap-2 mb-2">
-                            <BookMarked size={16} />
-                            <h3 className="font-medium">Dokumen Referensi</h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection
+                            icon={<BookMarked />}
+                            title="Dokumen Referensi"
+                        >
                             <ItemDetail
                                 title="Jenis Dokumen"
                                 detail={bupot.doc_type}
@@ -161,14 +166,7 @@ export default function BPNR({ user, bupot }: any) {
                                 title="NITKU / Nomor Identitas Sub Unit Organisasi*"
                                 detail={`${user.npwp}000000 - ${user.name}`}
                             />
-                        </div>
-                        <Button
-                            onClick={() =>
-                                router.get(route("bpnr.edit", bupot.id))
-                            }
-                        >
-                            Edit
-                        </Button>
+                        </FormSection>
                     </div>
                 </div>
             </div>

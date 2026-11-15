@@ -113,18 +113,18 @@ function MoneyField({
 }) {
     return (
         <div className="grid gap-2 md:grid-cols-[180px_minmax(0,1fr)] md:items-center">
-            <Label className="text-sm font-medium uppercase leading-6 text-gray-700">
+            <Label className="text-sm font-medium uppercase leading-6 text-foreground">
                 {label}
             </Label>
             <div className="grid grid-cols-[56px_minmax(0,1fr)]">
-                <div className="flex items-center justify-center rounded-l-md border border-r-0 border-input bg-gray-100 text-sm font-medium text-gray-600">
+                <div className="flex items-center justify-center rounded-l-md border border-r-0 border-input bg-muted text-sm font-medium text-muted-foreground">
                     Rp.
                 </div>
                 <Input
                     value={value}
                     onChange={onChange}
                     readOnly={readOnly}
-                    className={`rounded-l-none text-right ${readOnly ? "bg-gray-100 font-semibold text-gray-700" : ""}`}
+                    className={`rounded-l-none text-right ${readOnly ? "bg-muted font-semibold text-foreground" : ""}`}
                 />
             </div>
         </div>
@@ -246,7 +246,7 @@ export function FormL11B3Dialog({
     return (
         <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
             <DialogContent className="max-w-3xl p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle className="font-semibold">
                         {editData ? "Edit" : "Add"} Penghitungan Biaya Pinjaman
                     </DialogTitle>
@@ -254,7 +254,7 @@ export function FormL11B3Dialog({
                 <div className="flex-1 overflow-y-auto min-h-0 space-y-6 p-6">
                     <div className="grid gap-4">
                         <div className="grid gap-2 md:grid-cols-[180px_minmax(0,1fr)] md:items-center">
-                            <Label className="text-sm font-medium uppercase leading-6 text-gray-700">
+                            <Label className="text-sm font-medium uppercase leading-6 text-foreground">
                                 Pemberi Pinjaman
                             </Label>
                             <Input
@@ -302,7 +302,7 @@ export function FormL11B3Dialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900 gap-2"
+                        className="gap-2"
                         onClick={handleSave}
                         disabled={isSaving}
                     >

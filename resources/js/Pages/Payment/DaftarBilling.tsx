@@ -1,6 +1,7 @@
 import { DataTableBilling } from "@/Components/layout/Billing/data-table";
 import { columns, BillingColumns } from "@/Components/layout/Billing/columns";
 import { Head, router, usePage } from "@inertiajs/react";
+import { FormPageHeader } from "@/Components/app-shell/FormPage";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Button } from "@/Components/ui/button";
@@ -69,33 +70,38 @@ export default function DaftarBilling({ billingGroups = [] }: Props) {
             <Head title="Daftar Billing" />
 
             <div className="py-8 mx-auto max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
-                <div className="flex flex-1 flex-col gap-4 px-4 pt-0">
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Daftar Kode Billing Belum Bayar (Rupiah)
-                    </h1>
-                    <div className="flex flex-col items-end text-right gap-2 mr-6">
-                        <p>Total Payment for Active Billing Code</p>
-                        <p className="font-bold text-2xl ">
-                            {formatRupiah(totalAmount)}
-                        </p>
-                    </div>
+                <div className="flex flex-1 flex-col gap-4">
+                    <FormPageHeader
+                        title="Daftar Kode Billing Belum Bayar (Rupiah)"
+                        actions={
+                            <div className="tls-stat text-left sm:text-right">
+                                <p className="text-xs font-medium text-muted-foreground">
+                                    Total Payment for Active Billing Code
+                                </p>
+                                <p className="text-xl font-bold text-brand-950 md:text-2xl">
+                                    {formatRupiah(totalAmount)}
+                                </p>
+                            </div>
+                        }
+                    />
 
-                    <div className="p-5 md:p-8 rounded-xl bg-sidebar border">
+                    <div className="tls-card p-4 md:p-5">
                         <div className="flex gap-2">
                             <Button
-                                className="bg-yellow-400 text-primary hover:bg-yellow-400/90 hover:text-primary"
+                                variant="highlight"
+                                aria-label="Muat ulang"
                                 onClick={handleRefresh}
                             >
                                 <RefreshCcw />
                             </Button>
                             <Button
-                                className="bg-zinc-400 hover:bg-zinc-400/90"
+                                className="bg-steel text-steel-foreground hover:bg-steel/90"
                                 disabled
                             >
                                 <File />
                             </Button>
                             <Button
-                                className="bg-green-600 hover:bg-green-600/90"
+                                className="bg-success hover:bg-success/90 text-success-foreground"
                                 disabled
                             >
                                 <FileX />

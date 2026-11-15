@@ -89,7 +89,7 @@ export default function Edit(props: { businessEntity: BusinessEntity }) {
                                     </h3>
                                 </div>
 
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <div className="p-8 rounded-xl bg-card border mb-4">
                                     <FormFieldsBusinessEntity form={form} />
                                 </div>
 

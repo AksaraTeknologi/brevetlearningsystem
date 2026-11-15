@@ -11,18 +11,42 @@ import {
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
 import {
+    AlignLeft,
+    CalendarDays,
+    CalendarX,
+    ClipboardCheck,
     Copy,
+    Database,
     Download,
     Eye,
     FileText,
     FileUp,
+    Info,
+    Layers,
+    ListChecks,
     LoaderCircle,
     Pencil,
     Search,
+    SlidersHorizontal,
+    Target,
+    Timer,
     Trash,
     Upload,
     UserPlus,
+    Users,
 } from "lucide-react";
+import {
+    CodeChip,
+    IconTile,
+    InfoGrid,
+    MetaGrid,
+    PageHeader,
+    Section,
+    StatGrid,
+    StatTile,
+    StatusPill,
+    Timeline,
+} from "@/Components/app-shell/kit";
 import { useEffect, useState } from "react";
 import ConfirmDialog from "@/Components/layout/ConfirmDialog";
 import toast from "react-hot-toast";
@@ -259,8 +283,8 @@ export default function DetailTest({
     return (
         <TeacherLayout>
             <Head title={`Detail Ujian - ${test.title}`} />
-            <div className="teacher-page-shell">
-                <div className="teacher-page-stack">
+            <div className="py-8 mx-auto lg:px-4">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -275,197 +299,102 @@ export default function DetailTest({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-xl sm:teacher-page-title">
-                            Detail Ujian - {test.title}
-                        </h1>
-                        <div className="flex flex-col sm:flex-col md:flex-row items-center gap-2 md:gap-2 ">
-                            <Button asChild>
-                                <Link href={route("teacher.editTest", test.id)}>
-                                    <Pencil size={16} />
-                                    Edit Ujian
-                                </Link>
-                            </Button>
-                            <Button
-                                variant="outline"
-                                className="w-fit text-red-700 bg-red-200 border-red-200 hover:bg-red-300 flex items-center gap-1"
-                                onClick={() => {
-                                    setOpenDeleteModal(true);
-                                }}
-                            >
-                                <Trash size={16} />
-                                Hapus
-                            </Button>
-                        </div>
-                    </div>
+                    <PageHeader
+                        icon={ClipboardCheck}
+                        eyebrow="Detail Ujian"
+                        title={test.title}
+                        description={test.description || undefined}
+                        actions={
+                            <>
+                                <CodeChip code={test.code} copied={copiedCode} onCopy={handleCopyCode} />
+                                <Button asChild>
+                                    <Link href={route("teacher.editTest", test.id)}>
+                                        <Pencil size={16} />
+                                        Edit Ujian
+                                    </Link>
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                                    onClick={() => setOpenDeleteModal(true)}
+                                >
+                                    <Trash size={16} />
+                                    Hapus
+                                </Button>
+                            </>
+                        }
+                    />
 
-                    <div className="rounded-xl bg-white border shadow p-6">
-                        <div className="flex flex-col md:flex-row gap-2 md:items-center justify-between">
-                            <h2 className="text-lg font-bold md:mb-2 text-primary">
-                                Informasi Ujian
-                            </h2>
-                            <button
-                                type="button"
-                                onClick={handleCopyCode}
-                                className="inline-flex items-center gap-2 rounded-md border px-2.5 py-1.5 transition border-blue-300 bg-blue-50 text-blue-700"
-                            >
-                                <span className="text-[10px] font-semibold uppercase tracking-wide opacity-80">
-                                    Kode
-                                </span>
-                                <span className="font-mono text-sm font-bold tracking-widest md:text-[15px]">
-                                    {test.code}
-                                </span>
-                                <Copy size={13} className="opacity-75" />
-                            </button>
-                        </div>
-                        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                            <div className="rounded-lg border bg-slate-50 p-4">
-                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                    Informasi Dasar
-                                </p>
-                                <dl className="mt-3 space-y-3 text-sm">
-                                    <div>
-                                        <dt className="text-slate-500">
-                                            Nama Ujian
-                                        </dt>
-                                        <dd className="font-medium text-slate-900">
-                                            {test.title || "-"}
-                                        </dd>
-                                    </div>
-                                    <div>
-                                        <dt className="text-slate-500">
-                                            Deskripsi
-                                        </dt>
-                                        <dd className="font-medium text-slate-900">
-                                            {test.description || "-"}
-                                        </dd>
-                                    </div>
-                                    <div>
-                                        <dt className="text-slate-500">
-                                            Bank Soal
-                                        </dt>
-                                        <dd className="font-medium text-slate-900">
-                                            {test.question_bank?.name || "-"}
-                                        </dd>
-                                    </div>
-                                </dl>
+                    <StatGrid>
+                        <StatTile icon={Timer} label="Durasi" value={`${test.duration || "-"} mnt`} tone="brand" />
+                        <StatTile icon={Target} label="Passing Grade" value={test.passing_score || "-"} tone="success" />
+                        <StatTile icon={Database} label="Total Soal Bank" value={totalSoalBank} tone="info" />
+                        <StatTile icon={ListChecks} label="Soal Ditampilkan" value={soalDitampilkan} tone="highlight" />
+                    </StatGrid>
+
+                    <div className="grid grid-cols-1 gap-5 lg:grid-cols-5">
+                        <Section icon={Info} title="Informasi Ujian" className="lg:col-span-3">
+                            <InfoGrid
+                                items={[
+                                    { icon: ClipboardCheck, label: "Nama Ujian", value: test.title || "-" },
+                                    { icon: Database, label: "Bank Soal", value: test.question_bank?.name || "-" },
+                                    { icon: AlignLeft, label: "Deskripsi", value: test.description || "-", full: true },
+                                    { icon: CalendarDays, label: "Tanggal Pelaksanaan", value: tanggalPelaksanaan },
+                                    { icon: CalendarX, label: "Ujian Ditutup", value: ujianDitutup },
+                                ]}
+                            />
+                            <div className="mt-4">
+                                <Timeline start={test.start_date} end={test.end_date} startLabel="Progres jadwal ujian" />
                             </div>
+                        </Section>
 
-                            <div className="rounded-lg border bg-slate-50 p-4">
-                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                    Jadwal Dan Penilaian
-                                </p>
-                                <dl className="mt-3 space-y-3 text-sm">
-                                    <div>
-                                        <dt className="text-slate-500">
-                                            Durasi
-                                        </dt>
-                                        <dd className="font-medium text-slate-900">
-                                            {test.duration || "-"} Menit
-                                        </dd>
-                                    </div>
-                                    <div>
-                                        <dt className="text-slate-500">
-                                            Passing Grade
-                                        </dt>
-                                        <dd className="font-medium text-slate-900">
-                                            {test.passing_score || "-"}
-                                        </dd>
-                                    </div>
-                                    <div>
-                                        <dt className="text-slate-500">
-                                            Tanggal Pelaksanaan
-                                        </dt>
-                                        <dd className="font-medium text-slate-900">
-                                            {tanggalPelaksanaan}
-                                        </dd>
-                                    </div>
-                                    <div>
-                                        <dt className="text-slate-500">
-                                            Ujian Ditutup
-                                        </dt>
-                                        <dd className="font-medium text-slate-900">
-                                            {ujianDitutup}
-                                        </dd>
-                                    </div>
-                                </dl>
-                            </div>
-
-                            <div className="rounded-lg border border-blue-100 bg-blue-50/60 p-4 lg:col-span-2">
-                                <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">
-                                    Pengaturan Soal
-                                </p>
-                                <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
-                                    <div className="rounded-md border border-blue-100 bg-white p-3">
-                                        <p className="text-[11px] uppercase tracking-wide text-slate-500">
-                                            Bank Soal
-                                        </p>
-                                        <p className="text-sm font-semibold text-slate-900">
-                                            {test.question_bank?.name || "-"}
-                                        </p>
-                                    </div>
-                                    <div className="rounded-md border border-blue-100 bg-white p-3">
-                                        <p className="text-[11px] uppercase tracking-wide text-slate-500">
-                                            Total Soal Bank
-                                        </p>
-                                        <p className="text-sm font-semibold text-slate-900">
-                                            {totalSoalBank}
-                                        </p>
-                                    </div>
-                                    <div className="rounded-md border border-blue-100 bg-white p-3">
-                                        <p className="text-[11px] uppercase tracking-wide text-slate-500">
-                                            Soal Ditampilkan
-                                        </p>
-                                        <p className="text-sm font-semibold text-slate-900">
-                                            {soalDitampilkan}
-                                        </p>
-                                    </div>
-                                </div>
-                                <p className="mt-2 text-xs text-slate-600">
+                        <div className="flex flex-col gap-5 lg:col-span-2">
+                            <Section icon={SlidersHorizontal} title="Pengaturan Soal">
+                                <MetaGrid
+                                    className="grid-cols-1 lg:grid-cols-1"
+                                    items={[
+                                        { icon: Database, label: "Bank Soal", value: test.question_bank?.name || "-" },
+                                        { icon: Layers, label: "Total Soal Bank", value: totalSoalBank },
+                                        { icon: ListChecks, label: "Soal Ditampilkan", value: soalDitampilkan },
+                                    ]}
+                                />
+                                <p className="mt-3 text-xs text-muted-foreground">
                                     {isCustomSoalDitampilkan
                                         ? "Mode custom aktif: jumlah soal ditampilkan diatur manual."
                                         : "Mode otomatis: jumlah soal ditampilkan mengikuti total soal bank."}
                                 </p>
-                            </div>
+                            </Section>
 
-                            <div className="rounded-lg border bg-white p-4 lg:col-span-2">
-                                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                                    <div>
-                                        <p className="text-sm font-semibold text-slate-900">
-                                            Tampilkan Nilai ke Peserta
-                                        </p>
-                                        <p className="text-xs text-gray-500 mt-1">
-                                            {showScore
-                                                ? "Peserta dapat melihat nilai ujian mereka"
-                                                : 'Peserta hanya melihat "Selamat anda telah mengerjakan ujian"'}
-                                        </p>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <Switch
-                                            checked={showScore}
-                                            onCheckedChange={
-                                                handleToggleShowScore
-                                            }
-                                        />
-                                        <span
-                                            className={`text-sm ${showScore ? "text-emerald-600 font-medium" : "text-gray-500"}`}
-                                        >
-                                            {showScore
-                                                ? "Nilai ditampilkan"
-                                                : "Nilai disembunyikan"}
-                                        </span>
+                            <Section icon={Eye} title="Tampilkan Nilai ke Peserta">
+                                <div className="flex items-center justify-between gap-3">
+                                    <p className="text-sm text-muted-foreground">
+                                        {showScore
+                                            ? "Peserta dapat melihat nilai ujian mereka"
+                                            : 'Peserta hanya melihat "Selamat anda telah mengerjakan ujian"'}
+                                    </p>
+                                    <div className="flex shrink-0 items-center gap-2">
+                                        <Switch checked={showScore} onCheckedChange={handleToggleShowScore} />
+                                        <StatusPill tone={showScore ? "success" : "steel"}>
+                                            {showScore ? "Ditampilkan" : "Disembunyikan"}
+                                        </StatusPill>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="lg:col-span-2">
+                            </Section>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <div>
                                 <ReferenceLinksDisplay links={test.reference_link} />
                             </div>
                         </div>
                     </div>
 
-                    <div className="rounded-xl bg-white border shadow p-6">
+                    <div className="tls-card p-5 md:p-6">
                         <div className="flex items-center justify-between gap-2 flex-wrap md:flex-nowrap">
-                            <h2 className="text-lg font-bold text-primary">
+                            <h2 className="flex items-center gap-2.5 text-lg font-bold text-brand-950">
+                                <IconTile icon={Users} size="sm" />
                                 Daftar Peserta ({participants.length})
                             </h2>
                             <div className="flex items-center gap-2">
@@ -476,7 +405,6 @@ export default function DetailTest({
                                     <DialogTrigger asChild>
                                         <Button
                                             variant="outline"
-                                            className="text-blue-700 bg-blue-50 border-blue-200 hover:bg-blue-100"
                                         >
                                             <UserPlus size={16} />
                                             Tambah Peserta
@@ -513,7 +441,7 @@ export default function DetailTest({
                                             {/* Search Results */}
                                             <div className="max-h-64 overflow-y-auto">
                                                 {isSearching && (
-                                                    <div className="text-center py-4 text-gray-500">
+                                                    <div className="text-center py-4 text-muted-foreground">
                                                         Mencari...
                                                     </div>
                                                 )}
@@ -522,7 +450,7 @@ export default function DetailTest({
                                                     searchQuery.length >= 2 &&
                                                     searchResults.length ===
                                                         0 && (
-                                                        <div className="text-center py-4 text-gray-500">
+                                                        <div className="text-center py-4 text-muted-foreground">
                                                             Tidak ada peserta
                                                             ditemukan
                                                         </div>
@@ -531,13 +459,13 @@ export default function DetailTest({
                                                 {searchResults.map((user) => (
                                                     <div
                                                         key={user.id}
-                                                        className="flex items-center justify-between p-3 border rounded hover:bg-gray-50"
+                                                        className="flex items-center justify-between p-3 border rounded hover:bg-muted/50"
                                                     >
                                                         <div>
                                                             <div className="font-medium">
                                                                 {user.name}
                                                             </div>
-                                                            <div className="text-sm text-gray-500">
+                                                            <div className="text-sm text-muted-foreground">
                                                                 {user.email}
                                                             </div>
                                                         </div>
@@ -548,7 +476,7 @@ export default function DetailTest({
                                                                     user.id,
                                                                 )
                                                             }
-                                                            className="bg-green-600 hover:bg-green-700"
+                                                            className="bg-success hover:bg-green-700 text-success-foreground"
                                                         >
                                                             Tambah
                                                         </Button>

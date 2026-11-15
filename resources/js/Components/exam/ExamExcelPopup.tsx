@@ -502,7 +502,7 @@ export default function ExamExcelPopup({
             }
         >
             <div className="flex-1 min-h-0 flex flex-col">
-                <div className="flex-1 min-h-0 relative bg-white">
+                <div className="flex-1 min-h-0 relative bg-card">
                     <FortuneWorkbookSurface
                         key={resetCounter}
                         initialState={state}
@@ -511,10 +511,10 @@ export default function ExamExcelPopup({
                         skipFlushOnUnmountRef={skipFlushOnUnmountRef}
                     />
                 </div>
-                <div className="px-3 py-1 border-t bg-slate-50 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2 shrink-0">
+                <div className="px-3 py-1 border-t bg-muted/50 text-[11px] text-muted-foreground flex flex-wrap items-center justify-between gap-2 shrink-0">
                     <span>
-                        Tips rumus: ketik <code className="font-mono text-slate-700">=SUM(</code> lalu klik/tarik langsung sel yang diinginkan, akhiri{" "}
-                        <code className="font-mono text-slate-700">Enter</code>.
+                        Tips rumus: ketik <code className="font-mono text-foreground">=SUM(</code> lalu klik/tarik langsung sel yang diinginkan, akhiri{" "}
+                        <code className="font-mono text-foreground">Enter</code>.
                     </span>
                     <span>Aktif selama sesi ujian ini saja (otomatis reset setelah selesai/remidi)</span>
                 </div>

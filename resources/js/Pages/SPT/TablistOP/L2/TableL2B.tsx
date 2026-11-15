@@ -90,7 +90,7 @@ export function TableL2B({
         }
     };
 
-    const headerClass = "text-black font-semibold";
+    const headerClass = "text-foreground font-semibold";
 
     return (
         <div className="w-full overflow-x-auto">
@@ -146,10 +146,10 @@ export function TableL2B({
                     </TableRow>
 
                     <TableRow>
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white" />
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card" />
+                        <TableHead className="bg-card">
                             <Input
                                 value={filterCode}
                                 onChange={(e) => setFilterCode(e.target.value)}
@@ -157,7 +157,7 @@ export function TableL2B({
                                 className="h-8"
                             />
                         </TableHead>
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card">
                             <Input
                                 value={filterIncomeType}
                                 onChange={(e) =>
@@ -167,7 +167,7 @@ export function TableL2B({
                                 className="h-8"
                             />
                         </TableHead>
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card">
                             <Input
                                 value={filterNpwp}
                                 onChange={(e) =>
@@ -182,7 +182,7 @@ export function TableL2B({
                                 inputMode="numeric"
                             />
                         </TableHead>
-                        <TableHead className="bg-white">
+                        <TableHead className="bg-card">
                             <Input
                                 value={filterName}
                                 onChange={(e) => setFilterName(e.target.value)}
@@ -190,7 +190,7 @@ export function TableL2B({
                                 className="h-8"
                             />
                         </TableHead>
-                        <TableHead className="bg-white" />
+                        <TableHead className="bg-card" />
                     </TableRow>
                 </TableHeader>
 
@@ -231,7 +231,7 @@ export function TableL2B({
                                             type="button"
                                             size="icon"
                                             variant="ghost"
-                                            className="h-8 w-8 text-red-500 hover:text-red-600"
+                                            className="h-8 w-8 text-destructive hover:text-destructive/80"
                                             onClick={() => onDelete(item.id!)}
                                         >
                                             <Trash2 className="h-4 w-4" />

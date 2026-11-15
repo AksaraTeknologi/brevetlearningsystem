@@ -10,17 +10,29 @@ import {
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
 import { ReferenceLinksDisplay } from "@/Components/exam/ReferenceLinksInput";
+import { AlignLeft, CalendarDays, CalendarX, ClipboardCheck, Info, ListChecks, Target, Timer, Users } from "lucide-react";
+import {
+  CodeChip,
+  EmptyState,
+  InfoGrid,
+  PageHeader,
+  Section,
+  StatGrid,
+  StatTile,
+  Timeline,
+} from "@/Components/app-shell/kit";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
+
+const getInitials = (name: string) =>
+  name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .substring(0, 2)
+    .toUpperCase() || "??";
 
 export default function AdminDetailTest({ teacher, test = {}, participants = [] }: any) {
-  const getInitials = (name: string) => {
-    return name
-        ?.split(" ")
-        .map((n) => n[0])
-        .join("")
-        .substring(0, 2)
-        .toUpperCase() || "??";
-  };
-
+  const t = test as any;
   return (
     <AdminLayout>
       <Head title={`Detail Ujian - ${test?.title ?? ""}`} />
@@ -42,128 +54,86 @@ export default function AdminDetailTest({ teacher, test = {}, participants = [] 
             </BreadcrumbList>
           </Breadcrumb>
 
-          <div className="flex items-center justify-between">
-            <h1 className="text-xl sm:text-2xl font-semibold text-primary">
-              Detail Ujian - {(test as any)?.title}
-            </h1>
-          </div>
+          <PageHeader
+            icon={ClipboardCheck}
+            eyebrow="Detail Ujian"
+            title={t?.title}
+            description={t?.description || undefined}
+            actions={<CodeChip code={t?.code ?? "-"} onCopy={() => navigator.clipboard?.writeText(t?.code ?? "")} />}
+          />
 
-          <div className="rounded-xl bg-white border shadow p-6">
-            <div className="flex flex-col md:flex-row gap-2 md:items-center justify-between">
-              <h2 className="text-lg font-bold md:mb-2 text-primary">Informasi Ujian</h2>
-              <span className="w-fit text-sm md:text-base md:mb-0 mb-4 font-mono font-bold px-3 py-1 rounded bg-blue-200 text-blue-900 border border-blue-400 tracking-widest shadow-sm">
-                Kode : {(test as any)?.code}
-              </span>
-            </div>
-            <table className="w-full text-sm">
-              <tbody>
-                <tr>
-                  <td className="font-medium py-1 pr-4">Nama Ujian</td>
-                  <td className="py-1">:</td>
-                  <td className="py-1">{(test as any)?.title}</td>
-                </tr>
-                <tr>
-                  <td className="font-medium py-1 pr-4">Deskripsi</td>
-                  <td className="py-1">:</td>
-                  <td className="py-1">{(test as any)?.description || '-'}</td>
-                </tr>
-                <tr>
-                  <td className="font-medium py-1 pr-4">Durasi</td>
-                  <td className="py-1">:</td>
-                  <td className="py-1">{typeof (test as any)?.duration === 'number' ? (test as any).duration : '-'} Menit</td>
-                </tr>
-                <tr>
-                  <td className="font-medium py-1 pr-4">Passing Grade</td>
-                  <td className="py-1">:</td>
-                  <td className="py-1">{typeof (test as any)?.passing_score === 'number' ? (test as any).passing_score : '-'}</td>
-                </tr>
-                <tr>
-                  <td className="font-medium py-1 pr-4">Tanggal Pelaksanaan</td>
-                  <td className="py-1">:</td>
-                  <td className="py-1">
-                    {(test as any)?.start_date
-                      ? format(new Date((test as any).start_date), 'd MMMM yyyy', { locale: id })
-                      : '-'}
-                    {" - "}
-                    {(test as any)?.start_date
-                      ? format(new Date((test as any).start_date), 'HH:mm', { locale: id })
-                      : '-'}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="font-medium py-1 pr-4">Ujian Ditutup</td>
-                  <td className="py-1">:</td>
-                  <td className="py-1">
-                    {(test as any)?.end_date
-                      ? format(new Date((test as any).end_date), 'd MMMM yyyy', { locale: id })
-                      : '-'}
-                    {" - "}
-                    {(test as any)?.end_date
-                      ? format(new Date((test as any).end_date), 'HH:mm', { locale: id })
-                      : '-'}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="font-medium py-1 pr-4">Banyak Soal</td>
-                  <td className="py-1">:</td>
-                  <td className="py-1">
-                    <div className="flex flex-wrap gap-2">
-                      <span className="inline-flex gap-2 py-1 ">
-                         {typeof (test as any)?.question_count === 'number' ? `${(test as any).question_count} Soal` : '(Belum ada soal)'}
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <StatGrid>
+            <StatTile icon={Timer} label="Durasi" value={typeof t?.duration === "number" ? `${t.duration} mnt` : "-"} tone="brand" />
+            <StatTile icon={Target} label="Passing Grade" value={typeof t?.passing_score === "number" ? t.passing_score : "-"} tone="success" />
+            <StatTile icon={ListChecks} label="Banyak Soal" value={typeof t?.question_count === "number" ? t.question_count : "-"} tone="info" />
+            <StatTile icon={Users} label="Peserta" value={participants?.length || 0} tone="highlight" />
+          </StatGrid>
+
+          <Section icon={Info} title="Informasi Ujian">
+            <InfoGrid
+              items={[
+                { icon: ClipboardCheck, label: "Nama Ujian", value: t?.title },
+                { icon: ListChecks, label: "Banyak Soal", value: typeof t?.question_count === "number" ? `${t.question_count} Soal` : "(Belum ada soal)" },
+                { icon: AlignLeft, label: "Deskripsi", value: t?.description || "-", full: true },
+                {
+                  icon: CalendarDays,
+                  label: "Tanggal Pelaksanaan",
+                  value: t?.start_date ? `${format(new Date(t.start_date), "d MMMM yyyy", { locale: id })} - ${format(new Date(t.start_date), "HH:mm", { locale: id })}` : "-",
+                },
+                {
+                  icon: CalendarX,
+                  label: "Ujian Ditutup",
+                  value: t?.end_date ? `${format(new Date(t.end_date), "d MMMM yyyy", { locale: id })} - ${format(new Date(t.end_date), "HH:mm", { locale: id })}` : "-",
+                },
+              ]}
+            />
             <div className="mt-4">
-              <ReferenceLinksDisplay links={(test as any)?.reference_link} />
+              <Timeline start={t?.start_date} end={t?.end_date} startLabel="Progres jadwal ujian" />
             </div>
-          </div>
-
-          <div className="rounded-xl bg-white border shadow p-6">
-            <div className="flex md:flex-row flex-col gap-2 md:items-center justify-between">
-              <h2 className="text-lg font-bold text-primary">Daftar Peserta ({participants?.length || 0})</h2>
+            <div className="mt-4">
+              <ReferenceLinksDisplay links={t?.reference_link} />
             </div>
+          </Section>
 
+          <Section icon={Users} title={`Daftar Peserta (${participants?.length || 0})`} bodyClassName={participants?.length ? "p-0" : undefined}>
             {participants?.length ? (
-              <div className="overflow-x-auto mt-3">
-                <table className="min-w-full text-sm">
-                  <thead>
-                    <tr className="text-left text-gray-500 border-b">
-                      <th className="py-2 pr-4">Nama</th>
-                      <th className="py-2 pr-4">Email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {participants.map((p: any) => (
-                      <tr key={p.id} className="border-b last:border-0">
-                        <td className="py-2 pr-4">
-                          <div className="flex items-center gap-3">
-                            {p.user?.profile_url ? (
-                              <img
-                                src={p.user.profile_url}
-                                alt={`Foto profil ${p.user.name}`}
-                                className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-teal-100"
-                              />
-                            ) : (
-                              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-teal-600 to-cyan-700 text-xs font-bold text-white shadow-sm shrink-0">
-                                {getInitials(p.user?.name || "??")}
-                              </div>
-                            )}
-                            <span className="font-medium text-slate-700">{p.user?.name || "-"}</span>
-                          </div>
-                        </td>
-                        <td className="py-2 pr-4">{p.user?.email || '-'}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-12">No</TableHead>
+                    <TableHead>Nama</TableHead>
+                    <TableHead>Email</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {participants.map((p: any, i: number) => (
+                    <TableRow key={p.id}>
+                      <TableCell>{i + 1}</TableCell>
+                      <TableCell className="font-semibold">
+                        <div className="flex items-center gap-3">
+                          {p.user?.profile_url ? (
+                            <img
+                              src={p.user.profile_url}
+                              alt={`Foto profil ${p.user.name}`}
+                              className="h-8 w-8 rounded-xl object-cover shadow-sm ring-1 ring-border shrink-0"
+                            />
+                          ) : (
+                            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-brand-700 to-brand-900 text-xs font-bold text-white shadow-sm shrink-0">
+                              {getInitials(p.user?.name || "??")}
+                            </div>
+                          )}
+                          <span>{p.user?.name || "-"}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">{p.user?.email || "-"}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             ) : (
-              <div className="text-gray-500 mt-2">Belum ada peserta.</div>
+              <EmptyState icon={Users} title="Belum ada peserta." />
             )}
-          </div>
+          </Section>
         </div>
       </div>
     </AdminLayout>

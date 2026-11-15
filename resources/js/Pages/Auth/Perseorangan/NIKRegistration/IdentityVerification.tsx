@@ -327,10 +327,10 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
     return (
         <div className="space-y-6">
             <div className="text-center mb-8">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                <h2 className="text-xl font-semibold text-foreground mb-2">
                     Verifikasi Identitas
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                     Silakan ambil foto atau unggah dari komputer Anda
                 </p>
             </div>
@@ -344,7 +344,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                                 "border-2 border-dashed rounded-lg p-8 text-center transition-colors",
                                 errors.photo
                                     ? "border-red-300 bg-red-50"
-                                    : "border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100"
+                                    : "border-input bg-muted/50 hover:border-gray-400 hover:bg-muted"
                             )}
                             // onDragOver={handleDragOver}
                             // onDrop={handleDrop}
@@ -357,11 +357,11 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                                 </div>
 
                                 <div>
-                                    <h3 className="text-lg font-medium text-gray-700 mb-2">
+                                    <h3 className="text-lg font-medium text-foreground mb-2">
                                         Silakan ambil foto atau unggah dari
                                         komputer Anda
                                     </h3>
-                                    <p className="text-sm text-gray-500 mb-4">
+                                    <p className="text-sm text-muted-foreground mb-4">
                                         Format: JPG, JPEG, PNG • Maksimal: 5MB
                                     </p>
                                 </div>
@@ -370,7 +370,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                                     <Button
                                         type="button"
                                         onClick={startCamera}
-                                        className="flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white"
+                                        className="flex items-center gap-2 bg-brand hover:bg-brand/90 text-white"
                                         disabled={processing}
                                     >
                                         <Camera className="w-4 h-4" />
@@ -401,7 +401,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                         </div>
 
                         {errors.photo && (
-                            <p className="text-sm text-red-500 text-center mt-2">
+                            <p className="text-sm text-destructive text-center mt-2">
                                 {errors.photo}
                             </p>
                         )}
@@ -445,7 +445,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                                 type="button"
                                 onClick={capturePhoto}
                                 disabled={!cameraReady}
-                                className="bg-blue-900 hover:bg-blue-800"
+                                className="bg-brand hover:bg-brand/90 text-brand-foreground"
                             >
                                 <Camera className="w-4 h-4 mr-2" />
                                 {cameraReady ? "Ambil Foto" : "Tunggu..."}
@@ -461,7 +461,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
 
                         {/* Debug info */}
                         {process.env.NODE_ENV === "development" && (
-                            <div className="mt-2 text-xs text-gray-500 text-center">
+                            <div className="mt-2 text-xs text-muted-foreground text-center">
                                 Stream: {stream ? "Active" : "Inactive"} |
                                 Camera Ready: {cameraReady ? "Yes" : "No"} |
                                 Video Ready State:{" "}
@@ -474,7 +474,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                 {/* Photo Preview */}
                 {photoPreview && (
                     <div className="max-w-lg mx-auto">
-                        <div className="relative bg-gray-100 rounded-lg overflow-hidden">
+                        <div className="relative bg-muted rounded-lg overflow-hidden">
                             <img
                                 src={photoPreview}
                                 alt="Identity Photo Preview"
@@ -485,7 +485,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                                 variant="outline"
                                 size="sm"
                                 onClick={retakePhoto}
-                                className="absolute top-3 right-3 bg-white/90 hover:bg-white"
+                                className="absolute top-3 right-3 bg-card/90 hover:bg-card"
                             >
                                 <X className="w-4 h-4" />
                             </Button>
@@ -501,7 +501,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                             Hapus Foto
                         </Button>
 
-                        <div className="flex items-center justify-center text-green-600">
+                        <div className="flex items-center justify-center text-success">
                             <Check className="w-4 h-4 mr-2" />
                             <span className="text-sm font-medium">
                                 Validasi foto berhasil!
@@ -516,7 +516,7 @@ export default function IdentityVerification({ onNext, existingData }: Props) {
                     <Button
                         type="submit"
                         disabled={processing || (!photo && !photoPreview)}
-                        className="bg-blue-900 hover:bg-blue-800"
+                        className="bg-brand hover:bg-brand/90 text-brand-foreground"
                     >
                         {processing ? "Menyimpan..." : "Lanjutkan"}
                     </Button>

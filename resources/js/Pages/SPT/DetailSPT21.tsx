@@ -1,3 +1,4 @@
+import { FormPageHeader } from "@/Components/app-shell/FormPage";
 import { usePage, router, Link } from "@inertiajs/react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
@@ -643,9 +644,9 @@ const DetailSPT = ({
 
     return (
         <Authenticated>
-            <Head title="SPT Masa PPH Unifikasi" />
+            <Head title="SPT Masa PPh 21/26" />
             <div className="py-8 mx-auto max-w-xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
-                <div className="flex flex-1 flex-col gap-4 px-4 pt-0">
+                <div className="tls-spt flex flex-1 flex-col gap-4">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -660,10 +661,11 @@ const DetailSPT = ({
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                    Pemotongan PPH Pasal 21 atau 26
-                    </h1>
-                    <div className="flex flex-col gap-4 bg-sidebar border rounded-xl p-5 md:p-8">
+                    <FormPageHeader
+                        title="Pemotongan PPH Pasal 21 atau 26"
+                        backHref={route("spt.konsep")}
+                    />
+                    <div className="flex flex-col gap-4">
                         <Tabs defaultValue="Main Form" className="w-full">
                             <TabsList className="flex justify-start gap-2">
                                 <TabsTrigger value="Main Form">
@@ -697,7 +699,7 @@ const DetailSPT = ({
                                                 <AccordionTrigger className="bg-muted p-4 w-full rounded">
                                                     HEADER
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                 <div className="flex flex-col space-y-2">
                                                 <FormField
                                                     name="user.name"
@@ -775,7 +777,7 @@ const DetailSPT = ({
                                                 <AccordionTrigger className="bg-muted p-4 w-full rounded">
                                                     A. IDENTITAS PEMOTONG
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white w-full">
+                                                <AccordionContent className="p-4 bg-card w-full">
                                                 <div className="flex flex-col space-y-2">
                                                 
                                                 
@@ -870,27 +872,27 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-1">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     B. PAJAK PENGHASILAN PASAL 21
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white  w-full ">
-                                                    <div className="bg-white rounded  ">
-                                                        <div className="bg-gray-100 p-4 rounded  w-full mb-4">
+                                                <AccordionContent className="p-4 bg-card  w-full ">
+                                                    <div className="bg-card rounded  ">
+                                                        <div className="bg-muted p-4 rounded  w-full mb-4">
                                                         I. PAJAK PENGHASILAN PASAL 21 YANG DIPOTONG
                                                         </div>
                                                       <Table className="w-full">
                                                     <TableHeader>
                                                         <TableRow>
-                                                            <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center" rowSpan={2}>
                                                                 No
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center w-[64%]" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center w-[64%]" rowSpan={2}>
                                                                 URAIAN
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center w-[15%]" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center w-[15%]" rowSpan={2}>
                                                                 KAP-KJS
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center" rowSpan={2}>
                                                                 JUMLAH (Rp)
                                                             </TableHead>
                                                         </TableRow>
@@ -898,19 +900,19 @@ const DetailSPT = ({
                                                     </TableHeader>
                                                         <TableBody>
                                                         <TableRow>
-                                                            <TableCell className="border border-gray-300 text-center text-xs">
+                                                            <TableCell className="border border-input text-center text-xs">
                                                                 1.
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                             
                                                                     PAJAK PEMOTONGAN PENGHASILAN PASAL 21 YANG DILAKUKAN PEMOTONGAN
                                                                 
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                                 <div className="text-center font-medium">411121-100</div>
                                                                                                                                                           
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                             <FormField
                                                                   name="ppha1"
                                                                   render={({
@@ -935,16 +937,16 @@ const DetailSPT = ({
                                                         </TableRow>
                                                         
                                                             <TableRow>
-                                                                <TableCell className="border border-gray-300 text-xs text-center">
+                                                                <TableCell className="border border-input text-xs text-center">
                                                                     2.
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                     PENYERAHAN KELEBIHAN PEMBAYARAN PAJAK PENGHASILAN PASAL 21 DARI PERIODE PAJAK SEBELUMNYA
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 <FormField
                                                                   name="ppha2"
                                                                   render={({
@@ -976,16 +978,16 @@ const DetailSPT = ({
                                                             </TableRow>
 
                                                             <TableRow>
-                                                                <TableCell className="border border-gray-300 text-xs text-center">
+                                                                <TableCell className="border border-input text-xs text-center">
                                                                     3.
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                     PEMBAYARAN PAJAK PENGHASILAN PASAL 21 DENGAN SP2D (HANYA UNTUK INSTANSI PEMERINTAH)
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 <FormField
                                                                   name="ppha3"
                                                                   render={({
@@ -1010,14 +1012,14 @@ const DetailSPT = ({
                                                             </TableRow>
 
                                                             <TableRow>
-                                                                <TableCell className="border border-gray-300 text-xs text-center">4.</TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs text-center">4.</TableCell>
+                                                                <TableCell className="border border-input text-xs">
                                                                     PAJAK PENGHASILAN PASAL 21 YANG KURANG BAYAR (LEBIH BAYAR) (1-2-3) (Setiap Kelebihan Pembayaran Diteruskan)
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 
                                                                 </TableCell >
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 <FormField
                                                                   name="ppha4"
                                                                   render={({
@@ -1043,17 +1045,17 @@ const DetailSPT = ({
                                                       
 
                                                     <TableRow>
-                                                        <TableCell className="border border-gray-300 text-xs text-center">
+                                                        <TableCell className="border border-input text-xs text-center">
                                                             5.
                                                         </TableCell>
-                                                        <TableCell className="border border-gray-300 text-xs">
+                                                        <TableCell className="border border-input text-xs">
                                                                 PAJAK PENGHASILAN PASAL 21 YANG DIBAYAR PADA SPT YANG DIPERBAIKI
 
                                                         </TableCell>
-                                                        <TableCell className="border border-gray-300 text-xs">
+                                                        <TableCell className="border border-input text-xs">
                                                         
                                                         </TableCell>
-                                                        <TableCell className="border border-gray-300 text-xs">
+                                                        <TableCell className="border border-input text-xs">
                                                         <FormField
                                                                   name="ppha5"
                                                                   render={({
@@ -1084,14 +1086,14 @@ const DetailSPT = ({
 
                                                     
                                                             <TableRow>
-                                                                <TableCell className="border border-gray-300 text-xs text-center">6.</TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs text-center">6.</TableCell>
+                                                                <TableCell className="border border-input text-xs">
                                                                     PAJAK PENGHASILAN PASAL 21 YANG KURANG BAYAR (LEBIH BAYAR) (4-5) (Setiap Kelebihan Pembayaran Diteruskan)
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 <FormField
                                                                   name="ppha6"
                                                                   render={({
@@ -1119,24 +1121,24 @@ const DetailSPT = ({
                                                     </Table>
                                                     </div>
                                                 </AccordionContent>
-                                                <AccordionContent className="p-4 bg-white  w-full ">
-                                                    <div className="bg-white rounded  ">
-                                                        <div className="bg-gray-100 p-4 rounded  w-full mb-4">
+                                                <AccordionContent className="p-4 bg-card  w-full ">
+                                                    <div className="bg-card rounded  ">
+                                                        <div className="bg-muted p-4 rounded  w-full mb-4">
                                                         II. PAJAK PENGHASILAN PASAL 21 YANG DITANGGUNG OLEH PEMERINTAH
                                                         </div>
                                                       <Table className="w-full">
                                                     <TableHeader>
                                                         <TableRow>
-                                                            <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center" rowSpan={2}>
                                                                 No
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center w-[64%]" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center w-[64%]" rowSpan={2}>
                                                                 URAIAN
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center w-[15%]" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center w-[15%]" rowSpan={2}>
                                                                 KAP-KJS
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center" rowSpan={2}>
                                                                 JUMLAH (Rp)
                                                             </TableHead>
                                                         </TableRow>
@@ -1144,17 +1146,17 @@ const DetailSPT = ({
                                                     </TableHeader>
                                                         <TableBody>
                                                         <TableRow>
-                                                            <TableCell className="border border-gray-300 text-center text-xs">
+                                                            <TableCell className="border border-input text-center text-xs">
                                                                 1.
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                                     PAJAK PENGHASILAN PASAL 21 YANG DITANGGUNG OLEH PEMERINTAH                                              
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                                 <div className="text-center font-medium">411121-100</div>
                                                                                                                                                           
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                             <FormField
                                                                   name="pphapemerintah"
                                                                   render={({
@@ -1192,27 +1194,27 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-1">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     C. PAJAK PENGHASILAN PASAL 26
                                                 </AccordionTrigger>
-                                                <AccordionContent className="p-4 bg-white  w-full ">
-                                                    <div className="bg-white rounded  ">
-                                                        <div className="bg-gray-100 p-4 rounded  w-full mb-4">
+                                                <AccordionContent className="p-4 bg-card  w-full ">
+                                                    <div className="bg-card rounded  ">
+                                                        <div className="bg-muted p-4 rounded  w-full mb-4">
                                                         I. PAJAK PENGHASILAN PASAL 26 YANG DIPOTONG
                                                         </div>
                                                       <Table className="w-full">
                                                     <TableHeader>
                                                         <TableRow>
-                                                            <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center" rowSpan={2}>
                                                                 No
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center w-[64%]" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center w-[64%]" rowSpan={2}>
                                                                 URAIAN
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center w-[15%]" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center w-[15%]" rowSpan={2}>
                                                                 KAP-KJS
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center" rowSpan={2}>
                                                                 JUMLAH (Rp)
                                                             </TableHead>
                                                         </TableRow>
@@ -1220,18 +1222,18 @@ const DetailSPT = ({
                                                     </TableHeader>
                                                         <TableBody>
                                                         <TableRow>
-                                                            <TableCell className="border border-gray-300 text-center text-xs">
+                                                            <TableCell className="border border-input text-center text-xs">
                                                                 1.
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                             
                                                                     PAJAK PENGHASILAN PASAL 26 YANG DIPOTONG
                                                                 
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                                  <div className="text-center font-normal">411127-100</div>                                                                                         
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                             <FormField
                                                                   name="pphb1"
                                                                   render={({
@@ -1256,16 +1258,16 @@ const DetailSPT = ({
                                                         </TableRow>
                                                         
                                                             <TableRow>
-                                                                <TableCell className="border border-gray-300 text-xs text-center">
+                                                                <TableCell className="border border-input text-xs text-center">
                                                                     2.
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                     MEMBAWA KE DEPAN KELEBIHAN BAYAR PAJAK PENGHASILAN PASAL 26 DARI PERIODE PAJAK SEBELUMNYA
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 <FormField
                                                                   name="pphb2"
                                                                   render={({
@@ -1295,16 +1297,16 @@ const DetailSPT = ({
                                                             </TableRow>
 
                                                             <TableRow>
-                                                                <TableCell className="border border-gray-300 text-xs text-center">
+                                                                <TableCell className="border border-input text-xs text-center">
                                                                     3.
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                     PEMBAYARAN PAJAK PENGHASILAN PASAL 26 DENGAN SP2D (HANYA UNTUK INSTANSI PEMERINTAH)
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 <FormField
                                                                   name="pphb3"
                                                                   render={({
@@ -1329,14 +1331,14 @@ const DetailSPT = ({
                                                             </TableRow>
 
                                                             <TableRow>
-                                                                <TableCell className="border border-gray-300 text-xs text-center">4.</TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs text-center">4.</TableCell>
+                                                                <TableCell className="border border-input text-xs">
                                                                     PAJAK PENGHASILAN PASAL 26 YANG KURANG BAYAR (LEBIH BAYAR) (1-2-3) (Setiap Kelebihan Bayar Akan Dibawa Ke Depan)
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 
                                                                 </TableCell >
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 <FormField
                                                                   name="pphb4"
                                                                   render={({
@@ -1362,17 +1364,17 @@ const DetailSPT = ({
                                                       
 
                                                     <TableRow>
-                                                        <TableCell className="border border-gray-300 text-xs text-center">
+                                                        <TableCell className="border border-input text-xs text-center">
                                                             5.
                                                         </TableCell>
-                                                        <TableCell className="border border-gray-300 text-xs">
+                                                        <TableCell className="border border-input text-xs">
                                                                 PAJAK PENGHASILAN PASAL 26 YANG DIBAYAR PADA PENGEMBALIAN PAJAK YANG DIUBAH
 
                                                         </TableCell>
-                                                        <TableCell className="border border-gray-300 text-xs">
+                                                        <TableCell className="border border-input text-xs">
                                                         
                                                         </TableCell>
-                                                        <TableCell className="border border-gray-300 text-xs">
+                                                        <TableCell className="border border-input text-xs">
                                                         <FormField
                                                                   name="pphb5"
                                                                   render={({
@@ -1403,14 +1405,14 @@ const DetailSPT = ({
 
                                                     
                                                             <TableRow>
-                                                                <TableCell className="border border-gray-300 text-xs text-center">6.</TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs text-center">6.</TableCell>
+                                                                <TableCell className="border border-input text-xs">
                                                                     PAJAK PENGHASILAN PASAL 26 YANG KURANG BAYAR (KELEBIHAN BAYAR) (4-5) (Setiap Kelebihan Bayar Akan Dibawa ke Depan)
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 
                                                                 </TableCell>
-                                                                <TableCell className="border border-gray-300 text-xs">
+                                                                <TableCell className="border border-input text-xs">
                                                                 <FormField
                                                                   name="pphb6"
                                                                   render={({
@@ -1439,24 +1441,24 @@ const DetailSPT = ({
                                                     </div>
                                                 </AccordionContent>
 
-                                                <AccordionContent className="p-4 bg-white  w-full ">
-                                                    <div className="bg-white rounded  ">
-                                                        <div className="bg-gray-100 p-4 rounded  w-full mb-4">
+                                                <AccordionContent className="p-4 bg-card  w-full ">
+                                                    <div className="bg-card rounded  ">
+                                                        <div className="bg-muted p-4 rounded  w-full mb-4">
                                                         II. PAJAK PENGHASILAN PASAL 26 YANG DITANGGUNG OLEH PEMERINTAH
                                                         </div>
                                                       <Table className="w-full">
                                                     <TableHeader>
                                                         <TableRow>
-                                                            <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center" rowSpan={2}>
                                                                 No
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center w-[64%]" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center w-[64%]" rowSpan={2}>
                                                                 URAIAN
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center w-[15%]" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center w-[15%]" rowSpan={2}>
                                                                 KAP-KJS
                                                             </TableHead>
-                                                            <TableHead className="border border-gray-300 text-center" rowSpan={2}>
+                                                            <TableHead className="border border-input text-center" rowSpan={2}>
                                                                 JUMLAH (Rp)
                                                             </TableHead>
                                                         </TableRow>
@@ -1464,16 +1466,16 @@ const DetailSPT = ({
                                                     </TableHeader>
                                                         <TableBody>
                                                         <TableRow>
-                                                            <TableCell className="border border-gray-300 text-center text-xs">
+                                                            <TableCell className="border border-input text-center text-xs">
                                                                 1.
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                                     PAJAK PENGHASILAN PASAL 26 YANG DITANGGUNG OLEH PEMERINTAH                                              
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                                 <div className="text-center font-medium">411127-100</div>                                                                               
                                                             </TableCell>
-                                                            <TableCell className="border border-gray-300 text-xs">
+                                                            <TableCell className="border border-input text-xs">
                                                             <FormField
                                                                   name="pphbpemerintah"
                                                                   render={({
@@ -1511,7 +1513,7 @@ const DetailSPT = ({
                                             className="w-full"
                                         >
                                             <AccordionItem value="item-penyerahan">
-                                                <AccordionTrigger className="bg-amber-400 p-4 w-full rounded">
+                                                <AccordionTrigger className="bg-highlight p-4 w-full rounded text-highlight-foreground">
                                                     D. PERNYATAAN DAN TANDA TANGAN  
                                                 </AccordionTrigger>
                                                 <AccordionContent className="p-4 w-full">
@@ -1580,7 +1582,7 @@ const DetailSPT = ({
                                                         />
                                                         
                                                         </div>
-                                                        <div className="flex justify-end mt-4">
+                                                        <div className="mt-4 flex justify-end border-t border-border pt-4">
                                                             <Button 
                                                                 type="submit"
                                                                 disabled={!pernyataanSetuju}

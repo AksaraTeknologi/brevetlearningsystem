@@ -209,7 +209,7 @@ export function FormL2ADialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         Pemegang Saham / Pemilik Modal
                     </DialogTitle>
@@ -219,7 +219,7 @@ export function FormL2ADialog({
                     {/* Nama */}
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Nama <span className="text-red-500">*</span>
+                            Nama <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -228,10 +228,10 @@ export function FormL2ADialog({
                                     handleChange("name", e.target.value)
                                 }
                                 placeholder="Masukkan nama"
-                                className={cn(errors.name && "border-red-500")}
+                                className={cn(errors.name && "border-destructive")}
                             />
                             {errors.name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.name}
                                 </p>
                             )}
@@ -253,7 +253,7 @@ export function FormL2ADialog({
                     {/* Negara */}
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Negara <span className="text-red-500">*</span>
+                            Negara <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -267,7 +267,7 @@ export function FormL2ADialog({
                                         aria-expanded={openCountry}
                                         className={cn(
                                             "w-full justify-between font-normal",
-                                            errors.country && "border-red-500",
+                                            errors.country && "border-destructive",
                                         )}
                                     >
                                         {formData.country
@@ -315,7 +315,7 @@ export function FormL2ADialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.country && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.country}
                                 </p>
                             )}
@@ -337,7 +337,7 @@ export function FormL2ADialog({
                     {/* Jabatan / Posisi */}
                     <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Jabatan <span className="text-red-500">*</span>
+                            Jabatan <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -347,11 +347,11 @@ export function FormL2ADialog({
                                 }
                                 placeholder="Masukkan jabatan"
                                 className={cn(
-                                    errors.position && "border-red-500",
+                                    errors.position && "border-destructive",
                                 )}
                             />
                             {errors.position && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.position}
                                 </p>
                             )}
@@ -423,7 +423,6 @@ export function FormL2ADialog({
                         Tutup
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

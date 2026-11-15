@@ -227,7 +227,7 @@ export default function TaxpayerStatement({ onNext, existingData }: Props) {
     return (
         <div className="space-y-6">
             <div className="text-center mb-8">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                <h2 className="text-xl font-semibold text-foreground mb-2">
                     Mohon konfirmasi bahwa Wajib Pajak mematuhi pernyataan
                     berikut ini.
                 </h2>
@@ -235,7 +235,7 @@ export default function TaxpayerStatement({ onNext, existingData }: Props) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Statement Box */}
-                <div className="border border-gray-200 rounded-lg p-6 bg-gray-50">
+                <div className="border border-border rounded-lg p-6 bg-muted/50">
                     <div className="flex items-start space-x-3">
                         <Checkbox
                             id="statement-agreement"
@@ -247,7 +247,7 @@ export default function TaxpayerStatement({ onNext, existingData }: Props) {
                         />
                         <label
                             htmlFor="statement-agreement"
-                            className="text-sm text-gray-700 leading-relaxed cursor-pointer"
+                            className="text-sm text-foreground leading-relaxed cursor-pointer"
                         >
                             Dengan menyadari sepenuhnya akan segala akibatnya
                             termasuk sanksi sesuai dengan ketentuan peraturan
@@ -268,8 +268,8 @@ export default function TaxpayerStatement({ onNext, existingData }: Props) {
                         className={cn(
                             "px-8 py-3 font-medium rounded-lg transition-colors",
                             agreed && !processing
-                                ? "bg-blue-900 text-white hover:bg-blue-800"
-                                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                ? "bg-brand text-white hover:bg-brand/90"
+                                : "bg-gray-300 text-muted-foreground cursor-not-allowed"
                         )}
                     >
                         {processing ? (

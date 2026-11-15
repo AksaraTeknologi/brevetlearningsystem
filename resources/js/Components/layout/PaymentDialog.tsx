@@ -51,7 +51,7 @@ export default function PaymentDialog({
                             Saldo Anda :{" "}
                             <span
                                 className={`font-semibold ${
-                                    isSaldoSufficient ? "" : "text-red-500"
+                                    isSaldoSufficient ? "" : "text-destructive"
                                 }`}
                             >
                                 {formatCurrency(saldo)}

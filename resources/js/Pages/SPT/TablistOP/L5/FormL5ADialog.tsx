@@ -64,7 +64,7 @@ export default function FormL5ADialog({
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-[95vw] max-w-3xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         PENGHITUNGAN KOMPENSASI KERUGIAN FISKAL
                     </DialogTitle>
@@ -77,13 +77,13 @@ export default function FormL5ADialog({
                             <Input
                                 value={taxYear}
                                 disabled
-                                className="bg-gray-100"
+                                className="bg-muted"
                             />
                         </div>
                         <div className="space-y-2">
                             <Label>Laba/Rugi Penghasilan Fiskal *</Label>
                             <div className="flex items-center gap-2">
-                                <div className="px-3 py-2 border rounded bg-gray-100 text-sm">
+                                <div className="px-3 py-2 border rounded bg-muted text-sm">
                                     Rp
                                 </div>
                                 <Input
@@ -103,7 +103,7 @@ export default function FormL5ADialog({
                     </div>
 
                     <div className="border rounded">
-                        <div className="bg-blue-950 text-white font-semibold p-3">
+                        <div className="bg-brand text-white font-semibold p-3">
                             Jumlah Kompensasi Kerugian Fiskal
                         </div>
                         <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -113,7 +113,7 @@ export default function FormL5ADialog({
                                     <div key={year} className="space-y-2">
                                         <Label>Tahun {year}</Label>
                                         <div className="flex items-center gap-2">
-                                            <div className="px-3 py-2 border rounded bg-gray-100 text-sm">
+                                            <div className="px-3 py-2 border rounded bg-muted text-sm">
                                                 Rp
                                             </div>
                                             <Input
@@ -154,7 +154,6 @@ export default function FormL5ADialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={saveAndClose}
                     >
                         Simpan

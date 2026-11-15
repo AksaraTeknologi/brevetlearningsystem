@@ -67,7 +67,7 @@ export const columns: ColumnDef<BusinessEntityColumns>[] = [
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="text-red-600 hover:text-red-700"
+                        className="text-destructive hover:text-destructive/80"
                         onClick={() => {
                             if (!confirm("Hapus badan usaha ini?")) return;
                             router.delete(

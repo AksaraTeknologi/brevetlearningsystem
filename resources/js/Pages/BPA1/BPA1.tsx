@@ -1,3 +1,7 @@
+import {
+    FormPageHeader,
+    FormSection,
+} from "@/Components/app-shell/FormPage";
 import ItemDetail from "@/Components/layout/ItemDetail";
 import {
     Breadcrumb,
@@ -63,17 +67,23 @@ export default function BPA1({ user, bupot }: any) {
                         </BreadcrumbList>
                     </Breadcrumb>
 
-                    <h1 className="text-2xl font-semibold text-primary">
-                        Detail eBupot BPA1
-                    </h1>
+                    <FormPageHeader
+                        title="Detail eBupot BPA1"
+                        backHref={breadcrumb.route}
+                        actions={
+                            <Button
+                                onClick={() =>
+                                    router.get(route("bpa1.edit", bupot.id))
+                                }
+                            >
+                                Edit
+                            </Button>
+                        }
+                    />
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-sidebar border">
+                    <div>
                         {/* INFORMASI UMUM */}
-                        <div className="flex items-center gap-2 mb-2">
-                            <File size={16} />
-                            <h3 className="font-medium">Informasi Umum</h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection icon={<File />} title="Informasi Umum">
                             <ItemDetail
                                 title="Objek Pajak"
                                 detail={bupot.object?.tax_name || "-"}
@@ -149,14 +159,13 @@ export default function BPA1({ user, bupot }: any) {
                                 title="Jenis Pemotongan"
                                 detail={bupot.bupot_types || "-"}
                             />
-                        </div>
+                        </FormSection>
 
                         {/* PENGHASILAN BRUTO */}
-                        <div className="flex items-center gap-2 mb-2">
-                            <Banknote size={16} />
-                            <h3 className="font-medium">Penghasilan Bruto</h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection
+                            icon={<Banknote />}
+                            title="Penghasilan Bruto"
+                        >
                             <ItemDetail
                                 title="Gaji Pokok / Pensiun"
                                 detail={rupiahFormatter.format(bupot.basic_salary || 0)}
@@ -189,14 +198,10 @@ export default function BPA1({ user, bupot }: any) {
                                 title="Jumlah Penghasilan Bruto"
                                 detail={rupiahFormatter.format(bupot.gross_income_amount || 0)}
                             />
-                        </div>
+                        </FormSection>
 
                         {/* PENGURANG */}
-                        <div className="flex items-center gap-2 mb-2">
-                            <Banknote size={16} />
-                            <h3 className="font-medium">Pengurang</h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection icon={<Banknote />} title="Pengurang">
                             <ItemDetail
                                 title="Biaya Jabatan/Biaya Pensiun"
                                 detail={rupiahFormatter.format(bupot.position_allowance || 0)}
@@ -213,16 +218,13 @@ export default function BPA1({ user, bupot }: any) {
                                 title="Jumlah Pengurang"
                                 detail={rupiahFormatter.format(bupot.amount_of_reduction || 0)}
                             />
-                        </div>
+                        </FormSection>
 
                         {/* PENGHITUNGAN PPH PASAL 21 */}
-                        <div className="flex items-center gap-2 mb-2">
-                            <Banknote size={16} />
-                            <h3 className="font-medium">
-                                Penghitungan PPh Pasal 21
-                            </h3>
-                        </div>
-                        <div className="p-8 rounded-xl bg-white border mb-4">
+                        <FormSection
+                            icon={<Banknote />}
+                            title="Penghitungan PPh Pasal 21"
+                        >
                             <ItemDetail
                                 title="Jumlah Penghasilan Neto"
                                 detail={rupiahFormatter.format(bupot.neto || 0)}
@@ -277,15 +279,7 @@ export default function BPA1({ user, bupot }: any) {
                                 title="NITKU / Nomor Identitas Sub Unit Organisasi"
                                 detail={bupot.nitku || "-"}
                             />
-                        </div>
-
-                        <Button
-                            onClick={() =>
-                                router.get(route("bpa1.edit", bupot.id))
-                            }
-                        >
-                            Edit
-                        </Button>
+                        </FormSection>
                     </div>
                 </div>
             </div>

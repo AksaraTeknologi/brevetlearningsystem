@@ -1,10 +1,43 @@
 import { Head, Link } from "@inertiajs/react";
 import HeaderOnlyLayout from "@/Layouts/HeaderOnlyLayout";
-import { useEffect, useState } from "react";
+
+import { Button } from "@/Components/ui/button";
+import { EmptyState, Notice, Section, StatusPill } from "@/Components/app-shell/kit";
+import { cn } from "@/lib/utils";
+import { ArrowLeft, Check, CheckCircle2, CircleHelp, Lightbulb, ListChecks, X, XCircle } from "lucide-react";
+
+function ScoreRing({ score, passed }: { score: number; passed: boolean }) {
+    const pct = Math.max(0, Math.min(100, Number(score) || 0));
+    return (
+        <div
+            className="relative grid size-28 shrink-0 place-items-center rounded-full"
+            style={{
+                background: `conic-gradient(hsl(var(${passed ? "--success" : "--destructive"})) ${pct * 3.6}deg, hsl(var(--muted)) 0deg)`,
+            }}
+        >
+            <div className="grid size-[5.5rem] place-items-center rounded-full bg-card">
+                <span className="text-3xl font-bold text-foreground">{score ?? 0}</span>
+            </div>
+        </div>
+    );
+}
 
 export default function Result({ test, attempt, review }: any) {
     const showScore = Boolean(test?.show_score ?? true);
     const showCorrectAnswers = Boolean(test?.show_correct_answers ?? true);
+    const list: any[] = Array.isArray(review) ? review : [];
+    const correct = list.filter((r) => r.is_correct === true).length;
+    const wrong = list.filter((r) => r.is_correct === false).length;
+    const ungraded = list.filter((r) => r.is_correct === null).length;
+
+    const backButton = (
+        <Button variant="outline" asChild>
+            <Link href={route("tests.detail", test?.id)}>
+                <ArrowLeft />
+                Kembali ke Deskripsi
+            </Link>
+        </Button>
+    );
 
     return (
         <HeaderOnlyLayout
@@ -12,184 +45,134 @@ export default function Result({ test, attempt, review }: any) {
             backHref={route("tests.index")}
         >
             <Head title={`Hasil Ujian - ${test?.title ?? ""}`} />
-            <div className="py-6 px-4">
-                <div className="max-w-5xl mx-auto space-y-6">
-                    {!showScore && showCorrectAnswers && (
-                        <div className="flex justify-end">
-                            <Link
-                                href={route("tests.detail", test?.id)}
-                                className="px-4 py-2 rounded border bg-emerald-50"
-                            >
-                                Kembali ke Deskripsi
-                            </Link>
-                        </div>
-                    )}
+            <div className="mx-auto max-w-5xl space-y-5 px-4 py-6">
+                {!showScore && showCorrectAnswers && <div className="flex justify-end">{backButton}</div>}
 
-                    {showScore || showCorrectAnswers ? (
-                        <>
-                            {showScore && (
-                                <div className="bg-white border rounded-xl p-6 shadow-sm flex items-center justify-between">
-                                    <div>
-                                        <div className="text-sm text-gray-500">
-                                            Skor Anda
+                {showScore || showCorrectAnswers ? (
+                    <>
+                        {showScore && (
+                            <section className="tls-card flex flex-col gap-5 p-5 md:flex-row md:items-center md:p-6">
+                                <ScoreRing score={attempt?.score ?? 0} passed={Boolean(attempt?.passed)} />
+                                <div className="min-w-0 flex-1 space-y-2">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Skor Anda</p>
+                                    <h2 className="text-xl font-bold text-brand-950">{test?.title}</h2>
+                                    <StatusPill tone={attempt?.passed ? "success" : "destructive"}>
+                                        {attempt?.passed ? "Lulus" : "Tidak Lulus"} (KKM {test?.passing_score ?? 0})
+                                    </StatusPill>
+                                    {list.length > 0 && (
+                                        <div className="flex flex-wrap gap-2 pt-1 text-sm">
+                                            <span className="inline-flex items-center gap-1.5 rounded-lg bg-success/10 px-2.5 py-1 font-semibold text-success">
+                                                <CheckCircle2 className="size-4" /> {correct} Benar
+                                            </span>
+                                            <span className="inline-flex items-center gap-1.5 rounded-lg bg-destructive/10 px-2.5 py-1 font-semibold text-destructive">
+                                                <XCircle className="size-4" /> {wrong} Salah
+                                            </span>
+                                            {ungraded > 0 && (
+                                                <span className="inline-flex items-center gap-1.5 rounded-lg bg-muted px-2.5 py-1 font-semibold text-muted-foreground">
+                                                    <CircleHelp className="size-4" /> {ungraded} Tidak dinilai
+                                                </span>
+                                            )}
                                         </div>
-                                        <div className="text-3xl font-semibold">
-                                            {attempt?.score ?? 0}
-                                        </div>
+                                    )}
+                                </div>
+                                <div className="shrink-0">{backButton}</div>
+                            </section>
+                        )}
+
+                        {showCorrectAnswers && (
+                            <Section icon={ListChecks} title="Review Jawaban" description={`${list.length} soal`}>
+                                <div className="space-y-4">
+                                    {list.map((r: any, idx: number) => (
                                         <div
-                                            className={`mt-1 inline-flex text-xs px-2 py-0.5 rounded-full ${attempt?.passed ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}
+                                            key={r.id}
+                                            className={cn(
+                                                "rounded-2xl border border-l-4 border-border p-4",
+                                                r.is_correct === true && "border-l-success",
+                                                r.is_correct === false && "border-l-destructive",
+                                                r.is_correct === null && "border-l-steel"
+                                            )}
                                         >
-                                            {attempt?.passed
-                                                ? "Lulus"
-                                                : "Tidak Lulus"}{" "}
-                                            (KKM {test?.passing_score ?? 0})
-                                        </div>
-                                    </div>
-                                    <Link
-                                        href={route("tests.detail", test?.id)}
-                                        className="px-4 py-2 rounded border bg-emerald-50"
-                                    >
-                                        Kembali ke Deskripsi
-                                    </Link>
-                                </div>
-                            )}
-
-                            {showCorrectAnswers && (
-                                <div className="bg-white border rounded-xl p-6 shadow-sm">
-                                    <h2 className="text-lg font-semibold mb-4">
-                                        Review Jawaban
-                                    </h2>
-                                    <div className="space-y-4">
-                                        {review?.map((r: any, idx: number) => (
-                                            <div
-                                                key={r.id}
-                                                className="border rounded-lg p-4"
-                                            >
-                                                <div className="flex items-center justify-between">
-                                                    <div className="font-medium">
-                                                        Soal {idx + 1}
-                                                    </div>
-                                                    {r.is_correct === true && (
-                                                        <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
-                                                            Benar
-                                                        </span>
-                                                    )}
-                                                    {r.is_correct === false && (
-                                                        <span className="text-xs px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">
-                                                            Salah
-                                                        </span>
-                                                    )}
-                                                    {r.is_correct === null && (
-                                                        <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">
-                                                            Tidak dinilai
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                <div className="mt-2">
-                                                    {r.question_text}
-                                                </div>
-                                                {r.question_type ===
-                                                "short_answer" ? (
-                                                    <div className="mt-2">
-                                                        <div className="text-sm text-gray-500">
-                                                            Jawaban Anda:
-                                                        </div>
-                                                        <div className="mt-1 whitespace-pre-wrap bg-gray-50 border rounded p-2">
-                                                            {r.selected || "-"}
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className="mt-3 space-y-2">
-                                                        {r.options?.map(
-                                                            (o: any) => {
-                                                                const isSelected =
-                                                                    r.selected ===
-                                                                    o.id;
-                                                                const isCorrect =
-                                                                    o.is_correct;
-                                                                return (
-                                                                    <div
-                                                                        key={
-                                                                            o.id
-                                                                        }
-                                                                        className={`p-2 rounded border text-sm ${isCorrect ? "bg-emerald-50 border-emerald-200" : isSelected ? "bg-rose-50 border-rose-200" : "bg-white"}`}
-                                                                    >
-                                                                        <div className="flex items-center gap-2">
-                                                                            <input
-                                                                                type="radio"
-                                                                                disabled
-                                                                                checked={
-                                                                                    isSelected
-                                                                                }
-                                                                            />
-                                                                            <span>
-                                                                                {
-                                                                                    o.option_text
-                                                                                }
-                                                                            </span>
-                                                                            {isCorrect && (
-                                                                                <span className="ml-auto text-xs text-emerald-700">
-                                                                                    Kunci
-                                                                                </span>
-                                                                            )}
-                                                                        </div>
-                                                                    </div>
-                                                                );
-                                                            },
-                                                        )}
-                                                    </div>
-                                                )}
-                                                {showScore && showCorrectAnswers && r.explanation && (
-                                                    <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50/70 p-3 text-sm text-blue-950">
-                                                        <div className="font-semibold text-blue-900 mb-1">
-                                                            Pembahasan
-                                                        </div>
-                                                        <div className="whitespace-pre-wrap leading-relaxed">
-                                                            {r.explanation}
-                                                        </div>
-                                                    </div>
-                                                )}
+                                            <div className="flex items-center justify-between gap-3">
+                                                <span className="inline-flex items-center gap-2 text-sm font-bold text-brand-950">
+                                                    <span className="grid size-7 place-items-center rounded-lg bg-muted text-xs">{idx + 1}</span>
+                                                    Soal {idx + 1}
+                                                </span>
+                                                {r.is_correct === true && <StatusPill tone="success">Benar</StatusPill>}
+                                                {r.is_correct === false && <StatusPill tone="destructive">Salah</StatusPill>}
+                                                {r.is_correct === null && <StatusPill tone="steel">Tidak dinilai</StatusPill>}
                                             </div>
-                                        ))}
-                                    </div>
+                                            <div className="mt-3 text-foreground">{r.question_text}</div>
+                                            {r.question_type === "short_answer" ? (
+                                                <div className="mt-3">
+                                                    <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jawaban Anda</div>
+                                                    <div className="mt-1 whitespace-pre-wrap rounded-xl border border-border bg-muted/50 p-3 text-sm">
+                                                        {r.selected || "-"}
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div className="mt-3 space-y-2">
+                                                    {r.options?.map((o: any, oi: number) => {
+                                                        const isSelected = r.selected === o.id;
+                                                        const isCorrect = o.is_correct;
+                                                        return (
+                                                            <div
+                                                                key={o.id}
+                                                                className={cn(
+                                                                    "flex items-center gap-3 rounded-xl border px-3 py-2.5 text-sm",
+                                                                    isCorrect
+                                                                        ? "border-success/40 bg-success/10"
+                                                                        : isSelected
+                                                                        ? "border-destructive/40 bg-destructive/10"
+                                                                        : "border-border bg-card"
+                                                                )}
+                                                            >
+                                                                <span
+                                                                    className={cn(
+                                                                        "grid size-7 shrink-0 place-items-center rounded-full border text-xs font-bold",
+                                                                        isCorrect
+                                                                            ? "border-success bg-success text-success-foreground"
+                                                                            : isSelected
+                                                                            ? "border-destructive bg-destructive text-destructive-foreground"
+                                                                            : "border-border text-muted-foreground"
+                                                                    )}
+                                                                    aria-label={isSelected ? "Jawaban Anda" : undefined}
+                                                                >
+                                                                    {isCorrect ? <Check className="size-3.5" /> : isSelected ? <X className="size-3.5" /> : String.fromCharCode(65 + oi)}
+                                                                </span>
+                                                                <span className="flex-1">{o.option_text}</span>
+                                                                {isSelected && (
+                                                                    <span className="text-xs font-semibold text-muted-foreground">Jawaban Anda</span>
+                                                                )}
+                                                                {isCorrect && <span className="text-xs font-semibold text-success">Kunci</span>}
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            )}
+                                            {showScore && showCorrectAnswers && r.explanation && (
+                                                <Notice tone="info" className="mt-3" title={<span className="inline-flex items-center gap-1.5"><Lightbulb className="size-4" /> Pembahasan</span>}>
+                                                    <div className="whitespace-pre-wrap text-foreground">{r.explanation}</div>
+                                                </Notice>
+                                            )}
+                                        </div>
+                                    ))}
                                 </div>
-                            )}
-                        </>
-                    ) : (
-                        <div className="bg-white border rounded-xl p-8 shadow-sm text-center">
-                            <div className="max-w-md mx-auto">
-                                <div className="mb-4">
-                                    <svg
-                                        className="mx-auto h-16 w-16 text-emerald-500"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        />
-                                    </svg>
-                                </div>
-                                <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                                    Selamat Anda Telah Mengerjakan Ujian
-                                </h2>
-                                <p className="text-gray-600 mb-6">
-                                    Ujian Anda telah berhasil dikumpulkan. Nilai
-                                    akan diumumkan oleh pengajar.
-                                </p>
-                                <Link
-                                    href={route("tests.index")}
-                                    className="inline-block px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition"
-                                >
-                                    Kembali ke Daftar Ujian
-                                </Link>
-                            </div>
-                        </div>
-                    )}
-                </div>
+                            </Section>
+                        )}
+                    </>
+                ) : (
+                    <EmptyState
+                        icon={CheckCircle2}
+                        title="Selamat Anda Telah Mengerjakan Ujian"
+                        description="Ujian Anda telah berhasil dikumpulkan. Nilai akan diumumkan oleh pengajar."
+                        action={
+                            <Button variant="success" asChild>
+                                <Link href={route("tests.index")}>Kembali ke Daftar Ujian</Link>
+                            </Button>
+                        }
+                        className="tls-card border-solid py-14"
+                    />
+                )}
             </div>
         </HeaderOnlyLayout>
     );

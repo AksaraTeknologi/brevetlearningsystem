@@ -260,31 +260,31 @@ export const columns: ColumnDef<BupotA2Columns>[] = [
 
             switch (status) {
                 case "approved":
-                    colorClass = "bg-blue-600 hover:bg-blue-500";
+                    colorClass = "bg-info text-info-foreground hover:bg-info/90";
                     statusText = "Approved";
                     break;
                 case "created":
-                    colorClass = "bg-green-600 hover:bg-green-500";
+                    colorClass = "bg-success text-success-foreground hover:bg-success/90";
                     statusText = "Disimpan Valid";
                     break;
                 case "canceled":
-                    colorClass = "bg-yellow-600 hover:bg-yellow-500";
+                    colorClass = "bg-warning text-warning-foreground hover:bg-warning/90";
                     statusText = "Canceled";
                     break;
                 case "deleted":
-                    colorClass = "bg-red-600 hover:bg-red-500";
+                    colorClass = "bg-destructive text-destructive-foreground hover:bg-destructive/90";
                     statusText = "Deleted";
                     break;
                 case "amanded":
-                    colorClass = "bg-gray-600 hover:bg-gray-500";
+                    colorClass = "bg-steel text-steel-foreground hover:bg-steel/90";
                     statusText = "Amanded";
                     break;
                 case "draft":
-                    colorClass = "bg-gray-600 hover:bg-gray-500";
+                    colorClass = "bg-steel text-steel-foreground hover:bg-steel/90";
                     statusText = "Disimpan Tidak Valid";
                     break;
                 default:
-                    colorClass = "bg-gray-600 hover:bg-gray-500";
+                    colorClass = "bg-steel text-steel-foreground hover:bg-steel/90";
                     statusText = status;
             }
 

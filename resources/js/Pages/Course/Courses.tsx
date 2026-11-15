@@ -3,7 +3,34 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "@/Components/ui/button";
-import { Plus } from "lucide-react";
+import {
+    Award,
+    BookOpen,
+    CalendarCheck,
+    CalendarClock,
+    CalendarDays,
+    CheckCircle2,
+    ClipboardList,
+    Clock,
+    Eye,
+    GraduationCap,
+    PlayCircle,
+    Plus,
+    StopCircle,
+} from "lucide-react";
+import {
+    EmptyState,
+    EntityCard,
+    fmtDate,
+    MetaGrid,
+    Notice,
+    PageHeader,
+    StatGrid,
+    StatTile,
+    StatusPill,
+    Timeline,
+    toneFromStatus,
+} from "@/Components/app-shell/kit";
 import {
     Dialog,
     DialogTrigger,
@@ -70,15 +97,14 @@ function getCourseStatusDisplay(serverStatus: string) {
         default:
             return {
                 label: "-",
-                color: "border border-slate-200 bg-slate-100 text-slate-500",
+                color: "border border-border bg-muted text-muted-foreground",
             };
     }
 }
 
 export default function Courses({ courses = [] }: any) {
-    const { flash }: any = usePage().props;
-    const user = usePage().props.auth.user;
-    const noProfilePhoto = !user?.profile_url;
+    const { flash, auth }: any = usePage().props;
+    const noProfilePhoto = !auth?.user?.profile_url;
     const active_course = usePage().props.active_course as {
         id: number;
         name: string;
@@ -87,7 +113,6 @@ export default function Courses({ courses = [] }: any) {
     const [open, setOpen] = useState(false);
     const [classCode, setClassCode] = useState("");
     const [loading, setLoading] = useState(false);
-    const hasJoinedCourse = Array.isArray(courses) && courses.length > 0;
 
     useEffect(() => {
         if (flash?.success) toast.success(flash.success);
@@ -109,343 +134,254 @@ export default function Courses({ courses = [] }: any) {
         );
     };
 
+    const counts = {
+        total: courses.length,
+        ongoing: courses.filter((c: any) => (c.course_status ?? "ongoing") === "ongoing").length,
+        upcoming: courses.filter((c: any) => c.course_status === "upcoming").length,
+        finished: courses.filter((c: any) => c.course_status === "finished").length,
+    };
+
+    const joinDialog = (
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button variant="default">
+                    <Plus size={18} />
+                    Gabung Kelas
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Gabung Kelas</DialogTitle>
+                    <DialogDescription>
+                        Masukkan kode kelas yang diberikan oleh pengajar untuk
+                        bergabung ke kelas.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="flex flex-col gap-4">
+                    <Input
+                        placeholder="Kode Kelas"
+                        value={classCode}
+                        onChange={(e) => setClassCode(e.target.value)}
+                        autoFocus
+                    />
+                    <Button
+                        onClick={handleJoinClass}
+                        disabled={loading || !classCode}
+                    >
+                        {loading ? "Memproses..." : "Gabung"}
+                    </Button>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+
     return (
         <AuthenticatedLayout>
             <Head title="Daftar Kelas Saya" />
-            <div className="relative min-h-[100svh] overflow-hidden bg-gradient-to-b from-teal-50/70 via-white to-amber-50/60">
-                <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,_rgba(13,148,136,0.18),_transparent_35%),radial-gradient(circle_at_bottom_left,_rgba(245,158,11,0.16),_transparent_40%)]" />
-                <div className="mx-auto max-w-7xl px-4 py-8 md:py-10">
-                    <div className="mb-6 grid gap-4 lg:grid-cols-2">
-                        <div className="rounded-3xl border border-teal-200/70 bg-white/85 p-6 shadow-sm backdrop-blur-sm">
-                            <div className="flex items-start gap-4">
-                                <div className="mt-0.5 h-16 w-1 rounded-full bg-gradient-to-b from-teal-500 to-amber-500" />
-                                <div>
-                                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">
-                                        Brevet Class
-                                    </p>
-                                    <h1 className="mt-1 text-2xl font-semibold text-slate-800 md:text-3xl">
-                                        Kelas Saya
-                                    </h1>
-                                    <p className="mt-1 text-sm text-slate-600">
-                                        Pantau status kelas, jadwal terdekat,
-                                        dan progres belajar Anda dengan cepat.
-                                    </p>
-                                    <div className="mt-3 flex flex-wrap gap-2">
-                                        <span className="rounded-full border border-teal-200 bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700">
-                                            Total Kelas: {courses.length}
-                                        </span>
-                                        {active_course ? (
-                                            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                                                Kelas Aktif:{" "}
-                                                {active_course.name}
-                                            </span>
-                                        ) : (
-                                            <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                                                Belum ada kelas aktif
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div className="flex flex-col gap-5">
+                <PageHeader
+                    icon={GraduationCap}
+                    title="Kelas Saya"
+                    description="Kelas yang Anda ikuti beserta jadwal, nilai, dan status pengerjaannya."
+                    actions={joinDialog}
+                />
 
-                        <div className="rounded-2xl border border-amber-200/70 bg-white/85 p-4 shadow-sm backdrop-blur-sm lg:min-w-60">
-                            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-amber-700">
-                                Aksi Cepat
-                            </p>
-                            <p className="mt-1 text-sm text-slate-600">
-                                {hasJoinedCourse
-                                    ? "Anda telah terdaftar di 1 kelas."
-                                    : "Masukkan kode dari pengajar untuk bergabung ke kelas baru."}
-                            </p>
-                            {hasJoinedCourse && (
-                                <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50/80 p-3 text-xs text-amber-800 leading-relaxed">
-                                    <p className="font-semibold flex items-center gap-1 text-amber-900">
-                                        ℹ️ Ketentuan Pendaftaran Kelas
-                                    </p>
-                                    <p className="mt-1">
-                                        Anda hanya boleh terdaftar di 1 kelas. Jika ingin bergabung ke kelas lain, silakan minta admin pelatihan atau pengajar untuk mengeluarkan Anda dari kelas saat ini.
-                                    </p>
-                                </div>
-                            )}
-                            <Dialog open={open} onOpenChange={setOpen}>
-                                <DialogTrigger asChild>
-                                    <Button
-                                        variant="accent"
-                                        className="mt-3 w-full"
-                                        disabled={hasJoinedCourse}
-                                    >
-                                        <Plus size={18} />
-                                        Gabung Kelas
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent className="border-teal-100 bg-white/95">
-                                    <DialogHeader>
-                                        <DialogTitle className="text-slate-800">
-                                            Gabung Kelas
-                                        </DialogTitle>
-                                        <DialogDescription>
-                                            Masukkan kode kelas yang diberikan
-                                            oleh pengajar untuk bergabung ke
-                                            kelas.
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    {hasJoinedCourse ? (
-                                        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-                                            <p className="font-semibold">⚠️ Tidak Dapat Bergabung Kelas Lain</p>
-                                            <p className="mt-1 text-xs text-amber-700 leading-relaxed">
-                                                Anda saat ini sudah terdaftar di 1 kelas. Sesuai aturan, Anda hanya dapat terdaftar di 1 kelas. Harap hubungi admin pelatihan atau pengajar kelas untuk mengeluarkan Anda dari kelas yang ada sebelum bergabung ke kelas baru.
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        <div className="flex flex-col gap-4">
-                                            <Input
-                                                placeholder="Kode Kelas"
-                                                value={classCode}
-                                                onChange={(e) =>
-                                                    setClassCode(e.target.value)
-                                                }
-                                                autoFocus
-                                            />
-                                            <Button
-                                                onClick={handleJoinClass}
-                                                disabled={loading || !classCode}
-                                            >
-                                                {loading
-                                                    ? "Memproses..."
-                                                    : "Gabung"}
-                                            </Button>
-                                        </div>
-                                    )}
-                                </DialogContent>
-                            </Dialog>
-                        </div>
-                    </div>
+                <StatGrid>
+                    <StatTile icon={BookOpen} label="Total Kelas" value={counts.total} tone="brand" />
+                    <StatTile icon={PlayCircle} label="Berlangsung" value={counts.ongoing} tone="success" />
+                    <StatTile icon={Clock} label="Belum Mulai" value={counts.upcoming} tone="info" />
+                    <StatTile icon={CheckCircle2} label="Selesai" value={counts.finished} tone="steel" />
+                </StatGrid>
 
-                    <div className="grid grid-cols-1 gap-4">
-                        {courses.length === 0 && (
-                            <div className="rounded-2xl border border-teal-100 bg-white/90 px-6 py-10 text-center shadow-sm backdrop-blur-sm">
-                                <p className="text-sm font-medium text-slate-500">
-                                    Anda belum bergabung di kelas manapun.
-                                </p>
-                            </div>
-                        )}
-
+                {courses.length === 0 ? (
+                    <EmptyState
+                        icon={GraduationCap}
+                        title="Belum ada kelas"
+                        description="Anda belum bergabung di kelas manapun. Minta kode kelas ke pengajar lalu tekan Gabung Kelas."
+                        action={joinDialog}
+                    />
+                ) : (
+                    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                         {courses.map((course: any) => {
-                            const status = getCourseStatusDisplay(course.course_status ?? 'ongoing');
+                            const status = getCourseStatusDisplay(course.course_status ?? "ongoing");
+                            const tone = toneFromStatus(status.label);
                             const isActive = active_course?.id === course.id;
                             const hasOtherActive =
-                                active_course?.id &&
-                                active_course?.id !== course.id;
-
+                                active_course?.id && active_course?.id !== course.id;
                             const averageScore = course.score;
-                            const nextUpcomingSchedule =
-                                course.next_schedule_upcoming;
+                            const nextUpcomingSchedule = course.next_schedule_upcoming;
                             const nextUpcomingTest = course.next_test_upcoming;
 
                             return (
-                                <div
+                                <EntityCard
                                     key={course.id}
-                                    className="rounded-3xl border border-teal-100/80 bg-white/95 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                    tone={isActive ? "highlight" : tone}
+                                    icon={GraduationCap}
+                                    title={course.name}
+                                    subtitle={course.description || "-"}
+                                    badges={
+                                        <>
+                                            {isActive && (
+                                                <StatusPill tone="highlight">Kelas Aktif</StatusPill>
+                                            )}
+                                            <StatusPill tone={tone}>{status.label}</StatusPill>
+                                        </>
+                                    }
+                                    actions={
+                                        <>
+                                            {noProfilePhoto ? (
+                                                <Button variant="outline" disabled>
+                                                    <Eye />
+                                                    Lihat Detail
+                                                </Button>
+                                            ) : (
+                                                <Button variant="outline" asChild>
+                                                    <Link href={route("courses.detail", course.id)}>
+                                                        <Eye />
+                                                        Lihat Detail
+                                                    </Link>
+                                                </Button>
+                                            )}
+                                            {!isActive ? (
+                                                <Button
+                                                    variant="success"
+                                                    onClick={() =>
+                                                        router.post(route("courses.start", course.id))
+                                                    }
+                                                    disabled={
+                                                        noProfilePhoto ||
+                                                        (course.course_status !== "ongoing" &&
+                                                            !course.has_active_remedial) ||
+                                                        Boolean(hasOtherActive)
+                                                    }
+                                                >
+                                                    <PlayCircle />
+                                                    Mulai Mengerjakan
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    variant="outline"
+                                                    className="border-warning/40 text-warning hover:bg-warning/10 hover:text-warning"
+                                                    onClick={() => router.post(route("courses.stop"))}
+                                                >
+                                                    <StopCircle />
+                                                    Hentikan Pengerjaan
+                                                </Button>
+                                            )}
+                                        </>
+                                    }
                                 >
-                                    <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                                        <div>
-                                            <h3 className="text-lg font-semibold text-slate-800">
-                                                {course.name}
-                                            </h3>
-                                            <p className="mt-1 text-sm text-slate-600">
-                                                {course.description || "-"}
-                                            </p>
-                                        </div>
-                                        <span
-                                            className={`w-fit rounded-full px-2.5 py-1 text-xs font-semibold ${status.color}`}
-                                        >
-                                            {status.label}
-                                        </span>
-                                    </div>
+                                    <MetaGrid
+                                        className="lg:grid-cols-3"
+                                        items={[
+                                            { icon: CalendarDays, label: "Mulai", value: fmtDate(course.start_date) },
+                                            { icon: CalendarCheck, label: "Selesai", value: fmtDate(course.end_date) },
+                                            {
+                                                icon: Award,
+                                                label: "Nilai",
+                                                value:
+                                                    averageScore !== null && averageScore !== undefined ? (
+                                                        <span className="text-base text-brand-ink">{averageScore}</span>
+                                                    ) : (
+                                                        <span className="font-medium italic text-muted-foreground">
+                                                            Belum dinilai
+                                                        </span>
+                                                    ),
+                                            },
+                                        ]}
+                                    />
+                                    <Timeline
+                                        start={course.start_date}
+                                        end={course.end_date}
+                                        tone={tone}
+                                        startLabel="Progres durasi kelas"
+                                    />
 
-                                    <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50/70 px-3 py-2 text-sm text-slate-600">
-                                        Durasi Pengerjaan:{" "}
-                                        {course.start_date
-                                            ? new Date(
-                                                  course.start_date,
-                                              ).toLocaleDateString("id-ID", {
-                                                  day: "numeric",
-                                                  month: "long",
-                                                  year: "numeric",
-                                              })
-                                            : "-"}
-                                        {" - "}
-                                        {course.end_date
-                                            ? new Date(
-                                                  course.end_date,
-                                              ).toLocaleDateString("id-ID", {
-                                                  day: "numeric",
-                                                  month: "long",
-                                                  year: "numeric",
-                                              })
-                                            : "-"}
-                                    </div>
-
-                                    {(nextUpcomingSchedule ||
-                                        nextUpcomingTest) && (
-                                        <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2">
+                                    {(nextUpcomingSchedule || nextUpcomingTest) && (
+                                        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                                             {nextUpcomingSchedule && (
-                                                <div className="rounded-xl border border-teal-100 bg-teal-50/70 p-3 text-sm">
-                                                    <div className="font-semibold text-teal-800">
-                                                        Jadwal Kelas terdekat
-                                                    </div>
-                                                    <div className="mt-0.5 text-slate-700">
-                                                        {nextUpcomingSchedule.title ||
-                                                            "-"}
-                                                    </div>
-                                                    <div className="mt-1 text-xs text-slate-500">
-                                                        {formatLocalDateTime(
-                                                            nextUpcomingSchedule.starts_at,
-                                                        )}
+                                                <div className="flex items-start gap-2.5 rounded-xl border border-dashed border-border bg-muted/40 p-3 text-sm">
+                                                    <CalendarClock className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+                                                    <div className="min-w-0">
+                                                        <div className="font-semibold text-foreground">Jadwal Kelas terdekat</div>
+                                                        <div className="truncate text-foreground">{nextUpcomingSchedule.title || "-"}</div>
+                                                        <div className="text-xs text-muted-foreground">
+                                                            {formatLocalDateTime(nextUpcomingSchedule.starts_at)}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )}
-
                                             {nextUpcomingTest && (
-                                                <div className="rounded-xl border border-cyan-100 bg-cyan-50/70 p-3 text-sm">
-                                                    <div className="font-semibold text-cyan-800">
-                                                        {nextUpcomingTest.state ===
-                                                        "ongoing"
-                                                            ? "Ujian Kelas sedang berlangsung"
-                                                            : "Ujian Kelas terdekat"}
-                                                    </div>
-                                                    <div className="mt-0.5 text-slate-700">
-                                                        {nextUpcomingTest.title ||
-                                                            "-"}
-                                                    </div>
-                                                    <div className="mt-1 text-xs text-slate-500">
-                                                        {formatLocalDateTime(
-                                                            nextUpcomingTest.starts_at,
-                                                        )}
+                                                <div className="flex items-start gap-2.5 rounded-xl border border-dashed border-info/30 bg-info/5 p-3 text-sm">
+                                                    <ClipboardList className="mt-0.5 size-4 shrink-0 text-info" />
+                                                    <div className="min-w-0">
+                                                        <div className="font-semibold text-info">
+                                                            {nextUpcomingTest.state === "ongoing"
+                                                                ? "Ujian Kelas sedang berlangsung"
+                                                                : "Ujian Kelas terdekat"}
+                                                        </div>
+                                                        <div className="truncate text-foreground">{nextUpcomingTest.title || "-"}</div>
+                                                        <div className="text-xs text-muted-foreground">
+                                                            {formatLocalDateTime(nextUpcomingTest.starts_at)}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )}
                                         </div>
                                     )}
-
-                                    <div className="mt-3 flex items-center gap-2">
-                                        <span className="text-sm font-medium text-slate-700">
-                                            Nilai:
-                                        </span>
-                                        <div className="font-mono text-lg font-bold text-teal-700">
-                                            {averageScore !== null ? (
-                                                averageScore
-                                            ) : (
-                                                <span className="text-base italic text-slate-400">
-                                                    Belum dinilai
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-3 flex flex-wrap gap-2">
-                                        <Button
-                                            variant="info"
-                                            disabled={noProfilePhoto}
-                                            asChild={!noProfilePhoto}
-                                        >
-                                            {noProfilePhoto ? (
-                                                "Lihat Detail"
-                                            ) : (
-                                                <Link
-                                                    href={route(
-                                                        "courses.detail",
-                                                        course.id,
-                                                    )}
-                                                >
-                                                    Lihat Detail
-                                                </Link>
-                                            )}
-                                        </Button>
-
-                                        {!isActive ? (
-                                            <Button
-                                                onClick={() =>
-                                                    router.post(
-                                                        route(
-                                                            "courses.start",
-                                                            course.id,
-                                                        ),
-                                                    )
-                                                }
-                                                disabled={
-                                                    noProfilePhoto ||
-                                                    (course.course_status !== 'ongoing' && !course.has_active_remedial) ||
-                                                    Boolean(hasOtherActive)
-                                                }
-                                            >
-                                                Mulai Praktik
-                                            </Button>
-                                        ) : (
-                                            <Button
-                                                variant="accentOutline"
-                                                onClick={() =>
-                                                    router.post(
-                                                        route("courses.stop"),
-                                                    )
-                                                }
-                                            >
-                                                Hentikan Pengerjaan
-                                            </Button>
-                                        )}
-                                    </div>
 
                                     {noProfilePhoto && (
-                                        <div className="mt-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2.5 text-sm text-amber-800">
-                                            <p className="font-semibold">⚠ Foto Profil Diperlukan</p>
-                                            <p className="mt-0.5">
-                                                Anda harus mengunggah foto profil terlebih dahulu sebelum mengerjakan kelas.{" "}
-                                                <a
-                                                    href={route("dashboard")}
-                                                    className="font-semibold underline hover:text-amber-900"
-                                                >
-                                                    Upload di Dashboard →
-                                                </a>
-                                            </p>
-                                        </div>
+                                        <Notice tone="warning" title="Foto Profil Diperlukan">
+                                            Anda harus mengunggah foto profil terlebih dahulu sebelum mengerjakan kelas.{" "}
+                                            <Link href={route("dashboard")} className="font-semibold underline hover:opacity-80">
+                                                Upload di Dashboard →
+                                            </Link>
+                                        </Notice>
                                     )}
 
-                                    {status.label === "Sedang Berlangsung" && hasOtherActive && (
-                                        <div className="mt-3 rounded-xl border border-rose-100 bg-rose-50/50 p-3 text-sm text-rose-700">
-                                            <p className="font-semibold flex items-center gap-1.5">
-                                                ⚠️ Kelas Aktif Lain
-                                            </p>
-                                            <p className="mt-1 text-xs text-rose-600 leading-relaxed">
-                                                Anda memiliki kelas aktif lain. Selesaikan kelas tersebut terlebih dahulu sebelum mengerjakan kelas ini.
-                                            </p>
-                                        </div>
-                                    )}
-
-                                    {status.label === "Selesai" && (
-                                        course.has_active_remedial ? (
-                                            <div className="mt-3 rounded-xl border border-rose-100 bg-rose-50/50 p-3 text-sm text-rose-800">
-                                                <p className="font-semibold flex items-center gap-1.5 mb-1 text-rose-900">
-                                                    ⚠️ Perlu Remedial
-                                                </p>
-                                                <p className="text-xs text-rose-700 leading-relaxed">
-                                                    Terdapat ujian remedial yang perlu Anda kerjakan pada kelas ini.
-                                                    {course.remedial_deadline && (
-                                                        <> Batas akhir pengumpulan: <span className="font-semibold">{new Date(course.remedial_deadline).toLocaleString("id-ID", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })} WIB</span>.</>
-                                                    )}
-                                                </p>
-                                            </div>
-                                        ) : (
-                                            <div className="mt-3 rounded-xl border border-slate-100 bg-slate-50/70 p-3 text-xs text-slate-500 leading-relaxed">
-                                                Kelas sudah selesai. Anda tidak dapat mengerjakan kelas ini lagi.
-                                            </div>
+                                    {status.label === "Sedang Berlangsung" ? (
+                                        hasOtherActive && (
+                                            <Notice tone="destructive">
+                                                Anda memiliki kelas aktif lain. Selesaikan kelas tersebut terlebih
+                                                dahulu sebelum mengerjakan kelas ini.
+                                            </Notice>
                                         )
-                                    )}
-                                </div>
+                                    ) : status.label === "Belum Mulai" ? (
+                                        <Notice tone="info">
+                                            Kelas belum mulai. Tunggu waktu mulai kelas untuk dapat mengerjakan.
+                                        </Notice>
+                                    ) : status.label === "Selesai" ? (
+                                        course.has_active_remedial ? (
+                                            <Notice tone="warning" title="Perlu Remedial">
+                                                Terdapat ujian remedial yang perlu Anda kerjakan pada kelas ini.
+                                                {course.remedial_deadline && (
+                                                    <>
+                                                        {" "}Batas akhir pengumpulan:{" "}
+                                                        <span className="font-semibold">
+                                                            {new Date(course.remedial_deadline).toLocaleString("id-ID", {
+                                                                day: "numeric",
+                                                                month: "long",
+                                                                year: "numeric",
+                                                                hour: "2-digit",
+                                                                minute: "2-digit",
+                                                            })}{" "}
+                                                            WIB
+                                                        </span>
+                                                        .
+                                                    </>
+                                                )}
+                                            </Notice>
+                                        ) : (
+                                            <Notice tone="steel">
+                                                Kelas sudah selesai. Anda tidak dapat mengerjakan kelas ini lagi.
+                                            </Notice>
+                                        )
+                                    ) : null}
+                                </EntityCard>
                             );
                         })}
                     </div>
-                </div>
+                )}
             </div>
         </AuthenticatedLayout>
     );

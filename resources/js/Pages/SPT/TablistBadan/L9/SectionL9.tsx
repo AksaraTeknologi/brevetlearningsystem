@@ -187,7 +187,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
             defaultValue={group.value}
         >
             <AccordionItem value={group.value}>
-                <AccordionTrigger className="bg-blue-950 text-white font-semibold px-4 rounded hover:no-underline">
+                <AccordionTrigger className="bg-brand text-white font-semibold px-4 rounded hover:no-underline">
                     {group.label}
                 </AccordionTrigger>
                 <AccordionContent className="pt-4 space-y-6">
@@ -201,7 +201,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
                             <div key={groupType} className="space-y-3 border">
                                 {/* Label header dengan background zinc-300 */}
                                 <div className="bg-zinc-300 dark:bg-zinc-700 px-4 py-2 rounded-t">
-                                    <h4 className="text-sm font-semibold uppercase tracking-wide text-zinc-800 dark:text-zinc-100">
+                                    <h4 className="text-sm font-semibold uppercase tracking-wide text-foreground dark:text-zinc-100">
                                         {label}
                                     </h4>
                                 </div>
@@ -210,7 +210,6 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
                                 <div className="flex gap-2 px-2">
                                     <Button
                                         type="button"
-                                        className="bg-blue-950 hover:bg-blue-900"
                                         size="sm"
                                         onClick={() => handleAdd(groupType)}
                                     >
@@ -316,7 +315,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
             {renderAccordionGroup(GROUPS[1])}
 
             {/* ===== Summary: Jumlah Penyusutan ===== */}
-            <div className="border rounded-lg p-4 space-y-3 bg-gray-50 dark:bg-gray-900">
+            <div className="border rounded-lg p-4 space-y-3 bg-muted/50 dark:bg-gray-900">
                 <div className="grid grid-cols-2 items-center gap-4">
                     <Label className="text-sm font-semibold uppercase">
                         Jumlah Penyusutan Fiskal
@@ -324,7 +323,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
                     <Input
                         readOnly
                         value={formatMoney(totalFiskal)}
-                        className="text-right bg-gray-100 dark:bg-gray-800 cursor-default"
+                        className="text-right bg-muted dark:bg-gray-800 cursor-default"
                     />
                 </div>
                 <div className="grid grid-cols-2 items-center gap-4">
@@ -334,7 +333,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
                     <Input
                         readOnly
                         value={formatMoney(totalKomersial)}
-                        className="text-right bg-gray-100 dark:bg-gray-800 cursor-default"
+                        className="text-right bg-muted dark:bg-gray-800 cursor-default"
                     />
                 </div>
                 <div className="grid grid-cols-2 items-center gap-4">
@@ -344,7 +343,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
                     <Input
                         readOnly
                         value={formatMoney(selisih)}
-                        className="text-right bg-gray-100 dark:bg-gray-800 cursor-default"
+                        className="text-right bg-muted dark:bg-gray-800 cursor-default"
                     />
                 </div>
             </div>
@@ -353,7 +352,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
 
             {/* Accordion 3: Harta Tidak Berwujud */}
             {renderAccordionGroup(GROUPS[2])}
-            <div className="border rounded-lg p-4 space-y-3 bg-gray-50 dark:bg-gray-900">
+            <div className="border rounded-lg p-4 space-y-3 bg-muted/50 dark:bg-gray-900">
                 <div className="grid grid-cols-2 items-center gap-4">
                     <Label className="text-sm font-semibold uppercase">
                         Jumlah Amortisasi Fiskal
@@ -361,7 +360,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
                     <Input
                         readOnly
                         value={formatMoney(0)}
-                        className="text-right bg-gray-100 dark:bg-gray-800 cursor-default"
+                        className="text-right bg-muted dark:bg-gray-800 cursor-default"
                     />
                 </div>
                 <div className="grid grid-cols-2 items-center gap-4">
@@ -371,7 +370,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
                     <Input
                         readOnly
                         value={formatMoney(0)}
-                        className="text-right bg-gray-100 dark:bg-gray-800 cursor-default"
+                        className="text-right bg-muted dark:bg-gray-800 cursor-default"
                     />
                 </div>
                 <div className="grid grid-cols-2 items-center gap-4">
@@ -381,7 +380,7 @@ export function SectionL9({ data, sptBadanId }: SectionL9Props) {
                     <Input
                         readOnly
                         value={formatMoney(0)}
-                        className="text-right bg-gray-100 dark:bg-gray-800 cursor-default"
+                        className="text-right bg-muted dark:bg-gray-800 cursor-default"
                     />
                 </div>
             </div>

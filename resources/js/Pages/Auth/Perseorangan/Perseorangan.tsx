@@ -33,7 +33,7 @@ export default function RegistrationPortal() {
             <Link href="/" className="flex justify-center">
                 <img
                     src="/images/logo.png"
-                    alt="TBrevet Learning System"
+                    alt="Brevet Learning System"
                     className="w-36"
                 />
             </Link>
@@ -41,10 +41,10 @@ export default function RegistrationPortal() {
                 <CardContent>
                     <div className="text-center mb-12 md:mt-16">
                         <div className="flex justify-center mb-6"></div>
-                        <h1 className="text-2xl font-bold text-gray-800 mb-4">
+                        <h1 className="text-2xl font-bold text-foreground mb-4">
                             Persiapan Registrasi Wajib Pajak
                         </h1>
-                        <p className="text-gray-600 max-w-4xl mx-auto text-sm md:text-base">
+                        <p className="text-muted-foreground max-w-4xl mx-auto text-sm md:text-base">
                             Apakah wajib pajak sudah terdaftar dengan Nomor
                             Induk Kependudukan (NIK)
                         </p>
@@ -65,13 +65,13 @@ export default function RegistrationPortal() {
 
                         <div className="relative">
                             <Button
-                                className="w-full bg-red-500 hover:bg-red-600 text-white opacity-75 hover:opacity-90 cursor-pointer"
+                                className="w-full bg-destructive hover:bg-destructive/90 text-white opacity-75 hover:opacity-90 cursor-pointer"
                                 onClick={handleNoNIKClick}
                             >
                                 <X /> Tidak Memiliki NIK
                             </Button>
 
-                            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full border-2 border-white shadow-lg">
+                            <div className="absolute -top-2 -right-2 bg-destructive text-white text-xs px-2 py-1 rounded-full border-2 border-white shadow-lg">
                                 Segera Hadir
                             </div>
                         </div>

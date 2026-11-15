@@ -177,7 +177,7 @@ export const createUserColumns = (
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="px-2 text-red-600 hover:text-red-700"
+                                    className="px-2 text-destructive hover:text-destructive/80"
                                     onClick={() => {
                                         setOpenDeleteModal(true);
                                     }}

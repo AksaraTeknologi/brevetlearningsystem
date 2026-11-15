@@ -229,8 +229,8 @@ export default function ExamCalculatorPopup({
                 className="p-3 space-y-3 outline-none overflow-y-auto"
             >
                 {/* Display */}
-                <div className="rounded-lg border bg-slate-50 p-3 text-right space-y-1">
-                    <div className="min-h-[20px] text-xs font-mono text-slate-500 break-all">
+                <div className="rounded-lg border bg-muted/50 p-3 text-right space-y-1">
+                    <div className="min-h-[20px] text-xs font-mono text-muted-foreground break-all">
                         {state.expression || "0"}
                     </div>
                     <div className="flex items-center justify-between gap-2">
@@ -238,11 +238,11 @@ export default function ExamCalculatorPopup({
                             type="button"
                             onClick={handleCopyResult}
                             title="Salin nilai"
-                            className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200/70 transition-colors"
+                            className="p-1 rounded text-slate-400 hover:text-foreground hover:bg-slate-200/70 transition-colors"
                         >
                             <Copy className="h-3.5 w-3.5" />
                         </button>
-                        <div className="text-2xl font-bold font-mono text-slate-900 truncate">
+                        <div className="text-2xl font-bold font-mono text-foreground truncate">
                             {displayFormatted}
                         </div>
                     </div>
@@ -262,8 +262,8 @@ export default function ExamCalculatorPopup({
                                 btn.variant === "op"
                                     ? "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
                                     : btn.variant === "util"
-                                      ? "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200"
-                                      : "bg-white text-slate-800 border-slate-200 hover:bg-slate-50"
+                                      ? "bg-muted text-foreground border-border hover:bg-slate-200"
+                                      : "bg-card text-foreground border-border hover:bg-muted/50"
                             }`}
                         >
                             {btn.label}
@@ -273,14 +273,14 @@ export default function ExamCalculatorPopup({
                         type="button"
                         onClick={handleBackspace}
                         title="Hapus 1 karakter"
-                        className="col-span-1 h-10 rounded-lg text-sm font-semibold border bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200 flex items-center justify-center"
+                        className="col-span-1 h-10 rounded-lg text-sm font-semibold border bg-muted text-foreground border-border hover:bg-slate-200 flex items-center justify-center"
                     >
                         <Delete className="h-4 w-4" />
                     </button>
                     <button
                         type="button"
                         onClick={() => appendToken("000")}
-                        className="col-span-1 h-10 rounded-lg text-sm font-semibold border bg-white text-slate-800 border-slate-200 hover:bg-slate-50"
+                        className="col-span-1 h-10 rounded-lg text-sm font-semibold border bg-card text-foreground border-border hover:bg-muted/50"
                     >
                         000
                     </button>
@@ -297,7 +297,7 @@ export default function ExamCalculatorPopup({
                 {showHistory && (
                     <div className="border-t pt-2.5 space-y-1.5">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
+                            <span className="text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
                                 <History className="h-3.5 w-3.5" />
                                 History Hitungan (Sesi Ini)
                             </span>
@@ -335,13 +335,13 @@ export default function ExamCalculatorPopup({
                                                 }));
                                             }}
                                             title="Klik untuk memakai kembali hasil ini"
-                                            className="w-full text-left px-2.5 py-1.5 rounded-md border border-slate-200 bg-slate-50/70 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                                            className="w-full text-left px-2.5 py-1.5 rounded-md border border-border bg-muted/35 hover:bg-blue-50 hover:border-blue-200 transition-colors"
                                         >
-                                            <div className="flex items-center justify-between gap-2 text-[11px] text-slate-500">
+                                            <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                                                 <span className="font-mono truncate">{item.expression}</span>
                                                 <span className="shrink-0">{item.createdAt}</span>
                                             </div>
-                                            <div className="text-xs font-mono font-semibold text-slate-800">
+                                            <div className="text-xs font-mono font-semibold text-foreground">
                                                 = {formattedRes}
                                             </div>
                                         </button>

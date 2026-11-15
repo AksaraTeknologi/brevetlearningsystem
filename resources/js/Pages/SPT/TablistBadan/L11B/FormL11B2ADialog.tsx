@@ -140,7 +140,7 @@ export function FormL11B2ADialog({
     return (
         <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
             <DialogContent className="max-w-3xl p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData ? "Edit" : "Tambah"} Data Pemberi Pinjaman
                     </DialogTitle>
@@ -150,7 +150,7 @@ export function FormL11B2ADialog({
                         <div className="space-y-1">
                             <Label>
                                 Nomor Identitas{" "}
-                                <span className="text-red-500">*</span>
+                                <span className="text-destructive">*</span>
                             </Label>
                             <Input
                                 value={number_id}
@@ -160,7 +160,7 @@ export function FormL11B2ADialog({
                         </div>
                         <div className="space-y-1">
                             <Label>
-                                Nama <span className="text-red-500">*</span>
+                                Nama <span className="text-destructive">*</span>
                             </Label>
                             <Input
                                 value={name}
@@ -206,7 +206,7 @@ export function FormL11B2ADialog({
                             <Input
                                 value={formatRupiahInput(avgBalance)}
                                 readOnly
-                                className="bg-gray-100 text-right"
+                                className="bg-muted text-right"
                             />
                         </div>
                     </div>
@@ -216,7 +216,6 @@ export function FormL11B2ADialog({
                         Batal
                     </Button>
                     <Button
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSave}
                         disabled={isSaving}
                     >

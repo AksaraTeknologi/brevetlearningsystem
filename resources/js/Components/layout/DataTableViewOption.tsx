@@ -2,7 +2,8 @@
 
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Table } from "@tanstack/react-table";
-import { Settings2 } from "lucide-react";
+import { Columns3 } from "lucide-react";
+import { getColumnTitle } from "./DataTableTools";
 
 import { Button } from "@/Components/ui/button";
 import {
@@ -25,14 +26,14 @@ export function DataTableViewOptions<TData>({
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="outline"
-                    className="ml-auto hidden h-8 lg:flex"
+                    className="ml-auto hidden h-8 sm:flex"
                 >
-                    <Settings2 />
-                    Filter
+                    <Columns3 />
+                    Atur Kolom
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuLabel>Filter columns</DropdownMenuLabel>
+            <DropdownMenuContent align="end" className="max-h-80 overflow-y-auto">
+                <DropdownMenuLabel>Tampilkan kolom</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {table
                     .getAllColumns()
@@ -45,13 +46,12 @@ export function DataTableViewOptions<TData>({
                         return (
                             <DropdownMenuCheckboxItem
                                 key={column.id}
-                                className="capitalize"
                                 checked={column.getIsVisible()}
                                 onCheckedChange={(value) =>
                                     column.toggleVisibility(!!value)
                                 }
                             >
-                                {column.id}
+                                {getColumnTitle(column, table)}
                             </DropdownMenuCheckboxItem>
                         );
                     })}

@@ -199,7 +199,7 @@ export function FormL3DADialog({
     return (
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="w-[95vw] max-w-3xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData?.id ? "Ubah" : "Tambah"} Data Bagian A
                     </DialogTitle>
@@ -208,7 +208,7 @@ export function FormL3DADialog({
                 <div className="p-4 sm:p-6 space-y-4 overflow-y-auto min-h-0">
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Tanggal <span className="text-red-500">*</span>
+                            Tanggal <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover>
@@ -251,7 +251,7 @@ export function FormL3DADialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.entertainment_date && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.entertainment_date}
                                 </p>
                             )}
@@ -260,7 +260,7 @@ export function FormL3DADialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Tempat <span className="text-red-500">*</span>
+                            Tempat <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -273,7 +273,7 @@ export function FormL3DADialog({
                                 }
                             />
                             {errors.entertainment_location && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.entertainment_location}
                                 </p>
                             )}
@@ -282,7 +282,7 @@ export function FormL3DADialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Alamat <span className="text-red-500">*</span>
+                            Alamat <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -292,7 +292,7 @@ export function FormL3DADialog({
                                 }
                             />
                             {errors.address && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.address}
                                 </p>
                             )}
@@ -302,7 +302,7 @@ export function FormL3DADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Jenis Entertainment{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -315,7 +315,7 @@ export function FormL3DADialog({
                                 }
                             />
                             {errors.entertainment_type && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.entertainment_type}
                                 </p>
                             )}
@@ -324,7 +324,7 @@ export function FormL3DADialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Jumlah <span className="text-red-500">*</span>
+                            Jumlah <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -349,12 +349,12 @@ export function FormL3DADialog({
                                     className={cn(
                                         "pl-10",
                                         errors.entertainment_amount &&
-                                            "border-red-500",
+                                            "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.entertainment_amount && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.entertainment_amount}
                                 </p>
                             )}
@@ -363,7 +363,7 @@ export function FormL3DADialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Pihak Relasi <span className="text-red-500">*</span>
+                            Pihak Relasi <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -376,7 +376,7 @@ export function FormL3DADialog({
                                 }
                             />
                             {errors.related_party && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.related_party}
                                 </p>
                             )}
@@ -385,7 +385,7 @@ export function FormL3DADialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Jabatan <span className="text-red-500">*</span>
+                            Jabatan <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -395,7 +395,7 @@ export function FormL3DADialog({
                                 }
                             />
                             {errors.position && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.position}
                                 </p>
                             )}
@@ -405,7 +405,7 @@ export function FormL3DADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Nama Perusahaan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -415,7 +415,7 @@ export function FormL3DADialog({
                                 }
                             />
                             {errors.company_name && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.company_name}
                                 </p>
                             )}
@@ -424,7 +424,7 @@ export function FormL3DADialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Jenis Usaha <span className="text-red-500">*</span>
+                            Jenis Usaha <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -437,7 +437,7 @@ export function FormL3DADialog({
                                 }
                             />
                             {errors.business_type && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.business_type}
                                 </p>
                             )}
@@ -446,7 +446,7 @@ export function FormL3DADialog({
 
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Keterangan <span className="text-red-500">*</span>
+                            Keterangan <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -456,7 +456,7 @@ export function FormL3DADialog({
                                 }
                             />
                             {errors.notes && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.notes}
                                 </p>
                             )}
@@ -475,7 +475,6 @@ export function FormL3DADialog({
                     </Button>
                     <Button
                         onClick={handleSubmit}
-                        className="bg-blue-950 hover:bg-blue-900"
                         disabled={isSubmitting}
                     >
                         <Save className="w-4 h-4 mr-2" />

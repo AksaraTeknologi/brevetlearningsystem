@@ -26,6 +26,12 @@ import React from "react";
 import { Input } from "@/Components/ui/input";
 import { DataTablePagination } from "../DataTablePagination";
 import { DataTableViewOptions } from "../DataTableViewOption";
+import {
+    countTextFilters,
+    DataTableExport,
+    DataTableFilterRow,
+    DataTableFilterToggle,
+} from "../DataTableTools";
 import { DataTableFacetedFilter } from "../DataTableFacetedFIlter";
 import { Check, Pencil, Plus, Trash, X } from "lucide-react";
 
@@ -90,6 +96,7 @@ export function DataTableBupotA2<TData extends { id: string }, TValue>({
             columnVisibility,
         },
     });
+    const [showColumnFilters, setShowColumnFilters] = React.useState(false);
 
     const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -102,7 +109,7 @@ export function DataTableBupotA2<TData extends { id: string }, TValue>({
 
     return (
         <div className="space-y-4 mt-4">
-            <div className="flex items-center justify-between">
+            <div className="tls-table-toolbar flex items-center justify-between">
                 <div className="flex flex-1 items-center space-x-2">
                     <Input
                         placeholder="Cari nama..."
@@ -116,7 +123,7 @@ export function DataTableBupotA2<TData extends { id: string }, TValue>({
                                 .getColumn("customer_name")
                                 ?.setFilterValue(event.target.value)
                         }
-                        className="h-10 w-[150px] lg:w-[250px] bg-white"
+                        className="h-10 w-[150px] lg:w-[250px] bg-card"
                     />
                     {table.getColumn("status") && (
                         <DataTableFacetedFilter
@@ -137,8 +144,14 @@ export function DataTableBupotA2<TData extends { id: string }, TValue>({
                     )}
                 </div>
                 <DataTableViewOptions table={table} />
+                <DataTableFilterToggle
+                    active={showColumnFilters}
+                    onToggle={() => setShowColumnFilters((v) => !v)}
+                    activeCount={countTextFilters(table)}
+                />
+                <DataTableExport table={table} fileName="ebupot-a2" />
             </div>
-            <div className="rounded-md border bg-white overflow-auto">
+            <div className="rounded-md border bg-card overflow-auto">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -158,6 +171,7 @@ export function DataTableBupotA2<TData extends { id: string }, TValue>({
                                 })}
                             </TableRow>
                         ))}
+                        {showColumnFilters && <DataTableFilterRow table={table} />}
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (

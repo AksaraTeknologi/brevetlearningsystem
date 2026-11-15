@@ -227,7 +227,7 @@ export function TabL10B({ sptBadanId, l10b }: TabL10BProps) {
                         <p className="text-sm font-semibold">
                             {section.header}
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-muted-foreground">
                             {section.subheader}
                         </p>
                     </div>
@@ -237,7 +237,7 @@ export function TabL10B({ sptBadanId, l10b }: TabL10BProps) {
                         <div
                             key={row.field}
                             className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 px-4 py-3 ${
-                                rIdx % 2 === 0 ? "bg-white" : "bg-gray-50"
+                                rIdx % 2 === 0 ? "bg-card" : "bg-muted/50"
                             } border-t`}
                         >
                             <p className="text-sm w-full sm:flex-1 whitespace-pre-line break-words leading-relaxed">

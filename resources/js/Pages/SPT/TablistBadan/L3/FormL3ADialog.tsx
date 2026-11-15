@@ -251,7 +251,7 @@ export function FormL3ADialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-3xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>PENGHASILAN DARI LUAR NEGERI</DialogTitle>
                 </DialogHeader>
 
@@ -260,7 +260,7 @@ export function FormL3ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Nama Pemotong Pajak{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -269,10 +269,10 @@ export function FormL3ADialog({
                                     handleChange("name", e.target.value)
                                 }
                                 placeholder="Masukkan nama"
-                                className={cn(errors.name && "border-red-500")}
+                                className={cn(errors.name && "border-destructive")}
                             />
                             {errors.name && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.name}
                                 </p>
                             )}
@@ -343,7 +343,7 @@ export function FormL3ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Tanggal PPh Terutang/Dibayar/Dipotong{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={isCalendarOpen}
@@ -405,7 +405,7 @@ export function FormL3ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Jenis Penghasilan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Select
                             value={formData.type_income ?? ""}
@@ -433,7 +433,7 @@ export function FormL3ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Penghasilan Neto{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="flex">
                             <span className="inline-flex items-center px-3 text-sm bg-gray-200 border border-r-0 rounded-l-md">
@@ -452,7 +452,7 @@ export function FormL3ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             PPh Terutang/Dibayar/Dipotong di Luar Negeri{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="flex">
                             <span className="inline-flex items-center px-3 text-sm bg-gray-200 border border-r-0 rounded-l-md">
@@ -470,7 +470,7 @@ export function FormL3ADialog({
                     {/* Mata Uang */}
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Mata Uang <span className="text-red-500">*</span>
+                            Mata Uang <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openCurrency}
@@ -534,7 +534,7 @@ export function FormL3ADialog({
                         <Label className="pt-2">
                             PPh yang Dibayar/Dipotong/Terutang di Luar Negeri
                             dalam Mata Uang Asing{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="flex">
                             <span className="inline-flex items-center px-3 text-sm bg-gray-200 border border-r-0 rounded-l-md">
@@ -553,7 +553,7 @@ export function FormL3ADialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[260px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Kredit Pajak yang Dapat Diperhitungkan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="flex">
                             <span className="inline-flex items-center px-3 text-sm bg-gray-200 border border-r-0 rounded-l-md">
@@ -581,7 +581,6 @@ export function FormL3ADialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

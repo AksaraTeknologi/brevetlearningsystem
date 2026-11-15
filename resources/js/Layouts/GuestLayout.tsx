@@ -1,22 +1,29 @@
+import AuthShell from "@/Components/auth/AuthShell";
+import { MasukButton } from "@/Components/auth/parts";
+import { usePage } from "@inertiajs/react";
 import { PropsWithChildren } from "react";
-import { Toaster } from "react-hot-toast";
 
+/**
+ * Layout tamu untuk halaman pendaftaran & akun (Perorangan, Reset Sandi, dll).
+ * Memakai header kartu bergaya Coretax; dipaksa mode terang karena isi
+ * halaman-halaman ini belum mendukung mode gelap.
+ */
 export default function Guest({ children }: PropsWithChildren) {
+    // Halaman seperti Verifikasi Email & Konfirmasi Sandi diakses user yang sudah
+    // login; tombol "Masuk" hanya untuk pengunjung yang belum login.
+    const isLoggedIn = !!(usePage().props as any).auth?.user;
+
     return (
-        <div
-            className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-muted p-6 md:p-10"
-            style={{
-                backgroundImage: "url('/images/login background.png')",
-                backgroundSize: "cover",
-                backgroundPosition: "left",
-            }}
+        <AuthShell
+            headerVariant="card"
+            headerAction={isLoggedIn ? undefined : <MasukButton />}
+            footerAlign="center"
+            showThemeToggle={false}
+            forceLight
         >
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(240,253,250,0.65),rgba(255,251,235,0.55))]" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(13,148,136,0.2),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.2),_transparent_35%)]" />
-            <div className="relative z-10 w-full max-w-sm md:max-w-5xl">
-                <Toaster position="top-center" />
-                {children}
+            <div className="flex flex-1 flex-col items-center justify-center px-4 py-8 md:px-10">
+                <div className="w-full max-w-sm md:max-w-5xl">{children}</div>
             </div>
-        </div>
+        </AuthShell>
     );
 }

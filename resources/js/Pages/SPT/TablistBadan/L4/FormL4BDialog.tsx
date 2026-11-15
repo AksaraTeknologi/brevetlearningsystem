@@ -204,7 +204,7 @@ export function FormL4BDialog({
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="w-[95vw] max-w-xl sm:w-full p-0 overflow-visible flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         Penghasilan yang Tidak Termasuk Objek Pajak
                     </DialogTitle>
@@ -214,7 +214,7 @@ export function FormL4BDialog({
                     {/* Kode */}
                     <div className="grid grid-cols-1 sm:grid-cols-[200px_1fr] items-start gap-4">
                         <Label className="pt-2">
-                            Kode <span className="text-red-500">*</span>
+                            Kode <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -223,11 +223,11 @@ export function FormL4BDialog({
                                     handleChange("code", e.target.value)
                                 }
                                 placeholder="kode"
-                                className={cn(errors.code && "border-red-500")}
+                                className={cn(errors.code && "border-destructive")}
                                 disabled
                             />
                             {errors.code && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.code}
                                 </p>
                             )}
@@ -238,7 +238,7 @@ export function FormL4BDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[200px_1fr] items-start gap-4">
                         <Label className="pt-2">
                             Jenis Penghasilan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Popover
@@ -253,7 +253,7 @@ export function FormL4BDialog({
                                         className={cn(
                                             "w-full justify-between font-normal",
                                             errors.income_type &&
-                                                "border-red-500",
+                                                "border-destructive",
                                         )}
                                     >
                                         <span className="block truncate text-left">
@@ -307,7 +307,7 @@ export function FormL4BDialog({
                                 </PopoverContent>
                             </Popover>
                             {errors.income_type && (
-                                <p className="text-sm text-red-500">
+                                <p className="text-sm text-destructive">
                                     {errors.income_type}
                                 </p>
                             )}
@@ -358,7 +358,6 @@ export function FormL4BDialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

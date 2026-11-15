@@ -291,7 +291,7 @@ export default function NIKRegistration({
                         <div className="flex justify-center">
                             <button
                                 onClick={() => handleNextStep({})}
-                                className="bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-800"
+                                className="bg-brand text-white px-6 py-2 rounded hover:bg-brand/90"
                             >
                                 Lanjut
                             </button>
@@ -375,10 +375,10 @@ export default function NIKRegistration({
                                         className={cn(
                                             "w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 mb-2",
                                             step.active
-                                                ? "bg-blue-900 text-white border-blue-900"
+                                                ? "bg-brand text-white border-blue-900"
                                                 : currentStep > step.number
-                                                ? "bg-green-600 text-white border-green-600"
-                                                : "bg-gray-100 text-gray-500 border-gray-300"
+                                                ? "bg-success text-white border-green-600"
+                                                : "bg-muted text-muted-foreground border-input"
                                         )}
                                     >
                                         {currentStep > step.number ? (
@@ -397,7 +397,7 @@ export default function NIKRegistration({
                                             className={cn(
                                                 "w-8 md:w-16 h-0.5 mx-2",
                                                 currentStep > step.number
-                                                    ? "bg-green-600"
+                                                    ? "bg-success text-success-foreground"
                                                     : "bg-gray-300"
                                             )}
                                         ></div>

@@ -46,7 +46,7 @@ export function TableL13BA({
         <div className="overflow-x-auto">
             <Table className="text-xs border">
                 <TableHeader>
-                    <TableRow className="bg-gray-100">
+                    <TableRow className="bg-muted">
                         <TableHead className="w-8 text-center border">
                             <Checkbox
                                 checked={
@@ -138,7 +138,7 @@ export function TableL13BA({
                                             type="button"
                                             size="icon"
                                             variant="ghost"
-                                            className="h-7 w-7 text-red-500 hover:text-red-700"
+                                            className="h-7 w-7 text-destructive hover:text-destructive/80"
                                             onClick={() => onDelete(row.id!)}
                                         >
                                             <Trash2 className="w-3.5 h-3.5" />

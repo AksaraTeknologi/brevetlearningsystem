@@ -185,7 +185,7 @@ export function FormL3DCDialog({
     return (
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="w-[95vw] max-w-3xl sm:w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData?.id ? "Ubah" : "Tambah"} Data Bagian C
                     </DialogTitle>
@@ -194,7 +194,7 @@ export function FormL3DCDialog({
                 <div className="p-4 sm:p-6 space-y-4 overflow-y-auto min-h-0">
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            NPWP <span className="text-red-500">*</span>
+                            NPWP <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -209,7 +209,7 @@ export function FormL3DCDialog({
                                 maxLength={16}
                             />
                             {errors.npwp && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.npwp}
                                 </p>
                             )}
@@ -217,7 +217,7 @@ export function FormL3DCDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Nama Debitur <span className="text-red-500">*</span>
+                            Nama Debitur <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -227,7 +227,7 @@ export function FormL3DCDialog({
                                 }
                             />
                             {errors.debtor_name && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.debtor_name}
                                 </p>
                             )}
@@ -236,7 +236,7 @@ export function FormL3DCDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Alamat Debitur{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Input
@@ -249,7 +249,7 @@ export function FormL3DCDialog({
                                 }
                             />
                             {errors.debtor_address && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.debtor_address}
                                 </p>
                             )}
@@ -258,7 +258,7 @@ export function FormL3DCDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Jumlah Piutang{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -280,12 +280,12 @@ export function FormL3DCDialog({
                                     className={cn(
                                         "pl-10",
                                         errors.amount_of_debt &&
-                                            "border-red-500",
+                                            "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.amount_of_debt && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.amount_of_debt}
                                 </p>
                             )}
@@ -294,7 +294,7 @@ export function FormL3DCDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Piutang Tak Tertagih{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <div className="relative">
@@ -315,12 +315,12 @@ export function FormL3DCDialog({
                                     inputMode="numeric"
                                     className={cn(
                                         "pl-10",
-                                        errors.bad_debt && "border-red-500",
+                                        errors.bad_debt && "border-destructive",
                                     )}
                                 />
                             </div>
                             {errors.bad_debt && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.bad_debt}
                                 </p>
                             )}
@@ -329,7 +329,7 @@ export function FormL3DCDialog({
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
                             Metode Pengurangan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Select
@@ -350,7 +350,7 @@ export function FormL3DCDialog({
                                 </SelectContent>
                             </Select>
                             {errors.deduction_method && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.deduction_method}
                                 </p>
                             )}
@@ -358,7 +358,7 @@ export function FormL3DCDialog({
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] items-center gap-4">
                         <Label>
-                            Jenis Bukti <span className="text-red-500">*</span>
+                            Jenis Bukti <span className="text-destructive">*</span>
                         </Label>
                         <div className="space-y-1">
                             <Select
@@ -379,7 +379,7 @@ export function FormL3DCDialog({
                                 </SelectContent>
                             </Select>
                             {errors.type_of_proof && (
-                                <p className="text-xs text-red-500">
+                                <p className="text-xs text-destructive">
                                     {errors.type_of_proof}
                                 </p>
                             )}
@@ -398,7 +398,6 @@ export function FormL3DCDialog({
                     </Button>
                     <Button
                         onClick={handleSubmit}
-                        className="bg-blue-950 hover:bg-blue-900"
                         disabled={isSubmitting}
                     >
                         <Save className="w-4 h-4 mr-2" />

@@ -210,8 +210,8 @@ export default function CreateQuestion({
     return (
         <TeacherLayout>
             <Head title={`Tambah Soal Bank - ${bankName}`} />
-            <div className="teacher-page-shell">
-                <div className="teacher-page-stack">
+            <div className="py-8 mx-auto lg:px-4">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -242,14 +242,14 @@ export default function CreateQuestion({
                             variant="outline"
                             size="sm"
                             asChild
-                            className="text-gray-600"
+                            className="text-muted-foreground"
                         >
                             {/* <Link href={route("test.question.index", test.id)}>
                                 <ArrowLeft size={16} />
                                 Kembali
                             </Link> */}
                         </Button>
-                        <h1 className="teacher-page-title">
+                        <h1 className="text-2xl font-semibold text-primary">
                             Tambah Soal Bank - {bankName}
                         </h1>
                     </div>
@@ -263,7 +263,7 @@ export default function CreateQuestion({
                         semua ujian yang memakai bank soal ini.
                     </div>
 
-                    <div className="p-5 lg:p-8 rounded-xl bg-white border shadow">
+                    <div className="p-5 lg:p-8 rounded-xl bg-card border shadow">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
                                 <div className="grid grid-cols-1 gap-6">
@@ -409,7 +409,7 @@ export default function CreateQuestion({
                                                             className="flex flex-col gap-3 p-3 border rounded-lg"
                                                         >
                                                              <div className="flex items-center gap-3">
-                                                                 <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-slate-100 text-xs font-semibold text-slate-700">
+                                                                 <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-muted text-xs font-semibold text-foreground">
                                                                      {String.fromCharCode(65 + index)}
                                                                  </span>
                                                                  <div className="flex items-center space-x-2">
@@ -461,7 +461,7 @@ export default function CreateQuestion({
                                                                                 index,
                                                                             )
                                                                         }
-                                                                        className="text-red-600 hover:text-red-700"
+                                                                        className="text-destructive hover:text-destructive/80"
                                                                     >
                                                                         <Trash2
                                                                             size={
@@ -539,13 +539,13 @@ export default function CreateQuestion({
                                                                                     null,
                                                                                 )
                                                                             }
-                                                                            className="text-red-600 hover:text-red-700"
+                                                                            className="text-destructive hover:text-destructive/80"
                                                                         >
                                                                             Hapus
                                                                         </Button>
                                                                     )}
                                                                 </div>
-                                                                <p className="text-xs text-gray-500 mt-1">
+                                                                <p className="text-xs text-muted-foreground mt-1">
                                                                     Gambar
                                                                     opsional.
                                                                     Jika hanya
@@ -562,7 +562,7 @@ export default function CreateQuestion({
                                                     ),
                                                 )}
                                             </div>
-                                            <p className="text-xs text-gray-500">
+                                            <p className="text-xs text-muted-foreground">
                                                 Centang satu opsi sebagai
                                                 jawaban yang benar. Setiap opsi
                                                 harus memiliki teks atau gambar

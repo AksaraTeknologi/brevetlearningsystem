@@ -92,7 +92,7 @@ export default function Edit(props: { bank: Bank }) {
                                     </h3>
                                 </div>
 
-                                <div className="p-8 rounded-xl bg-white border mb-4">
+                                <div className="p-8 rounded-xl bg-card border mb-4">
                                     <FormFieldsBank form={form} />
                                 </div>
 

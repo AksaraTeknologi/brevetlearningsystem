@@ -135,7 +135,7 @@ export default function DaftarPengguna({ users, platforms = [] }: any) {
                                 Hapus Pengguna
                             </Button>
                             <Button
-                                className="bg-green-600 hover:bg-green-600/90"
+                                className="bg-success hover:bg-success/90 text-success-foreground"
                                 onClick={() => setImportModalOpen(true)}
                             >
                                 <FileDown />
@@ -152,7 +152,7 @@ export default function DaftarPengguna({ users, platforms = [] }: any) {
                                     encType="multipart/form-data"
                                 >
                                     <div className="space-y-1.5">
-                                        <Label className="text-xs font-semibold text-gray-700">
+                                        <Label className="text-xs font-semibold text-foreground">
                                             Pilih Platform (Opsional)
                                         </Label>
                                         <Select
@@ -161,7 +161,7 @@ export default function DaftarPengguna({ users, platforms = [] }: any) {
                                                 setData("platform_id", value === "none" ? "" : value)
                                             }
                                         >
-                                            <SelectTrigger className="w-full bg-white">
+                                            <SelectTrigger className="w-full bg-card">
                                                 <SelectValue placeholder="Pilih Platform" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -186,7 +186,7 @@ export default function DaftarPengguna({ users, platforms = [] }: any) {
                                         pengguna ke kelas berdasarkan kode kelas.
                                     </p>
                                     {errors.file && (
-                                        <p className="text-red-600">
+                                        <p className="text-destructive">
                                             {errors.file}
                                         </p>
                                     )}
@@ -196,7 +196,7 @@ export default function DaftarPengguna({ users, platforms = [] }: any) {
                                 </form>
                             </Modal>
                             <Button
-                                className="bg-yellow-400 text-primary hover:bg-yellow-400/90 hover:text-primary"
+                                className="bg-highlight text-highlight-foreground hover:bg-highlight/90"
                                 onClick={handleRefresh}
                             >
                                 <RefreshCcw />

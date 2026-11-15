@@ -289,12 +289,12 @@ export function FormL9Dialog({
 
     const rowClass = "grid grid-cols-[280px_1fr] items-start gap-x-4 py-2";
     const labelClass =
-        "text-sm font-medium text-gray-700 dark:text-gray-300 pt-2";
+        "text-sm font-medium text-foreground dark:text-gray-300 pt-2";
 
     return (
         <Dialog open={open} onOpenChange={(v) => !v && handleClose()}>
             <DialogContent className="max-w-3xl p-0 overflow-hidden flex flex-col max-h-[90vh]">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData ? "Edit" : "Tambah"} Data Penyusutan /
                         Amortisasi
@@ -308,11 +308,11 @@ export function FormL9Dialog({
                         <Input
                             value={formData.treasure_code}
                             placeholder="Kode harta"
-                            className="bg-gray-50"
+                            className="bg-muted/50"
                             disabled
                         />
                         {errors.treasure_code && (
-                            <p className="col-start-2 text-xs text-red-500 mt-1">
+                            <p className="col-start-2 text-xs text-destructive mt-1">
                                 {errors.treasure_code}
                             </p>
                         )}
@@ -321,7 +321,7 @@ export function FormL9Dialog({
                     {/* 2. Jenis Harta */}
                     <div className={rowClass}>
                         <Label className={labelClass}>
-                            Jenis Harta <span className="text-red-500">*</span>
+                            Jenis Harta <span className="text-destructive">*</span>
                         </Label>
                         <div>
                             <Popover
@@ -336,7 +336,7 @@ export function FormL9Dialog({
                                         className={cn(
                                             "w-full justify-between font-normal",
                                             errors.treasure_type &&
-                                                "border-red-500",
+                                                "border-destructive",
                                         )}
                                     >
                                         <span className="block truncate text-left">
@@ -391,7 +391,7 @@ export function FormL9Dialog({
                             </Popover>
                         </div>
                         {errors.treasure_type && (
-                            <p className="col-start-2 text-xs text-red-500 mt-1">
+                            <p className="col-start-2 text-xs text-destructive mt-1">
                                 {errors.treasure_type}
                             </p>
                         )}
@@ -401,7 +401,7 @@ export function FormL9Dialog({
                     <div className={rowClass}>
                         <Label className={labelClass}>
                             Bulan / Tahun Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             type="text"
@@ -411,7 +411,7 @@ export function FormL9Dialog({
                             placeholder="MM/YYYY"
                         />
                         {errors.period_aquisition && (
-                            <p className="col-start-2 text-xs text-red-500 mt-1">
+                            <p className="col-start-2 text-xs text-destructive mt-1">
                                 {errors.period_aquisition}
                             </p>
                         )}
@@ -421,10 +421,10 @@ export function FormL9Dialog({
                     <div className={rowClass}>
                         <Label className={labelClass}>
                             Biaya Perolehan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <div className="flex">
-                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-gray-100 text-sm text-gray-600">
+                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-muted-foreground">
                                 Rp.
                             </span>
                             <Input
@@ -448,7 +448,7 @@ export function FormL9Dialog({
                             Nilai Sisa Buku Fiskal Pada Awal Tahun
                         </Label>
                         <div className="flex">
-                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-gray-100 text-sm text-gray-600">
+                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-muted-foreground">
                                 Rp.
                             </span>
                             <Input
@@ -473,7 +473,7 @@ export function FormL9Dialog({
                         </Label>
                         <div className="space-y-2">
                             <div className="grid grid-cols-[100px_1fr] items-center gap-2">
-                                <span className="text-sm font-semibold uppercase text-gray-600">
+                                <span className="text-sm font-semibold uppercase text-muted-foreground">
                                     Komersial
                                 </span>
                                 <Select
@@ -504,7 +504,7 @@ export function FormL9Dialog({
                                 </Select>
                             </div>
                             <div className="grid grid-cols-[100px_1fr] items-center gap-2">
-                                <span className="text-sm font-semibold uppercase text-gray-600">
+                                <span className="text-sm font-semibold uppercase text-muted-foreground">
                                     Fiskal
                                 </span>
                                 <Select
@@ -543,7 +543,7 @@ export function FormL9Dialog({
                             Penyusutan/Amortisasi Fiskal Tahun Ini
                         </Label>
                         <div className="flex">
-                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-gray-100 text-sm text-gray-600">
+                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-muted-foreground">
                                 Rp.
                             </span>
                             <Input
@@ -586,7 +586,6 @@ export function FormL9Dialog({
                     </Button>
                     <Button
                         type="button"
-                        className="bg-blue-950 hover:bg-blue-900"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

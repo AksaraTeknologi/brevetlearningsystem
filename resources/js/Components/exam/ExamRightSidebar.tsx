@@ -85,10 +85,10 @@ export default function ExamRightSidebar({
                     size="sm"
                     onClick={onToggleOpen}
                     title="Buka Panel Nomor Soal"
-                    className="w-full lg:w-11 lg:h-auto lg:py-3 flex lg:flex-col items-center gap-2 bg-white border rounded-xl shadow-sm hover:bg-slate-50"
+                    className="w-full lg:w-11 lg:h-auto lg:py-3 flex lg:flex-col items-center gap-2 tls-card hover:bg-muted/50"
                 >
                     <PanelRightOpen className="h-4 w-4 text-blue-600 shrink-0" />
-                    <span className="text-xs font-medium text-slate-700 lg:[writing-mode:vertical-rl]">
+                    <span className="text-xs font-medium text-foreground lg:[writing-mode:vertical-rl]">
                         Nomor Soal ({questionIndex.length})
                     </span>
                 </Button>
@@ -102,8 +102,8 @@ export default function ExamRightSidebar({
                             title={label}
                             className={`relative p-2 rounded-lg border text-xs transition-colors ${
                                 activePopups[key]
-                                    ? "bg-blue-600 text-white border-blue-600"
-                                    : "bg-white text-slate-700 border-slate-200 hover:bg-slate-100"
+                                    ? "bg-brand-900 text-white border-brand-900"
+                                    : "bg-card text-foreground border-border hover:bg-muted"
                             }`}
                         >
                             <Icon className="h-4 w-4" />
@@ -118,10 +118,10 @@ export default function ExamRightSidebar({
     }
 
     return (
-        <aside className="bg-white border rounded-xl p-4 shadow-sm h-max">
+        <aside className="tls-card p-4 h-max">
             {/* Header row: Title left, 3 tool buttons + collapse toggle on the right */}
             <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b">
-                <h3 className="font-semibold text-sm text-gray-800 whitespace-nowrap">
+                <h3 className="font-semibold text-sm text-foreground whitespace-nowrap">
                     Nomor Soal
                 </h3>
                 <div className="flex items-center gap-1">
@@ -136,8 +136,8 @@ export default function ExamRightSidebar({
                                 aria-label={label}
                                 className={`relative inline-flex items-center justify-center h-7 w-7 rounded-md border transition-colors ${
                                     isOpenTool
-                                        ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                                        : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300"
+                                        ? "bg-brand-900 text-white border-brand-900 shadow-sm"
+                                        : "bg-muted/50 text-foreground border-border hover:bg-highlight-soft hover:text-brand-900 hover:border-[#FDE68A]"
                                 }`}
                             >
                                 <Icon className="h-3.5 w-3.5" />
@@ -156,7 +156,7 @@ export default function ExamRightSidebar({
                         onClick={onToggleOpen}
                         title="Tutup Panel Nomor Soal"
                         aria-label="Tutup Panel Nomor Soal"
-                        className="inline-flex items-center justify-center h-7 w-7 rounded-md text-gray-500 hover:text-gray-800 hover:bg-slate-100 transition-colors ml-0.5"
+                        className="inline-flex items-center justify-center h-7 w-7 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors ml-0.5"
                     >
                         <PanelRightClose className="h-4 w-4" />
                     </button>
@@ -173,14 +173,14 @@ export default function ExamRightSidebar({
                         localAnsweredIds.includes(q.id);
 
                     let colorClasses =
-                        "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200";
+                        "bg-muted text-foreground border-border hover:bg-gray-200";
                     if (isCurrent) {
                         colorClasses = isFlagged
-                            ? "bg-blue-600 text-white border-amber-400 ring-2 ring-amber-400 font-semibold"
-                            : "bg-blue-600 text-white border-blue-600 font-semibold";
+                            ? "bg-brand-900 text-white border-amber-400 ring-2 ring-amber-400 font-semibold"
+                            : "bg-brand-900 text-white border-brand-900 font-semibold";
                     } else if (isFlagged) {
                         colorClasses =
-                            "bg-amber-400 text-amber-950 border-amber-500 hover:bg-amber-300 font-semibold";
+                            "bg-highlight text-amber-950 border-amber-500 hover:bg-amber-300 font-semibold";
                     } else if (isAnswered) {
                         colorClasses =
                             "bg-emerald-100 text-emerald-800 border-emerald-300 hover:bg-emerald-200 font-medium";
@@ -221,9 +221,9 @@ export default function ExamRightSidebar({
             </div>
 
             {/* Legend */}
-            <div className="space-y-1.5 text-xs sm:text-sm text-gray-700">
+            <div className="space-y-1.5 text-xs sm:text-sm text-foreground">
                 <div className="flex items-center gap-2">
-                    <span className="w-3.5 h-3.5 rounded bg-gray-200 border border-gray-300 shrink-0"></span>
+                    <span className="w-3.5 h-3.5 rounded bg-gray-200 border border-input shrink-0"></span>
                     <span>Belum Dikerjakan</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -231,13 +231,13 @@ export default function ExamRightSidebar({
                     <span>Sudah Dikerjakan</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="relative w-3.5 h-3.5 rounded bg-amber-400 border border-amber-500 shrink-0">
+                    <span className="relative w-3.5 h-3.5 rounded bg-highlight border border-amber-500 shrink-0 text-highlight-foreground">
                         <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-orange-600" />
                     </span>
                     <span>Ragu-ragu / Ditandai{flaggedCount > 0 ? ` (${flaggedCount})` : ""}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-3.5 h-3.5 rounded bg-blue-600 shrink-0"></span>
+                    <span className="w-3.5 h-3.5 rounded bg-brand-900 shrink-0"></span>
                     <span>Nomor Soal Saat Ini</span>
                 </div>
             </div>
@@ -275,7 +275,7 @@ export default function ExamRightSidebar({
                 Kumpulkan Ujian
             </Button>
             {!canSubmit && (
-                <p className="text-xs text-red-600 mt-2">
+                <p className="text-xs text-destructive mt-2">
                     Jawab semua soal terlebih dahulu.
                 </p>
             )}

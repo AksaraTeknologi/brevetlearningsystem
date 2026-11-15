@@ -72,7 +72,7 @@ export default function Bupot({
         return (
             <div className="mb-4 rounded-xl bg-sidebar border p-4">
                 <h2 className="font-semibold mb-2">Bupot</h2>
-                <p className="text-gray-500">Belum ada bupot yang dibuat.</p>
+                <p className="text-muted-foreground">Belum ada bupot yang dibuat.</p>
             </div>
         );
     }
@@ -83,7 +83,7 @@ export default function Bupot({
             <div className="overflow-x-auto">
                 <table className="min-w-full border text-sm">
                     <thead>
-                        <tr className="bg-gray-100">
+                        <tr className="bg-muted">
                             <th className="px-2 py-1 border text-left">No</th>
                             <th className="px-2 py-1 border text-left">Tipe</th>
                             <th className="px-2 py-1 border text-left">
@@ -164,30 +164,30 @@ export default function Bupot({
                                 tarif = `${bupot.rates}%`;
                             }
 
-                            let colorClass = "bg-gray-600 hover:bg-gray-500";
+                            let colorClass = "bg-steel text-steel-foreground hover:bg-steel/90";
                             switch (bupot.status) {
                                 case "approved":
                                     colorClass =
-                                        "bg-blue-600 hover:bg-blue-500";
+                                        "bg-info text-info-foreground hover:bg-info/90";
                                     break;
                                 case "created":
                                     colorClass =
-                                        "bg-green-600 hover:bg-green-500";
+                                        "bg-success text-success-foreground hover:bg-success/90";
                                     break;
                                 case "canceled":
                                     colorClass =
-                                        "bg-yellow-600 hover:bg-yellow-500";
+                                        "bg-warning text-warning-foreground hover:bg-warning/90";
                                     break;
                                 case "deleted":
-                                    colorClass = "bg-red-600 hover:bg-red-500";
+                                    colorClass = "bg-destructive text-destructive-foreground hover:bg-destructive/90";
                                     break;
                                 case "amanded":
                                     colorClass =
-                                        "bg-gray-600 hover:bg-gray-500";
+                                        "bg-steel text-steel-foreground hover:bg-steel/90";
                                     break;
                                 default:
                                     colorClass =
-                                        "bg-gray-600 hover:bg-gray-500";
+                                        "bg-steel text-steel-foreground hover:bg-steel/90";
                             }
 
                             const courseResult = courseResults.find(

@@ -336,7 +336,7 @@ export default function EconomicData({
     return (
         <div>
             <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold text-gray-800 mb-2">
+                <h1 className="text-2xl font-bold text-foreground mb-2">
                     Masukkan data ekonomi wajib pajak.
                 </h1>
             </div>
@@ -346,7 +346,7 @@ export default function EconomicData({
                     <div className="space-y-2">
                         <Label>
                             Metode Pembukuan/Pencatatan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.accounting_method}
@@ -363,7 +363,7 @@ export default function EconomicData({
                                         !data.accounting_method &&
                                             "text-muted-foreground",
                                         errors.accounting_method &&
-                                            "border-red-500"
+                                            "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -416,7 +416,7 @@ export default function EconomicData({
                             </PopoverContent>
                         </Popover>
                         {errors.accounting_method && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.accounting_method}
                             </p>
                         )}
@@ -425,7 +425,7 @@ export default function EconomicData({
                     <div className="space-y-2">
                         <Label>
                             Mata Uang Pembukuan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.currency}
@@ -439,7 +439,7 @@ export default function EconomicData({
                                         "w-full justify-between",
                                         !data.currency &&
                                             "text-muted-foreground",
-                                        errors.currency && "border-red-500"
+                                        errors.currency && "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -496,7 +496,7 @@ export default function EconomicData({
                             </PopoverContent>
                         </Popover>
                         {errors.currency && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.currency}
                             </p>
                         )}
@@ -505,7 +505,7 @@ export default function EconomicData({
                     <div className="space-y-2">
                         <Label>
                             Periode Pembukuan{" "}
-                            <span className="text-red-500">*</span>
+                            <span className="text-destructive">*</span>
                         </Label>
                         <Popover
                             open={openPopovers.accounting_period}
@@ -522,7 +522,7 @@ export default function EconomicData({
                                         !data.accounting_period &&
                                             "text-muted-foreground",
                                         errors.accounting_period &&
-                                            "border-red-500"
+                                            "border-destructive"
                                     )}
                                 >
                                     <span className="truncate">
@@ -574,7 +574,7 @@ export default function EconomicData({
                             </PopoverContent>
                         </Popover>
                         {errors.accounting_period && (
-                            <p className="text-sm text-red-500">
+                            <p className="text-sm text-destructive">
                                 {errors.accounting_period}
                             </p>
                         )}
@@ -585,18 +585,18 @@ export default function EconomicData({
                     <Button
                         type="button"
                         onClick={() => handleOpenSourceIncomeDialog()}
-                        className="bg-blue-900 hover:bg-blue-800 text-white"
+                        className="bg-brand hover:bg-brand/90 text-white"
                     >
                         <Plus className="w-4 h-4 mr-2" />
                         Tambah Sumber Penghasilan
                     </Button>
                 </div>
 
-                <div className="mb-6 border rounded-lg bg-white overflow-hidden">
+                <div className="mb-6 border rounded-lg bg-card overflow-hidden">
                     <div className="overflow-x-auto">
                         <div className="min-w-[1000px]">
                             <div className="bg-yellow-100 border-b">
-                                <div className="grid grid-cols-8 gap-3 p-3 text-sm font-medium text-gray-700">
+                                <div className="grid grid-cols-8 gap-3 p-3 text-sm font-medium text-foreground">
                                     <div className="min-w-[70px] text-center">
                                         Aksi
                                     </div>
@@ -645,7 +645,7 @@ export default function EconomicData({
                                     sourceIncomes.map((item, index) => (
                                         <div
                                             key={item.id || index}
-                                            className="grid grid-cols-8 gap-3 p-3 text-xs items-center hover:bg-gray-50" // Reduced padding and font size
+                                            className="grid grid-cols-8 gap-3 p-3 text-xs items-center hover:bg-muted/50" // Reduced padding and font size
                                         >
                                             <div className="flex space-x-1 min-w-[70px] justify-center">
                                                 <Button
@@ -671,7 +671,7 @@ export default function EconomicData({
                                                             item.id!
                                                         )
                                                     }
-                                                    className="text-red-600 hover:text-red-700 px-1 h-7 w-7" // Smaller buttons
+                                                    className="text-destructive hover:text-destructive/80 px-1 h-7 w-7" // Smaller buttons
                                                     title="Hapus"
                                                 >
                                                     <Trash2 className="w-3 h-3" />
@@ -739,7 +739,7 @@ export default function EconomicData({
                                                 />
                                             </svg>
                                         </div>
-                                        <p className="md:text-base text-sm text-gray-500 mb-2">
+                                        <p className="md:text-base text-sm text-muted-foreground mb-2">
                                             Belum ada sumber penghasilan
                                         </p>
                                         <p className="md:text-sm text-xs text-gray-400">
@@ -757,7 +757,7 @@ export default function EconomicData({
                     <Button
                         type="submit"
                         disabled={processing}
-                        className="bg-blue-900 hover:bg-blue-800"
+                        className="bg-brand hover:bg-brand/90 text-brand-foreground"
                     >
                         {processing ? "Memvalidasi..." : "Lanjut"}
                     </Button>

@@ -105,7 +105,7 @@ function FormDialog({ open, onClose, sptBadanId, editData }: FormDialogProps) {
     return (
         <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
             <DialogContent className="max-w-lg p-0 overflow-hidden flex flex-col">
-                <DialogHeader className="bg-blue-950 text-white p-4">
+                <DialogHeader className="bg-brand text-white p-4">
                     <DialogTitle>
                         {editData ? "Edit" : "Tambah"} Aktiva Tidak Berwujud
                     </DialogTitle>
@@ -113,7 +113,7 @@ function FormDialog({ open, onClose, sptBadanId, editData }: FormDialogProps) {
                 <div className="space-y-3 p-4">
                     <div className="space-y-1">
                         <Label>
-                            Jenis Aktiva <span className="text-red-500">*</span>
+                            Jenis Aktiva <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             value={assetType}
@@ -147,7 +147,6 @@ function FormDialog({ open, onClose, sptBadanId, editData }: FormDialogProps) {
                     <Button
                         onClick={handleSave}
                         disabled={isSaving}
-                        className="bg-blue-950 hover:bg-blue-900"
                     >
                         {isSaving ? "Menyimpan..." : "Simpan"}
                     </Button>
@@ -190,7 +189,6 @@ export function SectionL12B8({ data, sptBadanId }: SectionL12B8Props) {
             <div className="flex flex-wrap gap-2">
                 <Button
                     type="button"
-                    className="bg-blue-950 hover:bg-blue-900"
                     onClick={() => {
                         setEditItem(null);
                         setIsFormOpen(true);
@@ -215,8 +213,8 @@ export function SectionL12B8({ data, sptBadanId }: SectionL12B8Props) {
             <div className="w-full overflow-x-auto border">
                 <Table className="min-w-[600px] text-xs">
                     <TableHeader>
-                        <TableRow className="bg-gray-100">
-                            <TableHead className="border border-gray-300 w-10">
+                        <TableRow className="bg-muted">
+                            <TableHead className="border border-input w-10">
                                 <Checkbox
                                     checked={
                                         allSelected ||
@@ -234,19 +232,19 @@ export function SectionL12B8({ data, sptBadanId }: SectionL12B8Props) {
                                     }
                                 />
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center w-10">
+                            <TableHead className="border border-input text-center w-10">
                                 NO.
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center w-16">
+                            <TableHead className="border border-input text-center w-16">
                                 Aksi
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center">
+                            <TableHead className="border border-input text-center">
                                 JENIS AKTIVA
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center">
+                            <TableHead className="border border-input text-center">
                                 NILAI INVESTASI (Rp)
                             </TableHead>
-                            <TableHead className="border border-gray-300 text-center">
+                            <TableHead className="border border-input text-center">
                                 URAIAN
                             </TableHead>
                         </TableRow>
@@ -264,7 +262,7 @@ export function SectionL12B8({ data, sptBadanId }: SectionL12B8Props) {
                         ) : (
                             data.map((item, idx) => (
                                 <TableRow key={item.id ?? idx}>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         <Checkbox
                                             checked={selectedIds.includes(
                                                 item.id!,
@@ -285,10 +283,10 @@ export function SectionL12B8({ data, sptBadanId }: SectionL12B8Props) {
                                             }
                                         />
                                     </TableCell>
-                                    <TableCell className="border border-gray-200 text-center">
+                                    <TableCell className="border border-border text-center">
                                         {idx + 1}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         <div className="flex gap-1">
                                             <Button
                                                 size="icon"
@@ -304,7 +302,7 @@ export function SectionL12B8({ data, sptBadanId }: SectionL12B8Props) {
                                             <Button
                                                 size="icon"
                                                 variant="ghost"
-                                                className="h-7 w-7 text-red-500"
+                                                className="h-7 w-7 text-destructive"
                                                 onClick={() => {
                                                     setDeleteId(item.id!);
                                                     setIsDeleteConfirmOpen(
@@ -316,13 +314,13 @@ export function SectionL12B8({ data, sptBadanId }: SectionL12B8Props) {
                                             </Button>
                                         </div>
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         {item.asset_type}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200 text-right">
+                                    <TableCell className="border border-border text-right">
                                         {formatMoney(item.asset_value)}
                                     </TableCell>
-                                    <TableCell className="border border-gray-200">
+                                    <TableCell className="border border-border">
                                         {item.description ?? "-"}
                                     </TableCell>
                                 </TableRow>
@@ -334,14 +332,14 @@ export function SectionL12B8({ data, sptBadanId }: SectionL12B8Props) {
                             <TableRow>
                                 <TableCell
                                     colSpan={4}
-                                    className="border border-gray-300 text-right font-semibold"
+                                    className="border border-input text-right font-semibold"
                                 >
                                     JUMLAH
                                 </TableCell>
-                                <TableCell className="border border-gray-300 text-right font-semibold">
+                                <TableCell className="border border-input text-right font-semibold">
                                     {formatMoney(totalValue)}
                                 </TableCell>
-                                <TableCell className="border border-gray-300" />
+                                <TableCell className="border border-input" />
                             </TableRow>
                         </TableFooter>
                     )}
