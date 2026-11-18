@@ -1,1 +1,0 @@
-import{j as o}from"./app-D5Sj0JoL.js";import{D as r,a as i,b as l,c as t}from"./dialog-DNjGwy5J.js";const d=({isOpen:a,onClose:e,title:s,children:n})=>o.jsx(r,{open:a,onOpenChange:e,children:o.jsxs(i,{children:[o.jsx(l,{children:o.jsx(t,{children:s})}),n]})});export{d as M};
