@@ -26,7 +26,12 @@ import toast from "react-hot-toast";
 
 function parseLocalDate(value?: string | null) {
     if (!value) return null;
-    const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2}))?/);
+    const str = String(value);
+    if (str.includes("Z") || /[+-]\d{2}:?\d{2}$/.test(str)) {
+        const d = new Date(str);
+        return isNaN(d.getTime()) ? null : d;
+    }
+    const match = str.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2}))?/);
     if (!match) return null;
     return new Date(
         Number(match[1]),

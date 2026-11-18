@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseSubmission;
 use App\Models\CourseUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -40,11 +41,13 @@ class CourseSubmissionController extends Controller
             $filePath = $file->storeAs("course-submissions/{$course->id}", $safeName, 'local');
         }
 
+        $deadline = $this->parseDeadlineInput($validated['deadline'] ?? null);
+
         CourseSubmission::create([
             'course_id' => $course->id,
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
-            'deadline' => $validated['deadline'] ?? null,
+            'deadline' => $deadline,
             'file_path' => $filePath,
             'original_filename' => $originalFilename,
             'file_size' => $fileSize,
@@ -72,10 +75,12 @@ class CourseSubmissionController extends Controller
             'file' => 'nullable|file|max:10240|mimes:pdf,doc,docx,zip,rar,png,jpg,jpeg,xlsx,xls,csv,txt',
         ]);
 
+        $deadline = $this->parseDeadlineInput($validated['deadline'] ?? null);
+
         $data = [
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
-            'deadline' => $validated['deadline'] ?? null,
+            'deadline' => $deadline,
         ];
 
         if ($request->hasFile('file')) {
@@ -138,6 +143,23 @@ class CourseSubmissionController extends Controller
         }
 
         return Storage::disk('local')->download($courseSubmission->file_path, $courseSubmission->original_filename ?: 'attachment');
+    }
+
+    /**
+     * Parse deadline input (dari zona waktu lokal WIB/Asia/Jakarta, UTC+7) dan konversi ke UTC (-7 jam)
+     * agar saat disimpan dan diserialisasi kembali oleh Laravel (UTC) ke browser, jamnya kembali tepat.
+     */
+    private function parseDeadlineInput(?string $value): ?Carbon
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        try {
+            return Carbon::parse($value, 'Asia/Jakarta')->setTimezone('UTC');
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 
     private function authorizeTeacher(Course $course): void
