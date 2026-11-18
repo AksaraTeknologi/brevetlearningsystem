@@ -34,6 +34,7 @@ import {
     KeyRound,
     Pencil,
     Plus,
+    RotateCcw,
     School,
     Search,
     Trash,
@@ -78,6 +79,7 @@ import {
     AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
 import TeacherCourseSubmissionsCard from "@/Components/layout/Submission/TeacherCourseSubmissionsCard";
+import BulkRemedialDialog from "@/Components/layout/Course/BulkRemedialDialog";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
     normalizeReferenceLinksForForm,
@@ -119,6 +121,7 @@ export default function DetailCourse({
         zoom_link: "",
     });
     const [testDialogOpen, setTestDialogOpen] = useState(false);
+    const [bulkRemedialOpen, setBulkRemedialOpen] = useState(false);
     const [testStartDateOpen, setTestStartDateOpen] = useState(false);
     const [testEndDateOpen, setTestEndDateOpen] = useState(false);
     const [remedialEndDateOpen, setRemedialEndDateOpen] = useState(false);
@@ -1100,6 +1103,17 @@ export default function DetailCourse({
                                     <Plus size={16} />
                                     Tambah Ujian
                                 </Button>
+                                {courseTests.length > 0 && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className="w-full text-amber-700 bg-amber-50 border-amber-200 hover:bg-amber-100 sm:w-auto"
+                                        onClick={() => setBulkRemedialOpen(true)}
+                                    >
+                                        <RotateCcw size={16} />
+                                        Atur Remedial
+                                    </Button>
+                                )}
                             </div>
                         </div>
 
@@ -1418,6 +1432,13 @@ export default function DetailCourse({
                             </div>
                         </DialogContent>
                     </Dialog>
+
+                    <BulkRemedialDialog
+                        course={course}
+                        courseTests={courseTests}
+                        open={bulkRemedialOpen}
+                        onOpenChange={setBulkRemedialOpen}
+                    />
 
                     <Dialog
                         open={testDialogOpen}

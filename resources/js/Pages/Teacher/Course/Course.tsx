@@ -34,6 +34,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { id } from "date-fns/locale";
 import ConfirmDialog from "@/Components/layout/ConfirmDialog";
+import DuplicateCourseDialog from "@/Components/layout/Course/DuplicateCourseDialog";
 
 function getStatus(start: string, end: string) {
     const now = new Date();
@@ -101,6 +102,7 @@ export default function Course({ courses, user }: any) {
         null,
     );
     const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
+    const [duplicateCourse, setDuplicateCourse] = useState<any | null>(null);
 
     useEffect(() => {
         if (flash?.success) toast.success(flash.success);
@@ -250,7 +252,7 @@ export default function Course({ courses, user }: any) {
                                                     disabled={!canCreateMore}
                                                     onClick={() => {
                                                         if (!canCreateMore) return;
-                                                        router.post(route("teacher.duplicateCourse", course.id));
+                                                        setDuplicateCourse(course);
                                                     }}
                                                 >
                                                     <Copy />
@@ -307,6 +309,14 @@ export default function Course({ courses, user }: any) {
                             })}
                         </div>
                     )}
+
+                    <DuplicateCourseDialog
+                        course={duplicateCourse}
+                        open={duplicateCourse !== null}
+                        onOpenChange={(open) => {
+                            if (!open) setDuplicateCourse(null);
+                        }}
+                    />
 
                     <ConfirmDialog
                         title="Hapus Kelas"

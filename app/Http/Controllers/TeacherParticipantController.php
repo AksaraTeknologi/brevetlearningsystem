@@ -249,11 +249,15 @@ class TeacherParticipantController extends Controller
         ]);
 
         try {
-            DB::transaction(function () use ($request) {
-                Excel::import(new UserImport($request->input('platform_id')), $request->file('file'));
+            $import = new UserImport($request->input('platform_id'));
+            DB::transaction(function () use ($request, $import) {
+                Excel::import($import, $request->file('file'));
             });
 
-            return redirect()->back()->with('success', 'Data peserta berhasil diimport!');
+            $result = $import->summary();
+            $redirect = redirect()->back()->with('success', $result['summary']);
+
+            return $result['warning'] ? $redirect->with('error', $result['warning']) : $redirect;
         } catch (ValidationException $e) {
             $failures = $e->failures();
             $messages = [];

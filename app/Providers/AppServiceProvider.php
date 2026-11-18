@@ -5,7 +5,10 @@ namespace App\Providers;
 use App\Models\BusinessEntity;
 use App\Models\Course;
 use App\Models\Test;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -26,6 +29,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+
+        // API integrasi (platform asal & agent Cava): batas per token, cadangan per IP.
+        RateLimiter::for('integration', function (Request $request) {
+            $token = $request->bearerToken();
+
+            return Limit::perMinute(60)->by($token ? 'integration:' . sha1($token) : 'integration-ip:' . $request->ip());
+        });
 
         Inertia::share([
             'active_course' => function () {
