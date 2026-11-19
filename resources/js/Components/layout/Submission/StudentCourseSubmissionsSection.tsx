@@ -130,7 +130,8 @@ export default function StudentCourseSubmissionsSection({
                         const isPending = sub && sub.status === "pending_review";
                         const isUnsubmitted = !sub;
                         const isDeadlinePassed = Boolean(task.deadline && new Date() > new Date(task.deadline));
-                        const canEditSubmission = !isApproved && !isDeadlinePassed;
+                        // Boleh mengunggah jika belum disetujui (ACC), dan (belum lewat tenggat ATAU tugas ditolak sehingga dibuka untuk revisi)
+                        const canEditSubmission = !isApproved && (!isDeadlinePassed || isRejected);
 
                         return (
                             <div
@@ -320,104 +321,130 @@ export default function StudentCourseSubmissionsSection({
                                     </div>
                                 )}
 
-                                {/* Upload / Edit Form (for unsubmitted or resubmitting/editing task before deadline) */}
-                                {canEditSubmission && (isUnsubmitted || form.showForm) && (
+                                {/* Upload / Edit / Resubmit Form */}
+                                {canEditSubmission && (isUnsubmitted || isRejected || form.showForm) && (
                                     <div className="pt-2">
-                                        {!form.showForm && isRejected ? (
-                                            <Button
-                                                type="button"
-                                                size="sm"
-                                                onClick={() => updateFormState(task.id, { showForm: true })}
-                                                className="text-xs bg-rose-600 hover:bg-rose-700 text-white gap-1.5"
-                                            >
-                                                <Upload className="h-3.5 w-3.5" />
-                                                Kirim Berkas Revisi (Versi {(sub?.version || 1) + 1})
-                                            </Button>
-                                        ) : (
-                                            <form
-                                                onSubmit={(e) => handleSubmitSubmission(e, task.id)}
-                                                className="space-y-3 bg-card p-3.5 rounded-lg border shadow-xs"
-                                            >
-                                                <div className="font-semibold text-xs text-foreground flex items-center gap-1.5">
-                                                    <Upload className="h-3.5 w-3.5 text-primary" />
-                                                    <span>
+                                        <form
+                                            onSubmit={(e) => handleSubmitSubmission(e, task.id)}
+                                            className={cn(
+                                                "space-y-3 bg-card p-4 rounded-lg border shadow-xs",
+                                                isRejected && "border-rose-300 bg-rose-50/20"
+                                            )}
+                                        >
+                                            <div className="font-semibold text-xs text-foreground flex items-center justify-between gap-1.5">
+                                                <div className="flex items-center gap-1.5">
+                                                    <Upload className={cn("h-3.5 w-3.5", isRejected ? "text-rose-600" : "text-primary")} />
+                                                    <span className={cn(isRejected && "text-rose-800 font-bold")}>
                                                         {isRejected
-                                                            ? `Form Kirim Berkas Revisi (Versi ${(sub?.version || 1) + 1})`
+                                                            ? `Kirim Ulang Berkas Revisi (Versi ${(sub?.version || 1) + 1})`
                                                             : isPending
                                                             ? `Form Edit / Perbarui Berkas Tugas (Versi ${(sub?.version || 1) + 1})`
                                                             : "Form Pengumpulan Tugas"}
                                                     </span>
                                                 </div>
-
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                    <div className="space-y-1.5">
-                                                        <label className="text-xs font-medium text-foreground">
-                                                            {sub ? "Pilih Berkas Pengganti / Revisi" : "Pilih Berkas Tugas"}{" "}
-                                                            <span className="text-rose-500">*</span>
-                                                        </label>
-                                                        <input
-                                                            type="file"
-                                                            required
-                                                            onChange={(e) =>
-                                                                updateFormState(task.id, {
-                                                                    file: e.target.files?.[0] || null,
-                                                                })
-                                                            }
-                                                            className="block w-full text-xs text-foreground file:mr-2.5 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 border rounded-md p-1 bg-muted/50 cursor-pointer"
-                                                            accept=".pdf,.doc,.docx,.zip,.rar,.png,.jpg,.jpeg,.xlsx,.xls,.csv,.txt"
-                                                        />
-                                                        <p className="text-[10px] text-gray-400">
-                                                            Mendukung PDF, Word, Excel, ZIP, Gambar (Maks 10MB)
-                                                        </p>
-                                                    </div>
-
-                                                    <div className="space-y-1.5">
-                                                        <label className="text-xs font-medium text-foreground">
-                                                            Catatan Tambahan untuk Pengajar (Opsional)
-                                                        </label>
-                                                        <Textarea
-                                                            rows={2}
-                                                            placeholder="Tuliskan catatan terkait berkas yang Anda kirimkan..."
-                                                            value={form.notes}
-                                                            onChange={(e) =>
-                                                                updateFormState(task.id, { notes: e.target.value })
-                                                            }
-                                                            className="text-xs"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="flex items-center justify-end gap-2 pt-1">
-                                                    {(isRejected || isPending) && (
-                                                        <Button
-                                                            type="button"
-                                                            variant="outline"
-                                                            size="sm"
-                                                            onClick={() => updateFormState(task.id, { showForm: false })}
-                                                            disabled={form.isSubmitting}
-                                                            className="text-xs"
-                                                        >
-                                                            Batal
-                                                        </Button>
-                                                    )}
+                                                {isPending && form.showForm && (
                                                     <Button
-                                                        type="submit"
+                                                        type="button"
+                                                        variant="ghost"
                                                         size="sm"
-                                                        disabled={form.isSubmitting || !form.file}
-                                                        className="text-xs gap-1.5"
+                                                        onClick={() => updateFormState(task.id, { showForm: false })}
+                                                        disabled={form.isSubmitting}
+                                                        className="h-6 px-2 text-[11px] text-muted-foreground hover:text-foreground"
                                                     >
-                                                        {form.isSubmitting && (
-                                                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                                                        )}
-                                                        {isRejected
-                                                            ? "Kirim Berkas Revisi"
-                                                            : isPending
-                                                            ? "Simpan Perubahan Berkas"
-                                                            : "Kirim Tugas"}
+                                                        Batal
                                                     </Button>
+                                                )}
+                                            </div>
+
+                                            {isRejected && (
+                                                <div className="text-xs text-rose-700 bg-rose-50 p-2.5 rounded border border-rose-200 flex items-start gap-2">
+                                                    <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
+                                                    <span>
+                                                        Tugas Anda sebelumnya ditolak. Pengumpulan telah dibuka kembali agar Anda dapat mengunggah berkas perbaikan di bawah ini.
+                                                    </span>
                                                 </div>
-                                            </form>
-                                        )}
+                                            )}
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                <div className="space-y-1.5">
+                                                    <label className="text-xs font-medium text-foreground">
+                                                        {isRejected
+                                                            ? "Pilih Berkas Revisi Baru"
+                                                            : sub
+                                                            ? "Pilih Berkas Pengganti"
+                                                            : "Pilih Berkas Tugas"}{" "}
+                                                        <span className="text-rose-500">*</span>
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        required
+                                                        onChange={(e) =>
+                                                            updateFormState(task.id, {
+                                                                file: e.target.files?.[0] || null,
+                                                            })
+                                                        }
+                                                        className="block w-full text-xs text-foreground file:mr-2.5 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 border rounded-md p-1 bg-muted/50 cursor-pointer"
+                                                        accept=".pdf,.doc,.docx,.zip,.rar,.png,.jpg,.jpeg,.xlsx,.xls,.csv,.txt"
+                                                    />
+                                                    <p className="text-[10px] text-muted-foreground">
+                                                        Mendukung PDF, Word, Excel, ZIP, Gambar (Maks 10MB)
+                                                    </p>
+                                                </div>
+
+                                                <div className="space-y-1.5">
+                                                    <label className="text-xs font-medium text-foreground">
+                                                        {isRejected
+                                                            ? "Catatan Perbaikan Anda (Opsional)"
+                                                            : "Catatan Tambahan untuk Pengajar (Opsional)"}
+                                                    </label>
+                                                    <Textarea
+                                                        rows={2}
+                                                        placeholder={
+                                                            isRejected
+                                                                ? "Jelaskan perbaikan apa saja yang sudah Anda lakukan..."
+                                                                : "Tuliskan catatan terkait berkas yang Anda kirimkan..."
+                                                        }
+                                                        value={form.notes}
+                                                        onChange={(e) =>
+                                                            updateFormState(task.id, { notes: e.target.value })
+                                                        }
+                                                        className="text-xs bg-background"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center justify-end gap-2 pt-1">
+                                                <Button
+                                                    type="submit"
+                                                    size="sm"
+                                                    disabled={form.isSubmitting || !form.file}
+                                                    className={cn(
+                                                        "text-xs gap-1.5 text-white shadow-sm",
+                                                        isRejected
+                                                            ? "bg-rose-600 hover:bg-rose-700"
+                                                            : "bg-primary hover:bg-primary/90"
+                                                    )}
+                                                >
+                                                    {form.isSubmitting ? (
+                                                        <>
+                                                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                                            <span>Mengunggah...</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Upload className="h-3.5 w-3.5" />
+                                                            <span>
+                                                                {isRejected
+                                                                    ? `Kirim Berkas Revisi (v${(sub?.version || 1) + 1})`
+                                                                    : isPending
+                                                                    ? "Simpan Perubahan Berkas"
+                                                                    : "Kirim Tugas"}
+                                                            </span>
+                                                        </>
+                                                    )}
+                                                </Button>
+                                            </div>
+                                        </form>
                                     </div>
                                 )}
                             </div>

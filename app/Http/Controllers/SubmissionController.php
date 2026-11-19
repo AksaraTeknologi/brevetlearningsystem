@@ -151,9 +151,15 @@ class SubmissionController extends Controller
             abort(404, 'Tugas submission tidak ditemukan dalam kelas ini.');
         }
 
-        // 3. Validasi deadline: jika deadline terlewat, siswa tidak boleh submit/edit
+        $existing = Submission::where('course_submission_id', $courseSubmission->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        // 3. Validasi deadline: jika deadline terlewat, siswa tidak boleh submit/edit KECUALI jika tugas sebelumnya ditolak (revisi)
         if ($courseSubmission->deadline && now()->gt($courseSubmission->deadline)) {
-            return back()->with('error', 'Batas waktu pengumpulan tugas ini telah berakhir.');
+            if (!$existing || !$existing->isRejected()) {
+                return back()->with('error', 'Batas waktu pengumpulan tugas ini telah berakhir.');
+            }
         }
 
         $file = $request->file('file');

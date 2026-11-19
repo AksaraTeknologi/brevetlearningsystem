@@ -1087,19 +1087,17 @@ class SubmissionAndExamAccessTest extends TestCase
 
         $response->assertSessionHas('success');
 
-        // Student 1 should be approved
+        // Student 1 (who submitted) should be approved
         $sub1->refresh();
         $this->assertEquals('approved', $sub1->status);
         $this->assertEquals($this->teacher->id, $sub1->reviewed_by);
 
-        // Student 2 should have an approved submission record created
+        // Student 2 (who did not submit) should NOT have a dummy submission created
         $sub2 = Submission::where('course_submission_id', $task->id)
             ->where('user_id', $student2->id)
             ->first();
 
-        $this->assertNotNull($sub2);
-        $this->assertEquals('approved', $sub2->status);
-        $this->assertEquals($this->teacher->id, $sub2->reviewed_by);
+        $this->assertNull($sub2);
     }
 
     public function test_other_teacher_cannot_approve_all_submissions(): void

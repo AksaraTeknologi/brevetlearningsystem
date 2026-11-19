@@ -115,13 +115,11 @@ class SubmissionReviewController extends Controller
             abort(403, 'Anda tidak memiliki hak otorisasi untuk mereview submission pada kelas ini.');
         }
 
-        $includeUnsubmitted = $request->boolean('include_unsubmitted', true);
-
         $now = now();
         $approvedCount = 0;
 
-        DB::transaction(function () use ($course, $courseSubmission, $user, $includeUnsubmitted, $now, &$approvedCount) {
-            // 1. Approve all existing submissions that are not yet approved
+        DB::transaction(function () use ($courseSubmission, $user, $now, &$approvedCount) {
+            // Hanya menyetujui pengiriman tugas yang benar-benar sudah dikirimkan oleh siswa dan belum di-ACC
             $existingSubmissions = Submission::where('course_submission_id', $courseSubmission->id)
                 ->where('status', '!=', 'approved')
                 ->get();
@@ -138,57 +136,19 @@ class SubmissionReviewController extends Controller
                     'submission_id' => $submission->id,
                     'reviewer_id' => $user->id,
                     'action' => 'approved',
-                    'notes' => 'Disetujui massal (ACC Semua) oleh ' . ($user->role === 'admin' ? 'admin' : 'pengajar'),
+                    'notes' => 'Disetujui massal (ACC Semua Pengirim) oleh ' . ($user->role === 'admin' ? 'admin' : 'pengajar'),
                     'created_at' => $now,
                 ]);
 
                 $approvedCount++;
             }
-
-            // 2. If includeUnsubmitted is true, create approved submission records for participants who haven't submitted
-            if ($includeUnsubmitted) {
-                $participantUserIds = CourseUser::where('course_id', $course->id)->pluck('user_id')->toArray();
-                $participantUserIds = array_diff($participantUserIds, [$user->id]);
-
-                $alreadySubmittedUserIds = Submission::where('course_submission_id', $courseSubmission->id)
-                    ->pluck('user_id')
-                    ->toArray();
-
-                $unsubmittedUserIds = array_diff($participantUserIds, $alreadySubmittedUserIds);
-
-                foreach ($unsubmittedUserIds as $userId) {
-                    $newSub = Submission::create([
-                        'course_id' => $course->id,
-                        'course_submission_id' => $courseSubmission->id,
-                        'course_test_id' => null,
-                        'course_module_id' => null,
-                        'user_id' => $userId,
-                        'file_path' => 'system/direct_acc',
-                        'original_filename' => 'Disetujui Langsung oleh Pengajar',
-                        'file_size' => 0,
-                        'mime_type' => 'text/plain',
-                        'student_notes' => 'Disetujui massal oleh pengajar.',
-                        'status' => 'approved',
-                        'admin_notes' => null,
-                        'reviewed_by' => $user->id,
-                        'reviewed_at' => $now,
-                        'version' => 1,
-                    ]);
-
-                    SubmissionReview::create([
-                        'submission_id' => $newSub->id,
-                        'reviewer_id' => $user->id,
-                        'action' => 'approved',
-                        'notes' => 'Disetujui massal (ACC Semua) langsung oleh ' . ($user->role === 'admin' ? 'admin' : 'pengajar'),
-                        'created_at' => $now,
-                    ]);
-
-                    $approvedCount++;
-                }
-            }
         });
 
-        return back()->with('success', "Berhasil menyetujui (ACC) {$approvedCount} siswa untuk tugas '{$courseSubmission->title}'. Akses ujian telah dibuka.");
+        if ($approvedCount > 0) {
+            return back()->with('success', "Berhasil menyetujui (ACC) {$approvedCount} pengirim tugas untuk '{$courseSubmission->title}'.");
+        }
+
+        return back()->with('info', 'Tidak ada pengiriman tugas baru yang perlu di-ACC.');
     }
 
     public function reject(RejectSubmissionRequest $request, Submission $submission)
