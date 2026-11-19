@@ -387,7 +387,7 @@ export default function StudentCourseSubmissionsSection({
                                                         accept=".pdf,.doc,.docx,.zip,.rar,.png,.jpg,.jpeg,.xlsx,.xls,.csv,.txt"
                                                     />
                                                     <p className="text-[10px] text-muted-foreground">
-                                                        Mendukung PDF, Word, Excel, ZIP, Gambar (Maks 10MB)
+                                                        Mendukung PDF, Word, Excel, ZIP, Gambar (Maks 2MB)
                                                     </p>
                                                 </div>
 
