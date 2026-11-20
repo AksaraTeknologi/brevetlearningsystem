@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { formatDateTimeWIB } from "@/lib/utils";
 
 function parseLocalDate(value?: string | null) {
     if (!value) return null;
@@ -44,20 +45,7 @@ function parseLocalDate(value?: string | null) {
 }
 
 function formatLocalDateTime(value?: string | null) {
-    const date = parseLocalDate(value);
-    if (!date) return value || "-";
-    
-    const day = date.getDate();
-    const months = [
-        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-    ];
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    
-    return `${day} ${month} ${year}, ${hours}.${minutes} WIB`;
+    return formatDateTimeWIB(value);
 }
 
 function getCourseTestStatusDisplay(serverStatus: string) {

@@ -18,6 +18,7 @@ import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { router } from "@inertiajs/react";
 import toast from "react-hot-toast";
+import { formatDateTimeWIB } from "@/lib/utils";
 import CourseSubmissionFormModal from "./CourseSubmissionFormModal";
 import TeacherSubmissionDetailModal from "./TeacherSubmissionDetailModal";
 import {
@@ -129,11 +130,7 @@ export default function TeacherCourseSubmissionsCard({
                                                 >
                                                     <Clock className="h-3 w-3" />
                                                     Batas:{" "}
-                                                    {format(
-                                                        new Date(submission.deadline),
-                                                        "d MMM yyyy, HH:mm",
-                                                        { locale: idLocale }
-                                                    )}
+                                                    {formatDateTimeWIB(submission.deadline)}
                                                 </Badge>
                                             ) : (
                                                 <Badge

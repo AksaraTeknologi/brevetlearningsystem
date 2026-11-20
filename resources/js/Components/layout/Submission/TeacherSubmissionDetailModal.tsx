@@ -39,7 +39,7 @@ import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { router } from "@inertiajs/react";
 import toast from "react-hot-toast";
-import { cn } from "@/lib/utils";
+import { cn, formatDateTimeWIB } from "@/lib/utils";
 
 interface TeacherSubmissionDetailModalProps {
     open: boolean;
@@ -291,9 +291,7 @@ export default function TeacherSubmissionDetailModal({
                                 <span className="font-medium text-foreground">Batas Waktu (Deadline): </span>
                                 {courseSubmission.deadline ? (
                                     <span className="font-semibold text-rose-600">
-                                        {format(new Date(courseSubmission.deadline), "d MMMM yyyy, HH:mm", {
-                                            locale: idLocale,
-                                        })}
+                                        {formatDateTimeWIB(courseSubmission.deadline)}
                                     </span>
                                 ) : (
                                     <span className="text-muted-foreground">Tidak ada batas waktu</span>

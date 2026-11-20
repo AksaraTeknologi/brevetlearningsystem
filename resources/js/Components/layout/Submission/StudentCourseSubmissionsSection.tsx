@@ -18,7 +18,7 @@ import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { router } from "@inertiajs/react";
 import toast from "react-hot-toast";
-import { cn } from "@/lib/utils";
+import { cn, formatDateTimeWIB } from "@/lib/utils";
 
 interface StudentCourseSubmissionsSectionProps {
     courseId: string;
@@ -129,7 +129,9 @@ export default function StudentCourseSubmissionsSection({
                         const isApproved = sub && sub.status === "approved";
                         const isPending = sub && sub.status === "pending_review";
                         const isUnsubmitted = !sub;
-                        const isDeadlinePassed = Boolean(task.deadline && new Date() > new Date(task.deadline));
+                        const isDeadlinePassed = task.is_deadline_passed !== undefined
+                            ? Boolean(task.is_deadline_passed)
+                            : Boolean(task.deadline && new Date() > new Date(task.deadline));
                         // Boleh mengunggah jika belum disetujui (ACC), dan (belum lewat tenggat ATAU tugas ditolak sehingga dibuka untuk revisi)
                         const canEditSubmission = !isApproved && (!isDeadlinePassed || isRejected);
 
@@ -193,9 +195,7 @@ export default function StudentCourseSubmissionsSection({
                                                 <Calendar className="h-3.5 w-3.5 text-gray-400" />
                                                 <span>Batas Pengumpulan: </span>
                                                 <span className="font-medium text-rose-600">
-                                                    {format(new Date(task.deadline), "d MMMM yyyy, HH:mm", {
-                                                        locale: idLocale,
-                                                    })}
+                                                    {formatDateTimeWIB(task.deadline)}
                                                 </span>
                                             </div>
                                         )}

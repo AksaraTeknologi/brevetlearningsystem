@@ -17,6 +17,19 @@ class CourseSubmission extends Model
         'file_size' => 'integer',
     ];
 
+    protected $appends = [
+        'is_deadline_passed',
+    ];
+
+    public function getIsDeadlinePassedAttribute(): bool
+    {
+        if (!$this->deadline) {
+            return false;
+        }
+
+        return now()->gt($this->deadline);
+    }
+
     public function course()
     {
         return $this->belongsTo(Course::class);
