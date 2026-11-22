@@ -40,6 +40,7 @@ import { ParticipantColumns } from "@/Components/layout/UserCourse/columns";
 import { DataTableColumnHeader } from "@/Components/layout/DataTableColumnHeader";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
+import { formatDateTimeWIB } from "@/lib/utils";
 
 export default function DetailCourse({
     teacherId,
@@ -49,16 +50,7 @@ export default function DetailCourse({
     courseTests = [],
 }: any) {
     const formatLocalDateTime = (value?: string | null) => {
-        if (!value) {
-            return "-";
-        }
-
-        const date = new Date(value);
-        if (Number.isNaN(date.getTime())) {
-            return "-";
-        }
-
-        return format(date, "d MMMM yyyy HH:mm", { locale: id });
+         return formatDateTimeWIB(value);
     };
 
     const columns = useMemo<ColumnDef<ParticipantColumns>[]>(

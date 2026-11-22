@@ -19,10 +19,10 @@ class CourseTest extends Model
         'max_attempts' => 'integer',
         'show_score' => 'boolean',
         'show_correct_answers' => 'boolean',
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'start_date' => 'datetime:Y-m-d\TH:i:s+07:00',
+        'end_date' => 'datetime:Y-m-d\TH:i:s+07:00',
         'remedial_enabled' => 'boolean',
-        'remedial_end_date' => 'datetime',
+        'remedial_end_date' => 'datetime:Y-m-d\TH:i:s+07:00',
         'requires_submission' => 'boolean',
         'reference_link' => 'array',
     ];
