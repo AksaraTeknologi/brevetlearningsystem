@@ -144,9 +144,12 @@ class CourseTestController extends Controller
                 return (int) $attempts->max('score');
             });
 
-        $participantsData = $participants->map(function ($participant) use ($bestScoreByUser, $courseTest) {
+        $rejectedByUser = $courseTest->getRejectedSubmissionsByUser();
+
+        $participantsData = $participants->map(function ($participant) use ($bestScoreByUser, $rejectedByUser, $courseTest) {
             $bestScore = $bestScoreByUser->get($participant->user_id);
             $hasAttempt = !is_null($bestScore);
+            $rejectionReason = $rejectedByUser->get($participant->user_id);
 
             return [
                 'id' => $participant->id,
@@ -155,6 +158,8 @@ class CourseTestController extends Controller
                 'passed' => $hasAttempt
                     ? (int) $bestScore >= (int) ($courseTest->passing_score ?? 0)
                     : null,
+                'submission_rejected' => !is_null($rejectionReason),
+                'rejection_reason' => $rejectionReason,
             ];
         })->values();
 

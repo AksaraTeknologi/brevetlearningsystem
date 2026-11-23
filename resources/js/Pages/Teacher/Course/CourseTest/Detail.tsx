@@ -17,7 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
-import { ArrowLeft, CheckCircle2, Clock, Download, FileText, Search, UserCheck, Users, XCircle } from "lucide-react";
+import { ArrowLeft, Ban, CheckCircle2, Clock, Download, FileText, Search, UserCheck, Users, XCircle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ReferenceLinksDisplay } from "@/Components/exam/ReferenceLinksInput";
 
@@ -85,8 +85,10 @@ export default function CourseTestTeacherDetail({
                 return p?.passed === true;
             } else if (statusFilter === "failed") {
                 return p?.passed === false && p?.best_score !== null && typeof p?.best_score !== "undefined";
+            } else if (statusFilter === "rejected") {
+                return (p?.best_score === null || typeof p?.best_score === "undefined") && Boolean(p?.submission_rejected);
             } else if (statusFilter === "unattempted") {
-                return p?.best_score === null || typeof p?.best_score === "undefined";
+                return (p?.best_score === null || typeof p?.best_score === "undefined") && !p?.submission_rejected;
             }
 
             return true;
@@ -316,6 +318,7 @@ export default function CourseTestTeacherDetail({
                                                 <SelectItem value="all">Semua Status</SelectItem>
                                                 <SelectItem value="passed">Lulus</SelectItem>
                                                 <SelectItem value="failed">Tidak Lulus</SelectItem>
+                                                <SelectItem value="rejected">Ditolak</SelectItem>
                                                 <SelectItem value="unattempted">Belum Mengerjakan</SelectItem>
                                             </SelectContent>
                                         </Select>
@@ -356,7 +359,23 @@ export default function CourseTestTeacherDetail({
                                                                 )}
                                                             </td>
                                                             <td className="py-3 px-4 text-center">
-                                                                {!hasScore ? (
+                                                                {!hasScore && participant?.submission_rejected ? (
+                                                                    <div className="flex flex-col items-center gap-1">
+                                                                        <span
+                                                                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-300"
+                                                                            title={participant?.rejection_reason || "Submission ditolak"}
+                                                                        >
+                                                                            <Ban size={12} />
+                                                                            Ditolak
+                                                                        </span>
+                                                                        <span
+                                                                            className="text-[11px] text-red-600 max-w-[220px] truncate"
+                                                                            title={participant?.rejection_reason || "Submission ditolak"}
+                                                                        >
+                                                                            {participant?.rejection_reason || "Submission ditolak"}
+                                                                        </span>
+                                                                    </div>
+                                                                ) : !hasScore ? (
                                                                     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
                                                                         Belum Mengerjakan
                                                                     </span>

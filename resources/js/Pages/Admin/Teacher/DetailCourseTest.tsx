@@ -9,7 +9,7 @@ import {
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
-import { Upload } from "lucide-react";
+import { Ban, Upload } from "lucide-react";
 import { ReferenceLinksDisplay } from "@/Components/exam/ReferenceLinksInput";
 
 function parseLocalDate(value?: string | null) {
@@ -338,7 +338,34 @@ export default function DetailCourseTest({
                                                                     "-"}
                                                             </td>
                                                             <td className="py-2">
-                                                                {participant?.best_score ===
+                                                                {(participant?.best_score ===
+                                                                    null ||
+                                                                typeof participant?.best_score ===
+                                                                    "undefined") &&
+                                                                participant?.submission_rejected ? (
+                                                                    <div className="flex flex-col items-start gap-1">
+                                                                        <span
+                                                                            className="inline-flex items-center gap-1 rounded-full border border-red-300 bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-800"
+                                                                            title={
+                                                                                participant?.rejection_reason ||
+                                                                                "Submission ditolak"
+                                                                            }
+                                                                        >
+                                                                            <Ban className="w-3 h-3" />
+                                                                            Ditolak
+                                                                        </span>
+                                                                        <span
+                                                                            className="text-[11px] text-red-600 max-w-[240px] truncate"
+                                                                            title={
+                                                                                participant?.rejection_reason ||
+                                                                                "Submission ditolak"
+                                                                            }
+                                                                        >
+                                                                            {participant?.rejection_reason ||
+                                                                                "Submission ditolak"}
+                                                                        </span>
+                                                                    </div>
+                                                                ) : participant?.best_score ===
                                                                     null ||
                                                                 typeof participant?.best_score ===
                                                                     "undefined" ? (

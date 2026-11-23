@@ -65,4 +65,60 @@ class CourseTest extends Model
     {
         return $this->questions()->count();
     }
+
+    /**
+     * Mengembalikan daftar user_id yang ditolak ikut ujian karena submission-nya ditolak,
+     * dipetakan ke ringkasan alasan penolakannya.
+     */
+    public function getRejectedSubmissionsByUser(): \Illuminate\Support\Collection
+    {
+        if (!$this->requires_submission) {
+            return collect();
+        }
+
+        if ($this->course_submission_id) {
+            $rejected = Submission::where('course_submission_id', $this->course_submission_id)
+                ->where('status', 'rejected')
+                ->with('courseSubmission:id,title')
+                ->get(['id', 'user_id', 'course_submission_id', 'admin_notes']);
+        } else {
+            $courseSubmissionIds = CourseSubmission::where('course_id', $this->course_id)->pluck('id');
+
+            if ($courseSubmissionIds->isNotEmpty()) {
+                $rejected = Submission::where('course_id', $this->course_id)
+                    ->whereIn('course_submission_id', $courseSubmissionIds)
+                    ->where('status', 'rejected')
+                    ->with('courseSubmission:id,title')
+                    ->get(['id', 'user_id', 'course_submission_id', 'admin_notes']);
+            } else {
+                $rejected = Submission::where('status', 'rejected')
+                    ->where(function ($query) {
+                        $query->where('course_test_id', $this->id)
+                            ->orWhere('course_id', $this->course_id);
+                    })
+                    ->get(['id', 'user_id', 'course_submission_id', 'admin_notes']);
+            }
+        }
+
+        return $rejected
+            ->groupBy('user_id')
+            ->map(function ($items) {
+                return $items->map(function ($sub) {
+                    $title = $sub->courseSubmission?->title;
+                    $note = trim((string) ($sub->admin_notes ?? ''));
+
+                    if ($title && $note !== '') {
+                        return "{$title}: {$note}";
+                    }
+                    if ($title) {
+                        return "{$title} ditolak";
+                    }
+                    if ($note !== '') {
+                        return $note;
+                    }
+
+                    return 'Submission ditolak';
+                })->unique()->implode('; ');
+            });
+    }
 }
