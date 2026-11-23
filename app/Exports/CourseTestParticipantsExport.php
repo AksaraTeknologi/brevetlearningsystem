@@ -45,7 +45,7 @@ class CourseTestParticipantsExport implements FromArray, WithHeadings, WithTitle
             ->map(fn($attempts) => (int) $attempts->max('score'));
 
         $passingScore = (int) ($this->courseTest->passing_score ?? 0);
-        $rejectedByUser = $this->courseTest->getRejectedSubmissionsByUser();
+         $rejectedByUser = $this->courseTest->getRejectedSubmissionsByUser($participants->pluck('user_id'));
 
         $rows = [];
         $no = 1;

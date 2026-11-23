@@ -364,7 +364,7 @@ class TeacherController extends Controller
                 return (int) $attempts->max('score');
             });
 
-        $rejectedByUser = $courseTest->getRejectedSubmissionsByUser();
+         $rejectedByUser = $courseTest->getRejectedSubmissionsByUser($participants->pluck('user_id'));
 
         $participantsData = $participants->map(function ($participant, $index) use ($bestScoreByUser, $rejectedByUser, $courseTest) {
             $bestScore = $bestScoreByUser->get($participant->user_id);
