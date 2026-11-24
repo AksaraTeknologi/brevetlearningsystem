@@ -34,6 +34,9 @@ class User extends Authenticatable
         'last_login_at',
         'last_logout_at',
         'role',
+        'biinsphere_user_id',
+        'biinsphere_username',
+        'biinsphere_linked_at',
     ];
 
     /**
@@ -57,6 +60,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'last_login_at' => 'datetime',
+            'biinsphere_linked_at' => 'datetime',
             'last_logout_at' => 'datetime',
             'access_rights' => 'array',
         ];

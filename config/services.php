@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+
+    'biinsphere' => [
+        // Shared with Biinsphere (its LINKED_PLATFORMS_SECRETS entry for this platform).
+        'secret' => env('BIINSPHERE_SSO_SECRET'),
+        // The Biinsphere app; link tokens are only ever sent here.
+        'frontend_url' => env('BIINSPHERE_FRONTEND_URL', 'http://localhost:5173'),
+        // This platform's code on Biinsphere (Brevet Learning System = brevet_ls).
+        'platform_code' => env('BIINSPHERE_PLATFORM_CODE', 'brevet_ls'),
+    ],
+
 ];

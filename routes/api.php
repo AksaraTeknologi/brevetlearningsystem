@@ -18,3 +18,9 @@ Route::prefix('v1/platform')->middleware(['auth:sanctum', EnsureActivePlatform::
     Route::get('/courses/{id}/grades', [PlatformCourseController::class, 'grades'])->name('api.platform.courses.grades');
     Route::get('/exam-results', [PlatformExamResultController::class, 'index'])->name('api.platform.exam_results');
 });
+
+// Server to server from Biinsphere, each call carries a signed single-use token
+// (Authorization: Bearer). Remember or forget which Biinsphere account a user
+// connected (Biinsphere AGENTS §14).
+Route::post('/biinsphere/link', [\App\Http\Controllers\Auth\BiinsphereAuthController::class, 'confirmLink'])->name('biinsphere.link');
+Route::post('/biinsphere/unlink', [\App\Http\Controllers\Auth\BiinsphereAuthController::class, 'unlink'])->name('biinsphere.unlink');

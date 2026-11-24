@@ -977,3 +977,15 @@ Route::prefix('api')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+// Open Brevet Learning System signed in from a Biinsphere launch token (single use).
+Route::get('/auth/biinsphere/consume', [\App\Http\Controllers\Auth\BiinsphereAuthController::class, 'consumeLaunchToken'])
+    ->name('biinsphere.consume');
+
+// Connect this account to Biinsphere (popup started from Biinsphere).
+Route::middleware('auth')->group(function () {
+    Route::get('/auth/biinsphere/authorize', [\App\Http\Controllers\Auth\BiinsphereAuthController::class, 'showAuthorizeForm'])
+        ->name('biinsphere.authorize');
+    Route::post('/auth/biinsphere/authorize', [\App\Http\Controllers\Auth\BiinsphereAuthController::class, 'authorizeAccount'])
+        ->name('biinsphere.authorize.post');
+});
