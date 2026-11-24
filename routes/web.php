@@ -289,7 +289,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':efaktur'])->
 
 Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->group(function () {
     Route::prefix('bppu')->group(function () {
-        Route::get('/', [BPPUController::class, 'index'])->name('bppu.notIssued');
+        Route::get('/', [BPPUController::class, 'index'])->name('bppu.index');
         Route::get('/not-issued', [BPPUController::class, 'index'])->name('bppu.notIssued');
         Route::get('/issued', [BPPUController::class, 'issued'])->name('bppu.issued');
         Route::get('/invalid', [BPPUController::class, 'invalid'])->name('bppu.invalid');
@@ -303,7 +303,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->g
     });
 
     Route::prefix('bpnr')->group(function () {
-        Route::get('/', [BPNRController::class, 'index'])->name('bpnr.notIssued');
+        Route::get('/', [BPNRController::class, 'index'])->name('bpnr.index');
         Route::get('/not-issued', [BPNRController::class, 'index'])->name('bpnr.notIssued');
         Route::get('/issued', [BPNRController::class, 'issued'])->name('bpnr.issued');
         Route::get('/invalid', [BPNRController::class, 'invalid'])->name('bpnr.invalid');
@@ -317,7 +317,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->g
     });
 
     Route::prefix('sp')->group(function () {
-        Route::get('/', [SPController::class, 'index'])->name('sp.notIssued');
+        Route::get('/', [SPController::class, 'index'])->name('sp.index');
         Route::get('/not-issued', [SPController::class, 'index'])->name('sp.notIssued');
         Route::get('/issued', [SPController::class, 'issued'])->name('sp.issued');
         Route::get('/invalid', [SPController::class, 'invalid'])->name('sp.invalid');
@@ -331,7 +331,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->g
     });
 
     Route::prefix('cy')->group(function () {
-        Route::get('/', [CYController::class, 'index'])->name('cy.notIssued');
+        Route::get('/', [CYController::class, 'index'])->name('cy.index');
         Route::get('/not-issued', [CYController::class, 'index'])->name('cy.notIssued');
         Route::get('/issued', [CYController::class, 'issued'])->name('cy.issued');
         Route::get('/invalid', [CYController::class, 'invalid'])->name('cy.invalid');
@@ -345,7 +345,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->g
     });
 
     Route::prefix('bp21')->group(function () {
-        Route::get('/', [BP21Controller::class, 'index'])->name('bp21.notIssued');
+        Route::get('/', [BP21Controller::class, 'index'])->name('bp21.index');
         Route::get('/not-issued', [BP21Controller::class, 'index'])->name('bp21.notIssued');
         Route::get('/issued', [BP21Controller::class, 'issued'])->name('bp21.issued');
         Route::get('/invalid', [BP21Controller::class, 'invalid'])->name('bp21.invalid');
@@ -359,7 +359,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->g
     });
 
     Route::prefix('bp26')->group(function () {
-        Route::get('/', [BP26Controller::class, 'index'])->name('bp26.notIssued');
+        Route::get('/', [BP26Controller::class, 'index'])->name('bp26.index');
         Route::get('/not-issued', [BP26Controller::class, 'index'])->name('bp26.notIssued');
         Route::get('/issued', [BP26Controller::class, 'issued'])->name('bp26.issued');
         Route::get('/invalid', [BP26Controller::class, 'invalid'])->name('bp26.invalid');
@@ -373,7 +373,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->g
     });
 
     Route::prefix('bpa1')->group(function () {
-        Route::get('/', [BPA1Controller::class, 'index'])->name('bpa1.notIssued');
+        Route::get('/', [BPA1Controller::class, 'index'])->name('bpa1.index');
         Route::get('/not-issued', [BPA1Controller::class, 'index'])->name('bpa1.notIssued');
         Route::get('/issued', [BPA1Controller::class, 'issued'])->name('bpa1.issued');
         Route::get('/invalid', [BPA1Controller::class, 'invalid'])->name('bpa1.invalid');
@@ -387,7 +387,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->g
     });
 
     Route::prefix('bpa2')->group(function () {
-        Route::get('/', [BPA2Controller::class, 'index'])->name('bpa2.notIssued');
+        Route::get('/', [BPA2Controller::class, 'index'])->name('bpa2.index');
         Route::get('/not-issued', [BPA2Controller::class, 'index'])->name('bpa2.notIssued');
         Route::get('/issued', [BPA2Controller::class, 'issued'])->name('bpa2.issued');
         Route::get('/invalid', [BPA2Controller::class, 'invalid'])->name('bpa2.invalid');
@@ -401,7 +401,7 @@ Route::middleware(['auth', 'verified', CheckAccessRights::class . ':ebupot'])->g
     });
 
     Route::prefix('mp')->group(function () {
-        Route::get('/', [MPController::class, 'index'])->name('mp.notIssued');
+        Route::get('/', [MPController::class, 'index'])->name('mp.index');
         Route::get('/not-issued', [MPController::class, 'index'])->name('mp.notIssued');
         Route::get('/issued', [MPController::class, 'issued'])->name('mp.issued');
         Route::get('/invalid', [MPController::class, 'invalid'])->name('mp.invalid');
