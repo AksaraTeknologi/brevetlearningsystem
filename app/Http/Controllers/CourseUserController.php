@@ -454,7 +454,7 @@ class CourseUserController extends Controller
                     'id' => $bestAttempt->id,
                     'score' => (int) $bestAttempt->score,
                     'passed' => (bool) $bestAttempt->passed,
-                    'submitted_at' => optional($bestAttempt->submitted_at)->toIso8601String(),
+                    'submitted_at' => optional($bestAttempt->submitted_at)->format('Y-m-d\TH:i:s+07:00'),
                 ] : null);
 
                 return $courseTest;
@@ -583,7 +583,7 @@ class CourseUserController extends Controller
                     'id' => $attempt->id,
                     'score' => (int) $attempt->score,
                     'passed' => (bool) $attempt->passed,
-                    'submitted_at' => optional($attempt->submitted_at)->toIso8601String(),
+                    'submitted_at' => optional($attempt->submitted_at)->format('Y-m-d\TH:i:s+07:00'),
                     'test_type' => $attempt->test_type,
                 ];
             });
@@ -731,7 +731,7 @@ class CourseUserController extends Controller
                 'id' => $lastAttempt->id,
                 'score' => (int) $lastAttempt->score,
                 'passed' => (bool) $lastAttempt->passed,
-                'submitted_at' => optional($lastAttempt->submitted_at)->toIso8601String(),
+                'submitted_at' => optional($lastAttempt->submitted_at)->format('Y-m-d\TH:i:s+07:00'),
                 'test_type' => $lastAttempt->test_type,
             ] : null,
             'activeCourseTestId' => $activeCourseTestId,

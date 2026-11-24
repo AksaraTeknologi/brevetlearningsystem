@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Bupot;
 use App\Models\Course;
+use App\Models\CourseSchedule;
 use App\Models\CourseUser;
 use App\Models\Invoice;
 use App\Models\Other;
@@ -13,6 +14,8 @@ use App\Models\Retur;
 use App\Models\ReturOther;
 use App\Models\Spt;
 use App\Models\User;
+use App\Services\Brevet\CourseRotationPlanner;
+use App\Support\ReferenceLinkNormalizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -239,11 +242,76 @@ class CourseController extends Controller
         return redirect()->route('teacher.courses')->with('success', 'Kelas berhasil dihapus!');
     }
 
-    public function duplicate($id)
+    /**
+     * Usulan jadwal & ujian kelas baru dari rotasi yang sedang berjalan.
+     * Tidak menyimpan apa pun; hasilnya ditampilkan di pratinjau duplikat.
+     * Bila `schedules` dikirim (jadwal hasil edit admin), hanya ujian dan
+     * tanggal akhir kelas yang dihitung ulang.
+     */
+    public function duplicatePreview(Request $request, $id)
+    {
+        $original = Course::with(['courseSchedules', 'courseTests.questionBank:id,name'])->findOrFail($id);
+
+        if ($original->teacher_id !== Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'with_tests' => 'nullable|boolean',
+            'schedules' => 'nullable|array',
+            'schedules.*.title' => 'required_with:schedules|string|max:255',
+            'schedules.*.scheduled_at' => 'required_with:schedules|date',
+        ]);
+
+        $planner = CourseRotationPlanner::fromConfig();
+        $withTests = $request->boolean('with_tests', true);
+        $inputs = $this->rotationInputs($original, $validated['start_date']);
+
+        if (!empty($validated['schedules'])) {
+            $schedules = collect($validated['schedules'])
+                ->map(fn ($row) => [
+                    'title' => $row['title'],
+                    'scheduled_at' => Carbon::parse($row['scheduled_at'])->format(CourseRotationPlanner::FORMAT),
+                ])
+                ->sortBy('scheduled_at')
+                ->values()
+                ->all();
+            $type = $planner->detectType(array_column($schedules, 'scheduled_at'));
+            [$tests, $warnings] = $withTests
+                ? $planner->computeTests($schedules, $type, $inputs['source_tests'], $inputs['banks'])
+                : [[], []];
+
+            $plan = [
+                'type' => $type,
+                'start_date' => Carbon::parse($validated['start_date'])->startOfDay()->format(CourseRotationPlanner::FORMAT),
+                'end_date' => $planner->endDate($schedules, $tests)->format(CourseRotationPlanner::FORMAT),
+                'tests' => $tests,
+                'warnings' => $warnings,
+            ];
+        } else {
+            $plan = $planner->plan(
+                $inputs['source_sessions'],
+                $inputs['source_tests'],
+                $inputs['stream'],
+                $inputs['banks'],
+                $validated['start_date'],
+                $withTests,
+            );
+        }
+
+        return response()->json([
+            'plan' => $plan,
+            'banks' => $inputs['banks'],
+            'suggested_name' => $this->suggestCourseName($original),
+        ]);
+    }
+
+    public function duplicate(Request $request, $id)
     {
         $original = Course::with([
             'courseSchedules:id,course_id,title,scheduled_at,zoom_link',
-            'courseTests:id,course_id,question_bank_id,title,description,duration,passing_score,questions_to_show,start_date,end_date,show_score,show_correct_answers',
+            'courseTests',
             'modules',
         ])->findOrFail($id);
 
@@ -259,6 +327,68 @@ class CourseController extends Controller
             }
         }
 
+        // Tanpa tanggal mulai = salin apa adanya (perilaku lama).
+        if (!$request->filled('start_date')) {
+            return $this->duplicateAsIs($original);
+        }
+
+        $validated = $this->validateDuplicatePayload($request);
+        $newCode = $this->generateUniqueCourseCode($original->code);
+
+        foreach (($validated['course_tests'] ?? []) as $index => $courseTestPayload) {
+            $this->validateCourseTestDateWindow($validated, $courseTestPayload, $index);
+        }
+
+        $newCourse = DB::transaction(function () use ($original, $validated, $newCode) {
+            $course = Course::create([
+                'teacher_id' => $original->teacher_id,
+                'name' => $validated['name'],
+                'code' => $newCode,
+                'description' => $original->description,
+                'start_date' => Carbon::parse($validated['start_date'])->format('Y-m-d H:i:s'),
+                'end_date' => Carbon::parse($validated['end_date'])->format('Y-m-d H:i:s'),
+                'access_rights' => $original->access_rights,
+            ]);
+
+            foreach ($validated['schedules'] as $schedule) {
+                $course->courseSchedules()->create([
+                    'title' => $schedule['title'],
+                    'scheduled_at' => Carbon::parse($schedule['scheduled_at'])->format('Y-m-d H:i:s'),
+                    'zoom_link' => $schedule['zoom_link'] ?? null,
+                ]);
+            }
+
+            foreach (($validated['course_tests'] ?? []) as $test) {
+                $course->courseTests()->create([
+                    'title' => $test['title'],
+                    'description' => $test['description'] ?? null,
+                    'question_bank_id' => $test['question_bank_id'],
+                    'duration' => $test['duration'] ?? 0,
+                    'passing_score' => $test['passing_score'] ?? 0,
+                    'questions_to_show' => $test['questions_to_show'] ?? null,
+                    'max_attempts' => $test['max_attempts'] ?? 0,
+                    'start_date' => Carbon::parse($test['start_date'])->format('Y-m-d H:i:s'),
+                    'end_date' => Carbon::parse($test['end_date'])->format('Y-m-d H:i:s'),
+                    'show_score' => $test['show_score'] ?? true,
+                    'show_correct_answers' => $test['show_correct_answers'] ?? false,
+                    'reference_link' => ReferenceLinkNormalizer::normalize($test['reference_link'] ?? null),
+                    'remedial_enabled' => false,
+                    'remedial_end_date' => null,
+                    'requires_submission' => false,
+                ]);
+            }
+
+            $this->copyModules($original, $course);
+
+            return $course;
+        });
+
+        return redirect()->route('teacher.showCourse', $newCourse->id)
+            ->with('success', "Kelas {$newCourse->name} berhasil dibuat dari {$original->name}.");
+    }
+
+    private function duplicateAsIs(Course $original)
+    {
         $newCode = $this->generateUniqueCourseCode($original->code);
 
         DB::transaction(function () use ($original, $newCode) {
@@ -267,15 +397,15 @@ class CourseController extends Controller
                 'name' => $original->name . ' (Salinan)',
                 'code' => $newCode,
                 'description' => $original->description,
-                'start_date' => $original->start_date,
-                'end_date' => $original->end_date,
+                'start_date' => $original->getRawOriginal('start_date'),
+                'end_date' => $original->getRawOriginal('end_date'),
                 'access_rights' => $original->access_rights,
             ]);
 
             foreach ($original->courseSchedules as $schedule) {
                 $duplicateCourse->courseSchedules()->create([
                     'title' => $schedule->title,
-                    'scheduled_at' => $schedule->scheduled_at,
+                    'scheduled_at' => $schedule->getRawOriginal('scheduled_at'),
                     'zoom_link' => $schedule->zoom_link,
                 ]);
             }
@@ -288,38 +418,177 @@ class CourseController extends Controller
                     'passing_score' => $courseTest->passing_score,
                     'question_bank_id' => $courseTest->question_bank_id,
                     'questions_to_show' => $courseTest->questions_to_show,
-                    'start_date' => $courseTest->start_date,
-                    'end_date' => $courseTest->end_date,
+                    'max_attempts' => $courseTest->max_attempts,
+                    'reference_link' => $courseTest->reference_link,
+                    'start_date' => $courseTest->getRawOriginal('start_date'),
+                    'end_date' => $courseTest->getRawOriginal('end_date'),
                     'show_score' => $courseTest->show_score,
                     'show_correct_answers' => $courseTest->show_correct_answers,
                 ]);
             }
 
-            foreach ($original->modules as $module) {
-                $filePath = $module->file_path;
-
-                if ($module->isFile() && $module->file_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($module->file_path)) {
-                    $oldPath = $module->file_path;
-                    $filename = time() . '_' . basename($oldPath);
-                    $newPath = 'course-modules/' . $filename;
-                    \Illuminate\Support\Facades\Storage::disk('public')->copy($oldPath, $newPath);
-                    $filePath = $newPath;
-                }
-
-                $duplicateCourse->modules()->create([
-                    'title' => $module->title,
-                    'description' => $module->description,
-                    'type' => $module->type,
-                    'file_path' => $filePath,
-                    'original_filename' => $module->original_filename,
-                    'link_url' => $module->link_url,
-                    'is_active' => $module->is_active ?? true,
-                    'order' => $module->order,
-                ]);
-            }
+            $this->copyModules($original, $duplicateCourse);
         });
 
         return redirect()->route('teacher.courses')->with('success', 'Kelas berhasil diduplikasi.');
+    }
+
+    private function copyModules(Course $original, Course $target): void
+    {
+        foreach ($original->modules as $module) {
+            $filePath = $module->file_path;
+
+            if ($module->isFile() && $module->file_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($module->file_path)) {
+                $oldPath = $module->file_path;
+                $filename = time() . '_' . basename($oldPath);
+                $newPath = 'course-modules/' . $filename;
+                \Illuminate\Support\Facades\Storage::disk('public')->copy($oldPath, $newPath);
+                $filePath = $newPath;
+            }
+
+            $target->modules()->create([
+                'title' => $module->title,
+                'description' => $module->description,
+                'type' => $module->type,
+                'file_path' => $filePath,
+                'original_filename' => $module->original_filename,
+                'link_url' => $module->link_url,
+                'is_active' => $module->is_active ?? true,
+                'order' => $module->order,
+            ]);
+        }
+    }
+
+    /**
+     * Data untuk planner: jadwal & ujian kelas sumber, sesi rotasi dari kelas
+     * sejenis (nama berawalan sama, mis. "WEEKEND"), dan bank soal pengajar.
+     */
+    private function rotationInputs(Course $original, string $startDate): array
+    {
+        $sourceSessions = $original->courseSchedules->map(fn ($schedule) => [
+            'title' => $schedule->title,
+            'scheduled_at' => $schedule->getRawOriginal('scheduled_at'),
+            'zoom_link' => $schedule->zoom_link,
+        ])->all();
+
+        $sourceTests = $original->courseTests->map(fn ($test) => [
+            'title' => $test->title,
+            'question_bank_id' => $test->question_bank_id,
+            'bank_name' => $test->questionBank?->name,
+            'description' => $test->description,
+            'duration' => $test->duration,
+            'passing_score' => $test->passing_score,
+            'questions_to_show' => $test->questions_to_show,
+            'max_attempts' => $test->max_attempts,
+            'show_score' => $test->show_score,
+            'show_correct_answers' => $test->show_correct_answers,
+            'reference_link' => $test->reference_link,
+            'start_date' => $test->getRawOriginal('start_date'),
+        ])->all();
+
+        $courses = Course::where('teacher_id', $original->teacher_id)
+            ->get(['id', 'name', 'start_date', 'created_at']);
+        $prefix = $this->courseNamePrefix($original->name);
+        $siblings = $prefix !== ''
+            ? $courses->filter(fn ($course) => $this->courseNamePrefix($course->name) === $prefix)
+            : collect();
+        if ($siblings->isEmpty()) {
+            $siblings = $courses;
+        }
+        // Kelas terbaru lebih dulu: bila jadwal antar kelas bertabrakan, yang terbaru dipakai.
+        $rank = $siblings
+            ->sortByDesc(fn ($course) => (string) ($course->getRawOriginal('start_date') ?? $course->getRawOriginal('created_at')))
+            ->values()
+            ->mapWithKeys(fn ($course, $index) => [$course->id => ['rank' => $index, 'name' => $course->name]]);
+
+        $stream = CourseSchedule::whereIn('course_id', $rank->keys())
+            ->where('scheduled_at', '>=', Carbon::parse($startDate)->startOfDay()->format('Y-m-d H:i:s'))
+            ->get(['course_id', 'title', 'scheduled_at', 'zoom_link'])
+            ->sortBy(fn ($schedule) => sprintf('%s|%05d', $schedule->getRawOriginal('scheduled_at'), $rank[$schedule->course_id]['rank']))
+            ->map(fn ($schedule) => [
+                'title' => $schedule->title,
+                'scheduled_at' => $schedule->getRawOriginal('scheduled_at'),
+                'zoom_link' => $schedule->zoom_link,
+                'course_name' => $rank[$schedule->course_id]['name'],
+            ])
+            ->values()
+            ->all();
+
+        $banks = QuestionBank::where('teacher_id', $original->teacher_id)
+            ->withCount('questions')
+            ->orderBy('name')
+            ->get(['id', 'name', 'is_active'])
+            ->map(fn ($bank) => [
+                'id' => $bank->id,
+                'name' => $bank->name,
+                'questions_count' => (int) $bank->questions_count,
+                'is_active' => (bool) $bank->is_active,
+            ])
+            ->all();
+
+        return [
+            'source_sessions' => $sourceSessions,
+            'source_tests' => $sourceTests,
+            'stream' => $stream,
+            'banks' => $banks,
+        ];
+    }
+
+    private function courseNamePrefix(?string $name): string
+    {
+        return mb_strtoupper(trim(preg_replace('/\s*\d+\s*$/', '', (string) $name)));
+    }
+
+    private function suggestCourseName(Course $original): string
+    {
+        $prefix = trim(preg_replace('/\s*\d+\s*$/', '', $original->name));
+        if ($prefix === '' || $prefix === trim($original->name)) {
+            return $original->name . ' (Salinan)';
+        }
+
+        $max = Course::where('teacher_id', $original->teacher_id)
+            ->pluck('name')
+            ->filter(fn ($name) => $this->courseNamePrefix($name) === mb_strtoupper($prefix))
+            ->map(fn ($name) => (int) (preg_match('/(\d+)\s*$/', $name, $m) ? $m[1] : 0))
+            ->max();
+
+        return $prefix . ' ' . ((int) $max + 1);
+    }
+
+    private function validateDuplicatePayload(Request $request): array
+    {
+        return $request->validate([
+            'name' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+
+            'schedules' => 'required|array|min:1',
+            'schedules.*.title' => 'required|string|max:255',
+            'schedules.*.scheduled_at' => 'required|date',
+            'schedules.*.zoom_link' => 'nullable|string|max:2048',
+
+            'course_tests' => 'nullable|array',
+            'course_tests.*.title' => 'required|string|max:255',
+            'course_tests.*.description' => 'nullable|string',
+            'course_tests.*.question_bank_id' => [
+                'required',
+                'uuid',
+                Rule::exists('question_banks', 'id')
+                    ->where(fn ($query) => $query->where('teacher_id', Auth::id())),
+            ],
+            'course_tests.*.duration' => 'nullable|integer|min:0',
+            'course_tests.*.passing_score' => 'nullable|integer|min:0|max:100',
+            'course_tests.*.questions_to_show' => 'nullable|integer|min:1',
+            'course_tests.*.max_attempts' => 'nullable|integer|min:0',
+            'course_tests.*.start_date' => 'required|date',
+            'course_tests.*.end_date' => 'required|date',
+            'course_tests.*.show_score' => 'nullable|boolean',
+            'course_tests.*.show_correct_answers' => 'nullable|boolean',
+            'course_tests.*.reference_link' => 'nullable|array',
+        ], [
+            'schedules.required' => 'Jadwal kelas baru masih kosong.',
+            'course_tests.*.question_bank_id.required' => 'Pilih bank soal untuk setiap ujian.',
+        ]);
     }
 
     public function removeParticipant($courseId, $participantId)

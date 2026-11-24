@@ -545,7 +545,7 @@ class CourseTestUserController extends Controller
                 'id' => $attempt->id,
                 'score' => $attempt->score,
                 'passed' => (bool) $attempt->passed,
-                'submitted_at' => optional($attempt->submitted_at)->toIso8601String(),
+                'submitted_at' => optional($attempt->submitted_at)->format('Y-m-d\TH:i:s+07:00'),
             ],
             'review' => $review,
         ]);

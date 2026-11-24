@@ -3,9 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Course;
-use App\Models\CourseUser;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Services\Brevet\ParticipantEnroller;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
@@ -19,27 +17,20 @@ class UserImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithValidat
 
     protected ?string $platformId;
 
+    /**
+     * Ringkasan hasil impor untuk ditampilkan ke admin.
+     */
+    protected array $report = [
+        'created' => 0,
+        'enrolled' => 0,
+        'already_enrolled' => 0,
+        'skipped_other_platform' => [],
+        'course_not_found' => [],
+    ];
+
     public function __construct(?string $platformId = null)
     {
         $this->platformId = $platformId;
-    }
-
-    private function formatPhoneNumber($phoneNumber): string
-    {
-        if ($phoneNumber === null) {
-            return '';
-        }
-
-        $phone = trim((string) $phoneNumber);
-        $phone = preg_replace('/[\s\-\(\)\.]+/', '', $phone);
-
-        if (str_starts_with($phone, '+62')) {
-            $phone = '0' . substr($phone, 3);
-        } elseif (str_starts_with($phone, '62')) {
-            $phone = '0' . substr($phone, 2);
-        }
-
-        return $phone;
     }
 
     private function resolveCourseCode(array $row): ?string
@@ -57,48 +48,28 @@ class UserImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithValidat
 
     public function model(array $row)
     {
-        $existingUser = User::where('email', $row['email'])->first();
-
-        if ($existingUser) {
-            // Gate 3: Conflict Policy
-            // If user has a different platform assigned, skip to avoid unauthorized transfer
-            if ($this->platformId && $existingUser->platform_id && $existingUser->platform_id !== $this->platformId) {
-                return null;
+        $course = null;
+        $courseCode = $this->resolveCourseCode($row);
+        if ($courseCode) {
+            $course = Course::whereRaw('LOWER(code) = ?', [Str::lower($courseCode)])->first();
+            if (!$course) {
+                $this->report['course_not_found'][$courseCode] = $courseCode;
             }
-
-            // If user has platform_id = NULL and import provides a platform_id, claim platform
-            if ($this->platformId && is_null($existingUser->platform_id)) {
-                $existingUser->update([
-                    'platform_id' => $this->platformId,
-                ]);
-            }
-
-            $user = $existingUser;
-        } else {
-            $phoneNumber = $this->formatPhoneNumber($row['phone_number'] ?? '');
-
-            $user = User::create([
-                'name'          => $row['name'],
-                'email'         => $row['email'],
-                'phone_number'  => $phoneNumber,
-                'npwp'          => isset($row['npwp']) ? strval($row['npwp']) : null,
-                'address'       => $row['address'] ?? null,
-                'password'      => Hash::make($phoneNumber),
-                'role'          => 'pengguna',
-                'platform_id'   => $this->platformId,
-                'event_id'      => 1,
-            ]);
         }
 
-        $courseCode = $this->resolveCourseCode($row);
-        if ($courseCode && $user) {
-            $course = Course::whereRaw('LOWER(code) = ?', [Str::lower($courseCode)])->first();
-            if ($course) {
-                CourseUser::firstOrCreate([
-                    'course_id' => $course->id,
-                    'user_id' => $user->id,
-                ]);
-            }
+        $result = app(ParticipantEnroller::class)->enroll($row, $this->platformId, $course);
+
+        if ($result['account'] === ParticipantEnroller::SKIPPED_OTHER_PLATFORM) {
+            $this->report['skipped_other_platform'][] = $result['user']->email;
+            return null;
+        }
+        if ($result['account'] === 'created') {
+            $this->report['created']++;
+        }
+        if ($result['class'] === 'enrolled') {
+            $this->report['enrolled']++;
+        } elseif ($result['class'] === 'already') {
+            $this->report['already_enrolled']++;
         }
 
         return null;
@@ -119,6 +90,51 @@ class UserImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithValidat
                 'not_regex:/[a-zA-Z]/',
             ],
         ];
+    }
+
+    public function report(): array
+    {
+        $report = $this->report;
+        $report['course_not_found'] = array_values($report['course_not_found']);
+
+        return $report;
+    }
+
+    /**
+     * Kalimat ringkas hasil impor. `warning` berisi baris yang tidak masuk kelas.
+     *
+     * @return array{summary: string, warning: ?string}
+     */
+    public function summary(): array
+    {
+        $report = $this->report();
+        $summary = "Impor selesai: {$report['created']} akun baru, {$report['enrolled']} masuk kelas"
+            . ($report['already_enrolled'] > 0 ? ", {$report['already_enrolled']} sudah ada di kelas" : '')
+            . '.';
+
+        $warnings = [];
+        if ($report['skipped_other_platform'] !== []) {
+            $warnings[] = count($report['skipped_other_platform'])
+                . ' peserta dilewati karena terdaftar di platform lain (tidak masuk kelas): '
+                . $this->shortList($report['skipped_other_platform']);
+        }
+        if ($report['course_not_found'] !== []) {
+            $warnings[] = 'Kode kelas tidak ditemukan: ' . $this->shortList($report['course_not_found'])
+                . '. Akun tetap dibuat tapi belum masuk kelas.';
+        }
+
+        return [
+            'summary' => $summary,
+            'warning' => $warnings !== [] ? implode(' | ', $warnings) : null,
+        ];
+    }
+
+    private function shortList(array $items, int $limit = 5): string
+    {
+        $shown = implode(', ', array_slice($items, 0, $limit));
+        $rest = count($items) - $limit;
+
+        return $rest > 0 ? "{$shown} (dan {$rest} lainnya)" : $shown;
     }
 
     public function customValidationMessages(): array

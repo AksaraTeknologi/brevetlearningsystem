@@ -12,7 +12,7 @@ class CourseSchedule extends Model
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
-        'scheduled_at' => 'datetime',
+        'scheduled_at' => 'datetime:Y-m-d\TH:i:s+07:00',
     ];
 
     public function course()

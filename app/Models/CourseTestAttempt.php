@@ -25,9 +25,9 @@ class CourseTestAttempt extends Model
     protected $casts = [
         'score' => 'integer',
         'passed' => 'boolean',
-        'started_at' => 'datetime',
-        'submitted_at' => 'datetime',
-        'completed_at' => 'datetime',
+        'started_at' => 'datetime:Y-m-d\TH:i:s+07:00',
+        'submitted_at' => 'datetime:Y-m-d\TH:i:s+07:00',
+        'completed_at' => 'datetime:Y-m-d\TH:i:s+07:00',
     ];
 
     public function courseTest()

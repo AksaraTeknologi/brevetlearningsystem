@@ -45,6 +45,7 @@ class CourseTestParticipantsExport implements FromArray, WithHeadings, WithTitle
             ->map(fn($attempts) => (int) $attempts->max('score'));
 
         $passingScore = (int) ($this->courseTest->passing_score ?? 0);
+         $rejectedByUser = $this->courseTest->getRejectedSubmissionsByUser($participants->pluck('user_id'));
 
         $rows = [];
         $no = 1;
@@ -53,9 +54,12 @@ class CourseTestParticipantsExport implements FromArray, WithHeadings, WithTitle
             $userId = $participant->user_id;
             $hasBestScore = $bestScoreByUser->has($userId);
             $bestScore = $hasBestScore ? $bestScoreByUser->get($userId) : null;
+            $rejectionReason = $rejectedByUser->get($userId);
 
             if ($bestScore === null) {
-                $keterangan = 'Belum Mengerjakan';
+                $keterangan = $rejectionReason !== null
+                    ? 'Ditolak (' . $rejectionReason . ')'
+                    : 'Belum Mengerjakan';
             } elseif ($bestScore >= $passingScore) {
                 $keterangan = 'Lulus';
             } else {

@@ -18,6 +18,7 @@ import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { router } from "@inertiajs/react";
 import toast from "react-hot-toast";
+import { formatDateTimeWIB } from "@/lib/utils";
 import CourseSubmissionFormModal from "./CourseSubmissionFormModal";
 import TeacherSubmissionDetailModal from "./TeacherSubmissionDetailModal";
 import {
@@ -108,6 +109,7 @@ export default function TeacherCourseSubmissionsCard({
                         const submittedCount = subs.length;
                         const pendingCount = subs.filter((s: any) => s.status === "pending_review").length;
                         const approvedCount = subs.filter((s: any) => s.status === "approved").length;
+                        const unapprovedSubmittedCount = subs.filter((s: any) => s.status !== "approved").length;
 
                         return (
                             <div
@@ -128,11 +130,7 @@ export default function TeacherCourseSubmissionsCard({
                                                 >
                                                     <Clock className="h-3 w-3" />
                                                     Batas:{" "}
-                                                    {format(
-                                                        new Date(submission.deadline),
-                                                        "d MMM yyyy, HH:mm",
-                                                        { locale: idLocale }
-                                                    )}
+                                                    {formatDateTimeWIB(submission.deadline)}
                                                 </Badge>
                                             ) : (
                                                 <Badge
@@ -202,16 +200,16 @@ export default function TeacherCourseSubmissionsCard({
                                             Detail & Periksa Siswa
                                         </Button>
 
-                                        {participants.length > 0 && approvedCount < participants.length && (
+                                        {unapprovedSubmittedCount > 0 && (
                                             <Button
                                                 size="sm"
                                                 type="button"
                                                 onClick={() => openDetailModal(submission)}
                                                 className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white gap-1 shadow-sm"
-                                                title="Buka detail & ACC Semua Siswa"
+                                                title={`Buka detail & ACC ${unapprovedSubmittedCount} tugas yang sudah dikirim`}
                                             >
                                                 <CheckCheck className="h-3.5 w-3.5" />
-                                                ACC Semua
+                                                ACC Pengirim ({unapprovedSubmittedCount})
                                             </Button>
                                         )}
 

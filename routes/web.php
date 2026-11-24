@@ -907,6 +907,7 @@ Route::middleware(['auth', EnsureTeacher::class])->group(function () {
     Route::put('/teacher/courses/{id}', [CourseController::class, 'update'])->name('teacher.updateCourse');
     Route::delete('/teacher/courses/{id}', [CourseController::class, 'destroy'])->name('teacher.destroyCourse');
     Route::post('/teacher/courses/{id}/duplicate', [CourseController::class, 'duplicate'])->name('teacher.duplicateCourse');
+    Route::post('/teacher/courses/{id}/duplicate-preview', [CourseController::class, 'duplicatePreview'])->name('teacher.duplicateCoursePreview');
     Route::delete('/teacher/courses/{courseId}/participants/{participantId}', [CourseController::class, 'removeParticipant'])->name('teacher.removeParticipant');
     Route::get('/teacher/search-users', [CourseController::class, 'searchUsers'])->name('teacher.searchUsers');
     Route::post('/teacher/courses/{courseId}/add-participant', [CourseController::class, 'addParticipant'])->name('teacher.addParticipant');
@@ -920,6 +921,7 @@ Route::middleware(['auth', EnsureTeacher::class])->group(function () {
 
     Route::post('/teacher/courses/{course}/tests', [CourseTestController::class, 'store'])->name('teacher.courseTests.store');
     Route::post('/teacher/courses/{course}/tests/import', [CourseTestController::class, 'import'])->name('teacher.courseTests.import');
+    Route::post('/teacher/courses/{course}/tests/remedial', [CourseTestController::class, 'bulkRemedial'])->name('teacher.courseTests.bulkRemedial');
     Route::get('/teacher/courses/{course}/tests/{courseTest}/detail', [CourseTestController::class, 'detail'])->name('teacher.courseTests.detail');
     Route::get('/teacher/courses/{course}/tests/{courseTest}/export-participants', [CourseTestController::class, 'exportParticipants'])->name('teacher.courseTests.exportParticipants');
     Route::put('/teacher/courses/{course}/tests/{courseTest}', [CourseTestController::class, 'update'])->name('teacher.courseTests.update');

@@ -39,7 +39,7 @@ import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { router } from "@inertiajs/react";
 import toast from "react-hot-toast";
-import { cn } from "@/lib/utils";
+import { cn, formatDateTimeWIB } from "@/lib/utils";
 
 interface TeacherSubmissionDetailModalProps {
     open: boolean;
@@ -72,7 +72,6 @@ export default function TeacherSubmissionDetailModal({
     // Approve All Dialog state
     const [approveAllDialogOpen, setApproveAllDialogOpen] = useState(false);
     const [isApprovingAll, setIsApprovingAll] = useState(false);
-    const [includeUnsubmitted, setIncludeUnsubmitted] = useState(true);
 
     // Build map of student user_id -> submission
     const studentSubmissionMap = useMemo(() => {
@@ -119,14 +118,17 @@ export default function TeacherSubmissionDetailModal({
         return { total, submitted, pending, approved, rejected, unsubmitted };
     }, [tableItems]);
 
-    const notApprovedCount = stats.total - stats.approved;
+    // Siswa yang sudah mengumpulkan berkas tapi belum di-ACC
+    const pendingApprovalCount = useMemo(() => {
+        return tableItems.filter((i) => i.submission !== null && i.status !== "approved").length;
+    }, [tableItems]);
 
-    // Handle Approve All (ACC Semua Siswa)
+    // Handle Approve All (ACC Semua Siswa yang Mengirimkan Tugas)
     const handleConfirmApproveAll = () => {
         setIsApprovingAll(true);
         router.post(
             route("courses.submissions.approveAll", [courseId, courseSubmission.id]),
-            { include_unsubmitted: includeUnsubmitted },
+            {},
             {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -228,7 +230,7 @@ export default function TeacherSubmissionDetailModal({
     return (
         <>
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="max-w-5xl max-h-[90vh] flex flex-col p-6 overflow-hidden">
+                <DialogContent className="max-w-5xl sm:max-w-6xl w-full max-h-[90vh] flex flex-col p-6 overflow-hidden">
                     <DialogHeader className="border-b pb-4 shrink-0">
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                             <div>
@@ -265,20 +267,20 @@ export default function TeacherSubmissionDetailModal({
                                 <Button
                                     size="sm"
                                     type="button"
-                                    disabled={notApprovedCount === 0 || isApprovingAll}
+                                    disabled={pendingApprovalCount === 0 || isApprovingAll}
                                     onClick={() => setApproveAllDialogOpen(true)}
                                     className={cn(
                                         "text-xs gap-1.5 shadow-sm transition shrink-0",
-                                        notApprovedCount === 0
+                                        pendingApprovalCount === 0
                                             ? "bg-muted text-gray-400 border border-border cursor-not-allowed hover:bg-muted"
                                             : "bg-emerald-600 hover:bg-emerald-700 text-white"
                                     )}
-                                    title={notApprovedCount === 0 ? "Semua siswa sudah disetujui (ACC)" : "Setujui semua siswa"}
+                                    title={pendingApprovalCount === 0 ? "Semua pengirim sudah di-ACC" : "Setujui semua tugas siswa yang sudah mengumpulkan"}
                                 >
                                     <CheckCheck className="h-4 w-4" />
-                                    {notApprovedCount === 0
-                                        ? "Semua Siswa Sudah Di-ACC"
-                                        : `ACC Semua Siswa (${notApprovedCount})`}
+                                    {pendingApprovalCount === 0
+                                        ? "Semua Pengirim Sudah Di-ACC"
+                                        : `ACC Semua Pengirim (${pendingApprovalCount})`}
                                 </Button>
                             </div>
                         </div>
@@ -289,9 +291,7 @@ export default function TeacherSubmissionDetailModal({
                                 <span className="font-medium text-foreground">Batas Waktu (Deadline): </span>
                                 {courseSubmission.deadline ? (
                                     <span className="font-semibold text-rose-600">
-                                        {format(new Date(courseSubmission.deadline), "d MMMM yyyy, HH:mm", {
-                                            locale: idLocale,
-                                        })}
+                                        {formatDateTimeWIB(courseSubmission.deadline)}
                                     </span>
                                 ) : (
                                     <span className="text-muted-foreground">Tidak ada batas waktu</span>
@@ -370,24 +370,24 @@ export default function TeacherSubmissionDetailModal({
                     </DialogHeader>
 
                     {/* Table Container (Scrollable) */}
-                    <div className="flex-1 overflow-y-auto mt-2 -mx-6 px-6">
+                    <div className="flex-1 min-h-0 overflow-y-auto mt-2 -mx-6 px-6">
                         {filteredItems.length === 0 ? (
                             <div className="text-center py-12 text-muted-foreground text-sm">
                                 Tidak ada siswa yang sesuai dengan filter pencarian.
                             </div>
                         ) : (
-                            <div className="border rounded-lg overflow-hidden bg-card shadow-sm">
-                                <table className="w-full text-left text-xs">
-                                    <thead className="bg-muted/80 text-foreground font-semibold border-b">
+                            <div className="border rounded-lg overflow-x-auto bg-card shadow-sm">
+                                <table className="w-full min-w-[1000px] text-left text-xs">
+                                    <thead className="bg-muted/80 text-foreground font-semibold border-b whitespace-nowrap">
                                         <tr>
-                                            <th className="py-2.5 px-3 w-10 text-center">No</th>
-                                            <th className="py-2.5 px-3">Nama Siswa</th>
-                                            <th className="py-2.5 px-3">Status</th>
-                                            <th className="py-2.5 px-3">Berkas Tugas</th>
-                                            <th className="py-2.5 px-3">Waktu Kirim</th>
-                                            <th className="py-2.5 px-3">Catatan Siswa</th>
-                                            <th className="py-2.5 px-3">Catatan Pengajar</th>
-                                            <th className="py-2.5 px-3 text-center min-w-[140px]">Aksi Review (ACC)</th>
+                                            <th className="py-2.5 px-3 w-10 text-center shrink-0">No</th>
+                                            <th className="py-2.5 px-3 min-w-[180px]">Nama Siswa</th>
+                                            <th className="py-2.5 px-3 min-w-[130px]">Status</th>
+                                            <th className="py-2.5 px-3 min-w-[180px]">Berkas Tugas</th>
+                                            <th className="py-2.5 px-3 min-w-[110px]">Waktu Kirim</th>
+                                            <th className="py-2.5 px-3 min-w-[160px]">Catatan Siswa</th>
+                                            <th className="py-2.5 px-3 min-w-[160px]">Catatan Pengajar</th>
+                                            <th className="py-2.5 px-3 text-center min-w-[150px]">Aksi Review (ACC)</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-100">
@@ -407,7 +407,7 @@ export default function TeacherSubmissionDetailModal({
                                                         {index + 1}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3">
+                                                    <td className="py-2.5 px-3 min-w-[180px]">
                                                         <div className="font-semibold text-foreground">
                                                             {item.user.name || "Nama Siswa"}
                                                         </div>
@@ -415,13 +415,13 @@ export default function TeacherSubmissionDetailModal({
                                                             {item.user.email}
                                                         </div>
                                                         {item.user.institution && (
-                                                            <div className="text-[10px] text-gray-400">
+                                                            <div className="text-[10px] text-muted-foreground">
                                                                 {item.user.institution}
                                                             </div>
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3">
+                                                    <td className="py-2.5 px-3 min-w-[130px] whitespace-nowrap">
                                                         {item.status === "unsubmitted" && (
                                                             <Badge
                                                                 variant="outline"
@@ -450,7 +450,7 @@ export default function TeacherSubmissionDetailModal({
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3">
+                                                    <td className="py-2.5 px-3 min-w-[180px]">
                                                         {sub ? (
                                                             <div className="space-y-1">
                                                                 <Button
@@ -464,22 +464,22 @@ export default function TeacherSubmissionDetailModal({
                                                                     Pratinjau Berkas
                                                                 </Button>
                                                                 <div
-                                                                    className="text-[11px] text-foreground font-medium truncate max-w-[150px] cursor-pointer hover:underline"
+                                                                    className="text-[11px] text-foreground font-medium truncate max-w-[200px] cursor-pointer hover:underline"
                                                                     title={sub.original_filename}
                                                                     onClick={() => setPreviewSubmission(sub)}
                                                                 >
                                                                     {sub.original_filename}
                                                                 </div>
-                                                                <div className="text-[10px] text-gray-400">
+                                                                <div className="text-[10px] text-muted-foreground">
                                                                     {formatBytes(sub.file_size)} • v{sub.version}
                                                                 </div>
                                                             </div>
                                                         ) : (
-                                                            <span className="text-gray-400">-</span>
+                                                            <span className="text-muted-foreground">-</span>
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3 text-muted-foreground whitespace-nowrap">
+                                                    <td className="py-2.5 px-3 text-muted-foreground whitespace-nowrap min-w-[110px]">
                                                         {sub?.created_at ? (
                                                             <div>
                                                                 <div>
@@ -487,38 +487,38 @@ export default function TeacherSubmissionDetailModal({
                                                                         locale: idLocale,
                                                                     })}
                                                                 </div>
-                                                                <div className="text-[11px] text-gray-400">
+                                                                <div className="text-[11px] text-muted-foreground">
                                                                     {format(new Date(sub.created_at), "HH:mm", {
                                                                         locale: idLocale,
                                                                     })}
                                                                 </div>
                                                             </div>
                                                         ) : (
-                                                            <span className="text-gray-400">-</span>
+                                                            <span className="text-muted-foreground">-</span>
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3 text-muted-foreground max-w-[160px]">
+                                                    <td className="py-2.5 px-3 text-muted-foreground min-w-[160px] max-w-[220px]">
                                                         {sub?.student_notes ? (
                                                             <p className="line-clamp-2 text-[11px]" title={sub.student_notes}>
                                                                 {sub.student_notes}
                                                             </p>
                                                         ) : (
-                                                            <span className="text-gray-400">-</span>
+                                                            <span className="text-muted-foreground">-</span>
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3 text-muted-foreground max-w-[160px]">
+                                                    <td className="py-2.5 px-3 text-muted-foreground min-w-[160px] max-w-[220px]">
                                                         {sub?.admin_notes ? (
                                                             <p className="line-clamp-2 text-[11px] text-rose-600 font-medium" title={sub.admin_notes}>
                                                                 {sub.admin_notes}
                                                             </p>
                                                         ) : (
-                                                            <span className="text-gray-400">-</span>
+                                                            <span className="text-muted-foreground">-</span>
                                                         )}
                                                     </td>
 
-                                                    <td className="py-2.5 px-3 text-center">
+                                                    <td className="py-2.5 px-3 text-center min-w-[150px] whitespace-nowrap">
                                                         {sub ? (
                                                             <div className="flex items-center justify-center gap-1.5">
                                                                 {/* ACC Button */}
@@ -797,18 +797,18 @@ export default function TeacherSubmissionDetailModal({
                 </DialogContent>
             </Dialog>
 
-            {/* Modal Konfirmasi ACC Semua Siswa */}
+            {/* Modal Konfirmasi ACC Semua Siswa yang Mengirim Tugas */}
             <AlertDialog open={approveAllDialogOpen} onOpenChange={setApproveAllDialogOpen}>
                 <AlertDialogContent className="max-w-md">
                     <AlertDialogHeader>
                         <AlertDialogTitle className="flex items-center gap-2 text-emerald-700 text-base">
                             <CheckCheck className="h-5 w-5 text-emerald-600 shrink-0" />
-                            <span>ACC Semua Siswa</span>
+                            <span>ACC Semua Pengirim Tugas</span>
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-xs text-muted-foreground space-y-3 pt-2 text-left" asChild>
                             <div>
                                 <p>
-                                    Apakah Anda yakin ingin menyetujui (ACC) seluruh siswa untuk tugas <strong>{courseSubmission.title}</strong>? Tindakan ini akan membuka akses ujian untuk siswa terkait.
+                                    Apakah Anda yakin ingin menyetujui (ACC) seluruh siswa yang <strong>sudah mengirimkan tugas</strong> untuk <strong>{courseSubmission.title}</strong>? Tindakan ini akan membuka akses ujian bagi siswa yang bersangkutan.
                                 </p>
                                 <div className="bg-muted/50 border rounded-lg p-3 space-y-1.5 text-xs mt-3">
                                     <div className="flex justify-between">
@@ -817,34 +817,21 @@ export default function TeacherSubmissionDetailModal({
                                     </div>
                                     {stats.rejected > 0 && (
                                         <div className="flex justify-between">
-                                            <span className="text-muted-foreground">Siswa status ditolak:</span>
+                                            <span className="text-muted-foreground">Siswa status ditolak (perlu ACC ulang):</span>
                                             <strong className="text-rose-700">{stats.rejected} siswa</strong>
                                         </div>
                                     )}
-                                    <div className="flex justify-between">
-                                        <span className="text-muted-foreground">Siswa belum mengumpulkan:</span>
-                                        <strong className="text-foreground">{stats.unsubmitted} siswa</strong>
-                                    </div>
                                     <div className="border-t pt-1.5 flex justify-between font-semibold">
-                                        <span className="text-foreground">Total siswa yang akan di-ACC:</span>
+                                        <span className="text-foreground">Total tugas yang akan di-ACC:</span>
                                         <span className="text-emerald-700 font-bold">
-                                            {includeUnsubmitted ? notApprovedCount : (stats.pending + stats.rejected)} siswa
+                                            {pendingApprovalCount} siswa
                                         </span>
                                     </div>
                                 </div>
-
                                 {stats.unsubmitted > 0 && (
-                                    <label className="flex items-start gap-2 pt-3 cursor-pointer select-none">
-                                        <input
-                                            type="checkbox"
-                                            checked={includeUnsubmitted}
-                                            onChange={(e) => setIncludeUnsubmitted(e.target.checked)}
-                                            className="h-4 w-4 rounded border-input text-emerald-600 focus:ring-emerald-500 mt-0.5 cursor-pointer"
-                                        />
-                                        <span className="text-xs text-foreground">
-                                            Sertakan juga siswa yang belum mengumpulkan ({stats.unsubmitted} siswa) agar dapat langsung mengikuti ujian.
-                                        </span>
-                                    </label>
+                                    <p className="text-[11px] text-muted-foreground pt-1 italic">
+                                        * Sebanyak {stats.unsubmitted} siswa yang belum mengumpulkan tugas tidak akan di-ACC dan tetap harus mengirimkan tugas terlebih dahulu.
+                                    </p>
                                 )}
                             </div>
                         </AlertDialogDescription>
@@ -855,7 +842,7 @@ export default function TeacherSubmissionDetailModal({
                         </AlertDialogCancel>
                         <Button
                             type="button"
-                            disabled={isApprovingAll || (!includeUnsubmitted && stats.pending + stats.rejected === 0)}
+                            disabled={isApprovingAll || pendingApprovalCount === 0}
                             onClick={handleConfirmApproveAll}
                             className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5 text-xs font-semibold"
                         >
@@ -867,7 +854,7 @@ export default function TeacherSubmissionDetailModal({
                             ) : (
                                 <>
                                     <CheckCheck className="h-3.5 w-3.5" />
-                                    Ya, ACC Semua Siswa
+                                    Ya, ACC {pendingApprovalCount} Pengirim
                                 </>
                             )}
                         </Button>

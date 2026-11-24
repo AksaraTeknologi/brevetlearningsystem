@@ -8,7 +8,7 @@ import { Calendar } from "@/Components/ui/calendar";
 import { CalendarIcon, Upload, Loader2, FileText } from "lucide-react";
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
-import { cn } from "@/lib/utils";
+import { cn, getWibParts } from "@/lib/utils";
 import { router } from "@inertiajs/react";
 import toast from "react-hot-toast";
 
@@ -42,11 +42,17 @@ export default function CourseSubmissionFormModal({
                 setDescription(courseSubmission.description || "");
 
                 if (courseSubmission.deadline) {
-                    const d = new Date(courseSubmission.deadline);
-                    setDeadlineDate(d);
-                    const hours = String(d.getHours()).padStart(2, "0");
-                    const minutes = String(d.getMinutes()).padStart(2, "0");
-                    setDeadlineTime(`${hours}:${minutes}`);
+                    const wib = getWibParts(courseSubmission.deadline);
+                    if (wib) {
+                        setDeadlineDate(wib.date);
+                        setDeadlineTime(wib.time);
+                    } else {
+                        const d = new Date(courseSubmission.deadline);
+                        setDeadlineDate(d);
+                        const hours = String(d.getHours()).padStart(2, "0");
+                        const minutes = String(d.getMinutes()).padStart(2, "0");
+                        setDeadlineTime(`${hours}:${minutes}`);
+                    }
                 } else {
                     setDeadlineDate(null);
                     setDeadlineTime("");

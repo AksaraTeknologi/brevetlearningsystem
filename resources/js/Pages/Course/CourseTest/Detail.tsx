@@ -23,10 +23,16 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { formatDateTimeWIB } from "@/lib/utils";
 
 function parseLocalDate(value?: string | null) {
     if (!value) return null;
-    const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2}))?/);
+    const str = String(value);
+    if (str.includes("Z") || /[+-]\d{2}:?\d{2}$/.test(str)) {
+        const d = new Date(str);
+        return isNaN(d.getTime()) ? null : d;
+    }
+    const match = str.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2}))?/);
     if (!match) return null;
     return new Date(
         Number(match[1]),
@@ -39,20 +45,7 @@ function parseLocalDate(value?: string | null) {
 }
 
 function formatLocalDateTime(value?: string | null) {
-    const date = parseLocalDate(value);
-    if (!date) return value || "-";
-    
-    const day = date.getDate();
-    const months = [
-        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-    ];
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    
-    return `${day} ${month} ${year}, ${hours}.${minutes} WIB`;
+    return formatDateTimeWIB(value);
 }
 
 function getCourseTestStatusDisplay(serverStatus: string) {

@@ -364,11 +364,14 @@ class TeacherController extends Controller
                 return (int) $attempts->max('score');
             });
 
-        $participantsData = $participants->map(function ($participant, $index) use ($bestScoreByUser, $courseTest) {
+         $rejectedByUser = $courseTest->getRejectedSubmissionsByUser($participants->pluck('user_id'));
+
+        $participantsData = $participants->map(function ($participant, $index) use ($bestScoreByUser, $rejectedByUser, $courseTest) {
             $bestScore = $bestScoreByUser->get($participant->user_id);
             $hasSubmitted = !is_null($bestScore);
             $passingScore = (int) ($courseTest->passing_score ?? 0);
             $passed = $hasSubmitted ? ($bestScore >= $passingScore) : false;
+            $rejectionReason = $rejectedByUser->get($participant->user_id);
 
             return [
                 'no' => $index + 1,
@@ -377,6 +380,8 @@ class TeacherController extends Controller
                 'best_score' => $bestScore,
                 'has_submitted' => $hasSubmitted,
                 'passed' => $passed,
+                'submission_rejected' => !is_null($rejectionReason),
+                'rejection_reason' => $rejectionReason,
             ];
         })->values();
 
