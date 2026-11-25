@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\CourseTest;
 use App\Models\CourseTestAttempt;
 use App\Models\QuestionBank;
+use App\Services\Brevet\CourseRemedialService;
 use App\Support\ReferenceLinkNormalizer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -68,6 +69,37 @@ class CourseTestController extends Controller
         $courseTest->update($validated);
 
         return back()->with('success', 'Ujian kelas berhasil diperbarui.');
+    }
+
+    /**
+     * Aktifkan / matikan remedial untuk semua ujian kelas (atau yang dipilih)
+     * sekaligus, dengan satu tanggal selesai remedial.
+     */
+    public function bulkRemedial(Request $request, Course $course)
+    {
+        $this->authorizeCourse($course);
+
+        $validated = $request->validate([
+            'enabled' => 'required|boolean',
+            'remedial_end_date' => 'nullable|required_if:enabled,true,1|date',
+            'test_ids' => 'nullable|array',
+            'test_ids.*' => 'uuid',
+        ], [
+            'remedial_end_date.required_if' => 'Isi tanggal dan jam selesai remedial.',
+        ]);
+
+        $result = app(CourseRemedialService::class)->apply(
+            $course,
+            $request->boolean('enabled'),
+            $validated['remedial_end_date'] ?? null,
+            $validated['test_ids'] ?? [],
+        );
+
+        if (!$request->boolean('enabled')) {
+            return back()->with('success', "Remedial dimatikan untuk {$result['count']} ujian.");
+        }
+
+        return back()->with('success', "Remedial diaktifkan untuk {$result['count']} ujian, dibuka {$result['start']->format('d/m/Y')} sampai {$result['end']->format('d/m/Y H:i')}.");
     }
 
     public function destroy(Course $course, CourseTest $courseTest)
