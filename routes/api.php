@@ -46,3 +46,9 @@ Route::prefix('v1/integration')->middleware('auth:sanctum')->group(function () {
         });
     });
 });
+
+// Server to server from Biinsphere, each call carries a signed single-use token
+// (Authorization: Bearer). Remember or forget which Biinsphere account a user
+// connected (Biinsphere AGENTS §14).
+Route::post('/biinsphere/link', [\App\Http\Controllers\Auth\BiinsphereAuthController::class, 'confirmLink'])->name('biinsphere.link');
+Route::post('/biinsphere/unlink', [\App\Http\Controllers\Auth\BiinsphereAuthController::class, 'unlink'])->name('biinsphere.unlink');
