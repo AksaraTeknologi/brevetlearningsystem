@@ -876,6 +876,7 @@ Route::middleware(['auth', EnsureTeacher::class])->group(function () {
 
     Route::get('/teacher/question-banks/{questionBank}/questions', [QuestionBankQuestionController::class, 'index'])->name('teacher.questionBankQuestions.index');
     Route::get('/teacher/question-banks/{questionBank}/questions/create', [QuestionBankQuestionController::class, 'create'])->name('teacher.questionBankQuestions.create');
+    Route::get('/teacher/question-banks/{questionBank}/questions/export', [QuestionBankQuestionController::class, 'export'])->name('teacher.questionBankQuestions.export');
     Route::post('/teacher/question-banks/{questionBank}/questions', [QuestionBankQuestionController::class, 'store'])->name('teacher.questionBankQuestions.store');
     Route::get('/teacher/question-banks/{questionBank}/questions/{question}/edit', [QuestionBankQuestionController::class, 'edit'])->name('teacher.questionBankQuestions.edit');
     Route::put('/teacher/question-banks/{questionBank}/questions/{question}', [QuestionBankQuestionController::class, 'update'])->name('teacher.questionBankQuestions.update');

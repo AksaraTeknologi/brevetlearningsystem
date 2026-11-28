@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\QuestionBankQuestionsExport;
 use App\Imports\QuestionImport;
 use App\Models\Question;
 use App\Models\QuestionBank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -333,6 +335,16 @@ class QuestionBankQuestionController extends Controller
                 ->back()
                 ->with('error', 'Import gagal! ' . $e->getMessage());
         }
+    }
+
+    public function export(QuestionBank $questionBank)
+    {
+        $this->authorizeBank($questionBank);
+
+        $slug = Str::slug($questionBank->name ?? 'bank_soal', '_');
+        $fileName = 'soal_' . ($slug !== '' ? $slug : 'bank_soal') . '.xlsx';
+
+        return Excel::download(new QuestionBankQuestionsExport($questionBank), $fileName);
     }
 
     private function authorizeBank(QuestionBank $questionBank): void

@@ -687,14 +687,33 @@ export default function Question({
                                     {bankId && (
                                         <>
                                             {questions.length > 0 && (
-                                                <Button
-                                                    variant="outline"
-                                                    className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
-                                                    onClick={handleDeleteAll}
-                                                >
-                                                    <Trash className="mr-2 h-4 w-4" />
-                                                    Hapus Semua
-                                                </Button>
+                                                <>
+                                                    <Button
+                                                        variant="outline"
+                                                        className="text-success bg-green-50 border-green-200 hover:bg-green-100"
+                                                        asChild
+                                                    >
+                                                        <a
+                                                            href={route(
+                                                                "teacher.questionBankQuestions.export",
+                                                                bankId,
+                                                            )}
+                                                            className="inline-flex items-center gap-2"
+                                                            download
+                                                        >
+                                                            <Download className="h-4 w-4" />
+                                                            Ekspor
+                                                        </a>
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline"
+                                                        className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                                                        onClick={handleDeleteAll}
+                                                    >
+                                                        <Trash className="mr-2 h-4 w-4" />
+                                                        Hapus Semua
+                                                    </Button>
+                                                </>
                                             )}
                                             <Button asChild>
                                                 <Link
